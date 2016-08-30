@@ -15,7 +15,7 @@
 		273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E575B1D61FE8B009DABFE /* LoginViewController.swift */; };
 		274902871D6F23F500E6766B /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274902851D6F23F500E6766B /* SideMenuTableViewCell.swift */; };
 		274902881D6F23F500E6766B /* SideMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274902861D6F23F500E6766B /* SideMenuTableViewCell.xib */; };
-		276109391D744752001B51B6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276109381D744752001B51B6 /* ProfileViewController.swift */; };
+		276109391D744752001B51B6 /* PastEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276109381D744752001B51B6 /* PastEventsViewController.swift */; };
 		2761093C1D74A38A001B51B6 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2761093B1D74A38A001B51B6 /* MainNavigationController.swift */; };
 		27743FEE1D634E47004EAD97 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27743FED1D634E47004EAD97 /* User.swift */; };
 		277C1CB91D6387100008331F /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277C1CB81D6387100008331F /* EventViewController.swift */; };
@@ -31,6 +31,11 @@
 		27CB27221D5D3CDD00F9ECF5 /* BeeSportiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB27211D5D3CDD00F9ECF5 /* BeeSportiveTests.swift */; };
 		27CB272D1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB272C1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift */; };
 		27CE1E911D6F7D76007C0DE7 /* LoginVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */; };
+		27EDE9931D759C5B00C90FC9 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9921D759C5B00C90FC9 /* StatsViewController.swift */; };
+		27EDE9951D759C7500C90FC9 /* FavoriteSportsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9941D759C7500C90FC9 /* FavoriteSportsCollectionViewController.swift */; };
+		27EDE9971D759CBE00C90FC9 /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9961D759CBE00C90FC9 /* ProfileHeaderViewController.swift */; };
+		27EDE9991D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */; };
+		27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */; };
 		27EE72441D6C4E5A00487673 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */; };
 		9479C21AFCF6B88A59A4EBB0 /* Pods_BeeSportive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */; };
 /* End PBXBuildFile section */
@@ -62,7 +67,7 @@
 		273E57631D62032B009DABFE /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		274902851D6F23F500E6766B /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		274902861D6F23F500E6766B /* SideMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideMenuTableViewCell.xib; sourceTree = "<group>"; };
-		276109381D744752001B51B6 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		276109381D744752001B51B6 /* PastEventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastEventsViewController.swift; sourceTree = "<group>"; };
 		2761093B1D74A38A001B51B6 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		27743FED1D634E47004EAD97 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		277C1CB81D6387100008331F /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +89,11 @@
 		27CB272C1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeeSportiveUITests.swift; sourceTree = "<group>"; };
 		27CB272E1D5D3CDD00F9ECF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LoginVideo.mp4; sourceTree = "<group>"; };
+		27EDE9921D759C5B00C90FC9 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+		27EDE9941D759C7500C90FC9 /* FavoriteSportsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteSportsCollectionViewController.swift; sourceTree = "<group>"; };
+		27EDE9961D759CBE00C90FC9 /* ProfileHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewController.swift; sourceTree = "<group>"; };
+		27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteSportCollectionViewCell.swift; sourceTree = "<group>"; };
+		27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoriteSportCollectionViewCell.xib; sourceTree = "<group>"; };
 		27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeeSportive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96DC1E17FA063DC29D2BCC46 /* Pods-BeeSportive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeeSportive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeeSportive/Pods-BeeSportive.debug.xcconfig"; sourceTree = "<group>"; };
@@ -168,7 +178,12 @@
 		276109371D74471F001B51B6 /* Profile View */ = {
 			isa = PBXGroup;
 			children = (
-				276109381D744752001B51B6 /* ProfileViewController.swift */,
+				276109381D744752001B51B6 /* PastEventsViewController.swift */,
+				27EDE9921D759C5B00C90FC9 /* StatsViewController.swift */,
+				27EDE9941D759C7500C90FC9 /* FavoriteSportsCollectionViewController.swift */,
+				27EDE9961D759CBE00C90FC9 /* ProfileHeaderViewController.swift */,
+				27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */,
+				27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */,
 			);
 			name = "Profile View";
 			sourceTree = "<group>";
@@ -393,6 +408,7 @@
 				27CB27171D5D3CDD00F9ECF5 /* LaunchScreen.storyboard in Resources */,
 				273E57551D61EC8B009DABFE /* GoogleService-Info.plist in Resources */,
 				27CB27141D5D3CDD00F9ECF5 /* Assets.xcassets in Resources */,
+				27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */,
 				274902881D6F23F500E6766B /* SideMenuTableViewCell.xib in Resources */,
 				27CB27121D5D3CDD00F9ECF5 /* Main.storyboard in Resources */,
 				277C1CC11D64A2B20008331F /* EventCollectionViewCell.xib in Resources */,
@@ -468,9 +484,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27EDE9951D759C7500C90FC9 /* FavoriteSportsCollectionViewController.swift in Sources */,
 				277C1CBD1D63B26A0008331F /* Event.swift in Sources */,
 				27743FEE1D634E47004EAD97 /* User.swift in Sources */,
-				276109391D744752001B51B6 /* ProfileViewController.swift in Sources */,
+				276109391D744752001B51B6 /* PastEventsViewController.swift in Sources */,
 				2761093C1D74A38A001B51B6 /* MainNavigationController.swift in Sources */,
 				273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */,
 				277C1CC01D64A2B20008331F /* EventCollectionViewCell.swift in Sources */,
@@ -478,7 +495,10 @@
 				277C1CBB1D6388510008331F /* CreateEventViewController.swift in Sources */,
 				27CB270D1D5D3CDD00F9ECF5 /* AppDelegate.swift in Sources */,
 				27EE72441D6C4E5A00487673 /* SideMenuViewController.swift in Sources */,
+				27EDE9991D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift in Sources */,
+				27EDE9931D759C5B00C90FC9 /* StatsViewController.swift in Sources */,
 				277C1CB91D6387100008331F /* EventViewController.swift in Sources */,
+				27EDE9971D759CBE00C90FC9 /* ProfileHeaderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

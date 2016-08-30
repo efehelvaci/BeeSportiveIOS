@@ -13,11 +13,13 @@ import FirebaseAuth
 import Alamofire
 import AlamofireImage
 import Async
+import SJSegmentedScrollView
 
 class SideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var tableView: UITableView!
     
+    let segmentedViewController = SJSegmentedViewController()
     let tableItems : [String] = ["Profile", "My Beevents", "Stats", "Settings"]
     let tableItemsIcons : [UIImage] = [UIImage(named: "Profile3")!, UIImage(named: "Event")!, UIImage(named: "Bar_chart")!, UIImage(named: "Settings")!]
     var whoSendIt : Int? = 0
@@ -53,21 +55,18 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let mainNavigationController = frostedViewController.contentViewController as! MainNavigationController
+        let viewController = getSJSegmentedViewController()
         
         switch indexPath.row {
         case 0:
-            whoSendIt = 0
-            frostedViewController.hideMenuViewController()
-            mainNavigationController.whoSendIt = 0
-            mainNavigationController.performSegueWithIdentifier("navToProfileSegue", sender: nil)
+            if viewController != nil {
+                mainNavigationController.presentViewController(viewController!, animated: true, completion: nil)
+            }
             break
         case 1:
-            mainNavigationController.whoSendIt = 1
-            mainNavigationController.performSegueWithIdentifier("navToProfileSegue", sender: nil)
             break
         case 2:
-            mainNavigationController.whoSendIt = 2
-            mainNavigationController.performSegueWithIdentifier("navToProfileSegue", sender: nil)
+            break
         default:
             print("Switch default")
         }
@@ -114,14 +113,53 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.tableHeaderView = headerView
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "navToProfileSegue" {
-            let destinationViewController = segue.destinationViewController as! ProfileViewController
+    func getSJSegmentedViewController() -> SJSegmentedViewController? {
+        
+        if let storyboard = self.storyboard {
             
-            destinationViewController.whoReachedMe = self.whoSendIt!
+            let headerViewController = storyboard
+                .instantiateViewControllerWithIdentifier("ProfileHeader") as! ProfileHeaderViewController
+            
+            let firstViewController = storyboard
+                .instantiateViewControllerWithIdentifier("PastEventsViewController")
+            firstViewController.title = "Past Beevents"
+            
+            let secondViewController = storyboard
+                .instantiateViewControllerWithIdentifier("ProfileStatsViewController")
+            secondViewController.title = "Stats"
+            
+            let thirdViewController = storyboard
+                .instantiateViewControllerWithIdentifier("FavoriteSportsCollectionViewController")
+            thirdViewController.title = "Favorite Sports"
+            
+            segmentedViewController.headerViewController = headerViewController
+            segmentedViewController.segmentControllers = [firstViewController,
+                                                          secondViewController,
+                                                          thirdViewController]
+            segmentedViewController.headerViewHeight = 200
+            
+            segmentedViewController.selectedSegmentViewColor = UIColor.redColor()
+            segmentedViewController.segmentViewHeight = 60.0
+            segmentedViewController.segmentShadow = SJShadow.light()
+            segmentedViewController.delegate = self
+            
+            headerViewController.delegate = segmentedViewController
+            
+            return segmentedViewController
         }
         
-            
+        return nil
+    }
+}
+
+extension SideMenuViewController: SJSegmentedViewControllerDelegate {
+    
+    func didMoveToPage(controller: UIViewController, segment: UIButton?, index: Int) {
         
+        if segmentedViewController.segments.count > 0 {
+            
+            let button = segmentedViewController.segments[index]
+            button.setTitleColor(UIColor.orangeColor(), forState: .Selected)
+        }
     }
 }
