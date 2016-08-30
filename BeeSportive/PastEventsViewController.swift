@@ -1,5 +1,5 @@
 //
-//  ProfileViewController.swift
+//  PastEventsViewController.swift
 //  BeeSportive
 //
 //  Created by Efe Helvaci on 29.08.2016.
@@ -11,16 +11,9 @@ import Firebase
 import Async
 import Alamofire
 
-class ProfileViewController: UIViewController {
+class PastEventsViewController: UIViewController {
 
-    @IBOutlet var navTitleLabel: UILabel!
-    @IBOutlet var profileHeaderHeightConstraint: NSLayoutConstraint!
-    @IBOutlet var profileHeaderViewContainer: UIView!
-    @IBOutlet var profilePhotoImageView: UIImageView!
-    @IBOutlet var nameLabel: UILabel!
     @IBOutlet var myEventsCollectionView: UICollectionView!
-    
-    internal var whoReachedMe = 0
     
     let user = (FIRAuth.auth()?.currentUser)!
     let databaseRef = FIRDatabase.database().reference()
@@ -29,27 +22,6 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        switch whoReachedMe {
-        case 0:
-            setHeader()
-            navTitleLabel.alpha = 0.0
-            break
-        case 1:
-            profileHeaderHeightConstraint.constant = 60
-            navTitleLabel.alpha = 1.0
-            navTitleLabel.text = "My Beevents"
-            break
-        case 2:
-            profileHeaderHeightConstraint.constant = 60
-            navTitleLabel.alpha = 1.0
-            navTitleLabel.text = "Stats"
-            break
-        default:
-            setHeader()
-            navTitleLabel.alpha = 0.0
-            break
-        }
         
         let nibName = UINib(nibName: "EventCollectionViewCell", bundle:nil)
         
@@ -148,21 +120,4 @@ class ProfileViewController: UIViewController {
             })
         }
     }
-    
-    func setHeader() {
-        profilePhotoImageView.layer.borderWidth = 3.0
-        profilePhotoImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        profilePhotoImageView.layer.cornerRadius = self.profilePhotoImageView.frame.width/2.0
-        profilePhotoImageView.clipsToBounds = true
-        
-        Async.background{
-            Alamofire.request(.GET, (self.user.photoURL)!).responseData{ response in
-                if let image = response.result.value {
-                    self.profilePhotoImageView.image = UIImage(data: image)
-                    self.nameLabel.text = (self.user.displayName)!
-                }
-            }
-        }
-    }
-
 }
