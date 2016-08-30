@@ -16,5 +16,6 @@ target 'BeeSportive' do
 	pod 'REFrostedViewController', '~> 2.4'
 	pod 'VideoSplashKit'
 	pod 'WWCalendarTimeSelector'
+	pod ’SJSegmentedScrollView’, ‘1.1.0'
     pod 'JSQMessagesViewController'
 end
