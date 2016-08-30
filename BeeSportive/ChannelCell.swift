@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import Firebase
+import Async
+import Alamofire
+import AlamofireImage
 
 class ChannelCell: UITableViewCell {
 
@@ -16,18 +20,25 @@ class ChannelCell: UITableViewCell {
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var sender: UILabel!
 
-//    func configureCell(channel: Channel) {
-//        self.channel = channel
-//        title.text = channel.title
-//        date.text = channel.lastMessage[Constants.LastMessageKeys.date]
-//        lastMessage.text = channel.lastMessage[Constants.LastMessageKeys.message]
-//        if let senderId = channel.lastMessage[Constants.LastMessageKeys.senderId] {
-//            if senderId == "" { sender.text = "" }
-//            else { sender.text = channel.lastSenderDisplayName}
-//        }
-//        if let url = channel.photoURL {
-//            img.hnk_setImageFromURL(url)
-//        }
-//    }
+    func configureCell(channelID: String) {
+        REF_EVENTS.child(channelID).observeEventType(.Value, withBlock: { snapshot in
+            if let title = snapshot.childSnapshotForPath("name").value as? String {
+                self.title.text = title
+            }
+            if let branch = snapshot.childSnapshotForPath("branch").value as? String {
+                self.backgroundView = UIImageView(image: UIImage(named: branch))
+            }
+            if let imgURLstr = snapshot.childSnapshotForPath("creatorImageURL").value as? String {
+                let imgURL = NSURL(string: imgURLstr)!
+                Async.background {
+                    Alamofire.request(.GET, imgURL).responseData{ response in
+                        if let image = response.result.value {
+                            self.img.image = UIImage(data: image)
+                        }
+                    }
+                }
+            }
+        })
+    }
 
 }

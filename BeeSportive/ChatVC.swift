@@ -7,25 +7,28 @@
 //
 
 import UIKit
+import Firebase
 import JSQMessagesViewController
 
 class ChatVC: JSQMessagesViewController {
 
+    var channelID: String!
     var messages = [JSQMessage]()
 
     override func viewDidLoad() {
+        //print(FIRServerValue.timestamp().description)
         super.viewDidLoad()
         automaticallyScrollsToMostRecentMessage = true
-//        self.senderId = FIRAuth.auth()?.currentUser?.uid
-//        self.senderDisplayName = FIRAuth.auth()?.currentUser?.displayName
-//        REF_MESSAGES.child(channel.id).observeEventType(.ChildAdded, withBlock: { snapshot in
-//            let data = snapshot.value as! Dictionary<String, String>
-//            let senderId = data[Constants.LastMessageKeys.senderId]!
-//            REF_USERS.child(senderId).child("displayName").observeEventType(.Value, withBlock: { (snapshot) in
-//                let displayName = snapshot.value as! String
-//                self.addMessage(data[Constants.LastMessageKeys.message]!, senderId: data[Constants.LastMessageKeys.senderId]!, senderDisplayName: displayName, date: self.dateFromString(data[Constants.LastMessageKeys.date]!))
-//            })
-//        })
+        self.senderId = FIRAuth.auth()?.currentUser?.uid
+        self.senderDisplayName = FIRAuth.auth()?.currentUser?.displayName
+        REF_CHANNELS.child(channelID).child("messages").observeEventType(.ChildAdded, withBlock: { snapshot in
+            guard let data = snapshot.value as? Dictionary<String, String> else { return }
+            let senderId = data["senderId"]!
+            REF_USERS.child(senderId).child("displayName").observeEventType(.Value, withBlock: { (snapshot) in
+                let displayName = snapshot.value as! String
+                self.addMessage(data["message"]!, senderId: data["senderId"]!, senderDisplayName: displayName, date: NSDate())
+            })
+        })
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -74,10 +77,9 @@ class ChatVC: JSQMessagesViewController {
     }
 
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-//        let dict: Dictionary<String, String> = [Constants.LastMessageKeys.message:text, "senderId":senderId, Constants.LastMessageKeys.date:dateToString(date)]
-//        REF_MESSAGES.child(channel.id).childByAutoId().setValue(dict)
-//        REF_CHANNELS.child(channel.id).child("lastMessage").setValue(dict)
-//        Analytics.sendShareEvent()
+        let dict: Dictionary<String, String> = ["message":text, "senderId":senderId, "date":NSDate().description]
+        REF_CHANNELS.child(channelID).child("messages").childByAutoId().setValue(dict)
+        REF_CHANNELS.child(channelID).child("lastMessage").setValue(dict)
         finishSendingMessageAnimated(true)
     }
 

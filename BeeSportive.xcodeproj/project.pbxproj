@@ -38,6 +38,8 @@
 		816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FD1D75ADF800E7F5CD /* ChannelCell.swift */; };
 		816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948F91D75A26000E7F5CD /* ChannelsVC.swift */; };
 		81E8DCF41D75B88300234743 /* FavoriteSportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */; };
+		81E8DCF61D75BB4400234743 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E8DCF51D75BB4400234743 /* Constants.swift */; };
+		81E8DCF81D75BD8400234743 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E8DCF71D75BD8400234743 /* Channel.swift */; };
 		9479C21AFCF6B88A59A4EBB0 /* Pods_BeeSportive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +101,8 @@
 		816948F91D75A26000E7F5CD /* ChannelsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsVC.swift; sourceTree = "<group>"; };
 		816948FB1D75A27A00E7F5CD /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		816948FD1D75ADF800E7F5CD /* ChannelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
+		81E8DCF51D75BB4400234743 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		81E8DCF71D75BD8400234743 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		96DC1E17FA063DC29D2BCC46 /* Pods-BeeSportive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeeSportive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeeSportive/Pods-BeeSportive.debug.xcconfig"; sourceTree = "<group>"; };
 		E2627E3253BB17FBA968F1C3 /* Pods-BeeSportive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeeSportive.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeeSportive/Pods-BeeSportive.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -203,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				27743FED1D634E47004EAD97 /* User.swift */,
+				81E8DCF71D75BD8400234743 /* Channel.swift */,
 				277C1CBC1D63B26A0008331F /* Event.swift */,
 			);
 			name = Models;
@@ -241,6 +246,7 @@
 				816948F51D75A1B100E7F5CD /* Channels View */,
 				816948F21D75A17900E7F5CD /* Chat View */,
 				273E57511D61EA26009DABFE /* Manager */,
+				81E8DCF51D75BB4400234743 /* Constants.swift */,
 				27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */,
 				27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */,
 				27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */,
@@ -506,6 +512,7 @@
 			files = (
 				27EDE9951D759C7500C90FC9 /* FavoriteSportsCollectionViewController.swift in Sources */,
 				816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */,
+				81E8DCF81D75BD8400234743 /* Channel.swift in Sources */,
 				277C1CBD1D63B26A0008331F /* Event.swift in Sources */,
 				27743FEE1D634E47004EAD97 /* User.swift in Sources */,
 				276109391D744752001B51B6 /* PastEventsViewController.swift in Sources */,
@@ -521,6 +528,7 @@
 				277C1CB91D6387100008331F /* EventViewController.swift in Sources */,
 				81E8DCF41D75B88300234743 /* FavoriteSportCollectionViewCell.swift in Sources */,
 				27EDE9971D759CBE00C90FC9 /* ProfileHeaderViewController.swift in Sources */,
+				81E8DCF61D75BB4400234743 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

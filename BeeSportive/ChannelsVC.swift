@@ -12,18 +12,21 @@ import Firebase
 class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    let uid = FIRAuth.auth()!.currentUser!.uid
+    var channelIDs = [String]()
+    var channelID: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        REF_CHANNELS.observeEventType(.Value, withBlock: { snapshot in
-//            self.channels.removeAll()
-//            for snap in snapshot.children {
-//                if let data = snap as? FIRDataSnapshot {
-//                    self.channels.append(Channel(snapshot: data))
-//                    self.tableView.reloadData()
-//                }
-//            }
-//        })
+        REF_USERS.child(uid).child("eventsCreated").observeEventType(.Value, withBlock: { snapshot in
+            self.channelIDs.removeAll()
+            for snap in snapshot.children {
+                if let data = snap as? FIRDataSnapshot {
+                    self.channelIDs.append(String(data.value!))
+                    self.tableView.reloadData()
+                }
+            }
+        })
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -31,14 +34,27 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return channelIDs.count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCellWithIdentifier("ChannelCell") as? ChannelCell {
-//            cell.configureCell(channels[indexPath.row])
+            cell.configureCell(channelIDs[indexPath.row])
             return cell
         } else { return UITableViewCell() }
+    }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        channelID = channelIDs[indexPath.row]
+        performSegueWithIdentifier("toChatSegue", sender: self)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toChatSegue" {
+            if let destVC = segue.destinationViewController as? ChatVC {
+                destVC.channelID = self.channelID
+            }
+        }
     }
 
 }
