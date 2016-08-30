@@ -53,6 +53,14 @@ class PastEventsViewController: UIViewController {
         cell.location.text = eventsArray[indexPath.row].location
         cell.time.text = eventsArray[indexPath.row].time
         
+        Alamofire.request(.GET, (self.eventsArray[indexPath.row].creatorImageURL)).responseData{ response in
+            if let image = response.result.value {
+                cell.creatorImage.layer.masksToBounds = true
+                cell.creatorImage.layer.cornerRadius = cell.creatorImage.frame.width / 2.0
+                cell.creatorImage.image = UIImage(data: image)
+            }
+        }
+
         // Flip animation
         UIView.transitionWithView(cell, duration: 0.5, options: .TransitionFlipFromTop, animations: nil, completion: nil)
         

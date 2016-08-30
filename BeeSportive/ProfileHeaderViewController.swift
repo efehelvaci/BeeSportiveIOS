@@ -27,24 +27,25 @@ class ProfileHeaderViewController: UIViewController {
         setHeader()
     }
     
+    //
+    // Self created methods
     func setHeader() {
         profileImage.layer.borderWidth = 3.0
         profileImage.layer.borderColor = UIColor.whiteColor().CGColor
         profileImage.layer.cornerRadius = self.profileImage.frame.width/2.0
         profileImage.clipsToBounds = true
     
-        Async.background{
-            Alamofire.request(.GET, (self.user.photoURL)!).responseData{ response in
-                if let image = response.result.value {
-                    self.profileImage.image = UIImage(data: image)
-                    self.profileName.text = (self.user.displayName)!
-                }
+        Alamofire.request(.GET, (self.user.photoURL)!).responseData{ response in
+            if let image = response.result.value {
+                self.profileImage.image = UIImage(data: image)
+                self.profileName.text = (self.user.displayName)!
             }
         }
     }
     
+    //
+    // Button Actions
     @IBAction func backButtonClicked(sender: AnyObject) {
-        print("Back button clicked")
         if delegate != nil {
             delegate?.dismissViewControllerAnimated(true, completion: nil)
         }

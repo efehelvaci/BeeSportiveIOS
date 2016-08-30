@@ -20,8 +20,8 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet var tableView: UITableView!
     
     let segmentedViewController = SJSegmentedViewController()
-    let tableItems : [String] = ["Profile", "My Beevents", "Stats", "Settings"]
-    let tableItemsIcons : [UIImage] = [UIImage(named: "Profile3")!, UIImage(named: "Event")!, UIImage(named: "Bar_chart")!, UIImage(named: "Settings")!]
+    let tableItems : [String] = ["Profile", "Settings"]
+    let tableItemsIcons : [UIImage] = [UIImage(named: "Profile3")!, UIImage(named: "Settings")!]
     var whoSendIt : Int? = 0
     
     override func viewDidLoad() {
@@ -62,10 +62,6 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
             if viewController != nil {
                 mainNavigationController.presentViewController(viewController!, animated: true, completion: nil)
             }
-            break
-        case 1:
-            break
-        case 2:
             break
         default:
             print("Switch default")
