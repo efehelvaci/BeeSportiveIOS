@@ -16,13 +16,17 @@ class ProfileHeaderViewController: UIViewController {
 
     @IBOutlet var profileImage: UIImageView!
     @IBOutlet var profileName: UILabel!
+    @IBOutlet var editButton: UIButton!
     
     internal var delegate : AnyObject?
-    
-    let user = (FIRAuth.auth()?.currentUser)!
+    internal var user : User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if user!.id != FIRAuth.auth()?.currentUser?.uid {
+            editButton.removeFromSuperview()
+        }
         
         setHeader()
     }
@@ -35,10 +39,10 @@ class ProfileHeaderViewController: UIViewController {
         profileImage.layer.cornerRadius = self.profileImage.frame.width/2.0
         profileImage.clipsToBounds = true
     
-        Alamofire.request(.GET, (self.user.photoURL)!).responseData{ response in
+        Alamofire.request(.GET, (self.user!.photoURL)!).responseData{ response in
             if let image = response.result.value {
                 self.profileImage.image = UIImage(data: image)
-                self.profileName.text = (self.user.displayName)!
+                self.profileName.text = self.user!.displayName
             }
         }
     }

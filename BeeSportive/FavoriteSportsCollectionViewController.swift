@@ -13,6 +13,8 @@ private let reuseIdentifier = "FavoriteSportCell"
 class FavoriteSportsCollectionViewController: UICollectionViewController {
     
     let favoriteSports = ["Billard", "Cycling", "Basketball", "Bowling", "Orienting", "Paintball"]
+    
+    internal var user : User?
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -15,10 +15,11 @@ class PastEventsViewController: UIViewController {
 
     @IBOutlet var myEventsCollectionView: UICollectionView!
     
-    let user = (FIRAuth.auth()?.currentUser)!
     let databaseRef = FIRDatabase.database().reference()
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     var eventsArray = [Event]()
+    
+    internal var user : User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +83,7 @@ class PastEventsViewController: UIViewController {
     //
     // Self created methods
     func getMyEventsIDs() {
-        databaseRef.child("users").child(user.uid).child("eventsCreated").observeEventType(.Value, withBlock: { snapshot in
+        databaseRef.child("users").child(user!.id).child("eventsCreated").observeSingleEventOfType(.Value, withBlock: { snapshot in
             
             if snapshot.exists() {
                 let myEventsIDArray = Array((snapshot.value as! [String: String]).values)
@@ -92,6 +93,7 @@ class PastEventsViewController: UIViewController {
                     myEventIDs.insert(element, atIndex: 0)
                 }
                 
+                self.eventsArray = [Event]()
                 self.getMyEvents(myEventIDs)
             }
         })
@@ -99,7 +101,7 @@ class PastEventsViewController: UIViewController {
     
     func getMyEvents(events: [String]) {
         for element in events {
-            databaseRef.child("events").child(element).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+            databaseRef.child("events").child(element).observeSingleEventOfType(FIRDataEventType.Value, withBlock: { (snapshot) in
                 
                 if snapshot.exists() {
                     let dict = NSDictionary(dictionary: snapshot.value as! [String : AnyObject])

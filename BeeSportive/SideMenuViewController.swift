@@ -13,16 +13,13 @@ import FirebaseAuth
 import Alamofire
 import AlamofireImage
 import Async
-import SJSegmentedScrollView
 
 class SideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var tableView: UITableView!
     
-    let segmentedViewController = SJSegmentedViewController()
     let tableItems : [String] = ["Profile", "Settings"]
     let tableItemsIcons : [UIImage] = [UIImage(named: "Profile3")!, UIImage(named: "Settings")!]
-    var whoSendIt : Int? = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,13 +52,10 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let mainNavigationController = frostedViewController.contentViewController as! MainNavigationController
-        let viewController = getSJSegmentedViewController()
         
         switch indexPath.row {
         case 0:
-            if viewController != nil {
-                mainNavigationController.presentViewController(viewController!, animated: true, completion: nil)
-            }
+            mainNavigationController.pushProfilePage((FIRAuth.auth()?.currentUser?.uid)!)
             break
         default:
             print("Switch default")
@@ -107,55 +101,5 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         headerView.addSubview(label)
         
         self.tableView.tableHeaderView = headerView
-    }
-    
-    func getSJSegmentedViewController() -> SJSegmentedViewController? {
-        
-        if let storyboard = self.storyboard {
-            
-            let headerViewController = storyboard
-                .instantiateViewControllerWithIdentifier("ProfileHeader") as! ProfileHeaderViewController
-            
-            let firstViewController = storyboard
-                .instantiateViewControllerWithIdentifier("PastEventsViewController")
-            firstViewController.title = "Past Beevents"
-            
-            let secondViewController = storyboard
-                .instantiateViewControllerWithIdentifier("ProfileStatsViewController")
-            secondViewController.title = "Stats"
-            
-            let thirdViewController = storyboard
-                .instantiateViewControllerWithIdentifier("FavoriteSportsCollectionViewController")
-            thirdViewController.title = "Favorite Sports"
-            
-            segmentedViewController.headerViewController = headerViewController
-            segmentedViewController.segmentControllers = [firstViewController,
-                                                          secondViewController,
-                                                          thirdViewController]
-            segmentedViewController.headerViewHeight = 200
-            
-            segmentedViewController.selectedSegmentViewColor = UIColor.redColor()
-            segmentedViewController.segmentViewHeight = 60.0
-            segmentedViewController.segmentShadow = SJShadow.light()
-            segmentedViewController.delegate = self
-            
-            headerViewController.delegate = segmentedViewController
-            
-            return segmentedViewController
-        }
-        
-        return nil
-    }
-}
-
-extension SideMenuViewController: SJSegmentedViewControllerDelegate {
-    
-    func didMoveToPage(controller: UIViewController, segment: UIButton?, index: Int) {
-        
-        if segmentedViewController.segments.count > 0 {
-            
-            let button = segmentedViewController.segments[index]
-            button.setTitleColor(UIColor.orangeColor(), forState: .Selected)
-        }
     }
 }

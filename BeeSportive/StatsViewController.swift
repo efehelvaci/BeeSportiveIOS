@@ -9,6 +9,8 @@
 import UIKit
 
 class StatsViewController: UIViewController {
+    
+    internal var user : User?
 
     override func viewDidLoad() {
         super.viewDidLoad()

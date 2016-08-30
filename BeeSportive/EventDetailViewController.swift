@@ -8,9 +8,13 @@
 
 import UIKit
 import Firebase
+import Alamofire
 
 class EventDetailViewController: UIViewController {
     
+    @IBOutlet var creatorProfileView: UIView!
+    @IBOutlet var creatorName: UILabel!
+    @IBOutlet var creatorImage: UIImageView!
     @IBOutlet var descriptionLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet var eventNameLabel: UILabel!
     @IBOutlet var eventDescriptionLabel: UILabel!
@@ -41,6 +45,17 @@ class EventDetailViewController: UIViewController {
         eventBrancImage.image = UIImage(named: event!.branch)
         eventAddressLabel.text = event!.location
         eventDateLabel.text = event!.day + "/" + event!.month + "/" + event!.year + "  " + event!.time
+        creatorProfileView.layer.borderWidth = 1.0
+        creatorProfileView.layer.cornerRadius = 10.0
+        
+        Alamofire.request(.GET, (self.event!.creatorImageURL)).responseData{ response in
+            if let image = response.result.value {
+                self.creatorImage.layer.masksToBounds = true
+                self.creatorImage.layer.cornerRadius = self.creatorImage.frame.width / 2.0
+                self.creatorImage.image = UIImage(data: image)
+                self.creatorName.text = self.event!.creatorName
+            }
+        }
     }
     
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
@@ -53,4 +68,10 @@ class EventDetailViewController: UIViewController {
         label.sizeToFit()
         return label.frame.height
     }
+    
+    @IBAction func creatorProfileClicked(sender: AnyObject) {
+        let navigationController = self.navigationController as! MainNavigationController
+        navigationController.pushProfilePage(event!.creatorID)
+    }
+    
 }
