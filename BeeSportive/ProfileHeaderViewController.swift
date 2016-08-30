@@ -24,8 +24,20 @@ class ProfileHeaderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        profileImage.alpha = 0
+        profileName.alpha = 0
+        
         if user!.id != FIRAuth.auth()?.currentUser?.uid {
-            editButton.removeFromSuperview()
+            editButton.enabled = false
+            editButton.alpha = 0
+        } else {
+            editButton.enabled = true
+            editButton.alpha = 1
         }
         
         setHeader()
@@ -43,6 +55,11 @@ class ProfileHeaderViewController: UIViewController {
             if let image = response.result.value {
                 self.profileImage.image = UIImage(data: image)
                 self.profileName.text = self.user!.displayName
+                
+                UIView.animateWithDuration(1, animations: {
+                    self.profileName.alpha = 1
+                    self.profileImage.alpha = 1
+                })
             }
         }
     }
