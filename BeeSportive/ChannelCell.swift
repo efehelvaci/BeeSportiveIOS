@@ -33,6 +33,8 @@ class ChannelCell: UITableViewCell {
                 Async.background {
                     Alamofire.request(.GET, imgURL).responseData{ response in
                         if let image = response.result.value {
+                            self.img.layer.masksToBounds = true
+                            self.img.layer.cornerRadius = self.img.frame.width / 2.0
                             self.img.image = UIImage(data: image)
                         }
                     }

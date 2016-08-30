@@ -11,17 +11,14 @@ import Firebase
 
 class Channel {
 
-    var messages = [[String: String]]()
-    var participants = [String]()
+    var id: String!
+    var title: String!
+    var lastMessage: Dictionary<String, String> = ["message":"There are no messages yet!", "senderId":"", "date":""]
+    var lastSenderID: String!
+    var photoURL: NSURL?
 
-//    var id: String!
-//    var title: String!
-//    var lastMessage: Dictionary<String, String> = [Constants.LastMessageKeys.message:"There are no messages yet!", Constants.LastMessageKeys.senderId:"", Constants.LastMessageKeys.date:""]
-//    var lastSenderDisplayName: String!
-//    var photoURL: NSURL?
-//
-//    init(snapshot: FIRDataSnapshot) {
-//        self.id = snapshot.key
+  init(snapshot: FIRDataSnapshot) {
+        self.id = snapshot.key
 //        if let data = snapshot.value as? Dictionary<String, AnyObject> {
 //            self.title = data["title"] as! String
 //            if let lastMessage = data["lastMessage"] as? Dictionary<String, String> {
@@ -40,6 +37,6 @@ class Channel {
 //                Shared.imageCache.fetch(URL: url)
 //            }
 //        } else { id = "channel"; title = "Channel" }
-//    }
+    }
 
 }

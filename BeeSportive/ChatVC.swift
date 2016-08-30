@@ -16,7 +16,6 @@ class ChatVC: JSQMessagesViewController {
     var messages = [JSQMessage]()
 
     override func viewDidLoad() {
-        //print(FIRServerValue.timestamp().description)
         super.viewDidLoad()
         automaticallyScrollsToMostRecentMessage = true
         self.senderId = FIRAuth.auth()?.currentUser?.uid
@@ -99,6 +98,10 @@ class ChatVC: JSQMessagesViewController {
         sheet.addAction(locationAction)
         sheet.addAction(cancelAction)
         self.presentViewController(sheet, animated: true, completion: nil)
+    }
+
+    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, atIndexPath indexPath: NSIndexPath!) {
+
     }
 
     override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {

@@ -46,13 +46,16 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         channelID = channelIDs[indexPath.row]
-        performSegueWithIdentifier("toChatSegue", sender: self)
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? ChannelCell else { return }
+        performSegueWithIdentifier("toChatSegue", sender: cell)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "toChatSegue" {
             if let destVC = segue.destinationViewController as? ChatVC {
                 destVC.channelID = self.channelID
+                guard let cell = sender as? ChannelCell else { return }
+                destVC.navigationItem.title = cell.title.text
             }
         }
     }
