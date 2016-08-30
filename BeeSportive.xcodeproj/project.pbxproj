@@ -30,15 +30,14 @@
 		27CB27221D5D3CDD00F9ECF5 /* BeeSportiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB27211D5D3CDD00F9ECF5 /* BeeSportiveTests.swift */; };
 		27CB272D1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB272C1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift */; };
 		27CE1E911D6F7D76007C0DE7 /* LoginVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */; };
-		27EDE9931D759C5B00C90FC9 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9921D759C5B00C90FC9 /* StatsViewController.swift */; };
 		27EDE9951D759C7500C90FC9 /* FavoriteSportsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9941D759C7500C90FC9 /* FavoriteSportsCollectionViewController.swift */; };
 		27EDE9971D759CBE00C90FC9 /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9961D759CBE00C90FC9 /* ProfileHeaderViewController.swift */; };
-		27EDE9991D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */; };
 		27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */; };
 		27EE72441D6C4E5A00487673 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */; };
 		816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FB1D75A27A00E7F5CD /* ChatVC.swift */; };
 		816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FD1D75ADF800E7F5CD /* ChannelCell.swift */; };
 		816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948F91D75A26000E7F5CD /* ChannelsVC.swift */; };
+		81E8DCF41D75B88300234743 /* FavoriteSportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */; };
 		9479C21AFCF6B88A59A4EBB0 /* Pods_BeeSportive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */; };
 /* End PBXBuildFile section */
 
@@ -520,6 +519,7 @@
 				816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */,
 				816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */,
 				277C1CB91D6387100008331F /* EventViewController.swift in Sources */,
+				81E8DCF41D75B88300234743 /* FavoriteSportCollectionViewCell.swift in Sources */,
 				27EDE9971D759CBE00C90FC9 /* ProfileHeaderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
