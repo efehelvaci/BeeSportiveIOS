@@ -10,7 +10,6 @@
 		2719B64C1D75749300724EF5 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B6491D75749300724EF5 /* FBSDKCoreKit.framework */; };
 		2719B64D1D75749300724EF5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */; };
 		2719B64E1D75749300724EF5 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */; };
-		2719B6501D757A6000724EF5 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2719B64F1D757A6000724EF5 /* .gitignore */; };
 		273E57551D61EC8B009DABFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 273E57541D61EC8B009DABFE /* GoogleService-Info.plist */; };
 		273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E575B1D61FE8B009DABFE /* LoginViewController.swift */; };
 		274902871D6F23F500E6766B /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274902851D6F23F500E6766B /* SideMenuTableViewCell.swift */; };
@@ -32,6 +31,9 @@
 		27CB272D1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB272C1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift */; };
 		27CE1E911D6F7D76007C0DE7 /* LoginVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */; };
 		27EE72441D6C4E5A00487673 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */; };
+		816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FB1D75A27A00E7F5CD /* ChatVC.swift */; };
+		816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FD1D75ADF800E7F5CD /* ChannelCell.swift */; };
+		816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948F91D75A26000E7F5CD /* ChannelsVC.swift */; };
 		9479C21AFCF6B88A59A4EBB0 /* Pods_BeeSportive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,7 +58,6 @@
 		2719B6491D75749300724EF5 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
-		2719B64F1D757A6000724EF5 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		273E57541D61EC8B009DABFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		273E575B1D61FE8B009DABFE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		273E57631D62032B009DABFE /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -86,6 +87,9 @@
 		27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LoginVideo.mp4; sourceTree = "<group>"; };
 		27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeeSportive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		816948F91D75A26000E7F5CD /* ChannelsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsVC.swift; sourceTree = "<group>"; };
+		816948FB1D75A27A00E7F5CD /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
+		816948FD1D75ADF800E7F5CD /* ChannelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
 		96DC1E17FA063DC29D2BCC46 /* Pods-BeeSportive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeeSportive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeeSportive/Pods-BeeSportive.debug.xcconfig"; sourceTree = "<group>"; };
 		E2627E3253BB17FBA968F1C3 /* Pods-BeeSportive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeeSportive.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeeSportive/Pods-BeeSportive.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -193,7 +197,6 @@
 		27CB27001D5D3CDD00F9ECF5 = {
 			isa = PBXGroup;
 			children = (
-				2719B64F1D757A6000724EF5 /* .gitignore */,
 				27CB270B1D5D3CDD00F9ECF5 /* BeeSportive */,
 				27CB27201D5D3CDD00F9ECF5 /* BeeSportiveTests */,
 				27CB272B1D5D3CDD00F9ECF5 /* BeeSportiveUITests */,
@@ -221,10 +224,12 @@
 				276109371D74471F001B51B6 /* Profile View */,
 				274902831D6F230A00E6766B /* Event View */,
 				274902821D6F22F400E6766B /* Side Menu */,
+				816948F51D75A1B100E7F5CD /* Channels View */,
+				816948F21D75A17900E7F5CD /* Chat View */,
 				273E57511D61EA26009DABFE /* Manager */,
 				27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */,
-				27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */,
 				27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */,
+				27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */,
 				27CB27151D5D3CDD00F9ECF5 /* LaunchScreen.storyboard */,
 				27CB27181D5D3CDD00F9ECF5 /* Info.plist */,
 				273E57541D61EC8B009DABFE /* GoogleService-Info.plist */,
@@ -250,6 +255,23 @@
 				27CB272E1D5D3CDD00F9ECF5 /* Info.plist */,
 			);
 			path = BeeSportiveUITests;
+			sourceTree = "<group>";
+		};
+		816948F21D75A17900E7F5CD /* Chat View */ = {
+			isa = PBXGroup;
+			children = (
+				816948FB1D75A27A00E7F5CD /* ChatVC.swift */,
+			);
+			name = "Chat View";
+			sourceTree = "<group>";
+		};
+		816948F51D75A1B100E7F5CD /* Channels View */ = {
+			isa = PBXGroup;
+			children = (
+				816948F91D75A26000E7F5CD /* ChannelsVC.swift */,
+				816948FD1D75ADF800E7F5CD /* ChannelCell.swift */,
+			);
+			name = "Channels View";
 			sourceTree = "<group>";
 		};
 		D88B80E2702491BEC5AB6B21 /* Frameworks */ = {
@@ -388,7 +410,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2719B6501D757A6000724EF5 /* .gitignore in Resources */,
 				27CE1E911D6F7D76007C0DE7 /* LoginVideo.mp4 in Resources */,
 				27CB27171D5D3CDD00F9ECF5 /* LaunchScreen.storyboard in Resources */,
 				273E57551D61EC8B009DABFE /* GoogleService-Info.plist in Resources */,
@@ -468,6 +489,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */,
 				277C1CBD1D63B26A0008331F /* Event.swift in Sources */,
 				27743FEE1D634E47004EAD97 /* User.swift in Sources */,
 				276109391D744752001B51B6 /* ProfileViewController.swift in Sources */,
@@ -478,6 +500,8 @@
 				277C1CBB1D6388510008331F /* CreateEventViewController.swift in Sources */,
 				27CB270D1D5D3CDD00F9ECF5 /* AppDelegate.swift in Sources */,
 				27EE72441D6C4E5A00487673 /* SideMenuViewController.swift in Sources */,
+				816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */,
+				816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */,
 				277C1CB91D6387100008331F /* EventViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

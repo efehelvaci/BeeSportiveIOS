@@ -155,7 +155,7 @@ class EventViewController: UIViewController {
     }
     
     func rightBarButtonItemTouchUpInside() {
-        
+        self.performSegueWithIdentifier("toChannelsSegue", sender: self)
     }
     
     func panGestureRecognized(sender : UIScreenEdgePanGestureRecognizer){
