@@ -14,9 +14,7 @@ import Alamofire
 class PastEventsViewController: UIViewController {
 
     @IBOutlet var myEventsCollectionView: UICollectionView!
-    
-    let databaseRef = FIRDatabase.database().reference()
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
     var eventsArray = [Event]()
     
     internal var user : User?
@@ -83,7 +81,7 @@ class PastEventsViewController: UIViewController {
     //
     // Self created methods
     func getMyEventsIDs() {
-        databaseRef.child("users").child(user!.id).child("eventsCreated").observeSingleEventOfType(.Value, withBlock: { snapshot in
+        REF_USERS.child(user!.id).child("eventsCreated").observeSingleEventOfType(.Value, withBlock: { snapshot in
             
             if snapshot.exists() {
                 let myEventsIDArray = Array((snapshot.value as! [String: String]).values)
@@ -101,7 +99,7 @@ class PastEventsViewController: UIViewController {
     
     func getMyEvents(events: [String]) {
         for element in events {
-            databaseRef.child("events").child(element).observeSingleEventOfType(FIRDataEventType.Value, withBlock: { (snapshot) in
+            REF_EVENTS.child(element).observeSingleEventOfType(FIRDataEventType.Value, withBlock: { (snapshot) in
                 
                 if snapshot.exists() {
                     let dict = NSDictionary(dictionary: snapshot.value as! [String : AnyObject])

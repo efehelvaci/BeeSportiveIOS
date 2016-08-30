@@ -13,13 +13,27 @@ import FTIndicator
 
 class MainNavigationController: UINavigationController {
     
-    let databaseRef = FIRDatabase.database().reference()
     var segmentedViewController = SJSegmentedViewController()
-
+    var firstViewController : PastEventsViewController?
+    var headerViewController : ProfileHeaderViewController?
+    var secondViewController : StatsViewController?
+    var thirdViewController : FavoriteSportsCollectionViewController?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        firstViewController = storyboard!.instantiateViewControllerWithIdentifier("PastEventsViewController") as? PastEventsViewController
+        firstViewController!.title = "Past Beevents"
+        
+        headerViewController = storyboard!.instantiateViewControllerWithIdentifier("ProfileHeader") as? ProfileHeaderViewController
+        
+        secondViewController = storyboard!.instantiateViewControllerWithIdentifier("ProfileStatsViewController") as? StatsViewController
+        secondViewController!.title = "Stats"
+        
+        thirdViewController = storyboard!.instantiateViewControllerWithIdentifier("FavoriteSportsCollectionViewController") as? FavoriteSportsCollectionViewController
+        thirdViewController!.title = "Favorite Sports"
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,7 +50,7 @@ class MainNavigationController: UINavigationController {
     
     internal func pushProfilePage(userID: String) {
         FTIndicator.showProgressWithmessage("Loading", userInteractionEnable: false)
-        databaseRef.child("users").child(userID).observeSingleEventOfType(.Value, withBlock: { snapshot in
+        REF_USERS.child(userID).observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.exists() {
                 let dict = NSDictionary(dictionary: snapshot.value as! [String : AnyObject])
                 print(dict)
@@ -47,6 +61,11 @@ class MainNavigationController: UINavigationController {
                 let id = dict.valueForKey("id") as! String
                 
                 let user = User(displayName: displayName, photoURL: photoURL, email: email, id: id)
+                
+                self.firstViewController!.user = user
+                self.secondViewController!.user = user
+                self.thirdViewController!.user = user
+                self.headerViewController!.user = user
                 
                 let viewController = self.getSJSegmentedViewController(user)
                 
@@ -63,44 +82,20 @@ class MainNavigationController: UINavigationController {
         
         segmentedViewController = SJSegmentedViewController()
         
-        if let storyboard = self.storyboard {
+        segmentedViewController.headerViewController = self.headerViewController!
+        segmentedViewController.segmentControllers = [self.firstViewController!,
+                                                          self.secondViewController!,
+                                                          self.thirdViewController!]
+        segmentedViewController.headerViewHeight = 200
             
-            let headerViewController = storyboard
-                .instantiateViewControllerWithIdentifier("ProfileHeader") as! ProfileHeaderViewController
-            headerViewController.user = user
+        segmentedViewController.selectedSegmentViewColor = UIColor.redColor()
+        segmentedViewController.segmentViewHeight = 60.0
+        segmentedViewController.segmentShadow = SJShadow.light()
+        segmentedViewController.delegate = self
             
-            let firstViewController = storyboard
-                .instantiateViewControllerWithIdentifier("PastEventsViewController") as! PastEventsViewController
-            firstViewController.title = "Past Beevents"
-            firstViewController.user = user
+        self.headerViewController!.delegate = segmentedViewController
             
-            let secondViewController = storyboard
-                .instantiateViewControllerWithIdentifier("ProfileStatsViewController") as! StatsViewController
-            secondViewController.title = "Stats"
-            secondViewController.user = user
-            
-            let thirdViewController = storyboard
-                .instantiateViewControllerWithIdentifier("FavoriteSportsCollectionViewController") as! FavoriteSportsCollectionViewController
-            thirdViewController.title = "Favorite Sports"
-            thirdViewController.user = user
-            
-            segmentedViewController.headerViewController = headerViewController
-            segmentedViewController.segmentControllers = [firstViewController,
-                                                          secondViewController,
-                                                          thirdViewController]
-            segmentedViewController.headerViewHeight = 200
-            
-            segmentedViewController.selectedSegmentViewColor = UIColor.redColor()
-            segmentedViewController.segmentViewHeight = 60.0
-            segmentedViewController.segmentShadow = SJShadow.light()
-            segmentedViewController.delegate = self
-            
-            headerViewController.delegate = segmentedViewController
-            
-            return segmentedViewController
-        }
-        
-        return nil
+        return segmentedViewController
     }
     
     func getUserFromID(userID: String){

@@ -91,7 +91,7 @@ class LoginViewController: VideoSplashViewController, FBSDKLoginButtonDelegate {
                     }
                     FTIndicator.showNotificationWithImage(UIImage(named: "Success"), title: "Yay!", message: "You logged in succesfully!")
                     
-                    let userRef = FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!)
+                    let userRef = REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!)
                     
                     // Check if user already signed in before
                     // If not, create user object into database/users
