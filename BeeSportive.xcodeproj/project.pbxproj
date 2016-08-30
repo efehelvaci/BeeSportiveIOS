@@ -33,6 +33,7 @@
 		27EDE9951D759C7500C90FC9 /* FavoriteSportsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9941D759C7500C90FC9 /* FavoriteSportsCollectionViewController.swift */; };
 		27EDE9971D759CBE00C90FC9 /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9961D759CBE00C90FC9 /* ProfileHeaderViewController.swift */; };
 		27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */; };
+		27EDE9A31D75DD7D00C90FC9 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */; };
 		27EE72441D6C4E5A00487673 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */; };
 		816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FB1D75A27A00E7F5CD /* ChatVC.swift */; };
 		816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FD1D75ADF800E7F5CD /* ChannelCell.swift */; };
@@ -97,6 +98,7 @@
 		27EDE9961D759CBE00C90FC9 /* ProfileHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewController.swift; sourceTree = "<group>"; };
 		27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteSportCollectionViewCell.swift; sourceTree = "<group>"; };
 		27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoriteSportCollectionViewCell.xib; sourceTree = "<group>"; };
+		27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeeSportive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		816948F91D75A26000E7F5CD /* ChannelsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsVC.swift; sourceTree = "<group>"; };
@@ -167,20 +169,19 @@
 		274902831D6F230A00E6766B /* Event View */ = {
 			isa = PBXGroup;
 			children = (
-				274902841D6F237B00E6766B /* Add Event */,
-				277C1CB81D6387100008331F /* EventViewController.swift */,
-				277C1CBE1D64A2B20008331F /* EventCollectionViewCell.swift */,
-				277C1CBF1D64A2B20008331F /* EventCollectionViewCell.xib */,
+				27EDE9A11D75DD3F00C90FC9 /* Event Detail Page */,
+				27EDE9A01D75DD2E00C90FC9 /* Events Main Page */,
+				274902841D6F237B00E6766B /* Event Add Page */,
 			);
 			name = "Event View";
 			sourceTree = "<group>";
 		};
-		274902841D6F237B00E6766B /* Add Event */ = {
+		274902841D6F237B00E6766B /* Event Add Page */ = {
 			isa = PBXGroup;
 			children = (
 				277C1CBA1D6388510008331F /* CreateEventViewController.swift */,
 			);
-			name = "Add Event";
+			name = "Event Add Page";
 			sourceTree = "<group>";
 		};
 		276109371D74471F001B51B6 /* Profile View */ = {
@@ -276,6 +277,24 @@
 				27CB272E1D5D3CDD00F9ECF5 /* Info.plist */,
 			);
 			path = BeeSportiveUITests;
+			sourceTree = "<group>";
+		};
+		27EDE9A01D75DD2E00C90FC9 /* Events Main Page */ = {
+			isa = PBXGroup;
+			children = (
+				277C1CB81D6387100008331F /* EventViewController.swift */,
+				277C1CBE1D64A2B20008331F /* EventCollectionViewCell.swift */,
+				277C1CBF1D64A2B20008331F /* EventCollectionViewCell.xib */,
+			);
+			name = "Events Main Page";
+			sourceTree = "<group>";
+		};
+		27EDE9A11D75DD3F00C90FC9 /* Event Detail Page */ = {
+			isa = PBXGroup;
+			children = (
+				27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */,
+			);
+			name = "Event Detail Page";
 			sourceTree = "<group>";
 		};
 		816948F21D75A17900E7F5CD /* Chat View */ = {
@@ -523,6 +542,7 @@
 				274902871D6F23F500E6766B /* SideMenuTableViewCell.swift in Sources */,
 				277C1CBB1D6388510008331F /* CreateEventViewController.swift in Sources */,
 				27CB270D1D5D3CDD00F9ECF5 /* AppDelegate.swift in Sources */,
+				27EDE9A31D75DD7D00C90FC9 /* EventDetailViewController.swift in Sources */,
 				27EE72441D6C4E5A00487673 /* SideMenuViewController.swift in Sources */,
 				816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */,
 				816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */,

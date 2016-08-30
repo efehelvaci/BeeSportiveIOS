@@ -31,6 +31,7 @@ class CreateEventViewController: UIViewController, WWCalendarTimeSelectorProtoco
     var currentDay = "01"
     var currentMonth = "01"
     var currentHour = "12:00"
+    var currentYear = "2017"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +80,7 @@ class CreateEventViewController: UIViewController, WWCalendarTimeSelectorProtoco
                     "branch" : self.currentBranch,
                     "location" : location,
                     "time" : self.currentHour,
+                    "year" : self.currentYear,
                     "month" : self.currentMonth,
                     "day" : self.currentDay,
                     "maxJoinNumber" : maxJoinNumber,
@@ -127,6 +129,9 @@ class CreateEventViewController: UIViewController, WWCalendarTimeSelectorProtoco
         
         dateFormatter.dateFormat = "M"
         self.currentMonth = dateFormatter.stringFromDate(date)
+        
+        dateFormatter.dateFormat = "yyyy"
+        self.currentYear = dateFormatter.stringFromDate(date)
         
         dateFormatter.dateFormat = "HH:mm"
         self.currentHour = dateFormatter.stringFromDate(date)

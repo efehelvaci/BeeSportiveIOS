@@ -108,8 +108,9 @@ class PastEventsViewController: UIViewController {
                     let time = dict.valueForKey("time") as! String
                     let month = dict.valueForKey("month") as! String
                     let day = dict.valueForKey("day") as! String
+                    let year = dict.valueForKey("year") as! String
                     
-                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day)
+                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day, year: year)
                     
                     self.eventsArray.insert(eventElement, atIndex: 0)
                     

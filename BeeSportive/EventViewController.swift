@@ -21,6 +21,7 @@ class EventViewController: UIViewController {
     let refreshControl = UIRefreshControl()
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     var eventsArray = [Event]()
+    var selectedEventNo : Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +90,8 @@ class EventViewController: UIViewController {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        selectedEventNo = indexPath.row
+        performSegueWithIdentifier("eventsToEventDetailSeg", sender: nil)
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -122,8 +124,9 @@ class EventViewController: UIViewController {
                     let time = element.valueForKey("time") as! String
                     let month = element.valueForKey("month") as! String
                     let day = element.valueForKey("day") as! String
+                    let year = element.valueForKey("year") as! String
                     
-                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day)
+                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day, year: year)
                     
                     self.eventsArray.insert(eventElement, atIndex: 0)
                 }
@@ -160,5 +163,14 @@ class EventViewController: UIViewController {
     
     func panGestureRecognized(sender : UIScreenEdgePanGestureRecognizer){
         self.frostedViewController.panGestureRecognized(sender)
+    }
+    
+    //
+    // Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "eventsToEventDetailSeg" {
+            let detailViewController = segue.destinationViewController as! EventDetailViewController
+            detailViewController.event = eventsArray[selectedEventNo!]
+        }
     }
 }

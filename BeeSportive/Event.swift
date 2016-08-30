@@ -21,8 +21,9 @@ class Event {
     let month : String
     let time : String
     let day : String
+    let year : String
     
-    init(creatorID: String, creatorImageURL: String, creatorName: String, name: String, branch: String, level: String, location: String, maxJoinNumber: String, description : String, time: String, month: String, day: String){
+    init(creatorID: String, creatorImageURL: String, creatorName: String, name: String, branch: String, level: String, location: String, maxJoinNumber: String, description : String, time: String, month: String, day: String, year: String){
         self.creatorID = creatorID
         self.creatorImageURL = creatorImageURL
         self.creatorName = creatorName
@@ -35,5 +36,6 @@ class Event {
         self.time = time
         self.day = day
         self.month = month
+        self.year = year
     }
 }
