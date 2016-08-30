@@ -1,0 +1,745 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2719B64C1D75749300724EF5 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B6491D75749300724EF5 /* FBSDKCoreKit.framework */; };
+		2719B64D1D75749300724EF5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */; };
+		2719B64E1D75749300724EF5 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */; };
+		2719B6501D757A6000724EF5 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2719B64F1D757A6000724EF5 /* .gitignore */; };
+		273E57551D61EC8B009DABFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 273E57541D61EC8B009DABFE /* GoogleService-Info.plist */; };
+		273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E575B1D61FE8B009DABFE /* LoginViewController.swift */; };
+		274902871D6F23F500E6766B /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274902851D6F23F500E6766B /* SideMenuTableViewCell.swift */; };
+		274902881D6F23F500E6766B /* SideMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274902861D6F23F500E6766B /* SideMenuTableViewCell.xib */; };
+		276109391D744752001B51B6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276109381D744752001B51B6 /* ProfileViewController.swift */; };
+		2761093C1D74A38A001B51B6 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2761093B1D74A38A001B51B6 /* MainNavigationController.swift */; };
+		27743FEE1D634E47004EAD97 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27743FED1D634E47004EAD97 /* User.swift */; };
+		277C1CB91D6387100008331F /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277C1CB81D6387100008331F /* EventViewController.swift */; };
+		277C1CBB1D6388510008331F /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277C1CBA1D6388510008331F /* CreateEventViewController.swift */; };
+		277C1CBD1D63B26A0008331F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277C1CBC1D63B26A0008331F /* Event.swift */; };
+		277C1CC01D64A2B20008331F /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277C1CBE1D64A2B20008331F /* EventCollectionViewCell.swift */; };
+		277C1CC11D64A2B20008331F /* EventCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277C1CBF1D64A2B20008331F /* EventCollectionViewCell.xib */; };
+		279D900B1D72571D00F73F23 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279D900A1D72571D00F73F23 /* MapKit.framework */; };
+		27CB270D1D5D3CDD00F9ECF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */; };
+		27CB27121D5D3CDD00F9ECF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */; };
+		27CB27141D5D3CDD00F9ECF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */; };
+		27CB27171D5D3CDD00F9ECF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27151D5D3CDD00F9ECF5 /* LaunchScreen.storyboard */; };
+		27CB27221D5D3CDD00F9ECF5 /* BeeSportiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB27211D5D3CDD00F9ECF5 /* BeeSportiveTests.swift */; };
+		27CB272D1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB272C1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift */; };
+		27CE1E911D6F7D76007C0DE7 /* LoginVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */; };
+		27EE72441D6C4E5A00487673 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */; };
+		9479C21AFCF6B88A59A4EBB0 /* Pods_BeeSportive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		27CB271E1D5D3CDD00F9ECF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 27CB27011D5D3CDD00F9ECF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 27CB27081D5D3CDD00F9ECF5;
+			remoteInfo = BeeSportive;
+		};
+		27CB27291D5D3CDD00F9ECF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 27CB27011D5D3CDD00F9ECF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 27CB27081D5D3CDD00F9ECF5;
+			remoteInfo = BeeSportive;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2719B6491D75749300724EF5 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		2719B64F1D757A6000724EF5 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		273E57541D61EC8B009DABFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		273E575B1D61FE8B009DABFE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		273E57631D62032B009DABFE /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		274902851D6F23F500E6766B /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
+		274902861D6F23F500E6766B /* SideMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideMenuTableViewCell.xib; sourceTree = "<group>"; };
+		276109381D744752001B51B6 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		2761093B1D74A38A001B51B6 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
+		27743FED1D634E47004EAD97 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		277C1CB81D6387100008331F /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
+		277C1CBA1D6388510008331F /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
+		277C1CBC1D63B26A0008331F /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		277C1CBE1D64A2B20008331F /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
+		277C1CBF1D64A2B20008331F /* EventCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCollectionViewCell.xib; sourceTree = "<group>"; };
+		279D900A1D72571D00F73F23 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		27CB27091D5D3CDD00F9ECF5 /* BeeSportive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeeSportive.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		27CB27111D5D3CDD00F9ECF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		27CB27161D5D3CDD00F9ECF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		27CB27181D5D3CDD00F9ECF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27CB271D1D5D3CDD00F9ECF5 /* BeeSportiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeeSportiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		27CB27211D5D3CDD00F9ECF5 /* BeeSportiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeeSportiveTests.swift; sourceTree = "<group>"; };
+		27CB27231D5D3CDD00F9ECF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27CB27281D5D3CDD00F9ECF5 /* BeeSportiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeeSportiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		27CB272C1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeeSportiveUITests.swift; sourceTree = "<group>"; };
+		27CB272E1D5D3CDD00F9ECF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LoginVideo.mp4; sourceTree = "<group>"; };
+		27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeeSportive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		96DC1E17FA063DC29D2BCC46 /* Pods-BeeSportive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeeSportive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeeSportive/Pods-BeeSportive.debug.xcconfig"; sourceTree = "<group>"; };
+		E2627E3253BB17FBA968F1C3 /* Pods-BeeSportive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeeSportive.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeeSportive/Pods-BeeSportive.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		27CB27061D5D3CDD00F9ECF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9479C21AFCF6B88A59A4EBB0 /* Pods_BeeSportive.framework in Frameworks */,
+				2719B64C1D75749300724EF5 /* FBSDKCoreKit.framework in Frameworks */,
+				2719B64E1D75749300724EF5 /* FBSDKShareKit.framework in Frameworks */,
+				2719B64D1D75749300724EF5 /* FBSDKLoginKit.framework in Frameworks */,
+				279D900B1D72571D00F73F23 /* MapKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27CB271A1D5D3CDD00F9ECF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27CB27251D5D3CDD00F9ECF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		273E57511D61EA26009DABFE /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				27743FE91D634DFC004EAD97 /* Models */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		273E57561D61FBCB009DABFE /* Login View */ = {
+			isa = PBXGroup;
+			children = (
+				273E575B1D61FE8B009DABFE /* LoginViewController.swift */,
+			);
+			name = "Login View";
+			sourceTree = "<group>";
+		};
+		274902821D6F22F400E6766B /* Side Menu */ = {
+			isa = PBXGroup;
+			children = (
+				27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */,
+				274902851D6F23F500E6766B /* SideMenuTableViewCell.swift */,
+				274902861D6F23F500E6766B /* SideMenuTableViewCell.xib */,
+			);
+			name = "Side Menu";
+			sourceTree = "<group>";
+		};
+		274902831D6F230A00E6766B /* Event View */ = {
+			isa = PBXGroup;
+			children = (
+				274902841D6F237B00E6766B /* Add Event */,
+				277C1CB81D6387100008331F /* EventViewController.swift */,
+				277C1CBE1D64A2B20008331F /* EventCollectionViewCell.swift */,
+				277C1CBF1D64A2B20008331F /* EventCollectionViewCell.xib */,
+			);
+			name = "Event View";
+			sourceTree = "<group>";
+		};
+		274902841D6F237B00E6766B /* Add Event */ = {
+			isa = PBXGroup;
+			children = (
+				277C1CBA1D6388510008331F /* CreateEventViewController.swift */,
+			);
+			name = "Add Event";
+			sourceTree = "<group>";
+		};
+		276109371D74471F001B51B6 /* Profile View */ = {
+			isa = PBXGroup;
+			children = (
+				276109381D744752001B51B6 /* ProfileViewController.swift */,
+			);
+			name = "Profile View";
+			sourceTree = "<group>";
+		};
+		2761093A1D74A36B001B51B6 /* Navigation Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2761093B1D74A38A001B51B6 /* MainNavigationController.swift */,
+			);
+			name = "Navigation Controller";
+			sourceTree = "<group>";
+		};
+		27743FE91D634DFC004EAD97 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				27743FED1D634E47004EAD97 /* User.swift */,
+				277C1CBC1D63B26A0008331F /* Event.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		27CB27001D5D3CDD00F9ECF5 = {
+			isa = PBXGroup;
+			children = (
+				2719B64F1D757A6000724EF5 /* .gitignore */,
+				27CB270B1D5D3CDD00F9ECF5 /* BeeSportive */,
+				27CB27201D5D3CDD00F9ECF5 /* BeeSportiveTests */,
+				27CB272B1D5D3CDD00F9ECF5 /* BeeSportiveUITests */,
+				27CB270A1D5D3CDD00F9ECF5 /* Products */,
+				DB02669BAE7114B9DEC23D01 /* Pods */,
+				D88B80E2702491BEC5AB6B21 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		27CB270A1D5D3CDD00F9ECF5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				27CB27091D5D3CDD00F9ECF5 /* BeeSportive.app */,
+				27CB271D1D5D3CDD00F9ECF5 /* BeeSportiveTests.xctest */,
+				27CB27281D5D3CDD00F9ECF5 /* BeeSportiveUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		27CB270B1D5D3CDD00F9ECF5 /* BeeSportive */ = {
+			isa = PBXGroup;
+			children = (
+				2761093A1D74A36B001B51B6 /* Navigation Controller */,
+				273E57561D61FBCB009DABFE /* Login View */,
+				276109371D74471F001B51B6 /* Profile View */,
+				274902831D6F230A00E6766B /* Event View */,
+				274902821D6F22F400E6766B /* Side Menu */,
+				273E57511D61EA26009DABFE /* Manager */,
+				27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */,
+				27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */,
+				27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */,
+				27CB27151D5D3CDD00F9ECF5 /* LaunchScreen.storyboard */,
+				27CB27181D5D3CDD00F9ECF5 /* Info.plist */,
+				273E57541D61EC8B009DABFE /* GoogleService-Info.plist */,
+				273E57631D62032B009DABFE /* Bridging-Header.h */,
+				27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */,
+			);
+			path = BeeSportive;
+			sourceTree = "<group>";
+		};
+		27CB27201D5D3CDD00F9ECF5 /* BeeSportiveTests */ = {
+			isa = PBXGroup;
+			children = (
+				27CB27211D5D3CDD00F9ECF5 /* BeeSportiveTests.swift */,
+				27CB27231D5D3CDD00F9ECF5 /* Info.plist */,
+			);
+			path = BeeSportiveTests;
+			sourceTree = "<group>";
+		};
+		27CB272B1D5D3CDD00F9ECF5 /* BeeSportiveUITests */ = {
+			isa = PBXGroup;
+			children = (
+				27CB272C1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift */,
+				27CB272E1D5D3CDD00F9ECF5 /* Info.plist */,
+			);
+			path = BeeSportiveUITests;
+			sourceTree = "<group>";
+		};
+		D88B80E2702491BEC5AB6B21 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2719B6491D75749300724EF5 /* FBSDKCoreKit.framework */,
+				2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */,
+				2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */,
+				279D900A1D72571D00F73F23 /* MapKit.framework */,
+				7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB02669BAE7114B9DEC23D01 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				96DC1E17FA063DC29D2BCC46 /* Pods-BeeSportive.debug.xcconfig */,
+				E2627E3253BB17FBA968F1C3 /* Pods-BeeSportive.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		27CB27081D5D3CDD00F9ECF5 /* BeeSportive */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 27CB27311D5D3CDD00F9ECF5 /* Build configuration list for PBXNativeTarget "BeeSportive" */;
+			buildPhases = (
+				B5AA37CFB0A5B1FE75066D7E /* [CP] Check Pods Manifest.lock */,
+				27CB27051D5D3CDD00F9ECF5 /* Sources */,
+				27CB27061D5D3CDD00F9ECF5 /* Frameworks */,
+				27CB27071D5D3CDD00F9ECF5 /* Resources */,
+				E3F787894C88D9C91F0AF4ED /* [CP] Embed Pods Frameworks */,
+				8E249ED6D9301C9B42B0D28B /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BeeSportive;
+			productName = BeeSportive;
+			productReference = 27CB27091D5D3CDD00F9ECF5 /* BeeSportive.app */;
+			productType = "com.apple.product-type.application";
+		};
+		27CB271C1D5D3CDD00F9ECF5 /* BeeSportiveTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 27CB27341D5D3CDD00F9ECF5 /* Build configuration list for PBXNativeTarget "BeeSportiveTests" */;
+			buildPhases = (
+				27CB27191D5D3CDD00F9ECF5 /* Sources */,
+				27CB271A1D5D3CDD00F9ECF5 /* Frameworks */,
+				27CB271B1D5D3CDD00F9ECF5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				27CB271F1D5D3CDD00F9ECF5 /* PBXTargetDependency */,
+			);
+			name = BeeSportiveTests;
+			productName = BeeSportiveTests;
+			productReference = 27CB271D1D5D3CDD00F9ECF5 /* BeeSportiveTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		27CB27271D5D3CDD00F9ECF5 /* BeeSportiveUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 27CB27371D5D3CDD00F9ECF5 /* Build configuration list for PBXNativeTarget "BeeSportiveUITests" */;
+			buildPhases = (
+				27CB27241D5D3CDD00F9ECF5 /* Sources */,
+				27CB27251D5D3CDD00F9ECF5 /* Frameworks */,
+				27CB27261D5D3CDD00F9ECF5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				27CB272A1D5D3CDD00F9ECF5 /* PBXTargetDependency */,
+			);
+			name = BeeSportiveUITests;
+			productName = BeeSportiveUITests;
+			productReference = 27CB27281D5D3CDD00F9ECF5 /* BeeSportiveUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		27CB27011D5D3CDD00F9ECF5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = BeeSportive;
+				TargetAttributes = {
+					27CB27081D5D3CDD00F9ECF5 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 23RTVFLNF5;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					27CB271C1D5D3CDD00F9ECF5 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 23RTVFLNF5;
+						TestTargetID = 27CB27081D5D3CDD00F9ECF5;
+					};
+					27CB27271D5D3CDD00F9ECF5 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 23RTVFLNF5;
+						TestTargetID = 27CB27081D5D3CDD00F9ECF5;
+					};
+				};
+			};
+			buildConfigurationList = 27CB27041D5D3CDD00F9ECF5 /* Build configuration list for PBXProject "BeeSportive" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 27CB27001D5D3CDD00F9ECF5;
+			productRefGroup = 27CB270A1D5D3CDD00F9ECF5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				27CB27081D5D3CDD00F9ECF5 /* BeeSportive */,
+				27CB271C1D5D3CDD00F9ECF5 /* BeeSportiveTests */,
+				27CB27271D5D3CDD00F9ECF5 /* BeeSportiveUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		27CB27071D5D3CDD00F9ECF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2719B6501D757A6000724EF5 /* .gitignore in Resources */,
+				27CE1E911D6F7D76007C0DE7 /* LoginVideo.mp4 in Resources */,
+				27CB27171D5D3CDD00F9ECF5 /* LaunchScreen.storyboard in Resources */,
+				273E57551D61EC8B009DABFE /* GoogleService-Info.plist in Resources */,
+				27CB27141D5D3CDD00F9ECF5 /* Assets.xcassets in Resources */,
+				274902881D6F23F500E6766B /* SideMenuTableViewCell.xib in Resources */,
+				27CB27121D5D3CDD00F9ECF5 /* Main.storyboard in Resources */,
+				277C1CC11D64A2B20008331F /* EventCollectionViewCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27CB271B1D5D3CDD00F9ECF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27CB27261D5D3CDD00F9ECF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8E249ED6D9301C9B42B0D28B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeeSportive/Pods-BeeSportive-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5AA37CFB0A5B1FE75066D7E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E3F787894C88D9C91F0AF4ED /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeeSportive/Pods-BeeSportive-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		27CB27051D5D3CDD00F9ECF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				277C1CBD1D63B26A0008331F /* Event.swift in Sources */,
+				27743FEE1D634E47004EAD97 /* User.swift in Sources */,
+				276109391D744752001B51B6 /* ProfileViewController.swift in Sources */,
+				2761093C1D74A38A001B51B6 /* MainNavigationController.swift in Sources */,
+				273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */,
+				277C1CC01D64A2B20008331F /* EventCollectionViewCell.swift in Sources */,
+				274902871D6F23F500E6766B /* SideMenuTableViewCell.swift in Sources */,
+				277C1CBB1D6388510008331F /* CreateEventViewController.swift in Sources */,
+				27CB270D1D5D3CDD00F9ECF5 /* AppDelegate.swift in Sources */,
+				27EE72441D6C4E5A00487673 /* SideMenuViewController.swift in Sources */,
+				277C1CB91D6387100008331F /* EventViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27CB27191D5D3CDD00F9ECF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27CB27221D5D3CDD00F9ECF5 /* BeeSportiveTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27CB27241D5D3CDD00F9ECF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27CB272D1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		27CB271F1D5D3CDD00F9ECF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 27CB27081D5D3CDD00F9ECF5 /* BeeSportive */;
+			targetProxy = 27CB271E1D5D3CDD00F9ECF5 /* PBXContainerItemProxy */;
+		};
+		27CB272A1D5D3CDD00F9ECF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 27CB27081D5D3CDD00F9ECF5 /* BeeSportive */;
+			targetProxy = 27CB27291D5D3CDD00F9ECF5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27CB27111D5D3CDD00F9ECF5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		27CB27151D5D3CDD00F9ECF5 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27CB27161D5D3CDD00F9ECF5 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		27CB272F1D5D3CDD00F9ECF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDK";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "BeeSportive/Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		27CB27301D5D3CDD00F9ECF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDK";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "BeeSportive/Bridging-Header.h";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		27CB27321D5D3CDD00F9ECF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96DC1E17FA063DC29D2BCC46 /* Pods-BeeSportive.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = BeeSportive/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportive;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		27CB27331D5D3CDD00F9ECF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2627E3253BB17FBA968F1C3 /* Pods-BeeSportive.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = BeeSportive/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportive;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		27CB27351D5D3CDD00F9ECF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = BeeSportiveTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportiveTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BeeSportive.app/BeeSportive";
+			};
+			name = Debug;
+		};
+		27CB27361D5D3CDD00F9ECF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = BeeSportiveTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportiveTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BeeSportive.app/BeeSportive";
+			};
+			name = Release;
+		};
+		27CB27381D5D3CDD00F9ECF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = BeeSportiveUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportiveUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = BeeSportive;
+			};
+			name = Debug;
+		};
+		27CB27391D5D3CDD00F9ECF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = BeeSportiveUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportiveUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = BeeSportive;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		27CB27041D5D3CDD00F9ECF5 /* Build configuration list for PBXProject "BeeSportive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27CB272F1D5D3CDD00F9ECF5 /* Debug */,
+				27CB27301D5D3CDD00F9ECF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		27CB27311D5D3CDD00F9ECF5 /* Build configuration list for PBXNativeTarget "BeeSportive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27CB27321D5D3CDD00F9ECF5 /* Debug */,
+				27CB27331D5D3CDD00F9ECF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		27CB27341D5D3CDD00F9ECF5 /* Build configuration list for PBXNativeTarget "BeeSportiveTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27CB27351D5D3CDD00F9ECF5 /* Debug */,
+				27CB27361D5D3CDD00F9ECF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		27CB27371D5D3CDD00F9ECF5 /* Build configuration list for PBXNativeTarget "BeeSportiveUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27CB27381D5D3CDD00F9ECF5 /* Debug */,
+				27CB27391D5D3CDD00F9ECF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 27CB27011D5D3CDD00F9ECF5 /* Project object */;
+}
