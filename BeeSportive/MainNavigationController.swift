@@ -13,7 +13,6 @@ import FTIndicator
 
 class MainNavigationController: UINavigationController {
     
-    let databaseRef = FIRDatabase.database().reference()
     var segmentedViewController = SJSegmentedViewController()
     var firstViewController : PastEventsViewController?
     var headerViewController : ProfileHeaderViewController?
@@ -51,7 +50,7 @@ class MainNavigationController: UINavigationController {
     
     internal func pushProfilePage(userID: String) {
         FTIndicator.showProgressWithmessage("Loading", userInteractionEnable: false)
-        databaseRef.child("users").child(userID).observeSingleEventOfType(.Value, withBlock: { snapshot in
+        REF_USERS.child(userID).observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.exists() {
                 let dict = NSDictionary(dictionary: snapshot.value as! [String : AnyObject])
                 print(dict)

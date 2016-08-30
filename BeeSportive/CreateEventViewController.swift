@@ -24,9 +24,7 @@ class CreateEventViewController: UIViewController, WWCalendarTimeSelectorProtoco
     @IBOutlet var levelField: UITextField!
     @IBOutlet var descriptionField: UITextView!
     
-    let databaseRef = FIRDatabase.database().reference()
     let calendar = WWCalendarTimeSelector.instantiate()
-    let branchs = ["Badminton", "Baseball", "Basketball", "Billard", "Bowling", "Crossfit", "Curling", "Cycling", "Dancing", "Diving", "Fencing", "Fitness", "Football", "Golf", "Gymnastic", "Handball", "Ice Hockey", "Ice Skating", "Martial Arts", "Motor Sports", "Mountain Climbing", "Orienting", "Paintball", "Parkour", "Pilates", "Pokemon Go", "Quidditch", "Rafting", "Rowing", "Rugby", "Running", "Sailing", "Skateboarding", "Skating", "Snowboarding", "Surfing", "Swimming", "Table Tennis", "Tennis", "Triathlon", "Volleyball", "Water Polo", "Wind Surfing", "Wrestling", "Yoga", "Zumba"]
     var currentBranch = "Basketball"
     var currentDay = "01"
     var currentMonth = "01"
@@ -88,8 +86,8 @@ class CreateEventViewController: UIViewController, WWCalendarTimeSelectorProtoco
                     "description" : description
                 ]
                 
-                databaseRef.child("events").child(uuid).setValue(newEvent)
-                databaseRef.child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("eventsCreated").childByAutoId().setValue(uuid)
+                REF_EVENTS.child(uuid).setValue(newEvent)
+                REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("eventsCreated").childByAutoId().setValue(uuid)
                 FTIndicator.showNotificationWithImage(UIImage(named: "Success"), title: "Yay!", message: "Event successfully created!")
     
                 Async.main(after: 1, block: {

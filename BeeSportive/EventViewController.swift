@@ -18,7 +18,6 @@ class EventViewController: UIViewController {
     @IBOutlet var eventsCollectionView: UICollectionView!
     
     let screenSize = UIScreen.mainScreen().bounds.size
-    let databaseRef = FIRDatabase.database().reference()
     let refreshControl = UIRefreshControl()
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     var eventsArray = [Event]()
@@ -116,7 +115,7 @@ class EventViewController: UIViewController {
     func retrieveData() {
         self.eventsArray =  [Event]()
         
-        databaseRef.child("events").observeSingleEventOfType(.Value , withBlock: { (snapshot) in
+        REF_EVENTS.observeSingleEventOfType(.Value , withBlock: { (snapshot) in
             if snapshot.exists() {
                 let postDict = Array((snapshot.value as! [String : AnyObject]).values)
                 
