@@ -37,6 +37,7 @@
 		816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FB1D75A27A00E7F5CD /* ChatVC.swift */; };
 		816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FD1D75ADF800E7F5CD /* ChannelCell.swift */; };
 		816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948F91D75A26000E7F5CD /* ChannelsVC.swift */; };
+		819669FE1D75D7D60038717C /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9921D759C5B00C90FC9 /* StatsViewController.swift */; };
 		81E8DCF41D75B88300234743 /* FavoriteSportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */; };
 		81E8DCF61D75BB4400234743 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E8DCF51D75BB4400234743 /* Constants.swift */; };
 		81E8DCF81D75BD8400234743 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E8DCF71D75BD8400234743 /* Channel.swift */; };
@@ -528,6 +529,7 @@
 				277C1CB91D6387100008331F /* EventViewController.swift in Sources */,
 				81E8DCF41D75B88300234743 /* FavoriteSportCollectionViewCell.swift in Sources */,
 				27EDE9971D759CBE00C90FC9 /* ProfileHeaderViewController.swift in Sources */,
+				819669FE1D75D7D60038717C /* StatsViewController.swift in Sources */,
 				81E8DCF61D75BB4400234743 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
