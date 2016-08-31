@@ -76,7 +76,14 @@ class EventDetailViewController: UIViewController {
     
     @IBAction func joinEventButtonClicked(sender: AnyObject) {
         if event!.creatorID != FIRAuth.auth()?.currentUser?.uid {
-            REF_EVENTS.child(event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).setValue("requested")
+            REF_EVENTS.child(event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue((FIRAuth.auth()?.currentUser?.uid)!)
+            REF_EVENTS.child(event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("result").setValue("requested")
         }
+    }
+    
+    @IBAction func requestsButtonClicked(sender: AnyObject) {
+        let requestPage = self.storyboard!.instantiateViewControllerWithIdentifier("RequestsViewController") as! RequestsViewController
+        requestPage.eventID = event?.id
+        self.presentViewController(requestPage, animated: true, completion: nil)
     }
 }
