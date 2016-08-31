@@ -104,6 +104,7 @@ class PastEventsViewController: UIViewController {
                 if snapshot.exists() {
                     let dict = NSDictionary(dictionary: snapshot.value as! [String : AnyObject])
                     
+                    let id = dict.valueForKey("id") as! String
                     let creatorID = dict.valueForKey("creatorID") as! String
                     let creatorImageURL = dict.valueForKey("creatorImageURL") as! String
                     let creatorName = dict.valueForKey("creatorName") as! String
@@ -118,7 +119,7 @@ class PastEventsViewController: UIViewController {
                     let day = dict.valueForKey("day") as! String
                     let year = dict.valueForKey("year") as! String
                     
-                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day, year: year)
+                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day, year: year, id: id)
                     
                     self.eventsArray.insert(eventElement, atIndex: 0)
                     

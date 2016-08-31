@@ -119,6 +119,7 @@ class EventViewController: UIViewController {
                 let postDict = Array((snapshot.value as! [String : AnyObject]).values)
                 
                 for element in postDict {
+                    let id = element.valueForKey("id") as! String
                     let creatorID = element.valueForKey("creatorID") as! String
                     let creatorImageURL = element.valueForKey("creatorImageURL") as! String
                     let creatorName = element.valueForKey("creatorName") as! String
@@ -133,7 +134,7 @@ class EventViewController: UIViewController {
                     let day = element.valueForKey("day") as! String
                     let year = element.valueForKey("year") as! String
                     
-                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day, year: year)
+                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day, year: year, id: id)
                     
                     self.eventsArray.insert(eventElement, atIndex: 0)
                 }

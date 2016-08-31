@@ -71,6 +71,7 @@ class CreateEventViewController: UIViewController, WWCalendarTimeSelectorProtoco
                 let uuid = NSUUID().UUIDString
                 
                 let newEvent = [
+                    "id" : uuid,
                     "creatorID" : (FIRAuth.auth()?.currentUser?.uid)!,
                     "creatorImageURL" : (FIRAuth.auth()?.currentUser?.photoURL?.absoluteString)!,
                     "creatorName" : (FIRAuth.auth()?.currentUser?.displayName)!,

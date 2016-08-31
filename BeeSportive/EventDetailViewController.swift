@@ -74,4 +74,9 @@ class EventDetailViewController: UIViewController {
         navigationController.pushProfilePage(event!.creatorID)
     }
     
+    @IBAction func joinEventButtonClicked(sender: AnyObject) {
+        if event!.creatorID != FIRAuth.auth()?.currentUser?.uid {
+            REF_EVENTS.child(event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).setValue("requested")
+        }
+    }
 }

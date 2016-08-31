@@ -9,6 +9,7 @@
 import Foundation
 
 class Event {
+    let id : String
     let creatorID : String
     let creatorImageURL : String
     let creatorName : String
@@ -23,7 +24,7 @@ class Event {
     let day : String
     let year : String
     
-    init(creatorID: String, creatorImageURL: String, creatorName: String, name: String, branch: String, level: String, location: String, maxJoinNumber: String, description : String, time: String, month: String, day: String, year: String){
+    init(creatorID: String, creatorImageURL: String, creatorName: String, name: String, branch: String, level: String, location: String, maxJoinNumber: String, description : String, time: String, month: String, day: String, year: String, id: String){
         self.creatorID = creatorID
         self.creatorImageURL = creatorImageURL
         self.creatorName = creatorName
@@ -37,5 +38,6 @@ class Event {
         self.day = day
         self.month = month
         self.year = year
+        self.id = id
     }
 }
