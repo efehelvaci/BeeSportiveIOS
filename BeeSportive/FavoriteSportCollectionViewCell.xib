@@ -8,29 +8,71 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FavoriteSportCell" id="Zrb-rA-WHe" customClass="FavoriteSportCollectionViewCell" customModule="BeeSportive" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="357" height="169"/>
+            <rect key="frame" x="0.0" y="0.0" width="357" height="123"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="357" height="169"/>
+                <rect key="frame" x="0.0" y="0.0" width="357" height="123"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Billard" translatesAutoresizingMaskIntoConstraints="NO" id="zVv-DD-5tD">
-                        <rect key="frame" x="0.0" y="0.0" width="357" height="169"/>
+                        <rect key="frame" x="0.0" y="0.0" width="357" height="123"/>
                     </imageView>
+                    <view alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vie-Y9-LgZ">
+                        <rect key="frame" x="0.0" y="0.0" width="357" height="123"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hwu-NW-XDk">
+                        <rect key="frame" x="0.0" y="37" width="357" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="Jcy-pi-xmx"/>
+                        </constraints>
+                        <attributedString key="attributedText">
+                            <fragment content="BILLARD">
+                                <attributes>
+                                    <color key="NSColor" red="1" green="1" blue="1" alpha="0.89582453547297303" colorSpace="calibratedRGB"/>
+                                    <font key="NSFont" size="24" name="Palatino-Roman"/>
+                                    <font key="NSOriginalFont" size="24" name="Palatino-Roman"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
+                <constraint firstItem="Hwu-NW-XDk" firstAttribute="top" secondItem="Zrb-rA-WHe" secondAttribute="top" constant="37" id="618-9O-fSW"/>
+                <constraint firstAttribute="trailing" secondItem="Hwu-NW-XDk" secondAttribute="trailing" id="9ng-JD-Onw"/>
+                <constraint firstAttribute="bottom" secondItem="Hwu-NW-XDk" secondAttribute="bottom" constant="36" id="K7F-tH-ard"/>
+                <constraint firstAttribute="bottom" secondItem="vie-Y9-LgZ" secondAttribute="bottom" id="L6H-bh-QbQ"/>
+                <constraint firstItem="Hwu-NW-XDk" firstAttribute="centerX" secondItem="zVv-DD-5tD" secondAttribute="centerX" id="TTu-vm-C7i"/>
+                <constraint firstItem="Hwu-NW-XDk" firstAttribute="leading" secondItem="Zrb-rA-WHe" secondAttribute="leading" id="Ucp-0v-fKh"/>
                 <constraint firstItem="zVv-DD-5tD" firstAttribute="top" secondItem="Zrb-rA-WHe" secondAttribute="top" id="XKC-Qv-FMb"/>
+                <constraint firstAttribute="trailing" secondItem="vie-Y9-LgZ" secondAttribute="trailing" id="b9p-vY-9mI"/>
                 <constraint firstAttribute="bottom" secondItem="zVv-DD-5tD" secondAttribute="bottom" id="ef7-Yo-vdo"/>
                 <constraint firstItem="zVv-DD-5tD" firstAttribute="leading" secondItem="Zrb-rA-WHe" secondAttribute="leading" id="hpY-Gz-1zO"/>
+                <constraint firstItem="Hwu-NW-XDk" firstAttribute="leading" secondItem="zVv-DD-5tD" secondAttribute="leading" id="i5E-yZ-9FC"/>
+                <constraint firstItem="vie-Y9-LgZ" firstAttribute="top" secondItem="Zrb-rA-WHe" secondAttribute="top" id="mXa-36-gad"/>
+                <constraint firstItem="Hwu-NW-XDk" firstAttribute="trailing" secondItem="zVv-DD-5tD" secondAttribute="trailing" id="sG8-mS-1LN"/>
                 <constraint firstAttribute="trailing" secondItem="zVv-DD-5tD" secondAttribute="trailing" id="tLI-yi-ywi"/>
+                <constraint firstItem="vie-Y9-LgZ" firstAttribute="leading" secondItem="Zrb-rA-WHe" secondAttribute="leading" id="yMe-OC-U6l"/>
+                <constraint firstItem="Hwu-NW-XDk" firstAttribute="centerY" secondItem="zVv-DD-5tD" secondAttribute="centerY" id="yf4-Cd-2u3"/>
             </constraints>
-            <size key="customSize" width="357" height="169"/>
+            <size key="customSize" width="357" height="123"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="618-9O-fSW"/>
+                    <exclude reference="K7F-tH-ard"/>
+                    <exclude reference="i5E-yZ-9FC"/>
+                    <exclude reference="sG8-mS-1LN"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="favSportImage" destination="zVv-DD-5tD" id="KaJ-tp-jp8"/>
+                <outlet property="favSportName" destination="Hwu-NW-XDk" id="Q07-ZN-ElR"/>
             </connections>
-            <point key="canvasLocation" x="408.5" y="213.5"/>
+            <point key="canvasLocation" x="408.5" y="190.5"/>
         </collectionViewCell>
     </objects>
     <resources>

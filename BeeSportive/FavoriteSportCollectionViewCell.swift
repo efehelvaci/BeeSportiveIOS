@@ -11,4 +11,5 @@ import UIKit
 class FavoriteSportCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var favSportImage: UIImageView!
+    @IBOutlet var favSportName: UILabel!
 }

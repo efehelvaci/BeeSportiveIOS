@@ -17,7 +17,6 @@ class EventViewController: UIViewController {
     
     @IBOutlet var eventsCollectionView: UICollectionView!
     
-    let screenSize = UIScreen.mainScreen().bounds.size
     let refreshControl = UIRefreshControl()
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     var eventsArray = [Event]()

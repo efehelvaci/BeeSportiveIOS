@@ -151,8 +151,8 @@
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="WyL-ag-iev"/>
-                    <exclude reference="Bqj-e5-FlA"/>
                     <exclude reference="Usy-ez-qye"/>
+                    <exclude reference="Bqj-e5-FlA"/>
                     <exclude reference="5Q8-Ks-snb"/>
                     <exclude reference="Yhi-N0-MiC"/>
                 </mask>

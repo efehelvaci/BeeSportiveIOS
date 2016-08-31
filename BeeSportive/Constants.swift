@@ -7,7 +7,9 @@
 //
 
 import Firebase
+import UIKit
 
+let screenSize = UIScreen.mainScreen().bounds.size
 let REF_DATA = FIRDatabase.database().reference()
 let REF_CHANNELS = REF_DATA.child("channels")
 let REF_USERS = REF_DATA.child("users")

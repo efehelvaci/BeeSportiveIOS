@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import Async
 import Alamofire
 import AlamofireImage
 
@@ -30,13 +29,12 @@ class ChannelCell: UITableViewCell {
             }
             if let imgURLstr = snapshot.childSnapshotForPath("creatorImageURL").value as? String {
                 let imgURL = NSURL(string: imgURLstr)!
-                Async.background {
-                    Alamofire.request(.GET, imgURL).responseData{ response in
-                        if let image = response.result.value {
-                            self.img.layer.masksToBounds = true
-                            self.img.layer.cornerRadius = self.img.frame.width / 2.0
-                            self.img.image = UIImage(data: image)
-                        }
+                
+                Alamofire.request(.GET, imgURL).responseData{ response in
+                    if let image = response.result.value {
+                        self.img.layer.masksToBounds = true
+                        self.img.layer.cornerRadius = self.img.frame.width / 2.0
+                        self.img.image = UIImage(data: image)
                     }
                 }
             }

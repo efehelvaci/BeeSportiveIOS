@@ -40,7 +40,7 @@ class EventDetailViewController: UIViewController {
 
     func setPageOutlets () {
         eventNameLabel.text = event!.name
-        descriptionLabelHeightConstraint.constant = heightForView(event!.description, font: font!, width: UIScreen.mainScreen().bounds.size.width-40)
+        descriptionLabelHeightConstraint.constant = heightForView(event!.description, font: font!, width: screenSize.width-40)
         eventDescriptionLabel.text = event!.description
         eventBrancImage.image = UIImage(named: event!.branch)
         eventAddressLabel.text = event!.location

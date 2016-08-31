@@ -58,14 +58,15 @@ class FavoriteSportsCollectionViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! FavoriteSportCollectionViewCell
-    
+        
         cell.favSportImage.image =  UIImage(named: favoriteSports[indexPath.row])
+        cell.favSportName.text = favoriteSports[indexPath.row].uppercaseString
     
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(UIScreen.mainScreen().bounds.size.width/2.0 - 1, 70)
+        return CGSizeMake(screenSize.width/2.0 - 1, 70)
     }
 
     // MARK: UICollectionViewDelegate

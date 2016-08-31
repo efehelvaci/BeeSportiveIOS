@@ -75,7 +75,7 @@ class PastEventsViewController: UIViewController {
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(UIScreen.mainScreen().bounds.width, 130)
+        return CGSizeMake(screenSize.width, 130)
     }
     
     //

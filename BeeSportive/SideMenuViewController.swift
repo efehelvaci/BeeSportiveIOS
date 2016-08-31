@@ -73,13 +73,12 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         
         headerView.backgroundColor = UIColor(red: 255/255, green: 128/255, blue: 0, alpha: 0.8)
         
-        Async.background{
-            Alamofire.request(.GET, (FIRAuth.auth()?.currentUser?.photoURL)!).responseData{ response in
-                if let image = response.result.value {
-                    imageView.image = UIImage(data: image)
-                }
+        Alamofire.request(.GET, (FIRAuth.auth()?.currentUser?.photoURL)!).responseData{ response in
+            if let image = response.result.value {
+                imageView.image = UIImage(data: image)
             }
         }
+        
         imageView.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin]
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 50.0
