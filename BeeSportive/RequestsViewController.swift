@@ -61,12 +61,15 @@ class RequestsViewController: UIViewController, UITableViewDelegate{
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        let function = Functions()
+        function.getProfilePage(users[indexPath.row].id, vc: self)
     }
     
     func getUsers() {
         REF_EVENTS.child(eventID!).child("requested").observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.exists() {
+                
+                self.users.removeAll()
 
                 let requesterIDs = Array((snapshot.value as! [String : AnyObject]).values)
                 

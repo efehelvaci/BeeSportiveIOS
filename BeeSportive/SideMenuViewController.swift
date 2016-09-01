@@ -55,7 +55,8 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         
         switch indexPath.row {
         case 0:
-            mainNavigationController.pushProfilePage((FIRAuth.auth()?.currentUser?.uid)!)
+            let function = Functions()
+            function.getProfilePage((FIRAuth.auth()?.currentUser?.uid)! , vc: mainNavigationController)
             break
         default:
             print("Switch default")

@@ -70,8 +70,8 @@ class EventDetailViewController: UIViewController {
     }
     
     @IBAction func creatorProfileClicked(sender: AnyObject) {
-        let navigationController = self.navigationController as! MainNavigationController
-        navigationController.pushProfilePage(event!.creatorID)
+        let function = Functions()
+        function.getProfilePage(event!.creatorID , vc: self)
     }
     
     @IBAction func joinEventButtonClicked(sender: AnyObject) {
