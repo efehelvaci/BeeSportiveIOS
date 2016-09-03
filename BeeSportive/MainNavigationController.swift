@@ -15,8 +15,6 @@ class MainNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,24 +23,4 @@ class MainNavigationController: UINavigationController {
     }
     
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-    }
-    
-    internal func pushProfilePage(userID: String) {
-        
-    }
-    
-   
-    
-    func getUserFromID(userID: String){
-        
-    }
-}
-
-extension MainNavigationController: SJSegmentedViewControllerDelegate {
-    
-    
 }

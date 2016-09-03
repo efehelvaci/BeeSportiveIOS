@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ttQ-U5-FIx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="zN5-3s-ZjT">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -478,6 +478,46 @@
                                 <color key="sectionIndexColor" red="0.23023096009999999" green="0.64415640780000005" blue="0.40312170510000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="sideBarItem" id="aET-Fg-uRb" customClass="SideMenuTableViewCell" customModule="BeeSportive" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aET-Fg-uRb" id="dRR-cC-Q7F">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CFZ-cb-6et">
+                                                    <rect key="frame" x="15" y="6" width="32" height="32"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="9Ty-ph-ijU"/>
+                                                        <constraint firstAttribute="height" constant="32" id="s8l-oN-hUP"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6xC-jG-fU6">
+                                                    <rect key="frame" x="63" y="11" width="529" height="21"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="CFZ-cb-6et" firstAttribute="leading" secondItem="dRR-cC-Q7F" secondAttribute="leading" constant="15" id="2yu-Tq-vU9"/>
+                                                <constraint firstItem="6xC-jG-fU6" firstAttribute="leading" secondItem="CFZ-cb-6et" secondAttribute="trailing" constant="16" id="8lk-f6-vHw"/>
+                                                <constraint firstItem="CFZ-cb-6et" firstAttribute="centerY" secondItem="dRR-cC-Q7F" secondAttribute="centerY" id="fJp-MN-KgT"/>
+                                                <constraint firstAttribute="trailing" secondItem="6xC-jG-fU6" secondAttribute="trailing" constant="8" id="iCT-Yd-YsE"/>
+                                                <constraint firstItem="6xC-jG-fU6" firstAttribute="centerY" secondItem="CFZ-cb-6et" secondAttribute="centerY" id="tUR-9y-IoQ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="sideBarIcon" destination="CFZ-cb-6et" id="Ub0-KI-cgt"/>
+                                            <outlet property="sideBarLabel" destination="6xC-jG-fU6" id="JS9-fU-d4g"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="GlY-Yy-e07" id="wta-NJ-Ja2"/>
                                     <outlet property="delegate" destination="GlY-Yy-e07" id="5AG-pK-IfD"/>

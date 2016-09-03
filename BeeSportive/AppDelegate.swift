@@ -26,8 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let frostedViewController = REFrostedViewController(contentViewController:  storyboard.instantiateViewControllerWithIdentifier("BaseNavigationController"), menuViewController: storyboard.instantiateViewControllerWithIdentifier("SideMenuViewController"))
         
         frostedViewController.direction = REFrostedViewControllerDirection.Left
-        frostedViewController.menuViewSize = CGSizeMake(260 , UIScreen.mainScreen().bounds.height)
-        frostedViewController.liveBlur = true
+        frostedViewController.menuViewSize = CGSizeMake(screenSize.width*0.8 , screenSize.height)
         
         self.window?.rootViewController = frostedViewController
         

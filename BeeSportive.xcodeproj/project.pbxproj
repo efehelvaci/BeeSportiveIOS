@@ -13,7 +13,6 @@
 		273E57551D61EC8B009DABFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 273E57541D61EC8B009DABFE /* GoogleService-Info.plist */; };
 		273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E575B1D61FE8B009DABFE /* LoginViewController.swift */; };
 		274902871D6F23F500E6766B /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274902851D6F23F500E6766B /* SideMenuTableViewCell.swift */; };
-		274902881D6F23F500E6766B /* SideMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274902861D6F23F500E6766B /* SideMenuTableViewCell.xib */; };
 		276109391D744752001B51B6 /* PastEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276109381D744752001B51B6 /* PastEventsViewController.swift */; };
 		2761093C1D74A38A001B51B6 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2761093B1D74A38A001B51B6 /* MainNavigationController.swift */; };
 		27743FEE1D634E47004EAD97 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27743FED1D634E47004EAD97 /* User.swift */; };
@@ -73,7 +72,6 @@
 		273E575B1D61FE8B009DABFE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		273E57631D62032B009DABFE /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		274902851D6F23F500E6766B /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
-		274902861D6F23F500E6766B /* SideMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideMenuTableViewCell.xib; sourceTree = "<group>"; };
 		276109381D744752001B51B6 /* PastEventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastEventsViewController.swift; sourceTree = "<group>"; };
 		2761093B1D74A38A001B51B6 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		27743FED1D634E47004EAD97 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -167,7 +165,6 @@
 			children = (
 				27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */,
 				274902851D6F23F500E6766B /* SideMenuTableViewCell.swift */,
-				274902861D6F23F500E6766B /* SideMenuTableViewCell.xib */,
 			);
 			name = "Side Menu";
 			sourceTree = "<group>";
@@ -472,7 +469,6 @@
 				273E57551D61EC8B009DABFE /* GoogleService-Info.plist in Resources */,
 				27CB27141D5D3CDD00F9ECF5 /* Assets.xcassets in Resources */,
 				27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */,
-				274902881D6F23F500E6766B /* SideMenuTableViewCell.xib in Resources */,
 				27CB27121D5D3CDD00F9ECF5 /* Main.storyboard in Resources */,
 				277C1CC11D64A2B20008331F /* EventCollectionViewCell.xib in Resources */,
 			);
@@ -722,7 +718,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BeeSportive/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -739,7 +735,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BeeSportive/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportive;
 				PRODUCT_NAME = "$(TARGET_NAME)";

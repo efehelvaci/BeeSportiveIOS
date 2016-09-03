@@ -18,17 +18,16 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet var tableView: UITableView!
     
+    let reuseIdentifier = "sideBarItem"
     let tableItems : [String] = ["Profile", "Settings"]
     let tableItemsIcons : [UIImage] = [UIImage(named: "Profile3")!, UIImage(named: "Settings")!]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setTableHeader()
+        frostedViewController.liveBlur = true
         
-        // Table view cell register nib
-        let nibName = UINib(nibName: "SideMenuTableViewCell", bundle:nil)
-        tableView.registerNib(nibName, forCellReuseIdentifier: "sideBarItem")
+        setTableHeader()
     }
     
     //
