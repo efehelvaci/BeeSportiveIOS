@@ -18,7 +18,6 @@ class EventViewController: UIViewController {
     @IBOutlet var eventsCollectionView: UICollectionView!
     
     let refreshControl = UIRefreshControl()
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     var eventsArray = [Event]()
     var selectedEventNo : Int?
     
@@ -26,12 +25,9 @@ class EventViewController: UIViewController {
         super.viewDidLoad()
         
         // Navigation bar & controller settings
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController!.navigationBar.translucent = true
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Profile3") , style: .Plain, target: self, action: #selector(leftBarButtonItemTouchUpInside))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Chat") , style: .Plain, target: self, action: #selector(rightBarButtonItemTouchUpInside))
-        navigationItem.titleView = UIImageView(image: UIImage(named: "Logo.png"))
+        navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         
         // Check if user is logged in or not
         FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
@@ -63,6 +59,14 @@ class EventViewController: UIViewController {
         
         // If there are not enough events to scroll, you can still pull to refresh
         eventsCollectionView.alwaysBounceVertical = true
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController!.navigationBar.translucent = true
     }
 
     //
@@ -157,7 +161,7 @@ class EventViewController: UIViewController {
     
     @IBAction func didTouchUpInside(sender: AnyObject) {
         Async.main{
-            self.performSegueWithIdentifier("createEventSegue", sender: self)
+            self.performSegueWithIdentifier("eventAddFormSegue", sender: self)
         }
     }
     
