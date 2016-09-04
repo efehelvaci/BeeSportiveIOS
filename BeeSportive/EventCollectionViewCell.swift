@@ -9,7 +9,7 @@
 import UIKit
 
 class EventCollectionViewCell: UICollectionViewCell {
-
+    
     @IBOutlet var backgroundImage: UIImageView!
     @IBOutlet var dateDay: UILabel!
     @IBOutlet var dateMonth: UILabel!
@@ -23,5 +23,8 @@ class EventCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
+    func offset(offset: CGPoint) {
+        backgroundImage.frame = CGRectOffset(self.backgroundImage.bounds, offset.x, offset.y)
+    }
 }

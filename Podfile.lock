@@ -3,6 +3,7 @@ PODS:
   - AlamofireImage (2.4.1):
     - Alamofire (~> 3.3)
   - AsyncSwift (1.7.3)
+  - Eureka (1.7.0)
   - Firebase/Analytics (3.5.2):
     - FirebaseAnalytics (~> 3.3)
   - Firebase/Auth (3.5.2):
@@ -67,6 +68,7 @@ DEPENDENCIES:
   - Alamofire
   - AlamofireImage (~> 2.0)
   - AsyncSwift (~> 1.7.3)
+  - Eureka (~> 1.7)
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -83,6 +85,7 @@ SPEC CHECKSUMS:
   Alamofire: 6aa33201d20d069e1598891cf928883ff1888c7a
   AlamofireImage: 3ccf3347d9ea24580dc11fb892770a0be6a29826
   AsyncSwift: f3ad5dd077bbd1477e7573e87071a532fedaca1a
+  Eureka: 2020d9faeef7b7e9adeb9e3d8af779e5931c1897
   Firebase: 94e63112efcad75226c0356a8f3032397b8547c9
   FirebaseAnalytics: d968d4d5f6aeb795cd64144337bcd233e530efc6
   FirebaseAuth: 26fd291c3b552fc9658420b867520d5ae080421c
@@ -104,6 +107,6 @@ SPEC CHECKSUMS:
   VideoSplashKit: 0aa63d0bb37c5bd357de3e6a2a13dea5acad4d66
   WWCalendarTimeSelector: 9e58e9d81600d836cbb38995349e6764e9e3aa5f
 
-PODFILE CHECKSUM: daa41734b35d9edb0fbf8fbd2d5d2f8c33a59e12
+PODFILE CHECKSUM: 20f2fd79cf372f9ddea3e28a66a8b96cafd838a4
 
 COCOAPODS: 1.0.1
