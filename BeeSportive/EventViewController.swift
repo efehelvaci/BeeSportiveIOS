@@ -13,16 +13,20 @@ import FirebaseDatabase
 import REFrostedViewController
 import Alamofire
 
-class EventViewController: UIViewController {
+class EventViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet var eventsCollectionView: UICollectionView!
     
+    let ImageHeight = 230.0
+    let OffsetSpeed = 25.0
     let refreshControl = UIRefreshControl()
     var eventsArray = [Event]()
     var selectedEventNo : Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.hidesBarsOnSwipe = true
         
         // Navigation bar & controller settings
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Profile3") , style: .Plain, target: self, action: #selector(leftBarButtonItemTouchUpInside))
@@ -64,9 +68,9 @@ class EventViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController!.navigationBar.translucent = true
+//        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+//        navigationController?.navigationBar.shadowImage = UIImage()
+//        navigationController!.navigationBar.translucent = true
     }
 
     //
@@ -110,7 +114,7 @@ class EventViewController: UIViewController {
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(screenSize.width, 130)
+        return CGSizeMake(screenSize.width, 180)
     }
     
     //
@@ -175,6 +179,15 @@ class EventViewController: UIViewController {
     
     func panGestureRecognized(sender : UIScreenEdgePanGestureRecognizer){
         self.frostedViewController.panGestureRecognized(sender)
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if let visibleCells = eventsCollectionView.visibleCells() as? [EventCollectionViewCell] {
+            for parallaxCell in visibleCells {
+                let yOffset = ((eventsCollectionView.contentOffset.y - parallaxCell.frame.origin.y) / 230) * 25
+                parallaxCell.offset(CGPointMake(0.0, yOffset))
+            }
+        }
     }
     
     //
