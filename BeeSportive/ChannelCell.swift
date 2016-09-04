@@ -19,8 +19,11 @@ class ChannelCell: UITableViewCell {
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var sender: UILabel!
 
-    func configureCell(channelID: String) {
-        REF_EVENTS.child(channelID).observeEventType(.Value, withBlock: { snapshot in
+    func configureCell(channel: Channel) {
+        self.lastMessage.text = channel.lastMessage["message"]
+        self.date.text = channel.lastMessage["date"]
+        self.sender.text = channel.lastSenderDisplayName
+        REF_EVENTS.child(channel.id).observeEventType(.Value, withBlock: { snapshot in
             if let title = snapshot.childSnapshotForPath("name").value as? String {
                 self.title.text = title
             }
@@ -29,7 +32,6 @@ class ChannelCell: UITableViewCell {
             }
             if let imgURLstr = snapshot.childSnapshotForPath("creatorImageURL").value as? String {
                 let imgURL = NSURL(string: imgURLstr)!
-                
                 Alamofire.request(.GET, imgURL).responseData{ response in
                     if let image = response.result.value {
                         self.img.layer.masksToBounds = true

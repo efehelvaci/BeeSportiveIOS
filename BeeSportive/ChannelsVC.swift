@@ -13,18 +13,21 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     let uid = FIRAuth.auth()!.currentUser!.uid
-    var channelIDs = [String]()
-    var channelID: String!
+    var channels = [Channel]()
+    var selectedChannelID: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         REF_USERS.child(uid).child("eventsCreated").observeEventType(.Value, withBlock: { snapshot in
-            self.channelIDs.removeAll()
+            self.channels.removeAll()
             for snap in snapshot.children {
-                if let data = snap as? FIRDataSnapshot {
-                    self.channelIDs.append(String(data.value!))
+                guard let data = snap as? FIRDataSnapshot else { return }
+                let channelID = data.value as! String
+                REF_CHANNELS.child(channelID).observeEventType(.Value, withBlock: { (snapshot) in
+                    let channel = Channel(snapshot: snapshot)
+                    self.channels.append(channel)
                     self.tableView.reloadData()
-                }
+                })
             }
         })
     }
@@ -34,18 +37,18 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return channelIDs.count
+        return channels.count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCellWithIdentifier("ChannelCell") as? ChannelCell {
-            cell.configureCell(channelIDs[indexPath.row])
+            cell.configureCell(channels[indexPath.row])
             return cell
         } else { return UITableViewCell() }
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        channelID = channelIDs[indexPath.row]
+        self.selectedChannelID = channels[indexPath.row].id
         guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? ChannelCell else { return }
         performSegueWithIdentifier("toChatSegue", sender: cell)
     }
@@ -53,7 +56,7 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "toChatSegue" {
             if let destVC = segue.destinationViewController as? ChatVC {
-                destVC.channelID = self.channelID
+                destVC.channelID = self.selectedChannelID
                 guard let cell = sender as? ChannelCell else { return }
                 destVC.navigationItem.title = cell.title.text
             }
