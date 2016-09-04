@@ -723,8 +723,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.34901960780000002" green="0.30980392159999998" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" red="1" green="1" blue="0.9312442555099999" alpha="0.80386929898648651" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="1" green="1" blue="1" alpha="0.79527027027027042" colorSpace="calibratedRGB"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="WRA-K0-IO2">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="zN5-3s-ZjT" kind="relationship" relationship="rootViewController" id="2Vm-5T-1P7"/>
                     </connections>
@@ -849,7 +853,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QYh-J1-xVr">
-                                <rect key="frame" x="0.0" y="1" width="600" height="599"/>
+                                <rect key="frame" x="0.0" y="-1" width="600" height="601"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="fBo-LO-ddb">
                                     <size key="itemSize" width="50" height="50"/>
@@ -882,7 +886,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.97647058819999999" green="0.87450980389999999" blue="0.023529411760000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="QYh-J1-xVr" firstAttribute="top" secondItem="KAO-oN-nrP" secondAttribute="bottom" constant="-63" id="7Mi-na-3mZ"/>
+                            <constraint firstItem="QYh-J1-xVr" firstAttribute="top" secondItem="KAO-oN-nrP" secondAttribute="bottom" constant="-65" id="7Mi-na-3mZ"/>
                             <constraint firstItem="QYh-J1-xVr" firstAttribute="leading" secondItem="da3-L1-fzG" secondAttribute="leading" id="Gco-B2-xO2"/>
                             <constraint firstItem="477-gb-4WY" firstAttribute="centerX" secondItem="SNv-bJ-X02" secondAttribute="centerX" id="JHt-cm-Qty"/>
                             <constraint firstAttribute="trailing" secondItem="QYh-J1-xVr" secondAttribute="trailing" id="Jj9-NH-g0t"/>

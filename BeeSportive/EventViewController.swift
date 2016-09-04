@@ -67,10 +67,6 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-//        navigationController?.navigationBar.shadowImage = UIImage()
-//        navigationController!.navigationBar.translucent = true
     }
 
     //
@@ -88,7 +84,9 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
         cell.dateDay.text = eventsArray[indexPath.row].day
         cell.dateMonth.text =  months[Int(eventsArray[indexPath.row].month)! - 1]
         cell.location.text = eventsArray[indexPath.row].location
+        cell.location.adjustsFontSizeToFitWidth = true
         cell.time.text = eventsArray[indexPath.row].time
+        cell.branchName.text = (eventsArray[indexPath.row].branch).uppercaseString
         
         Alamofire.request(.GET, (self.eventsArray[indexPath.row].creatorImageURL)).responseData{ response in
             if let image = response.result.value {
@@ -114,7 +112,7 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(screenSize.width, 180)
+        return CGSizeMake(screenSize.width, 200)
     }
     
     //

@@ -28,6 +28,8 @@ class EventDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.navigationBar.translucent = true
+        
         setPageOutlets()
         
         // If visitor is creator or not
