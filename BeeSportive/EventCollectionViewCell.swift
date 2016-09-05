@@ -18,6 +18,7 @@ class EventCollectionViewCell: UICollectionViewCell {
     @IBOutlet var time: UILabel!
     @IBOutlet var progressView: UIProgressView!
     @IBOutlet var creatorImage: UIImageView!
+    @IBOutlet var branchName: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
