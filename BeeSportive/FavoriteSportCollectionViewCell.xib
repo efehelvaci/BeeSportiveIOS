@@ -17,7 +17,7 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Billard" translatesAutoresizingMaskIntoConstraints="NO" id="zVv-DD-5tD">
                         <rect key="frame" x="0.0" y="0.0" width="357" height="123"/>
                     </imageView>
-                    <view alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vie-Y9-LgZ">
+                    <view alpha="0.34999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vie-Y9-LgZ">
                         <rect key="frame" x="0.0" y="0.0" width="357" height="123"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -30,8 +30,8 @@
                             <fragment content="BILLARD">
                                 <attributes>
                                     <color key="NSColor" red="1" green="1" blue="1" alpha="0.89582453547297303" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="24" name="Palatino-Roman"/>
-                                    <font key="NSOriginalFont" size="24" name="Palatino-Roman"/>
+                                    <font key="NSFont" size="23" name="AvenirNext-Heavy"/>
+                                    <font key="NSOriginalFont" size="23" name="AvenirNext-Heavy"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -76,6 +76,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Billard" width="1152" height="355"/>
+        <image name="Billard" width="750" height="355"/>
     </resources>
 </document>

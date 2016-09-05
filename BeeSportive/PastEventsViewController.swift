@@ -11,10 +11,10 @@ import Firebase
 import Async
 import Alamofire
 
-class PastEventsViewController: UIViewController {
-
+class PastEventsViewController: UIViewController, UIScrollViewDelegate {
+    
     @IBOutlet var myEventsCollectionView: UICollectionView!
-
+    
     var eventsArray = [Event]()
     
     internal var user : User?
@@ -27,8 +27,8 @@ class PastEventsViewController: UIViewController {
         myEventsCollectionView.registerNib(nibName, forCellWithReuseIdentifier: "eventCell")
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
         getMyEventsIDs()
     }
@@ -37,7 +37,6 @@ class PastEventsViewController: UIViewController {
     // CollectionView Delegate Methods
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //        return self.eventsArray.count
         return eventsArray.count
     }
     
@@ -51,6 +50,7 @@ class PastEventsViewController: UIViewController {
         cell.dateMonth.text =  months[Int(eventsArray[indexPath.row].month)! - 1]
         cell.location.text = eventsArray[indexPath.row].location
         cell.time.text = eventsArray[indexPath.row].time
+        cell.branchName.text = (eventsArray[indexPath.row].branch).uppercaseString
         
         Alamofire.request(.GET, (self.eventsArray[indexPath.row].creatorImageURL)).responseData{ response in
             if let image = response.result.value {
@@ -59,7 +59,7 @@ class PastEventsViewController: UIViewController {
                 cell.creatorImage.image = UIImage(data: image)
             }
         }
-
+        
         // Flip animation
         UIView.transitionWithView(cell, duration: 0.5, options: .TransitionFlipFromTop, animations: nil, completion: nil)
         
@@ -67,7 +67,9 @@ class PastEventsViewController: UIViewController {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        let eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
+        eventDetailVC.event = eventsArray[indexPath.row]
+        self.presentViewController(eventDetailVC, animated: true, completion: nil)
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -75,7 +77,16 @@ class PastEventsViewController: UIViewController {
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(screenSize.width, 130)
+        return CGSizeMake(screenSize.width, 200)
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if let visibleCells = myEventsCollectionView.visibleCells() as? [EventCollectionViewCell] {
+            for parallaxCell in visibleCells {
+                let yOffset = ((myEventsCollectionView.contentOffset.y - parallaxCell.frame.origin.y) / 230) * 25
+                parallaxCell.offset(CGPointMake(0.0, yOffset))
+            }
+        }
     }
     
     //
@@ -122,10 +133,10 @@ class PastEventsViewController: UIViewController {
                     let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day, year: year, id: id)
                     
                     self.eventsArray.insert(eventElement, atIndex: 0)
-                    
-                    Async.main {
-                        self.myEventsCollectionView.reloadData()
-                    }
+                }
+                
+                Async.main {
+                    self.myEventsCollectionView.reloadData()
                 }
             })
         }

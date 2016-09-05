@@ -25,15 +25,6 @@ class ProfileHeaderViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        editButton.clipsToBounds = true
-        backButton.clipsToBounds = true
-        
-        editButton.layer.cornerRadius = editButton.frame.width/2.0
-        backButton.layer.cornerRadius = backButton.frame.width/2.0
-        
-        editButton.layer.borderWidth = 1.0
-        backButton.layer.borderWidth = 1.0
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -70,8 +61,6 @@ class ProfileHeaderViewController: UIViewController{
     
                 self.backgroundView.backgroundColor = colors!.backgroundColor
                 self.profileName.textColor = colors!.primaryColor
-                self.backButton.backgroundColor = colors!.primaryColor
-                self.backButton.backgroundColor = colors!.secondaryColor
                 
                 UIView.animateWithDuration(1, animations: {
                     self.profileName.alpha = 1

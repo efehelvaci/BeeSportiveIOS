@@ -12,4 +12,8 @@ class FavoriteSportCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var favSportImage: UIImageView!
     @IBOutlet var favSportName: UILabel!
+    
+    override func awakeFromNib() {
+        favSportName.adjustsFontSizeToFitWidth = true
+    }
 }

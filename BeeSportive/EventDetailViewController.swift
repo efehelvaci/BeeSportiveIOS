@@ -88,4 +88,10 @@ class EventDetailViewController: UIViewController {
         requestPage.eventID = event?.id
         self.presentViewController(requestPage, animated: true, completion: nil)
     }
+    
+
+    @IBAction func backButtonClicked(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
 }

@@ -17,8 +17,6 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet var eventsCollectionView: UICollectionView!
     
-    let ImageHeight = 230.0
-    let OffsetSpeed = 25.0
     let refreshControl = UIRefreshControl()
     var eventsArray = [Event]()
     var selectedEventNo : Int?
@@ -36,7 +34,7 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
         // Check if user is logged in or not
         FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
             if user != nil {
-                // User already logged 
+                // User already logged
                 print("User already logged in")
             } else {
                 // No user is signed in.
@@ -56,7 +54,7 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
         
         // Sidebar pan gesture
         self.frostedViewController.panGestureEnabled = true
-
+        
         // Collection view cell nib register
         let nibName = UINib(nibName: "EventCollectionViewCell", bundle:nil)
         eventsCollectionView.registerNib(nibName, forCellWithReuseIdentifier: "eventCell")
@@ -68,7 +66,7 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
     }
-
+    
     //
     // CollectionView Delegate Methods
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -103,8 +101,9 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        selectedEventNo = indexPath.row
-        performSegueWithIdentifier("eventsToEventDetailSeg", sender: nil)
+        let eventDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
+        eventDetailVC.event = eventsArray[indexPath.row]
+        self.presentViewController(eventDetailVC, animated: true, completion: nil)
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -185,15 +184,6 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
                 let yOffset = ((eventsCollectionView.contentOffset.y - parallaxCell.frame.origin.y) / 230) * 25
                 parallaxCell.offset(CGPointMake(0.0, yOffset))
             }
-        }
-    }
-    
-    //
-    // Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "eventsToEventDetailSeg" {
-            let detailViewController = segue.destinationViewController as! EventDetailViewController
-            detailViewController.event = eventsArray[selectedEventNo!]
         }
     }
 }
