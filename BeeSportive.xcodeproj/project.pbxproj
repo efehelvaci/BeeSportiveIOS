@@ -39,6 +39,8 @@
 		27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */; };
 		27EDE9A31D75DD7D00C90FC9 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */; };
 		27EE72441D6C4E5A00487673 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */; };
+		8149CEDA1D7CF47A005007BB /* ParticipantsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149CED91D7CF47A005007BB /* ParticipantsVC.swift */; };
+		8149CEDC1D7CF587005007BB /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149CEDB1D7CF587005007BB /* ParticipantCell.swift */; };
 		816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FB1D75A27A00E7F5CD /* ChatVC.swift */; };
 		816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FD1D75ADF800E7F5CD /* ChannelCell.swift */; };
 		816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948F91D75A26000E7F5CD /* ChannelsVC.swift */; };
@@ -109,6 +111,8 @@
 		27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeeSportive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8149CED91D7CF47A005007BB /* ParticipantsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsVC.swift; sourceTree = "<group>"; };
+		8149CEDB1D7CF587005007BB /* ParticipantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
 		816948F91D75A26000E7F5CD /* ChannelsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsVC.swift; sourceTree = "<group>"; };
 		816948FB1D75A27A00E7F5CD /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		816948FD1D75ADF800E7F5CD /* ChannelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
@@ -263,8 +267,7 @@
 				276109371D74471F001B51B6 /* Profile View */,
 				274902831D6F230A00E6766B /* Event View */,
 				274902821D6F22F400E6766B /* Side Menu */,
-				816948F51D75A1B100E7F5CD /* Channels View */,
-				816948F21D75A17900E7F5CD /* Chat View */,
+				816948F51D75A1B100E7F5CD /* Chat View */,
 				273E57511D61EA26009DABFE /* Manager */,
 				81E8DCF51D75BB4400234743 /* Constants.swift */,
 				27BFF2EC1D77A4A3002040D3 /* Functions.swift */,
@@ -317,6 +320,24 @@
 			name = "Event Detail Page";
 			sourceTree = "<group>";
 		};
+		8149CED71D7CF439005007BB /* Channels View */ = {
+			isa = PBXGroup;
+			children = (
+				816948F91D75A26000E7F5CD /* ChannelsVC.swift */,
+				816948FD1D75ADF800E7F5CD /* ChannelCell.swift */,
+			);
+			name = "Channels View";
+			sourceTree = "<group>";
+		};
+		8149CED81D7CF458005007BB /* Participants View */ = {
+			isa = PBXGroup;
+			children = (
+				8149CED91D7CF47A005007BB /* ParticipantsVC.swift */,
+				8149CEDB1D7CF587005007BB /* ParticipantCell.swift */,
+			);
+			name = "Participants View";
+			sourceTree = "<group>";
+		};
 		816948F21D75A17900E7F5CD /* Chat View */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,13 +346,14 @@
 			name = "Chat View";
 			sourceTree = "<group>";
 		};
-		816948F51D75A1B100E7F5CD /* Channels View */ = {
+		816948F51D75A1B100E7F5CD /* Chat View */ = {
 			isa = PBXGroup;
 			children = (
-				816948F91D75A26000E7F5CD /* ChannelsVC.swift */,
-				816948FD1D75ADF800E7F5CD /* ChannelCell.swift */,
+				8149CED71D7CF439005007BB /* Channels View */,
+				816948F21D75A17900E7F5CD /* Chat View */,
+				8149CED81D7CF458005007BB /* Participants View */,
 			);
-			name = "Channels View";
+			name = "Chat View";
 			sourceTree = "<group>";
 		};
 		D88B80E2702491BEC5AB6B21 /* Frameworks */ = {
@@ -556,6 +578,7 @@
 				81E8DCF81D75BD8400234743 /* Channel.swift in Sources */,
 				277C1CBD1D63B26A0008331F /* Event.swift in Sources */,
 				27743FEE1D634E47004EAD97 /* User.swift in Sources */,
+				8149CEDC1D7CF587005007BB /* ParticipantCell.swift in Sources */,
 				276109391D744752001B51B6 /* PastEventsViewController.swift in Sources */,
 				2761093C1D74A38A001B51B6 /* MainNavigationController.swift in Sources */,
 				273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */,
@@ -570,6 +593,7 @@
 				816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */,
 				816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */,
 				277C1CB91D6387100008331F /* EventViewController.swift in Sources */,
+				8149CEDA1D7CF47A005007BB /* ParticipantsVC.swift in Sources */,
 				81E8DCF41D75B88300234743 /* FavoriteSportCollectionViewCell.swift in Sources */,
 				27EDE9971D759CBE00C90FC9 /* ProfileHeaderViewController.swift in Sources */,
 				819669FE1D75D7D60038717C /* StatsViewController.swift in Sources */,

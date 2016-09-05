@@ -20,6 +20,7 @@ class ChatVC: JSQMessagesViewController {
         automaticallyScrollsToMostRecentMessage = true
         self.senderId = FIRAuth.auth()?.currentUser?.uid
         self.senderDisplayName = FIRAuth.auth()?.currentUser?.displayName
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(ChatVC.segueToParticipants))
         REF_CHANNELS.child(channelID).child("messages").observeEventType(.ChildAdded, withBlock: { snapshot in
             guard let data = snapshot.value as? Dictionary<String, String> else { return }
             let senderId = data["senderId"]!
@@ -132,6 +133,16 @@ class ChatVC: JSQMessagesViewController {
         messages.append(message)
         self.collectionView.reloadData()
         finishReceivingMessageAnimated(true)
+    }
+
+    func segueToParticipants() {
+        self.performSegueWithIdentifier("toParticipantsSegue", sender: self.navigationItem.rightBarButtonItem)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let destVC = segue.destinationViewController as? ParticipantsVC {
+            destVC.eventID = self.channelID
+        }
     }
     
 }

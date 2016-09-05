@@ -6,8 +6,10 @@
 //  Copyright © 2016 BeeSportive. All rights reserved.
 //
 import Foundation
+import Firebase
 
 class User {
+    
     // MARK: Properties
     let displayName: String
     var photoURL: String?
@@ -21,4 +23,13 @@ class User {
         self.email = email
         self.id = id
     }
+
+    init(snapshot: FIRDataSnapshot) {
+        let data = snapshot.value as! Dictionary<String, String>
+        self.displayName = data["displayName"]!
+        self.photoURL = data["photoURL"]
+        self.email = data["email"]!
+        self.id = data["id"]!
+    }
+
 }
