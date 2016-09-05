@@ -29,6 +29,13 @@ class ChannelCell: UITableViewCell {
             }
             if let branch = snapshot.childSnapshotForPath("branch").value as? String {
                 self.backgroundView = UIImageView(image: UIImage(named: branch))
+                self.backgroundView?.contentMode = .ScaleAspectFill
+                self.backgroundView?.alpha = 0.8
+                let layer = UIView(frame: CGRect(origin: self.contentView.bounds.origin, size: self.contentView.bounds.size))
+                layer.backgroundColor = UIColor.blackColor()
+                layer.alpha = 0.3
+                layer.userInteractionEnabled = false
+                self.backgroundView?.addSubview(layer)
             }
             if let imgURLstr = snapshot.childSnapshotForPath("creatorImageURL").value as? String {
                 let imgURL = NSURL(string: imgURLstr)!
