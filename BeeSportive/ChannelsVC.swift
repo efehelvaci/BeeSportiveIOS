@@ -18,6 +18,7 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         REF_USERS.child(uid).child("eventsCreated").observeEventType(.Value, withBlock: { snapshot in
             self.channels.removeAll()
             for snap in snapshot.children {
@@ -36,7 +37,25 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         })
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let tabBarCont = tabBarController as! TabBarController
+        
+        tabBarCont.menuButton.hidden = true
+        tabBarCont.tabBar.hidden = true
+    }
 
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        let tabBarCont = tabBarController as! TabBarController
+        
+        tabBarCont.menuButton.hidden = false
+        tabBarCont.tabBar.hidden = false
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

@@ -13,6 +13,7 @@ import SJSegmentedScrollView
 
 class TabBarController: UITabBarController {
     
+    let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
     var segmentedViewController = SJSegmentedViewController()
     
     override func viewDidLoad() {
@@ -46,7 +47,7 @@ class TabBarController: UITabBarController {
     }
     
     func setupMiddleButton() {
-        let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
+        
         var menuButtonFrame = menuButton.frame
         menuButtonFrame.origin.y = self.view.bounds.height - menuButtonFrame.height
         menuButtonFrame.origin.x = self.view.bounds.width/2 - menuButtonFrame.size.width/2
@@ -103,7 +104,7 @@ class TabBarController: UITabBarController {
                     thirdViewController!]
                 self.segmentedViewController.headerViewHeight = 200
                 
-                self.segmentedViewController.selectedSegmentViewColor = UIColor.redColor()
+                self.segmentedViewController.selectedSegmentViewColor = UIColor.orangeColor()
                 self.segmentedViewController.segmentViewHeight = 60.0
                 self.segmentedViewController.segmentShadow = SJShadow.light()
                 self.segmentedViewController.delegate = self

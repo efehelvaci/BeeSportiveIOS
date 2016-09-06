@@ -62,9 +62,7 @@ class Functions {
                 headerViewController!.delegate = self.segmentedViewController
                 
     
-                vc.presentViewController(self.segmentedViewController, animated: true, completion: {
-                    FTIndicator.dismissProgress()
-                })
+                vc.presentViewController(self.segmentedViewController, animated: true, completion: nil)
             }
         })
     }
