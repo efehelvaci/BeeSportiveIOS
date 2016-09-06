@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import REFrostedViewController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,15 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Use Firebase library to configure APIs
         FIRApp.configure()
-        
-        // FrostedViewController initial setup
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let frostedViewController = REFrostedViewController(contentViewController:  storyboard.instantiateViewControllerWithIdentifier("BaseNavigationController"), menuViewController: storyboard.instantiateViewControllerWithIdentifier("SideMenuViewController"))
-        
-        frostedViewController.direction = REFrostedViewControllerDirection.Left
-        frostedViewController.menuViewSize = CGSizeMake(screenSize.width*0.8 , screenSize.height)
-        
-        self.window?.rootViewController = frostedViewController
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }

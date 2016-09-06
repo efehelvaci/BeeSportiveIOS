@@ -65,7 +65,6 @@ PODS:
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
   - KYWheelTabController (1.0.0)
-  - REFrostedViewController (2.4.8)
   - SJSegmentedScrollView (1.1.0)
   - VideoSplashKit (1.1.0)
   - WWCalendarTimeSelector (1.2.11)
@@ -83,7 +82,6 @@ DEPENDENCIES:
   - FTIndicator
   - JSQMessagesViewController
   - KYWheelTabController
-  - REFrostedViewController (~> 2.4)
   - SJSegmentedScrollView (= 1.1.0)
   - VideoSplashKit
   - WWCalendarTimeSelector
@@ -110,11 +108,10 @@ SPEC CHECKSUMS:
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   KYWheelTabController: 1aab3d3b1e0db6f8dc97c458f694678cb696eacd
-  REFrostedViewController: a893b4979ba1f200c547aef9ff4c3fd5a18f5923
   SJSegmentedScrollView: 24a5b24a8822f087f0dda56523a6abbf8a2a2472
   VideoSplashKit: 0aa63d0bb37c5bd357de3e6a2a13dea5acad4d66
   WWCalendarTimeSelector: 9e58e9d81600d836cbb38995349e6764e9e3aa5f
 
-PODFILE CHECKSUM: 5353e2115189992681590162e549f30f1fe6ecff
+PODFILE CHECKSUM: e9b8e19960150af60861b867f2165e19295d7c5a
 
 COCOAPODS: 1.0.1

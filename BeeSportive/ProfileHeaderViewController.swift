@@ -10,7 +10,7 @@ import UIKit
 import Async
 import Alamofire
 import Firebase
-import REFrostedViewController
+import FTIndicator
 
 class ProfileHeaderViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -21,8 +21,9 @@ class ProfileHeaderViewController: UIViewController, UIImagePickerControllerDele
     @IBOutlet var backButton: UIButton!
     let imagePicker = UIImagePickerController()
     
-    internal var delegate : AnyObject?
-    internal var user : User?
+    var delegate : AnyObject?
+    var user : User?
+    var sender = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,16 +33,15 @@ class ProfileHeaderViewController: UIViewController, UIImagePickerControllerDele
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        FTIndicator.showProgressWithmessage("Loading", userInteractionEnable: false)
+        
+        editButton.alpha = 0
         profileImage.alpha = 0
         profileName.alpha = 0
         
-        if user!.id != FIRAuth.auth()?.currentUser?.uid {
-            editButton.enabled = false
-            editButton.alpha = 0
-        } else {
-            editButton.enabled = true
-            editButton.alpha = 1
-        }
+        sender == 0 ? (backButton.hidden = true) : (backButton.hidden = false)
+        
+        user!.id != FIRAuth.auth()?.currentUser?.uid ? (editButton.hidden = true) : (editButton.hidden = false)
         
         setHeader()
     }
@@ -67,6 +67,9 @@ class ProfileHeaderViewController: UIViewController, UIImagePickerControllerDele
                 UIView.animateWithDuration(1, animations: {
                     self.profileName.alpha = 1
                     self.profileImage.alpha = 1
+                    self.editButton.alpha = 1
+                    }, completion: { _ in
+                        FTIndicator.dismissProgress()
                 })
             }
         }

@@ -18,9 +18,6 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController!.navigationBar.translucent = false
-        navigationItem.title = "Event create"
-        
         form +++ Section()
             <<< TextRow(){ row in
                 row.placeholder = "Event name"
@@ -155,7 +152,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
             <<< ButtonRow("Cancel") { (row: ButtonRow) -> () in
                 row.title = row.tag
                 row.onCellSelection({ (cell, row) in
-                    self.navigationController!.popViewControllerAnimated(true)
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 })
             }
     }

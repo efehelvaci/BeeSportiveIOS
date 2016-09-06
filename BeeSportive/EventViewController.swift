@@ -10,7 +10,6 @@ import UIKit
 import Async
 import Firebase
 import FirebaseDatabase
-import REFrostedViewController
 import Alamofire
 
 class EventViewController: UIViewController, UIScrollViewDelegate {
@@ -27,7 +26,6 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
         navigationController?.hidesBarsOnSwipe = true
         
         // Navigation bar & controller settings
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Profile3") , style: .Plain, target: self, action: #selector(leftBarButtonItemTouchUpInside))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Chat") , style: .Plain, target: self, action: #selector(rightBarButtonItemTouchUpInside))
         navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         
@@ -51,9 +49,6 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(retrieveData), forControlEvents: UIControlEvents.ValueChanged)
         eventsCollectionView.addSubview(refreshControl)
-        
-        // Sidebar pan gesture
-        self.frostedViewController.panGestureEnabled = true
         
         // Collection view cell nib register
         let nibName = UINib(nibName: "EventCollectionViewCell", bundle:nil)
@@ -167,15 +162,11 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func leftBarButtonItemTouchUpInside() {
-        self.frostedViewController.presentMenuViewController()
+        
     }
     
     func rightBarButtonItemTouchUpInside() {
         self.performSegueWithIdentifier("toChannelsSegue", sender: self)
-    }
-    
-    func panGestureRecognized(sender : UIScreenEdgePanGestureRecognizer){
-        self.frostedViewController.panGestureRecognized(sender)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

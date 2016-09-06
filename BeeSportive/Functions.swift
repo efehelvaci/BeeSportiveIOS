@@ -20,6 +20,7 @@ class Functions {
         firstViewController!.title = "Past Beevents"
         
         let headerViewController = storyboard.instantiateViewControllerWithIdentifier("ProfileHeader") as? ProfileHeaderViewController
+        headerViewController?.sender = 1
         
         let secondViewController = storyboard.instantiateViewControllerWithIdentifier("ProfileStatsViewController") as? StatsViewController
         secondViewController!.title = "Stats"
