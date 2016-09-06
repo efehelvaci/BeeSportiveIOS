@@ -19,8 +19,8 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet var tableView: UITableView!
     
     let reuseIdentifier = "sideBarItem"
-    let tableItems : [String] = ["Profile", "Settings"]
-    let tableItemsIcons : [UIImage] = [UIImage(named: "Profile3")!, UIImage(named: "Settings")!]
+    let tableItems : [String] = ["Profile", "Users", "Settings"]
+    let tableItemsIcons : [UIImage] = [UIImage(named: "Profile3")!, UIImage(named: "Profile")!, UIImage(named: "Settings")!]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +57,8 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
             let function = Functions()
             function.getProfilePage((FIRAuth.auth()?.currentUser?.uid)! , vc: mainNavigationController)
             break
+        case 1:
+            self.performSegueWithIdentifier("toUsersSegue", sender: self)
         default:
             print("Switch default")
         }

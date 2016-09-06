@@ -20,6 +20,7 @@ class ChannelCell: UITableViewCell {
     @IBOutlet weak var sender: UILabel!
 
     func configureCell(channel: Channel) {
+        self.hidden = true
         self.lastMessage.text = channel.lastMessage["message"]
         self.date.text = channel.lastMessage["date"]
         if channel.lastMessage["senderId"]! != "" {
@@ -53,6 +54,7 @@ class ChannelCell: UITableViewCell {
                     }
                 }
             }
+            self.hidden = false
         })
     }
 

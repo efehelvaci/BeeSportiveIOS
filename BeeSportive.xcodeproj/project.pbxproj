@@ -39,6 +39,9 @@
 		27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */; };
 		27EDE9A31D75DD7D00C90FC9 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */; };
 		27EE72441D6C4E5A00487673 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */; };
+		8114B4CE1D7ED2A900CE0FF8 /* UsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8114B4CD1D7ED2A900CE0FF8 /* UsersVC.swift */; };
+		8114B4D11D7ED2CB00CE0FF8 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8114B4CF1D7ED2CB00CE0FF8 /* UserCell.swift */; };
+		8114B4D21D7ED2CB00CE0FF8 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8114B4D01D7ED2CB00CE0FF8 /* UserCell.xib */; };
 		8149CEDA1D7CF47A005007BB /* ParticipantsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149CED91D7CF47A005007BB /* ParticipantsVC.swift */; };
 		8149CEDC1D7CF587005007BB /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149CEDB1D7CF587005007BB /* ParticipantCell.swift */; };
 		816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FB1D75A27A00E7F5CD /* ChatVC.swift */; };
@@ -111,6 +114,9 @@
 		27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		27EE72431D6C4E5A00487673 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeeSportive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8114B4CD1D7ED2A900CE0FF8 /* UsersVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersVC.swift; sourceTree = "<group>"; };
+		8114B4CF1D7ED2CB00CE0FF8 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		8114B4D01D7ED2CB00CE0FF8 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		8149CED91D7CF47A005007BB /* ParticipantsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsVC.swift; sourceTree = "<group>"; };
 		8149CEDB1D7CF587005007BB /* ParticipantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
 		816948F91D75A26000E7F5CD /* ChannelsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsVC.swift; sourceTree = "<group>"; };
@@ -267,6 +273,7 @@
 				276109371D74471F001B51B6 /* Profile View */,
 				274902831D6F230A00E6766B /* Event View */,
 				274902821D6F22F400E6766B /* Side Menu */,
+				8114B4CC1D7ED28300CE0FF8 /* Users View */,
 				816948F51D75A1B100E7F5CD /* Chat View */,
 				273E57511D61EA26009DABFE /* Manager */,
 				81E8DCF51D75BB4400234743 /* Constants.swift */,
@@ -318,6 +325,16 @@
 				27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */,
 			);
 			name = "Event Detail Page";
+			sourceTree = "<group>";
+		};
+		8114B4CC1D7ED28300CE0FF8 /* Users View */ = {
+			isa = PBXGroup;
+			children = (
+				8114B4CD1D7ED2A900CE0FF8 /* UsersVC.swift */,
+				8114B4CF1D7ED2CB00CE0FF8 /* UserCell.swift */,
+				8114B4D01D7ED2CB00CE0FF8 /* UserCell.xib */,
+			);
+			name = "Users View";
 			sourceTree = "<group>";
 		};
 		8149CED71D7CF439005007BB /* Channels View */ = {
@@ -492,6 +509,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8114B4D21D7ED2CB00CE0FF8 /* UserCell.xib in Resources */,
 				27CE1E911D6F7D76007C0DE7 /* LoginVideo.mp4 in Resources */,
 				27CB27171D5D3CDD00F9ECF5 /* LaunchScreen.storyboard in Resources */,
 				273E57551D61EC8B009DABFE /* GoogleService-Info.plist in Resources */,
@@ -575,6 +593,7 @@
 				816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */,
 				27BFF2E61D778D3E002040D3 /* RequestsViewController.swift in Sources */,
 				2786D7F31D7C451B00E1510F /* UIImageColors.swift in Sources */,
+				8114B4D11D7ED2CB00CE0FF8 /* UserCell.swift in Sources */,
 				81E8DCF81D75BD8400234743 /* Channel.swift in Sources */,
 				277C1CBD1D63B26A0008331F /* Event.swift in Sources */,
 				27743FEE1D634E47004EAD97 /* User.swift in Sources */,
@@ -586,6 +605,7 @@
 				277C1CC01D64A2B20008331F /* EventCollectionViewCell.swift in Sources */,
 				27788D241D7B2173002B6554 /* EventFormViewController.swift in Sources */,
 				27BFF2ED1D77A4A3002040D3 /* Functions.swift in Sources */,
+				8114B4CE1D7ED2A900CE0FF8 /* UsersVC.swift in Sources */,
 				274902871D6F23F500E6766B /* SideMenuTableViewCell.swift in Sources */,
 				27CB270D1D5D3CDD00F9ECF5 /* AppDelegate.swift in Sources */,
 				27EDE9A31D75DD7D00C90FC9 /* EventDetailViewController.swift in Sources */,

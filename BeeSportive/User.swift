@@ -25,11 +25,11 @@ class User {
     }
 
     init(snapshot: FIRDataSnapshot) {
-        let data = snapshot.value as! Dictionary<String, String>
-        self.displayName = data["displayName"]!
-        self.photoURL = data["photoURL"]
-        self.email = data["email"]!
-        self.id = data["id"]!
+        let data = snapshot.value as! Dictionary<String, AnyObject>
+        self.displayName = data["displayName"] as! String
+        self.photoURL = data["photoURL"] as? String
+        self.email = data["email"] as! String
+        self.id = data["id"] as! String
     }
 
 }
