@@ -22,7 +22,13 @@ class ChannelCell: UITableViewCell {
     func configureCell(channel: Channel) {
         self.lastMessage.text = channel.lastMessage["message"]
         self.date.text = channel.lastMessage["date"]
-        self.sender.text = channel.lastSenderDisplayName
+        if channel.lastMessage["senderId"]! != "" {
+            REF_USERS.child(channel.lastMessage["senderId"]!).child("displayName").observeEventType(.Value, withBlock: { (snapshot) in
+                if let displayName = snapshot.value as? String {
+                    self.sender.text = displayName
+                }
+            })
+        }
         REF_EVENTS.child(channel.id).observeEventType(.Value, withBlock: { snapshot in
             if let title = snapshot.childSnapshotForPath("name").value as? String {
                 self.title.text = title

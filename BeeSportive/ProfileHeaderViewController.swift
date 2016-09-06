@@ -12,19 +12,21 @@ import Alamofire
 import Firebase
 import REFrostedViewController
 
-class ProfileHeaderViewController: UIViewController{
+class ProfileHeaderViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet var profileImage: UIImageView!
     @IBOutlet var profileName: UILabel!
     @IBOutlet var editButton: UIButton!
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var backButton: UIButton!
+    let imagePicker = UIImagePickerController()
     
     internal var delegate : AnyObject?
     internal var user : User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        imagePicker.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -79,6 +81,27 @@ class ProfileHeaderViewController: UIViewController{
     }
     
     @IBAction func profilEditButtonClicked(sender: AnyObject) {
-        
+        imagePicker.sourceType = .PhotoLibrary
+        presentViewController(imagePicker, animated: true, completion: nil)
     }
+
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        profileImage.image = image
+        if let data = UIImageJPEGRepresentation(image, 0.2) {
+            var path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+            path = path.stringByAppendingString("/\(user!.id).jpg")
+            do { try data.writeToFile(path, options: .DataWritingAtomic) }
+            catch { print(error) }
+            let url = NSURL(fileURLWithPath: path)
+            REF_STORAGE.child(user!.id).putFile(url, metadata: nil, completion: { (meta, error) in
+                if let meta = meta {
+                    let url = meta.downloadURL()!
+                    self.user!.photoURL = url.absoluteString
+                    REF_USERS.child(self.user!.id).child("photoURL").setValue(url.absoluteString)
+                } else { print(error) }
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+        }
+    }
+
 }

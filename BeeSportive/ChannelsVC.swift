@@ -23,6 +23,9 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             for snap in snapshot.children {
                 guard let data = snap as? FIRDataSnapshot else { return }
                 let channelID = data.value as! String
+                REF_CHANNELS.child(channelID).observeEventType(.ChildChanged, withBlock: { (snapshot) in
+                    self.viewDidLoad()
+                })
                 REF_CHANNELS.child(channelID).observeEventType(.Value, withBlock: { (snap) in
                     if self.channels.count != Int(snapshot.childrenCount) {
                         let channel = Channel(snapshot: snap)

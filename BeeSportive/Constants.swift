@@ -14,6 +14,7 @@ let REF_DATA = FIRDatabase.database().reference()
 let REF_CHANNELS = REF_DATA.child("channels")
 let REF_USERS = REF_DATA.child("users")
 let REF_EVENTS = REF_DATA.child("events")
+let REF_STORAGE = FIRStorage.storage().reference()
 
 let branchs = ["Badminton", "Baseball", "Basketball", "Billard", "Bowling", "Canoe", "Crossfit", "Curling", "Cycling", "Dancing", "Diving", "Fencing", "Fitness", "Football", "Golf", "Gymnastic", "Handball", "Hiking", "Ice Hockey", "Ice Skating", "Martial Arts", "Motor Sports", "Mountain Climbing", "Orienting", "Paintball", "Parkour", "Pilates", "Pokemon Go", "Quidditch", "Rafting", "Rowing", "Rugby", "Running", "Sailing", "Skateboarding", "Skating", "Skiing", "Snowboarding", "Surfing", "Swimming", "Table Tennis", "Tennis", "Triathlon", "Volleyball", "Water polo", "Wind surfing", "Wrestling", "Yoga"]
 let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
