@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class RequestsTableViewCell: UITableViewCell {
     
@@ -14,6 +15,7 @@ class RequestsTableViewCell: UITableViewCell {
     @IBOutlet var userImage: UIImageView!
     
     var requesterID : String?
+    var eventID : String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,10 +32,13 @@ class RequestsTableViewCell: UITableViewCell {
     }
     
     @IBAction func declineButtonClicked(sender: AnyObject) {
+        REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
     }
     
  
     @IBAction func acceptButtonClicked(sender: AnyObject) {
+        REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
+        REF_EVENTS.child(eventID!).child("participants").child(requesterID!).setValue("accepted")
     }
     
 

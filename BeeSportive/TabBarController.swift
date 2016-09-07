@@ -13,27 +13,45 @@ import SJSegmentedScrollView
 
 class TabBarController: UITabBarController {
     
-    let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
+    let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 72))
     var segmentedViewController = SJSegmentedViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tabBar.tintColor = UIColor(red: 249/255, green: 225/255, blue: 6/255, alpha: 1)
+        
         getProfilePage((FIRAuth.auth()?.currentUser!.uid)!)
         
         let viewController1 = storyboard!.instantiateViewControllerWithIdentifier("EventViewController") as! EventViewController
-        viewController1.tabBarItem = UITabBarItem(title: "Events", image: UIImage(named: "Event"), tag: 1)
+        viewController1.tabBarItem = UITabBarItem(title: "Events", image: UIImage(named: "Events"), tag: 1)
         let nav1 = UINavigationController(rootViewController: viewController1)
         
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = nav1.navigationBar.bounds
+        gradientLayer.frame.size.height += 20
+        gradientLayer.colors = [UIColor.yellowColor(),UIColor.whiteColor()].map{$0.CGColor}
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        
+        // Render the gradient to UIImage
+        UIGraphicsBeginImageContext(gradientLayer.bounds.size)
+        gradientLayer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        // Set the UIImage as background property
+        nav1.navigationBar.setBackgroundImage(image, forBarMetrics: UIBarMetrics.Default)
+        
         let viewController2 = storyboard!.instantiateViewControllerWithIdentifier("UsersVC") as! UsersVC
-        viewController2.tabBarItem = UITabBarItem(tabBarSystemItem: .Search, tag: 2)
+        viewController2.tabBarItem = UITabBarItem(title: "Search", image: UIImage(named: "SearchPeople"), tag: 2)
         
         let viewController3 = UIViewController()
         
         let viewController4 = UIViewController()
-        viewController4.tabBarItem = UITabBarItem(tabBarSystemItem: .Featured, tag: 4)
+        viewController4.tabBarItem = UITabBarItem(title: "Notifications", image: UIImage(named: "Notifications"), tag: 4)
         
-        segmentedViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "Profile"), tag: 5)
+        segmentedViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "Avatar"), tag: 5)
         
         setupMiddleButton()
         
@@ -53,16 +71,16 @@ class TabBarController: UITabBarController {
         menuButtonFrame.origin.x = self.view.bounds.width/2 - menuButtonFrame.size.width/2
         menuButton.frame = menuButtonFrame
         
-        menuButton.layer.cornerRadius = menuButtonFrame.height/2
+//        menuButton.layer.cornerRadius = menuButtonFrame.height/2
         self.view.addSubview(menuButton)
         
         menuButton.setImage(UIImage(named: "Add"), forState: UIControlState.Normal)
-        menuButton.addTarget(self, action: "menuButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        menuButton.addTarget(self, action: #selector(menuButtonAction), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.view.layoutIfNeeded()
     }
     
-    func menuButtonAction(sender: UIButton) {
+    func menuButtonAction() {
         self.presentViewController(storyboard!.instantiateViewControllerWithIdentifier("EventFormViewController"), animated: true, completion: nil)
     }
     
@@ -82,7 +100,6 @@ class TabBarController: UITabBarController {
         REF_USERS.child(userID).observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.exists() {
                 let dict = NSDictionary(dictionary: snapshot.value as! [String : AnyObject])
-                print(dict)
                 
                 let displayName = dict.valueForKey("displayName") as! String
                 let email = dict.valueForKey("email") as! String
@@ -110,7 +127,7 @@ class TabBarController: UITabBarController {
                 self.segmentedViewController.delegate = self
                 
                 headerViewController!.delegate = self.segmentedViewController
-                self.segmentedViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "Profile"), tag: 5)
+                self.segmentedViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "Avatar"), tag: 5)
                 
                 self.viewControllers?.removeAtIndex(4)
                 self.viewControllers?.insert(self.segmentedViewController, atIndex: 4)

@@ -77,9 +77,7 @@ class LoginViewController: VideoSplashViewController, FBSDKLoginButtonDelegate {
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
             if result.grantedPermissions.contains("email") && result.grantedPermissions.contains("user_friends") && result.grantedPermissions.contains("public_profile")
-            {
-                print(result)
-                
+            {   
                 let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
                 
                 FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in

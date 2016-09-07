@@ -31,8 +31,13 @@ class ChatVC: JSQMessagesViewController {
         })
     }
 
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let tabBarCont = tabBarController as! TabBarController
+        
+        tabBarCont.menuButton.hidden = true
+        tabBarCont.tabBar.hidden = true
     }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

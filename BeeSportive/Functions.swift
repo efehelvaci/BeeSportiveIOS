@@ -32,7 +32,6 @@ class Functions {
         REF_USERS.child(userID).observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.exists() {
                 let dict = NSDictionary(dictionary: snapshot.value as! [String : AnyObject])
-                print(dict)
                 
                 let displayName = dict.valueForKey("displayName") as! String
                 let email = dict.valueForKey("email") as! String

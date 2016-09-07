@@ -66,7 +66,7 @@ class FavoriteSportsCollectionViewController: UICollectionViewController {
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(screenSize.width/2.0 - 1, 70)
+        return CGSizeMake(screenSize.width/2.0 - 1, 100)
     }
 
     // MARK: UICollectionViewDelegate

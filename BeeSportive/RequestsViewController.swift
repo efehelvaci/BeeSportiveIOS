@@ -49,6 +49,7 @@ class RequestsViewController: UIViewController, UITableViewDelegate{
         if let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as? RequestsTableViewCell {
             
             cell.requesterID = users[indexPath.row].id
+            cell.eventID = eventID!
             cell.userNameLabel.text = users[indexPath.row].displayName
             
             Alamofire.request(.GET, (self.users[indexPath.row].photoURL)!).responseData{ response in
@@ -84,14 +85,15 @@ class RequestsViewController: UIViewController, UITableViewDelegate{
     }
     
     func getUser(userID : String) {
-        REF_USERS.child(userID).observeSingleEventOfType(.Value, withBlock: { snapshot in
+        REF_USERS.child(userID).observeEventType(.Value, withBlock: { snapshot in
             if snapshot.exists() {
-                let dict = NSDictionary(dictionary: snapshot.value as! [String : AnyObject])
                 
-                let displayName = dict.valueForKey("displayName") as! String
-                let email = dict.valueForKey("email") as! String
-                let photoURL = dict.valueForKey("photoURL") as! String
-                let id = dict.valueForKey("id") as! String
+                let dict = snapshot.value as! Dictionary<String, AnyObject>
+                
+                let displayName = dict["displayName"] as! String
+                let email = dict["email"] as! String
+                let photoURL = dict["photoURL"] as! String
+                let id = dict["id"] as! String
                 
                 let user = User(displayName: displayName, photoURL: photoURL, email: email, id: id)
                 
@@ -103,15 +105,4 @@ class RequestsViewController: UIViewController, UITableViewDelegate{
             }
         })
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

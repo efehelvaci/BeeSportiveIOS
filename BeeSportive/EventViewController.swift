@@ -90,7 +90,7 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
         }
         
         // Flip animation
-        UIView.transitionWithView(cell, duration: 0.5, options: .TransitionFlipFromTop, animations: nil, completion: nil)
+        UIView.transitionWithView(cell, duration: 0.25, options: .TransitionFlipFromTop, animations: nil, completion: nil)
         
         return cell
     }
