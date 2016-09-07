@@ -20,8 +20,13 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         
         tabBar.tintColor = UIColor(red: 249/255, green: 225/255, blue: 6/255, alpha: 1)
-        
-        getProfilePage((FIRAuth.auth()?.currentUser!.uid)!)
+
+        if let uid = FIRAuth.auth()?.currentUser?.uid {
+            getProfilePage(uid)
+        }
+        //getProfilePage((FIRAuth.auth()?.currentUser!.uid)!)
+        // Abi bunu profile tabine basınca çağıralım direk açılışta değil de,
+        // hiç login olmamışsan crash veriyor şimdilik if let yaptım
         
         let viewController1 = storyboard!.instantiateViewControllerWithIdentifier("EventViewController") as! EventViewController
         viewController1.tabBarItem = UITabBarItem(title: "Events", image: UIImage(named: "Events"), tag: 1)
