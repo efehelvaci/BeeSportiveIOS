@@ -16,9 +16,9 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Hiking" translatesAutoresizingMaskIntoConstraints="NO" id="CDp-oJ-DaP">
                         <rect key="frame" x="0.0" y="-34" width="372" height="265"/>
                     </imageView>
-                    <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lKR-eJ-85U">
+                    <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lKR-eJ-85U">
                         <rect key="frame" x="0.0" y="0.0" width="372" height="196"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CardLines" translatesAutoresizingMaskIntoConstraints="NO" id="97N-Gu-LVY">
                         <rect key="frame" x="8" y="10" width="60" height="120"/>

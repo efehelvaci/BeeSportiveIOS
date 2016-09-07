@@ -33,22 +33,22 @@ class ProfileHeaderViewController: UIViewController, UIImagePickerControllerDele
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        sender == 0 ? (backButton.hidden = true) : (backButton.hidden = false)
+        
+        user!.id != FIRAuth.auth()?.currentUser?.uid ? (editButton.hidden = true) : (editButton.hidden = false)
+        
+        if user?.displayName != profileName.text { setHeader() }
+    }
+    
+    //
+    // Self created methods
+    func setHeader() {
         FTIndicator.showProgressWithmessage("Loading", userInteractionEnable: false)
         
         editButton.alpha = 0
         profileImage.alpha = 0
         profileName.alpha = 0
         
-        sender == 0 ? (backButton.hidden = true) : (backButton.hidden = false)
-        
-        user!.id != FIRAuth.auth()?.currentUser?.uid ? (editButton.hidden = true) : (editButton.hidden = false)
-        
-        setHeader()
-    }
-    
-    //
-    // Self created methods
-    func setHeader() {
         profileImage.layer.borderWidth = 3.0
         profileImage.layer.borderColor = UIColor.whiteColor().CGColor
         profileImage.layer.cornerRadius = self.profileImage.frame.width/2.0

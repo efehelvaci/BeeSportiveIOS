@@ -30,7 +30,7 @@ class PastEventsViewController: UIViewController, UIScrollViewDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        getMyEventsIDs()
+        if eventsArray.count == 0 { getMyEventsIDs() }
     }
     
     //

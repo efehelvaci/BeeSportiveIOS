@@ -87,7 +87,7 @@ class TabBarController: UITabBarController {
     }
     
     func menuButtonAction() {
-        self.presentViewController(eventCreationNavCon!, animated: true, completion: nil)
+        presentViewController(eventCreationNavCon!, animated: true, completion: nil)
     }
     
     func getProfilePage(userID : String) -> Void {
