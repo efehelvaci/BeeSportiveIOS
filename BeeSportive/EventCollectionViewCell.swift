@@ -28,4 +28,10 @@ class EventCollectionViewCell: UICollectionViewCell {
     func offset(offset: CGPoint) {
         backgroundImage.frame = CGRectOffset(self.backgroundImage.bounds, offset.x, offset.y)
     }
+    
+    override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
+    }
+    
+    
 }

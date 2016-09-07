@@ -10,11 +10,13 @@ import UIKit
 import FirebaseAuth
 import FTIndicator
 import SJSegmentedScrollView
+import Async
 
 class TabBarController: UITabBarController {
     
     let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 72))
     var segmentedViewController = SJSegmentedViewController()
+    var eventCreationNavCon : UINavigationController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +24,14 @@ class TabBarController: UITabBarController {
         tabBar.tintColor = UIColor(red: 249/255, green: 225/255, blue: 6/255, alpha: 1)
         
         getProfilePage((FIRAuth.auth()?.currentUser!.uid)!)
-        
+
         let viewController1 = storyboard!.instantiateViewControllerWithIdentifier("EventViewController") as! EventViewController
         viewController1.tabBarItem = UITabBarItem(title: "Events", image: UIImage(named: "Events"), tag: 1)
         let nav1 = UINavigationController(rootViewController: viewController1)
+        
+        let eventCreateVC = storyboard!.instantiateViewControllerWithIdentifier("EventFormViewController")
+        eventCreationNavCon = UINavigationController(rootViewController: eventCreateVC)
+        eventCreateVC.navigationItem.title = "Create Event"
         
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = nav1.navigationBar.bounds
@@ -81,7 +87,7 @@ class TabBarController: UITabBarController {
     }
     
     func menuButtonAction() {
-        self.presentViewController(storyboard!.instantiateViewControllerWithIdentifier("EventFormViewController"), animated: true, completion: nil)
+        self.presentViewController(eventCreationNavCon!, animated: true, completion: nil)
     }
     
     func getProfilePage(userID : String) -> Void {
@@ -121,7 +127,7 @@ class TabBarController: UITabBarController {
                     thirdViewController!]
                 self.segmentedViewController.headerViewHeight = 200
                 
-                self.segmentedViewController.selectedSegmentViewColor = UIColor.orangeColor()
+                self.segmentedViewController.selectedSegmentViewColor = UIColor(red: 249/255, green: 225/255, blue: 6/255, alpha: 1)
                 self.segmentedViewController.segmentViewHeight = 60.0
                 self.segmentedViewController.segmentShadow = SJShadow.light()
                 self.segmentedViewController.delegate = self
@@ -129,8 +135,10 @@ class TabBarController: UITabBarController {
                 headerViewController!.delegate = self.segmentedViewController
                 self.segmentedViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "Avatar"), tag: 5)
                 
-                self.viewControllers?.removeAtIndex(4)
-                self.viewControllers?.insert(self.segmentedViewController, atIndex: 4)
+                Async.main{
+                    self.viewControllers?.removeAtIndex(4)
+                    self.viewControllers?.insert(self.segmentedViewController, atIndex: 4)
+                }
             }
         })
     }
@@ -142,7 +150,7 @@ extension TabBarController : SJSegmentedViewControllerDelegate {
         if segmentedViewController.segments.count > 0 {
             
             let button = segmentedViewController.segments[index]
-            button.setTitleColor(UIColor.orangeColor(), forState: .Selected)
+            button.setTitleColor(UIColor(red: 249/255, green: 225/255, blue: 6/255, alpha: 1), forState: .Selected)
         }
     }
 }

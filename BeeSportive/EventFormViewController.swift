@@ -90,8 +90,8 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
             +++ Section()
             <<< ButtonRow("Add Event") { (row: ButtonRow) -> () in
                 row.title = row.tag
+                row.tag = "AddButton"
                 row.onCellSelection({ (cell, row) in
-                    row.disabled = true
                     
                     if let name = self.form.rowByTag("Name")?.baseValue as? String,
                         let description = self.form.rowByTag("Description")?.baseValue as? String,
@@ -103,7 +103,8 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                         let branch = self.form.rowByTag("Branch")?.baseValue as? String,
                         let maxJoin = self.form.rowByTag("MaxJoin")?.baseValue as? Int
                     {
-                    
+                        self.view.userInteractionEnabled = false
+                        
                         let dateFormatter = NSDateFormatter()
                     
                         dateFormatter.dateFormat = "dd"
@@ -143,9 +144,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                         REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("eventsCreated").childByAutoId().setValue(uuid)
                         FTIndicator.showNotificationWithImage(UIImage(named: "Success"), title: "Yay!", message: "Event successfully created!")
                     
-                        Async.main(after: 1, block: {
-                            self.navigationController!.popViewControllerAnimated(true)
-                        })
+                        self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 })
             }

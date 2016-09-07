@@ -12,9 +12,7 @@ import Firebase
 import FirebaseDatabase
 import Alamofire
 
-class EventViewController: UIViewController, UIScrollViewDelegate {
-    
-    @IBOutlet var eventsCollectionView: UICollectionView!
+class EventViewController: UICollectionViewController {
     
     let refreshControl = UIRefreshControl()
     var eventsArray = [Event]()
@@ -48,14 +46,14 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
         // Pull to refresh
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(retrieveData), forControlEvents: UIControlEvents.ValueChanged)
-        eventsCollectionView.addSubview(refreshControl)
+        collectionView!.addSubview(refreshControl)
         
         // Collection view cell nib register
         let nibName = UINib(nibName: "EventCollectionViewCell", bundle:nil)
-        eventsCollectionView.registerNib(nibName, forCellWithReuseIdentifier: "eventCell")
+        collectionView!.registerNib(nibName, forCellWithReuseIdentifier: "eventCell")
         
         // If there are not enough events to scroll, you can still pull to refresh
-        eventsCollectionView.alwaysBounceVertical = true
+        collectionView!.alwaysBounceVertical = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -64,12 +62,12 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
     
     //
     // CollectionView Delegate Methods
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.eventsArray.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = eventsCollectionView.dequeueReusableCellWithReuseIdentifier("eventCell", forIndexPath: indexPath) as! EventCollectionViewCell
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCell", forIndexPath: indexPath) as! EventCollectionViewCell
         
         // Filling cell
         cell.backgroundImage.image = UIImage(named: eventsArray[indexPath.row].branch)
@@ -89,24 +87,21 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        // Flip animation
-        UIView.transitionWithView(cell, duration: 0.25, options: .TransitionFlipFromTop, animations: nil, completion: nil)
-        
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let eventDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
         eventDetailVC.event = eventsArray[indexPath.row]
         self.presentViewController(eventDetailVC, animated: true, completion: nil)
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(screenSize.width, 200)
+        return CGSizeMake(screenSize.width, 180)
     }
     
     //
@@ -141,7 +136,7 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
                 
                 Async.main {
                     self.refreshControl.endRefreshing()
-                    self.eventsCollectionView.reloadData()
+                    self.collectionView!.reloadData()
                 }
             } else {
                 self.refreshControl.endRefreshing()
@@ -169,10 +164,10 @@ class EventViewController: UIViewController, UIScrollViewDelegate {
         self.performSegueWithIdentifier("toChannelsSegue", sender: self)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if let visibleCells = eventsCollectionView.visibleCells() as? [EventCollectionViewCell] {
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        if let visibleCells = collectionView!.visibleCells() as? [EventCollectionViewCell] {
             for parallaxCell in visibleCells {
-                let yOffset = ((eventsCollectionView.contentOffset.y - parallaxCell.frame.origin.y) / 230) * 25
+                let yOffset = ((collectionView!.contentOffset.y - parallaxCell.frame.origin.y) / 230) * 25
                 parallaxCell.offset(CGPointMake(0.0, yOffset))
             }
         }

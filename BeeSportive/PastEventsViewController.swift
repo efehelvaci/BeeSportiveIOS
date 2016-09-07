@@ -60,9 +60,6 @@ class PastEventsViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        // Flip animation
-        UIView.transitionWithView(cell, duration: 0.5, options: .TransitionFlipFromTop, animations: nil, completion: nil)
-        
         return cell
     }
     
@@ -77,7 +74,7 @@ class PastEventsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(screenSize.width, 200)
+        return CGSizeMake(screenSize.width, 180)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

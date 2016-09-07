@@ -40,6 +40,4 @@ class RequestsTableViewCell: UITableViewCell {
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).setValue("accepted")
     }
-    
-
 }
