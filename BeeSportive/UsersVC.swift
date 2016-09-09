@@ -21,7 +21,6 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        dismissKeyboardWhenTappedAround()
         FTIndicator.showProgressWithmessage("Loading", userInteractionEnable: false)
         let nib = UINib(nibName: "UserCell", bundle:nil)
         collectionView.registerNib(nib, forCellWithReuseIdentifier: "userCell")
@@ -58,12 +57,17 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     }
 
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print(indexPath.row)
         let function = Functions()
         if isSearching { function.getProfilePage(filteredUsers[indexPath.row].id, vc: self) }
         else { function.getProfilePage(users[indexPath.row].id, vc: self) }
     }
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        view.endEditing(true)
+    }
+
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         view.endEditing(true)
     }
 

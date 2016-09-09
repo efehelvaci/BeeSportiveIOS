@@ -19,4 +19,5 @@ target 'BeeSportive' do
 	pod 'SJSegmentedScrollView', '1.1.0'
     	pod 'JSQMessagesViewController'
 	pod 'Eureka', '~> 1.7'
+	pod 'HanekeSwift'
 end

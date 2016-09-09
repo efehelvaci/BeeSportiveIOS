@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import Alamofire
-import AlamofireImage
 import FTIndicator
+import Haneke
 
 class UserCell: UICollectionViewCell {
 
@@ -21,14 +20,12 @@ class UserCell: UICollectionViewCell {
         displayName.text = user.displayName
         if let urlStr = user.photoURL {
             let imgURL = NSURL(string: urlStr)!
-            Alamofire.request(.GET, imgURL).responseData{ response in
-                if let image = response.result.value {
-                    self.img.layer.masksToBounds = true
-                    self.img.layer.cornerRadius = self.img.frame.width / 2.0
-                    self.img.image = UIImage(data: image)
-                    FTIndicator.dismissProgress()
-                }
-            }
+            self.img.hnk_setImageFromURL(imgURL, placeholder: UIImage(), format: nil, failure: nil, success: { (image) in
+                self.img.layer.masksToBounds = true
+                self.img.layer.cornerRadius = self.img.frame.width / 2.0
+                self.img.image = image
+                FTIndicator.dismissProgress()
+            })
         }; self.hidden = false
     }
 

@@ -8,8 +8,7 @@
 
 import UIKit
 import Firebase
-import Alamofire
-import AlamofireImage
+import Haneke
 
 class ChannelCell: UITableViewCell {
 
@@ -46,13 +45,11 @@ class ChannelCell: UITableViewCell {
             }
             if let imgURLstr = snapshot.childSnapshotForPath("creatorImageURL").value as? String {
                 let imgURL = NSURL(string: imgURLstr)!
-                Alamofire.request(.GET, imgURL).responseData{ response in
-                    if let image = response.result.value {
-                        self.img.layer.masksToBounds = true
-                        self.img.layer.cornerRadius = self.img.frame.width / 2.0
-                        self.img.image = UIImage(data: image)
-                    }
-                }
+                self.img.hnk_setImageFromURL(imgURL, placeholder: UIImage(), format: nil, failure: nil, success: { (image) in
+                    self.img.layer.masksToBounds = true
+                    self.img.layer.cornerRadius = self.img.frame.width / 2.0
+                    self.img.image = image
+                })
             }
             self.hidden = false
         })
