@@ -9,17 +9,21 @@
 import UIKit
 import Firebase
 
-class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+
     let uid = FIRAuth.auth()!.currentUser!.uid
     var channels = [Channel]()
+    var filteredChannels = [Channel]()
+    var isSearching = false
     var selectedChannelID: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         REF_USERS.child(uid).child("eventsCreated").observeEventType(.Value, withBlock: { snapshot in
+            self.channels.removeAll()
             self.channels.removeAll()
             for snap in snapshot.children {
                 guard let data = snap as? FIRDataSnapshot else { return }
@@ -40,18 +44,14 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         let tabBarCont = tabBarController as! TabBarController
-        
         tabBarCont.menuButton.hidden = true
         tabBarCont.tabBar.hidden = true
     }
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
         let tabBarCont = tabBarController as! TabBarController
-        
         tabBarCont.menuButton.hidden = false
         tabBarCont.tabBar.hidden = false
     }
@@ -61,18 +61,21 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return channels.count
+        if isSearching { return filteredChannels.count }
+        else { return channels.count }
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCellWithIdentifier("ChannelCell") as? ChannelCell {
-            cell.configureCell(channels[indexPath.row])
+            if isSearching { cell.configureCell(filteredChannels[indexPath.row]) }
+            else { cell.configureCell(channels[indexPath.row]) }
             return cell
         } else { return UITableViewCell() }
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.selectedChannelID = channels[indexPath.row].id
+        if isSearching { self.selectedChannelID = filteredChannels[indexPath.row].id }
+        else { self.selectedChannelID = channels[indexPath.row].id }
         guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? ChannelCell else { return }
         performSegueWithIdentifier("toChatSegue", sender: cell)
     }
@@ -85,6 +88,20 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 destVC.navigationItem.title = cell.title.text
             }
         }
+    }
+
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        self.view.endEditing(true)
+    }
+
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text == nil || searchBar.text == "" {
+            isSearching = false
+        } else {
+            isSearching = true
+            let key = searchBar.text!.capitalizedString
+            filteredChannels = channels.filter({$0.title.rangeOfString(key) != nil})
+        }; tableView.reloadData()
     }
 
 }

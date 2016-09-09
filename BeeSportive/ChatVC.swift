@@ -33,9 +33,7 @@ class ChatVC: JSQMessagesViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         let tabBarCont = tabBarController as! TabBarController
-        
         tabBarCont.menuButton.hidden = true
         tabBarCont.tabBar.hidden = true
     }
@@ -145,8 +143,8 @@ class ChatVC: JSQMessagesViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let destVC = segue.destinationViewController as? ParticipantsVC {
-            destVC.eventID = self.channelID
+        if let destVC = segue.destinationViewController as? UsersVC {
+            destVC.title = "Participants"
         }
     }
     

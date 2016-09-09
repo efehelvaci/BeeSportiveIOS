@@ -77,3 +77,37 @@ extension Functions : SJSegmentedViewControllerDelegate {
         }
     }
 }
+
+extension UIViewController {
+
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
+    func dismissKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
+    func dateFromString(dateStr: String) -> NSDate {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .MediumStyle
+        dateFormatter.timeStyle = .ShortStyle
+        if let str = dateFormatter.dateFromString(dateStr) { return str }
+        else { return NSDate() }
+    }
+
+    func dateToString(date: NSDate) -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .MediumStyle
+        dateFormatter.timeStyle = .ShortStyle
+        return dateFormatter.stringFromDate(date)
+    }
+
+}

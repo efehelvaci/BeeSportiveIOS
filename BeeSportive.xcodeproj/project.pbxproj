@@ -10,7 +10,6 @@
 		2719B64C1D75749300724EF5 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B6491D75749300724EF5 /* FBSDKCoreKit.framework */; };
 		2719B64D1D75749300724EF5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */; };
 		2719B64E1D75749300724EF5 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */; };
-		273E57551D61EC8B009DABFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 273E57541D61EC8B009DABFE /* GoogleService-Info.plist */; };
 		273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E575B1D61FE8B009DABFE /* LoginViewController.swift */; };
 		276109391D744752001B51B6 /* PastEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276109381D744752001B51B6 /* PastEventsViewController.swift */; };
 		27743FEE1D634E47004EAD97 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27743FED1D634E47004EAD97 /* User.swift */; };
@@ -40,12 +39,11 @@
 		8114B4CE1D7ED2A900CE0FF8 /* UsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8114B4CD1D7ED2A900CE0FF8 /* UsersVC.swift */; };
 		8114B4D11D7ED2CB00CE0FF8 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8114B4CF1D7ED2CB00CE0FF8 /* UserCell.swift */; };
 		8114B4D21D7ED2CB00CE0FF8 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8114B4D01D7ED2CB00CE0FF8 /* UserCell.xib */; };
-		8149CEDA1D7CF47A005007BB /* ParticipantsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149CED91D7CF47A005007BB /* ParticipantsVC.swift */; };
-		8149CEDC1D7CF587005007BB /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149CEDB1D7CF587005007BB /* ParticipantCell.swift */; };
 		816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FB1D75A27A00E7F5CD /* ChatVC.swift */; };
 		816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948FD1D75ADF800E7F5CD /* ChannelCell.swift */; };
 		816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816948F91D75A26000E7F5CD /* ChannelsVC.swift */; };
 		819669FE1D75D7D60038717C /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9921D759C5B00C90FC9 /* StatsViewController.swift */; };
+		81AD82151D815ADA0027F3C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 81AD82141D815ADA0027F3C6 /* GoogleService-Info.plist */; };
 		81E8DCF41D75B88300234743 /* FavoriteSportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */; };
 		81E8DCF61D75BB4400234743 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E8DCF51D75BB4400234743 /* Constants.swift */; };
 		81E8DCF81D75BD8400234743 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E8DCF71D75BD8400234743 /* Channel.swift */; };
@@ -73,7 +71,6 @@
 		2719B6491D75749300724EF5 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
-		273E57541D61EC8B009DABFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		273E575B1D61FE8B009DABFE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		273E57631D62032B009DABFE /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		276109381D744752001B51B6 /* PastEventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastEventsViewController.swift; sourceTree = "<group>"; };
@@ -113,11 +110,10 @@
 		8114B4CD1D7ED2A900CE0FF8 /* UsersVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersVC.swift; sourceTree = "<group>"; };
 		8114B4CF1D7ED2CB00CE0FF8 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		8114B4D01D7ED2CB00CE0FF8 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
-		8149CED91D7CF47A005007BB /* ParticipantsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsVC.swift; sourceTree = "<group>"; };
-		8149CEDB1D7CF587005007BB /* ParticipantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
 		816948F91D75A26000E7F5CD /* ChannelsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelsVC.swift; sourceTree = "<group>"; };
 		816948FB1D75A27A00E7F5CD /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		816948FD1D75ADF800E7F5CD /* ChannelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
+		81AD82141D815ADA0027F3C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		81E8DCF51D75BB4400234743 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		81E8DCF71D75BD8400234743 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		96DC1E17FA063DC29D2BCC46 /* Pods-BeeSportive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeeSportive.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeeSportive/Pods-BeeSportive.debug.xcconfig"; sourceTree = "<group>"; };
@@ -269,8 +265,8 @@
 				27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */,
 				27CB27151D5D3CDD00F9ECF5 /* LaunchScreen.storyboard */,
 				27CB27181D5D3CDD00F9ECF5 /* Info.plist */,
+				81AD82141D815ADA0027F3C6 /* GoogleService-Info.plist */,
 				2786D7F21D7C451B00E1510F /* UIImageColors.swift */,
-				273E57541D61EC8B009DABFE /* GoogleService-Info.plist */,
 				273E57631D62032B009DABFE /* Bridging-Header.h */,
 				27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */,
 			);
@@ -332,15 +328,6 @@
 			name = "Channels View";
 			sourceTree = "<group>";
 		};
-		8149CED81D7CF458005007BB /* Participants View */ = {
-			isa = PBXGroup;
-			children = (
-				8149CED91D7CF47A005007BB /* ParticipantsVC.swift */,
-				8149CEDB1D7CF587005007BB /* ParticipantCell.swift */,
-			);
-			name = "Participants View";
-			sourceTree = "<group>";
-		};
 		816948F21D75A17900E7F5CD /* Chat View */ = {
 			isa = PBXGroup;
 			children = (
@@ -354,7 +341,6 @@
 			children = (
 				8149CED71D7CF439005007BB /* Channels View */,
 				816948F21D75A17900E7F5CD /* Chat View */,
-				8149CED81D7CF458005007BB /* Participants View */,
 			);
 			name = "Chat View";
 			sourceTree = "<group>";
@@ -451,7 +437,6 @@
 				TargetAttributes = {
 					27CB27081D5D3CDD00F9ECF5 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 23RTVFLNF5;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -496,9 +481,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8114B4D21D7ED2CB00CE0FF8 /* UserCell.xib in Resources */,
+				81AD82151D815ADA0027F3C6 /* GoogleService-Info.plist in Resources */,
 				27CE1E911D6F7D76007C0DE7 /* LoginVideo.mp4 in Resources */,
 				27CB27171D5D3CDD00F9ECF5 /* LaunchScreen.storyboard in Resources */,
-				273E57551D61EC8B009DABFE /* GoogleService-Info.plist in Resources */,
 				27CB27141D5D3CDD00F9ECF5 /* Assets.xcassets in Resources */,
 				27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */,
 				27CB27121D5D3CDD00F9ECF5 /* Main.storyboard in Resources */,
@@ -584,7 +569,6 @@
 				81E8DCF81D75BD8400234743 /* Channel.swift in Sources */,
 				277C1CBD1D63B26A0008331F /* Event.swift in Sources */,
 				27743FEE1D634E47004EAD97 /* User.swift in Sources */,
-				8149CEDC1D7CF587005007BB /* ParticipantCell.swift in Sources */,
 				276109391D744752001B51B6 /* PastEventsViewController.swift in Sources */,
 				273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */,
 				27BFF2E91D778D82002040D3 /* RequestsTableViewCell.swift in Sources */,
@@ -597,7 +581,6 @@
 				816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */,
 				816948FC1D75A27A00E7F5CD /* ChatVC.swift in Sources */,
 				277C1CB91D6387100008331F /* EventViewController.swift in Sources */,
-				8149CEDA1D7CF47A005007BB /* ParticipantsVC.swift in Sources */,
 				81E8DCF41D75B88300234743 /* FavoriteSportCollectionViewCell.swift in Sources */,
 				27EDE9971D759CBE00C90FC9 /* ProfileHeaderViewController.swift in Sources */,
 				819669FE1D75D7D60038717C /* StatsViewController.swift in Sources */,
@@ -749,6 +732,7 @@
 			baseConfigurationReference = 96DC1E17FA063DC29D2BCC46 /* Pods-BeeSportive.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -766,6 +750,7 @@
 			baseConfigurationReference = E2627E3253BB17FBA968F1C3 /* Pods-BeeSportive.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

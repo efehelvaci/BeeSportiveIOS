@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import FTIndicator
 
 class UserCell: UICollectionViewCell {
 
@@ -16,17 +17,19 @@ class UserCell: UICollectionViewCell {
     @IBOutlet weak var img: UIImageView!
 
     func configureCell(user: User) {
+        self.hidden = true
         displayName.text = user.displayName
         if let urlStr = user.photoURL {
             let imgURL = NSURL(string: urlStr)!
             Alamofire.request(.GET, imgURL).responseData{ response in
                 if let image = response.result.value {
                     self.img.layer.masksToBounds = true
-                    //self.img.layer.cornerRadius = self.img.frame.width / 2.0
+                    self.img.layer.cornerRadius = self.img.frame.width / 2.0
                     self.img.image = UIImage(data: image)
+                    FTIndicator.dismissProgress()
                 }
             }
-        }
+        }; self.hidden = false
     }
 
 }
