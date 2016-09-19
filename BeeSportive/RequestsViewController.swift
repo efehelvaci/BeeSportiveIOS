@@ -9,9 +9,9 @@
 import UIKit
 import Async
 import Firebase
-import Alamofire
+import Haneke
 
-class RequestsViewController: UIViewController, UITableViewDelegate{
+class RequestsViewController: UIViewController, UITableViewDelegate {
 
     @IBOutlet var tableView: UITableView!
     
@@ -51,11 +51,10 @@ class RequestsViewController: UIViewController, UITableViewDelegate{
             cell.requesterID = users[indexPath.row].id
             cell.eventID = eventID!
             cell.userNameLabel.text = users[indexPath.row].displayName
-            
-            Alamofire.request(.GET, (self.users[indexPath.row].photoURL)!).responseData{ response in
-                if let image = response.result.value {cell.userImage.image = UIImage(data: image)}
-            }
-
+            cell.delegate = self
+            cell.userImage.hnk_setImageFromURL(NSURL(string: self.users[indexPath.row].photoURL!)!, placeholder: UIImage(), format: nil, failure: nil, success: { image in
+                cell.userImage.image = image
+            })
             
             return cell
         } else { return UITableViewCell() }

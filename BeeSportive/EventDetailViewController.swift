@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import Alamofire
+import MapKit
 
 class EventDetailViewController: UIViewController {
     
@@ -21,8 +22,10 @@ class EventDetailViewController: UIViewController {
     @IBOutlet var eventBrancImage: UIImageView!
     @IBOutlet var eventAddressLabel: UILabel!
     @IBOutlet var eventDateLabel: UILabel!
+    @IBOutlet var map: MKMapView!
     
     internal var event : Event?
+    var participants = [User]()
     let font = UIFont(name: "Helvetica", size: 15.0)
 
     override func viewDidLoad() {
@@ -49,6 +52,15 @@ class EventDetailViewController: UIViewController {
         eventDateLabel.text = event!.day + "/" + event!.month + "/" + event!.year + "  " + event!.time
         creatorProfileView.layer.borderWidth = 1.0
         creatorProfileView.layer.cornerRadius = 10.0
+        
+        let centerLocation = CLLocationCoordinate2DMake(Double(event!.locationLat)!, Double(event!.locationLon)!)
+        let mapSpan = MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
+        
+        let pin = MKPointAnnotation()
+        pin.coordinate = centerLocation
+        map.addAnnotation(pin)
+        
+        map.region = MKCoordinateRegion(center: centerLocation, span: mapSpan)
         
         Alamofire.request(.GET, (self.event!.creatorImageURL)).responseData{ response in
             if let image = response.result.value {
@@ -92,6 +104,26 @@ class EventDetailViewController: UIViewController {
 
     @IBAction func backButtonClicked(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func retrieveParticipants() {
+        REF_EVENTS.child(event!.id).child("participants").observeSingleEventOfType(.Value , withBlock: { (snapshot) in
+            if snapshot.exists() {
+                let postDict = Array((snapshot.value as! [String : AnyObject]).values)
+                
+                for element in postDict {
+                    let id = element.valueForKey("id") as! String
+                    
+                    REF_USERS.child(id).observeSingleEventOfType(.Value, withBlock: { snapshot in
+                        if snapshot.exists() {
+                            let user = User(snapshot: snapshot)
+                            
+                            self.participants.insert(user, atIndex: 0)
+                        }
+                    })
+                }
+            }
+        })
     }
     
 }

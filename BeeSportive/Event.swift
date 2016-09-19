@@ -17,6 +17,8 @@ class Event {
     let branch : String
     let level : String
     let location : String
+    let locationLat : String
+    let locationLon : String
     let maxJoinNumber : String
     let description : String
     let month : String
@@ -24,7 +26,7 @@ class Event {
     let day : String
     let year : String
     
-    init(creatorID: String, creatorImageURL: String, creatorName: String, name: String, branch: String, level: String, location: String, maxJoinNumber: String, description : String, time: String, month: String, day: String, year: String, id: String){
+    init(creatorID: String, creatorImageURL: String, creatorName: String, name: String, branch: String, level: String, location: String, locationLat: String, locationLon : String, maxJoinNumber: String, description : String, time: String, month: String, day: String, year: String, id: String){
         self.creatorID = creatorID
         self.creatorImageURL = creatorImageURL
         self.creatorName = creatorName
@@ -32,6 +34,8 @@ class Event {
         self.branch = branch
         self.level = level
         self.location = location
+        self.locationLat = locationLat
+        self.locationLon = locationLon
         self.maxJoinNumber = maxJoinNumber
         self.description = description
         self.time = time

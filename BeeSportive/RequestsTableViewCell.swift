@@ -16,6 +16,7 @@ class RequestsTableViewCell: UITableViewCell {
     
     var requesterID : String?
     var eventID : String?
+    var delegate : RequestsViewController?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,13 +32,26 @@ class RequestsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func deleteUser() {
+        for i in 0 ..< delegate!.users.count {
+            if requesterID! == delegate!.users[i].id {
+                delegate!.users.removeAtIndex(i)
+                delegate!.tableView.reloadData()
+            }
+        }
+        
+        if delegate!.users.count == 0 { delegate!.dismissViewControllerAnimated(true, completion: nil) }
+    }
+    
     @IBAction func declineButtonClicked(sender: AnyObject) {
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
+        deleteUser()
     }
     
  
     @IBAction func acceptButtonClicked(sender: AnyObject) {
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).setValue("accepted")
+        deleteUser()
     }
 }

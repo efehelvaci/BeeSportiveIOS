@@ -11,6 +11,7 @@
 		2719B64D1D75749300724EF5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */; };
 		2719B64E1D75749300724EF5 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */; };
 		273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E575B1D61FE8B009DABFE /* LoginViewController.swift */; };
+		2750C3191D90743300747B74 /* EventsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750C3181D90743300747B74 /* EventsCollectionViewController.swift */; };
 		276109391D744752001B51B6 /* PastEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276109381D744752001B51B6 /* PastEventsViewController.swift */; };
 		27743FEE1D634E47004EAD97 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27743FED1D634E47004EAD97 /* User.swift */; };
 		27788D241D7B2173002B6554 /* EventFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27788D231D7B2173002B6554 /* EventFormViewController.swift */; };
@@ -73,6 +74,7 @@
 		2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		273E575B1D61FE8B009DABFE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		273E57631D62032B009DABFE /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		2750C3181D90743300747B74 /* EventsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewController.swift; sourceTree = "<group>"; };
 		276109381D744752001B51B6 /* PastEventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastEventsViewController.swift; sourceTree = "<group>"; };
 		27743FED1D634E47004EAD97 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		27788D231D7B2173002B6554 /* EventFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFormViewController.swift; sourceTree = "<group>"; };
@@ -193,8 +195,6 @@
 				27EDE9921D759C5B00C90FC9 /* StatsViewController.swift */,
 				27EDE9941D759C7500C90FC9 /* FavoriteSportsCollectionViewController.swift */,
 				27EDE9961D759CBE00C90FC9 /* ProfileHeaderViewController.swift */,
-				27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */,
-				27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */,
 			);
 			name = "Profile View";
 			sourceTree = "<group>";
@@ -297,6 +297,9 @@
 				277C1CB81D6387100008331F /* EventViewController.swift */,
 				277C1CBE1D64A2B20008331F /* EventCollectionViewCell.swift */,
 				277C1CBF1D64A2B20008331F /* EventCollectionViewCell.xib */,
+				27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */,
+				27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */,
+				2750C3181D90743300747B74 /* EventsCollectionViewController.swift */,
 			);
 			name = "Events Main Page";
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */,
 				27BFF2E91D778D82002040D3 /* RequestsTableViewCell.swift in Sources */,
 				277C1CC01D64A2B20008331F /* EventCollectionViewCell.swift in Sources */,
+				2750C3191D90743300747B74 /* EventsCollectionViewController.swift in Sources */,
 				27788D241D7B2173002B6554 /* EventFormViewController.swift in Sources */,
 				27BFF2ED1D77A4A3002040D3 /* Functions.swift in Sources */,
 				8114B4CE1D7ED2A900CE0FF8 /* UsersVC.swift in Sources */,

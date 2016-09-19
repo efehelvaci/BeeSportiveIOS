@@ -26,7 +26,8 @@ class UserCell: UICollectionViewCell {
                 self.img.image = image
                 FTIndicator.dismissProgress()
             })
-        }; self.hidden = false
+        }
+        self.hidden = false
     }
 
 }

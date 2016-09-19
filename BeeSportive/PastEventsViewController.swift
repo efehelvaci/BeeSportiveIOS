@@ -120,6 +120,8 @@ class PastEventsViewController: UIViewController, UIScrollViewDelegate {
                     let branch = dict.valueForKey("branch") as! String
                     let level = dict.valueForKey("level") as! String
                     let location = dict.valueForKey("location") as! String
+                    let locationLat = dict.valueForKey("locationLat") as! String
+                    let locationLon = dict.valueForKey("locationLon") as! String
                     let maxJoinNumber = dict.valueForKey("maxJoinNumber") as! String
                     let description = dict.valueForKey("description") as! String
                     let time = dict.valueForKey("time") as! String
@@ -127,7 +129,7 @@ class PastEventsViewController: UIViewController, UIScrollViewDelegate {
                     let day = dict.valueForKey("day") as! String
                     let year = dict.valueForKey("year") as! String
                     
-                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day, year: year, id: id)
+                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, locationLat : locationLat, locationLon : locationLon, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day, year: year, id: id)
                     
                     self.eventsArray.insert(eventElement, atIndex: 0)
                 }
