@@ -44,12 +44,10 @@ class PastEventsViewController: UIViewController, UIScrollViewDelegate {
         let cell = myEventsCollectionView.dequeueReusableCellWithReuseIdentifier("eventCell", forIndexPath: indexPath) as! EventCollectionViewCell
         
         // Filling cell
+        cell.date.text = eventsArray[indexPath.row].day + " " + months[Int(eventsArray[indexPath.row].month)! - 1] + ", " + eventsArray[indexPath.row].time
         cell.backgroundImage.image = UIImage(named: eventsArray[indexPath.row].branch)
         cell.creatorName.text = eventsArray[indexPath.row].creatorName
-        cell.dateDay.text = eventsArray[indexPath.row].day
-        cell.dateMonth.text =  months[Int(eventsArray[indexPath.row].month)! - 1]
         cell.location.text = eventsArray[indexPath.row].location
-        cell.time.text = eventsArray[indexPath.row].time
         cell.branchName.text = (eventsArray[indexPath.row].branch).uppercaseString
         
         Alamofire.request(.GET, (self.eventsArray[indexPath.row].creatorImageURL)).responseData{ response in

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 class Event {
     let id : String
@@ -43,5 +44,26 @@ class Event {
         self.month = month
         self.year = year
         self.id = id
+    }
+    
+    init(snapshot: FIRDataSnapshot) {
+        let dict = snapshot.value as! Dictionary<String, AnyObject>
+        
+        self.id = dict["id"] as! String
+        self.creatorID = dict["creatorID"] as! String
+        self.creatorImageURL = dict["creatorImageURL"] as! String
+        self.creatorName = dict["creatorName"] as! String
+        self.name = dict["name"] as! String
+        self.branch = dict["branch"] as! String
+        self.level = dict["level"] as! String
+        self.location = dict["location"] as! String
+        self.locationLat = dict["locationLat"] as! String
+        self.locationLon = dict["locationLon"] as! String
+        self.maxJoinNumber = dict["maxJoinNumber"] as! String
+        self.description = dict["description"] as! String
+        self.time = dict["time"] as! String
+        self.month = dict["month"] as! String
+        self.day = dict["day"] as! String
+        self.year = dict["year"] as! String
     }
 }

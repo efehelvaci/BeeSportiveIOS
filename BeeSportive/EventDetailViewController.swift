@@ -11,7 +11,9 @@ import Firebase
 import Alamofire
 import MapKit
 
-class EventDetailViewController: UIViewController {
+private let reuseIdentifier = "participantsCell"
+
+class EventDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet var creatorProfileView: UIView!
     @IBOutlet var creatorName: UILabel!
@@ -24,6 +26,9 @@ class EventDetailViewController: UIViewController {
     @IBOutlet var eventDateLabel: UILabel!
     @IBOutlet var map: MKMapView!
     
+    @IBOutlet var participantsCollectionView: UICollectionView!
+    
+    
     internal var event : Event?
     var participants = [User]()
     let font = UIFont(name: "Helvetica", size: 15.0)
@@ -35,12 +40,37 @@ class EventDetailViewController: UIViewController {
         
         setPageOutlets()
         
+        retrieveParticipants()
+        
         // If visitor is creator or not
         if event?.creatorID == FIRAuth.auth()?.currentUser?.uid {
             
         } else {
             
         }
+        
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = participantsCollectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! ParticipantsCollectionViewCell
+        
+        cell.name.text = participants[indexPath.row].displayName
+        
+        return cell
+    }
+
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return participants.count
+    }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        return CGSizeMake(screenSize.width/4.0, participantsCollectionView.bounds.height)
     }
 
     func setPageOutlets () {
@@ -90,6 +120,7 @@ class EventDetailViewController: UIViewController {
     
     @IBAction func joinEventButtonClicked(sender: AnyObject) {
         if event!.creatorID != FIRAuth.auth()?.currentUser?.uid {
+        
             REF_EVENTS.child(event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue((FIRAuth.auth()?.currentUser?.uid)!)
             REF_EVENTS.child(event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("result").setValue("requested")
         }
@@ -119,11 +150,11 @@ class EventDetailViewController: UIViewController {
                             let user = User(snapshot: snapshot)
                             
                             self.participants.insert(user, atIndex: 0)
+                            self.participantsCollectionView.reloadData()
                         }
                     })
                 }
             }
         })
     }
-    
 }

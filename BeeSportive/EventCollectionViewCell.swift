@@ -11,14 +11,11 @@ import UIKit
 class EventCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var backgroundImage: UIImageView!
-    @IBOutlet var dateDay: UILabel!
-    @IBOutlet var dateMonth: UILabel!
     @IBOutlet var creatorName: UILabel!
     @IBOutlet var location: UILabel!
-    @IBOutlet var time: UILabel!
-    @IBOutlet var progressView: UIProgressView!
     @IBOutlet var creatorImage: UIImageView!
     @IBOutlet var branchName: UILabel!
+    @IBOutlet var date: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

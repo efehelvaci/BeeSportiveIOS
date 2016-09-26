@@ -32,7 +32,7 @@ class RequestsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func deleteUser() {
+    func deleteUserFromTable() {
         for i in 0 ..< delegate!.users.count {
             if requesterID! == delegate!.users[i].id {
                 delegate!.users.removeAtIndex(i)
@@ -45,13 +45,14 @@ class RequestsTableViewCell: UITableViewCell {
     
     @IBAction func declineButtonClicked(sender: AnyObject) {
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
-        deleteUser()
+        deleteUserFromTable()
     }
     
  
     @IBAction func acceptButtonClicked(sender: AnyObject) {
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
-        REF_EVENTS.child(eventID!).child("participants").child(requesterID!).setValue("accepted")
-        deleteUser()
+        REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("id").setValue(requesterID!)
+        REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("status").setValue("accepted")
+        deleteUserFromTable()
     }
 }

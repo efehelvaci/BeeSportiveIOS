@@ -12,6 +12,9 @@
 		2719B64E1D75749300724EF5 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */; };
 		273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E575B1D61FE8B009DABFE /* LoginViewController.swift */; };
 		2750C3191D90743300747B74 /* EventsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750C3181D90743300747B74 /* EventsCollectionViewController.swift */; };
+		275F9B6F1D9872B400E7744B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275F9B6E1D9872B400E7744B /* ProfileViewController.swift */; };
+		275F9B711D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275F9B701D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift */; };
+		275F9B731D98748B00E7744B /* ProfileCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275F9B721D98748B00E7744B /* ProfileCommentTableViewCell.swift */; };
 		276109391D744752001B51B6 /* PastEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276109381D744752001B51B6 /* PastEventsViewController.swift */; };
 		27743FEE1D634E47004EAD97 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27743FED1D634E47004EAD97 /* User.swift */; };
 		27788D241D7B2173002B6554 /* EventFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27788D231D7B2173002B6554 /* EventFormViewController.swift */; };
@@ -26,6 +29,7 @@
 		27BFF2E61D778D3E002040D3 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BFF2E51D778D3E002040D3 /* RequestsViewController.swift */; };
 		27BFF2E91D778D82002040D3 /* RequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BFF2E81D778D82002040D3 /* RequestsTableViewCell.swift */; };
 		27BFF2ED1D77A4A3002040D3 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BFF2EC1D77A4A3002040D3 /* Functions.swift */; };
+		27C850A11D9120C9007168A6 /* ParticipantsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C850A01D9120C9007168A6 /* ParticipantsCollectionViewCell.swift */; };
 		27CB270D1D5D3CDD00F9ECF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */; };
 		27CB27121D5D3CDD00F9ECF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */; };
 		27CB27141D5D3CDD00F9ECF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */; };
@@ -75,6 +79,9 @@
 		273E575B1D61FE8B009DABFE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		273E57631D62032B009DABFE /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		2750C3181D90743300747B74 /* EventsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewController.swift; sourceTree = "<group>"; };
+		275F9B6E1D9872B400E7744B /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		275F9B701D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFavoriteSportCollectionViewCell.swift; sourceTree = "<group>"; };
+		275F9B721D98748B00E7744B /* ProfileCommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCommentTableViewCell.swift; sourceTree = "<group>"; };
 		276109381D744752001B51B6 /* PastEventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastEventsViewController.swift; sourceTree = "<group>"; };
 		27743FED1D634E47004EAD97 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		27788D231D7B2173002B6554 /* EventFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFormViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +96,7 @@
 		27BFF2E51D778D3E002040D3 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
 		27BFF2E81D778D82002040D3 /* RequestsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsTableViewCell.swift; sourceTree = "<group>"; };
 		27BFF2EC1D77A4A3002040D3 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		27C850A01D9120C9007168A6 /* ParticipantsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsCollectionViewCell.swift; sourceTree = "<group>"; };
 		27CB27091D5D3CDD00F9ECF5 /* BeeSportive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeeSportive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27CB27111D5D3CDD00F9ECF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -188,6 +196,16 @@
 			name = "Event Add Page";
 			sourceTree = "<group>";
 		};
+		275F9B6D1D98729000E7744B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				275F9B6E1D9872B400E7744B /* ProfileViewController.swift */,
+				275F9B701D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift */,
+				275F9B721D98748B00E7744B /* ProfileCommentTableViewCell.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		276109371D74471F001B51B6 /* Profile View */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +269,7 @@
 		27CB270B1D5D3CDD00F9ECF5 /* BeeSportive */ = {
 			isa = PBXGroup;
 			children = (
+				275F9B6D1D98729000E7744B /* Profile */,
 				279FBC431D7EF9F900B0AFAE /* Tab Bar */,
 				273E57561D61FBCB009DABFE /* Login View */,
 				276109371D74471F001B51B6 /* Profile View */,
@@ -308,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */,
+				27C850A01D9120C9007168A6 /* ParticipantsCollectionViewCell.swift */,
 			);
 			name = "Event Detail Page";
 			sourceTree = "<group>";
@@ -569,16 +589,20 @@
 				279FBC451D7EFA0C00B0AFAE /* TabBarController.swift in Sources */,
 				2786D7F31D7C451B00E1510F /* UIImageColors.swift in Sources */,
 				8114B4D11D7ED2CB00CE0FF8 /* UserCell.swift in Sources */,
+				275F9B731D98748B00E7744B /* ProfileCommentTableViewCell.swift in Sources */,
 				81E8DCF81D75BD8400234743 /* Channel.swift in Sources */,
+				275F9B711D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift in Sources */,
 				277C1CBD1D63B26A0008331F /* Event.swift in Sources */,
 				27743FEE1D634E47004EAD97 /* User.swift in Sources */,
 				276109391D744752001B51B6 /* PastEventsViewController.swift in Sources */,
 				273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */,
 				27BFF2E91D778D82002040D3 /* RequestsTableViewCell.swift in Sources */,
 				277C1CC01D64A2B20008331F /* EventCollectionViewCell.swift in Sources */,
+				275F9B6F1D9872B400E7744B /* ProfileViewController.swift in Sources */,
 				2750C3191D90743300747B74 /* EventsCollectionViewController.swift in Sources */,
 				27788D241D7B2173002B6554 /* EventFormViewController.swift in Sources */,
 				27BFF2ED1D77A4A3002040D3 /* Functions.swift in Sources */,
+				27C850A11D9120C9007168A6 /* ParticipantsCollectionViewCell.swift in Sources */,
 				8114B4CE1D7ED2A900CE0FF8 /* UsersVC.swift in Sources */,
 				27CB270D1D5D3CDD00F9ECF5 /* AppDelegate.swift in Sources */,
 				27EDE9A31D75DD7D00C90FC9 /* EventDetailViewController.swift in Sources */,

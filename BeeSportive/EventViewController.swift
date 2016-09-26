@@ -89,8 +89,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         thirdCollectionView.alwaysBounceVertical = true
     }
     
-    //
-    // CollectionView Delegate Methods
+    // MARK: - CollectionView Delegate Methods
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == firstCollectionView {
             return allEvents.count
@@ -110,13 +109,11 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCell", forIndexPath: indexPath) as! EventCollectionViewCell
             
             // Filling cell
+            cell.date.text = allEvents[indexPath.row].day + " " + months[Int(allEvents[indexPath.row].month)! - 1] + ", " + allEvents[indexPath.row].time
             cell.backgroundImage.image = UIImage(named: allEvents[indexPath.row].branch)
             cell.creatorName.text = allEvents[indexPath.row].creatorName
-            cell.dateDay.text = allEvents[indexPath.row].day
-            cell.dateMonth.text =  months[Int(allEvents[indexPath.row].month)! - 1]
             cell.location.text = allEvents[indexPath.row].location
             cell.location.adjustsFontSizeToFitWidth = true
-            cell.time.text = allEvents[indexPath.row].time
             cell.branchName.text = (allEvents[indexPath.row].branch).uppercaseString
             
             Alamofire.request(.GET, (self.allEvents[indexPath.row].creatorImageURL)).responseData{ response in
@@ -127,18 +124,20 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                 }
             }
             
+            cell.layer.borderWidth = 1.0
+            cell.layer.cornerRadius = 5.0
+            cell.layer.borderColor = UIColor.grayColor().CGColor
+            
             return cell
         } else if collectionView == secondCollectionView {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCell", forIndexPath: indexPath) as! EventCollectionViewCell
             
             // Filling cell
+            cell.date.text = popularEvents[indexPath.row].day + " " + months[Int(popularEvents[indexPath.row].month)! - 1] + ", " + popularEvents[indexPath.row].time
             cell.backgroundImage.image = UIImage(named: popularEvents[indexPath.row].branch)
             cell.creatorName.text = popularEvents[indexPath.row].creatorName
-            cell.dateDay.text = popularEvents[indexPath.row].day
-            cell.dateMonth.text =  months[Int(popularEvents[indexPath.row].month)! - 1]
             cell.location.text = popularEvents[indexPath.row].location
             cell.location.adjustsFontSizeToFitWidth = true
-            cell.time.text = popularEvents[indexPath.row].time
             cell.branchName.text = (popularEvents[indexPath.row].branch).uppercaseString
             
             Alamofire.request(.GET, (self.popularEvents[indexPath.row].creatorImageURL)).responseData{ response in
@@ -154,13 +153,11 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCell", forIndexPath: indexPath) as! EventCollectionViewCell
             
             // Filling cell
+            cell.date.text = favoriteEvents[indexPath.row].day + " " + months[Int(favoriteEvents[indexPath.row].month)! - 1] + ", " + favoriteEvents[indexPath.row].time
             cell.backgroundImage.image = UIImage(named: favoriteEvents[indexPath.row].branch)
             cell.creatorName.text = favoriteEvents[indexPath.row].creatorName
-            cell.dateDay.text = favoriteEvents[indexPath.row].day
-            cell.dateMonth.text =  months[Int(favoriteEvents[indexPath.row].month)! - 1]
             cell.location.text = favoriteEvents[indexPath.row].location
             cell.location.adjustsFontSizeToFitWidth = true
-            cell.time.text = favoriteEvents[indexPath.row].time
             cell.branchName.text = (favoriteEvents[indexPath.row].branch).uppercaseString
             
             Alamofire.request(.GET, (self.favoriteEvents[indexPath.row].creatorImageURL)).responseData{ response in
@@ -186,15 +183,16 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        let eventDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
-        
         if collectionView == firstCollectionView {
+            let eventDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
             eventDetailVC.event = allEvents[indexPath.row]
             self.presentViewController(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == secondCollectionView {
+            let eventDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
             eventDetailVC.event = popularEvents[indexPath.row]
             self.presentViewController(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == thirdCollectionView {
+            let eventDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
             eventDetailVC.event = favoriteEvents[indexPath.row]
             self.presentViewController(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == fourthCollectionView {
@@ -222,7 +220,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
         if collectionView == firstCollectionView || collectionView == secondCollectionView || collectionView == thirdCollectionView {
-            return CGSizeMake(screenSize.width, 180)
+            return CGSizeMake(screenSize.width-8, 180)
         }
         
         return CGSizeMake(screenSize.width, 100)
