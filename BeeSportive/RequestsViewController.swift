@@ -61,8 +61,10 @@ class RequestsViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let function = Functions()
-        function.getProfilePage(users[indexPath.row].id, vc: self)
+        let viewController5 = storyboard!.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        self.presentViewController(viewController5, animated: true, completion: { _ in
+            viewController5.getUser(self.users[indexPath.row].id)
+        })
     }
     
     func getUsers() {

@@ -12,12 +12,21 @@ import CoreLocation
 import Async
 import Firebase
 import FTIndicator
+import MapKit
 
 class EventFormViewController: FormViewController, CLLocationManagerDelegate {
 
+    let locationManager = CLLocationManager()
+    var location : CLLocation?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        locationManager.delegate = self;
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+        
         form +++ Section()
             <<< TextRow(){ row in
                 row.placeholder = "Event name"
@@ -40,15 +49,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                 $0.tag = "Time"
             }
             <<< LocationRow(){
-                $0.value = CLLocation(latitude: 41.01513, longitude: 28.97953)
-//                if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse ||
-//                    CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized){
-//                    
-//                    $0.value = locManager.location
-//                } else {
-//                    $0.value = CLLocation(latitude: -34.91, longitude: -56.1646)
-//                }
-                
+                $0.value = CLLocation()
                 $0.title = "Location Pin"
                 
                 $0.tag = "LocationPin"
@@ -157,12 +158,13 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation:CLLocation = locations[0]
-        let long = userLocation.coordinate.longitude;
-        let lat = userLocation.coordinate.latitude;
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         
-        print(long, lat)
-        
-        //Do What ever you want with it
+        self.location = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
+        self.form.rowByTag("LocationPin")?.baseValue = self.location
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("Error while updating location " + error.localizedDescription)
     }
 }

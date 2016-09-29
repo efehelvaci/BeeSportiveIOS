@@ -260,8 +260,8 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     //
     // Self created methods
     func retrieveAllEvents() {
-        allEvents =  [Event]()
-        favoriteEvents = [Event]()
+        allEvents.removeAll()
+        favoriteEvents.removeAll()
         
         REF_EVENTS.observeSingleEventOfType(.Value , withBlock: { (snapshot) in
             if snapshot.exists() {
@@ -290,11 +290,14 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                     self.allEvents.insert(eventElement, atIndex: 0)
                 }
                 
+                Async.main {
+                    self.refreshControl1.endRefreshing()
+                    self.firstCollectionView.reloadData()
+                }
+                
                 REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("favoriteSports").observeSingleEventOfType(.Value, withBlock: { snapshot in
                     if snapshot.exists() {
                         let postDict = snapshot.value as! Dictionary<String, String>
-                        
-                        print(postDict)
 
                         if postDict["First"] != "nil" { self.favoriteSports.insert(postDict["First"]!, atIndex: 0) }
                         if postDict["Second"] != "nil" { self.favoriteSports.insert(postDict["Second"]!, atIndex: 0) }
@@ -315,11 +318,6 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                         self.thirdCollectionView.reloadData()
                     }
                 })
-            }
-            
-            Async.main {
-                self.refreshControl1.endRefreshing()
-                self.firstCollectionView.reloadData()
             }
         })
     }

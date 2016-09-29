@@ -2,38 +2,37 @@ PODS:
   - Alamofire (3.5.0)
   - AlamofireImage (2.5.0):
     - Alamofire (~> 3.5)
-  - AsyncSwift (1.7.3)
+  - AsyncSwift (1.7.4)
   - Eureka (1.7.0)
-  - Firebase/Analytics (3.5.2):
-    - FirebaseAnalytics (~> 3.3)
-  - Firebase/Auth (3.5.2):
+  - Firebase/Analytics (3.6.0):
+    - FirebaseAnalytics (= 3.4.2)
+  - Firebase/Auth (3.6.0):
     - Firebase/Analytics
-    - FirebaseAuth (= 3.0.4)
-  - Firebase/Core (3.5.2):
+    - FirebaseAuth (= 3.0.5)
+  - Firebase/Core (3.6.0):
     - Firebase/Analytics
-  - Firebase/Database (3.5.2):
+  - Firebase/Database (3.6.0):
     - Firebase/Analytics
-    - FirebaseDatabase (= 3.0.2)
-  - Firebase/Messaging (3.5.2):
+    - FirebaseDatabase (= 3.0.3)
+  - Firebase/Messaging (3.6.0):
     - Firebase/Analytics
-    - FirebaseMessaging (= 1.1.1)
-  - Firebase/Storage (3.5.2):
+    - FirebaseMessaging (= 1.2.0)
+  - Firebase/Storage (3.6.0):
     - Firebase/Analytics
     - FirebaseStorage (= 1.0.3)
-  - FirebaseAnalytics (3.3.1):
+  - FirebaseAnalytics (3.4.2):
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
     - GoogleUtilities (~> 1.2)
-  - FirebaseAuth (3.0.4):
-    - FirebaseAnalytics (~> 3.2)
+  - FirebaseAuth (3.0.5):
+    - FirebaseAnalytics (~> 3.3)
     - GoogleNetworkingUtilities (~> 1.2)
-    - GoogleParsingUtilities (~> 1.1)
     - GoogleUtilities (~> 1.2)
-  - FirebaseDatabase (3.0.2):
-    - FirebaseAnalytics (~> 3.2)
+  - FirebaseDatabase (3.0.3):
+    - FirebaseAnalytics (~> 3.3)
   - FirebaseInstanceID (1.0.8)
-  - FirebaseMessaging (1.1.1):
+  - FirebaseMessaging (1.2.0):
     - FirebaseAnalytics (~> 3.3)
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
@@ -42,21 +41,19 @@ PODS:
   - FirebaseStorage (1.0.3):
     - FirebaseAnalytics (~> 3.3)
     - GoogleNetworkingUtilities (~> 1.2)
-  - FTIndicator (1.1.4):
-    - FTIndicator/FTNotificationIndicator (= 1.1.4)
-    - FTIndicator/FTNotificationIndicator (= 1.1.4)
-    - FTIndicator/FTProgressIndicator (= 1.1.4)
-  - FTIndicator/FTNotificationIndicator (1.1.4)
-  - FTIndicator/FTProgressIndicator (1.1.4)
+  - FTIndicator (1.1.5):
+    - FTIndicator/FTNotificationIndicator (= 1.1.5)
+    - FTIndicator/FTProgressIndicator (= 1.1.5)
+    - FTIndicator/FTToastIndicator (= 1.1.5)
+  - FTIndicator/FTNotificationIndicator (1.1.5)
+  - FTIndicator/FTProgressIndicator (1.1.5)
+  - FTIndicator/FTToastIndicator (1.1.5)
   - GoogleInterchangeUtilities (1.2.1):
     - GoogleSymbolUtilities (~> 1.0)
   - GoogleIPhoneUtilities (1.2.1):
     - GoogleSymbolUtilities (~> 1.0)
     - GoogleUtilities (~> 1.0)
   - GoogleNetworkingUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
-  - GoogleParsingUtilities (1.1.1):
-    - GoogleNetworkingUtilities (~> 1.0)
     - GoogleSymbolUtilities (~> 1.0)
   - GoogleSymbolUtilities (1.1.1)
   - GoogleUtilities (1.3.1):
@@ -66,9 +63,7 @@ PODS:
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
   - KYWheelTabController (1.0.0)
-  - SJSegmentedScrollView (1.1.0)
   - VideoSplashKit (1.1.0)
-  - WWCalendarTimeSelector (1.2.11)
 
 DEPENDENCIES:
   - Alamofire
@@ -84,37 +79,32 @@ DEPENDENCIES:
   - HanekeSwift
   - JSQMessagesViewController
   - KYWheelTabController
-  - SJSegmentedScrollView (= 1.1.0)
   - VideoSplashKit
-  - WWCalendarTimeSelector
 
 SPEC CHECKSUMS:
   Alamofire: b70a7352335f8ea5babd0a923eb7e8eacc67b877
   AlamofireImage: 2d34936e5201270bb17a316a786e90e83b4a249d
-  AsyncSwift: f3ad5dd077bbd1477e7573e87071a532fedaca1a
+  AsyncSwift: cecffe40af6e09558ed25dd71fabf04836b5eaf4
   Eureka: 2020d9faeef7b7e9adeb9e3d8af779e5931c1897
-  Firebase: 94e63112efcad75226c0356a8f3032397b8547c9
-  FirebaseAnalytics: d968d4d5f6aeb795cd64144337bcd233e530efc6
-  FirebaseAuth: 26fd291c3b552fc9658420b867520d5ae080421c
-  FirebaseDatabase: 59bea2e7dfd81b3b8b2f8e396caf1a52c2ced6f7
+  Firebase: 34187200ef4979dbd485c7aa685ef078bf587c86
+  FirebaseAnalytics: 3f5358d9104adf159cc8d99b7b501e50099a39ad
+  FirebaseAuth: 75a062bbf2d3c97d1e6e55bbc110e13a6853e25d
+  FirebaseDatabase: 750a4a0fe18ef114318876fd654b2d9c671e0992
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
-  FirebaseMessaging: 6bc7cd2ecb875c1a9c0f8b94956398aa3145bbb8
+  FirebaseMessaging: 789d23fd796594dfb55dcf36cd325541df887c22
   FirebaseStorage: 3992817bf405f5c1a4f8349678d22724cd0ef509
-  FTIndicator: 05f17450b2bba20fc2f9d4e17f7e47b43762c968
+  FTIndicator: 8b9885b84340a19029ad13672add3bb8183feba8
   GoogleInterchangeUtilities: def8415a862effc67d549d5b5b0b9c7a2f97d4de
   GoogleIPhoneUtilities: 63f25e93a3ddcb66884d182aab3a660d98f1479b
   GoogleNetworkingUtilities: 3e83269048cfb498dc7ec83ab36813360965c74f
-  GoogleParsingUtilities: 30b3896f9ee167dc78747f013d3de157ced1cadf
   GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   KYWheelTabController: 1aab3d3b1e0db6f8dc97c458f694678cb696eacd
-  SJSegmentedScrollView: 24a5b24a8822f087f0dda56523a6abbf8a2a2472
   VideoSplashKit: 0aa63d0bb37c5bd357de3e6a2a13dea5acad4d66
-  WWCalendarTimeSelector: 9e58e9d81600d836cbb38995349e6764e9e3aa5f
 
-PODFILE CHECKSUM: 06d238d0869df75dcd73e4884d629beadce4e92e
+PODFILE CHECKSUM: d98ed4f00959ab87e9ad1195a3c7329bfa556bd1
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.0.rc.2

@@ -15,8 +15,6 @@ target 'BeeSportive' do
 	pod 'AsyncSwift', '~> 1.7.3'
 	pod 'FTIndicator'
 	pod 'VideoSplashKit'
-	pod 'WWCalendarTimeSelector'
-	pod 'SJSegmentedScrollView', '1.1.0'
     	pod 'JSQMessagesViewController'
 	pod 'Eureka', '~> 1.7'
 	pod 'HanekeSwift'

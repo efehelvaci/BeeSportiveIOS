@@ -35,8 +35,6 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationController?.navigationBar.translucent = true
         
         setPageOutlets()
         
@@ -114,8 +112,10 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     @IBAction func creatorProfileClicked(sender: AnyObject) {
-        let function = Functions()
-        function.getProfilePage(event!.creatorID , vc: self)
+        let viewController5 = storyboard!.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        self.presentViewController(viewController5, animated: true, completion: { _ in
+            viewController5.getUser((self.event?.creatorID)!)
+        })
     }
     
     @IBAction func joinEventButtonClicked(sender: AnyObject) {

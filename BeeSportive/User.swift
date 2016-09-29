@@ -15,6 +15,7 @@ class User {
     var photoURL: String?
     let email: String
     let id: String
+    var verified = false
     
     // MARK: Init
     init(displayName: String, photoURL: String, email: String, id: String) {
@@ -30,6 +31,11 @@ class User {
         self.photoURL = data["photoURL"] as? String
         self.email = data["email"] as! String
         self.id = data["id"] as! String
+        
+        if let adminOptions = data["adminOptions"] as? Dictionary<String, AnyObject> {
+            if let verify = adminOptions["verified"] as? Bool {
+                self.verified = verify
+            }
+        }
     }
-
 }

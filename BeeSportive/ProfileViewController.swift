@@ -11,7 +11,7 @@ import Firebase
 import Async
 import Haneke
 
-class ProfileViewController: UIViewController, UITableViewDataSource {
+class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet var profileImage: UIImageView!
     
@@ -47,19 +47,50 @@ class ProfileViewController: UIViewController, UITableViewDataSource {
     
     @IBOutlet var scrollView: UIScrollView!
     
+    @IBOutlet var profileImageEditButton: UIButton!
+    
+    @IBOutlet var followersText: UILabel!
+    
+    @IBOutlet var followingText: UILabel!
+    
+    @IBOutlet var followButton: UIButton!
+    
     var user : User?
+    
+    // Tab bar = 0
+    // Presented = 1
+    var sender =  1
+    
+    var isFollowing = false
     
     var favoriteSports = [String]()
     
     var eventsArray = [Event]()
     
+    var commentsArray = [Comment]()
+    
+    let imagePicker = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        profileImage.alpha = 0
+        profileName.alpha = 0
+        profileFollowers.alpha = 0
+        profileFollowing.alpha = 0
+        followersText.alpha = 0
+        followingText.alpha = 0
 
         profileImage.layer.masksToBounds = true
         profileImage.layer.cornerRadius = profileImage.frame.width/2.0
         profileImage.layer.borderColor = UIColor.grayColor().CGColor
         profileImage.layer.borderWidth = 1.0
+        
+        imagePicker.delegate = self
+        
+        favoriteSportsCollectionView.reloadData()
+        eventsCollectionView.reloadData()
+        commentsTableView.reloadData()
         
         favoriteSportsHeight.constant = (screenSize.width / 5.0) + 10
         
@@ -73,7 +104,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        getUser((FIRAuth.auth()?.currentUser?.uid)!)
+        sender == 0 ? (backButton.hidden = true) : (backButton.hidden = false)
+        
+        if profileName.text == "null" && user != nil { setUser() }
     }
     
     // MARK: - Collection View Delegate Methods
@@ -144,14 +177,43 @@ class ProfileViewController: UIViewController, UITableViewDataSource {
         return UICollectionViewCell()
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if collectionView == eventsCollectionView {
+            let eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
+            eventDetailVC.event = eventsArray[indexPath.row]
+            self.presentViewController(eventDetailVC, animated: true, completion: nil)
+        }
+    }
+    
+    
+    
     // MARK: - Table View Delegate Methods
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return commentsArray.count
+    }
+    
+    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        return commentsArray[indexPath.row].height
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = commentsTableView.dequeueReusableCellWithIdentifier("commentCell", forIndexPath: indexPath) as! ProfileCommentTableViewCell
+        
+        cell.comment.text = commentsArray[indexPath.row].comment
+        cell.date.text = commentsArray[indexPath.row].date
+        
+        REF_USERS.child(commentsArray[indexPath.row].id).observeSingleEventOfType(.Value, withBlock: { snapshot in
+            if snapshot.exists() {
+                let commmentedUser = User(snapshot: snapshot)
+                
+                cell.name.text = commmentedUser.displayName
+                cell.userImage.hnk_setImageFromURL(NSURL(string: commmentedUser.photoURL!)!, placeholder: UIImage(), format: nil, failure: nil, success: { image in
+                    cell.userImage.image = image
+                })
+            }
+        
+        })
         
         return cell
     }
@@ -175,8 +237,57 @@ class ProfileViewController: UIViewController, UITableViewDataSource {
     
     // MARK: - Text Field
     
+    func animateTextField(textField: UITextField, up: Bool)
+    {
+        let movementDistance:CGFloat = -180
+        let movementDuration: Double = 0.3
+        
+        var movement:CGFloat = 0
+        if up
+        {
+            movement = movementDistance
+        }
+        else
+        {
+            movement = -movementDistance
+        }
+        UIView.beginAnimations("animateTextField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuration)
+        self.view.frame = CGRectOffset(self.view.frame, 0, movement)
+        UIView.commitAnimations()
+    }
+    
+    @IBAction func commentEditingBegin(sender: AnyObject) {
+        let inputView = sender as! UITextField
+        inputView.becomeFirstResponder()
+        self.animateTextField(sender as! UITextField, up: true)
+    }
+    
+    
     @IBAction func commentSend(sender: AnyObject) {
-        print ("LOLLOL")
+        
+        let inputView = sender as! UITextField
+        inputView.resignFirstResponder()
+        self.animateTextField(sender as! UITextField, up: false)
+        
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateFormat = "dd.M.yy, HH:mm"
+        let date = dateFormatter.stringFromDate(NSDate())
+        
+        let commentText = commentTextField.text!
+        commentTextField.text = ""
+        
+        let comment = [
+            "id" : (FIRAuth.auth()?.currentUser?.uid)!,
+            "date" : date,
+            "comment" : commentText
+        ]
+        
+        REF_USERS.child(user!.id).child("comments").child((FIRAuth.auth()?.currentUser?.uid)!).setValue(comment)
+        
+        getComments()
     }
     
     // MARK: - Self created methods
@@ -186,13 +297,26 @@ class ProfileViewController: UIViewController, UITableViewDataSource {
             if snapshot.exists() {
                 self.user = User(snapshot: snapshot)
                 
+//                REF_USERS.child(userID).child("adminOptions").observeSingleEventOfType(.Value, withBlock: { snapshot in
+//                    if snapshot.exists() {
+//                        let data = snapshot.value as! Dictionary <String, AnyObject>
+//                        
+//                        if let verified = (data["verified"] as? Bool) {
+//                            self.user?.verified = verified
+//                        }
+//                    }
+//                })
+                
                 self.setUser()
                 self.getEventsIDs()
+                self.getComments()
             }
         })
         
         REF_USERS.child(userID).child("favoriteSports").observeSingleEventOfType(.Value, withBlock: { snapshot in
             if snapshot.exists() {
+                self.favoriteSports.removeAll()
+                
                 let postDict = snapshot.value as! Dictionary<String, String>
                 
                 if postDict["First"] != "nil" { self.favoriteSports.insert(postDict["First"]!, atIndex: 0) }
@@ -200,16 +324,46 @@ class ProfileViewController: UIViewController, UITableViewDataSource {
                 if postDict["Third"] != "nil" { self.favoriteSports.insert(postDict["Third"]!, atIndex: 0) }
                 if postDict["Fourth"] != "nil" { self.favoriteSports.insert(postDict["Fourth"]!, atIndex: 0) }
                 
-                self.favoriteSportsCollectionView.reloadData()
+                if self.isViewLoaded() { self.favoriteSportsCollectionView.reloadData() }
+                
             }
         })
     }
     
     func setUser() {
-        profileName.text = self.user?.displayName
-        profileImage.hnk_setImageFromURL(NSURL(string: (user?.photoURL)!)!, placeholder: UIImage(), format: nil, failure: nil, success: { image in
-            self.profileImage.image = image
-        })
+        if self.isViewLoaded() {
+            profileName.text = self.user?.displayName
+            profileImage.hnk_setImageFromURL(NSURL(string: (user?.photoURL)!)!, placeholder: UIImage(), format: nil, failure: nil, success: { image in
+                self.profileImage.image = image
+            })
+            
+            UIView.animateWithDuration(1, animations: { 
+                self.profileImage.alpha = 1
+                self.profileName.alpha = 1
+                self.profileFollowers.alpha = 1
+                self.profileFollowing.alpha = 1
+                self.followersText.alpha = 1
+                self.followingText.alpha = 1
+            })
+            
+            if user!.id != FIRAuth.auth()?.currentUser?.uid {
+                profileImageEditButton.hidden = true
+                settingsButton.hidden = true
+                followButton.hidden = false
+            } else {
+                profileImageEditButton.hidden = false
+                settingsButton.hidden = false
+                followButton.hidden = true
+            }
+            
+            for element in followingUsers.instance.users {
+                if element.id == user!.id {
+                    isFollowing = true
+                    followButton.setTitle("unfollow", forState: .Normal)
+                }
+            }
+            
+        }
     }
     
     func getEventsIDs() {
@@ -237,14 +391,86 @@ class ProfileViewController: UIViewController, UITableViewDataSource {
                     
                     self.eventsArray.insert(eventElement, atIndex: 0)
                     
-                    if element == events.count-1 { self.eventsCollectionView.reloadData() }
+                    if element == events.count-1 && self.isViewLoaded() { self.eventsCollectionView.reloadData() }
                 }
             })
         }
     }
     
+    func getComments() {
+        REF_USERS.child(user!.id).child("comments").observeSingleEventOfType(.Value, withBlock: { snapshot in
+            if snapshot.exists() {
+                self.commentsArray.removeAll()
+                
+                let comments = Array((snapshot.value as! Dictionary<String, AnyObject>).values)
+                
+                for element in comments {
+                    let id = element["id"] as! String
+                    let date = element["date"] as! String
+                    let comment = element["comment"] as! String
+                    let height = comment.heightWithConstrainedWidth(screenSize.width-76, font: UIFont(name: "Helvetica", size: 14)!)
+                    
+                    let newComment = Comment(id: id, date: date, comment: comment, height: height+60)
+                    
+                    self.commentsArray.insert(newComment, atIndex: 0)
+                }
+                
+                if self.isViewLoaded() { self.commentsTableView.reloadData() }
+            }
+        })
+    }
+    
     @IBAction func backButtonClicked(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func profileImageEditButtonClicked(sender: AnyObject) {
+        imagePicker.sourceType = .PhotoLibrary
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        profileImage.image = image
+        if let data = UIImageJPEGRepresentation(image, 0.2) {
+            var path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+            path = path.stringByAppendingString("/\(user!.id).jpg")
+            do { try data.writeToFile(path, options: .DataWritingAtomic) }
+            catch { print(error) }
+            let url = NSURL(fileURLWithPath: path)
+            REF_STORAGE.child(user!.id).putFile(url, metadata: nil, completion: { (meta, error) in
+                if let meta = meta {
+                    let url = meta.downloadURL()!
+                    self.user!.photoURL = url.absoluteString
+                    REF_USERS.child(self.user!.id).child("photoURL").setValue(url.absoluteString)
+                } else { print(error) }
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+        }
+    }
+    
+    @IBAction func followButtonClicked(sender: AnyObject) {
+        if !isFollowing {
+            followButton.setTitle("unfollow", forState: .Normal)
+            isFollowing = true
+            
+            followingUsers.instance.users.insert(user!, atIndex: 0)
+            REF_USERS.child(user!.id).child("followers").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue(FIRAuth.auth()?.currentUser?.uid)
+            REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("following").child(user!.id).child("id").setValue(user!.id)
+            
+        } else {
+            followButton.setTitle("follow", forState: .Normal)
+            isFollowing = false
+            
+            for index in 0...followingUsers.instance.users.count-1 {
+                if user!.id == followingUsers.instance.users[index].id {
+                    followingUsers.instance.users.removeAtIndex(index)
+                    break
+                }
+            }
+            
+            REF_USERS.child(user!.id).child("followers").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").removeValue()
+            REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("following").child(user!.id).child("id").removeValue()
+        }
     }
     
     
