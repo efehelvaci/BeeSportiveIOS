@@ -50,25 +50,25 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = participantsCollectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! ParticipantsCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = participantsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ParticipantsCollectionViewCell
         
-        cell.name.text = participants[indexPath.row].displayName
+        cell.name.text = participants[(indexPath as NSIndexPath).row].displayName
         
         return cell
     }
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return participants.count
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
-        return CGSizeMake(screenSize.width/4.0, participantsCollectionView.bounds.height)
+        return CGSize(width: screenSize.width/4.0, height: participantsCollectionView.bounds.height)
     }
 
     func setPageOutlets () {
@@ -90,20 +90,20 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         
         map.region = MKCoordinateRegion(center: centerLocation, span: mapSpan)
         
-        Alamofire.request(.GET, (self.event!.creatorImageURL)).responseData{ response in
+        Alamofire.request(self.event!.creatorImageURL).responseImage(completionHandler: { response in
             if let image = response.result.value {
                 self.creatorImage.layer.masksToBounds = true
                 self.creatorImage.layer.cornerRadius = self.creatorImage.frame.width / 2.0
-                self.creatorImage.image = UIImage(data: image)
+                self.creatorImage.image = image
                 self.creatorName.text = self.event!.creatorName
             }
-        }
+        })
     }
     
-    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
-        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
+    func heightForView(_ text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.font = font
         label.text = text
         
@@ -111,14 +111,14 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         return label.frame.height
     }
     
-    @IBAction func creatorProfileClicked(sender: AnyObject) {
-        let viewController5 = storyboard!.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
-        self.presentViewController(viewController5, animated: true, completion: { _ in
-            viewController5.getUser((self.event?.creatorID)!)
+    @IBAction func creatorProfileClicked(_ sender: AnyObject) {
+        let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        self.present(viewController5, animated: true, completion: { _ in
+            viewController5.getUser(userID: (self.event?.creatorID)!)
         })
     }
     
-    @IBAction func joinEventButtonClicked(sender: AnyObject) {
+    @IBAction func joinEventButtonClicked(_ sender: AnyObject) {
         if event!.creatorID != FIRAuth.auth()?.currentUser?.uid {
         
             REF_EVENTS.child(event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue((FIRAuth.auth()?.currentUser?.uid)!)
@@ -126,30 +126,30 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         }
     }
     
-    @IBAction func requestsButtonClicked(sender: AnyObject) {
-        let requestPage = self.storyboard!.instantiateViewControllerWithIdentifier("RequestsViewController") as! RequestsViewController
+    @IBAction func requestsButtonClicked(_ sender: AnyObject) {
+        let requestPage = self.storyboard!.instantiateViewController(withIdentifier: "RequestsViewController") as! RequestsViewController
         requestPage.eventID = event?.id
-        self.presentViewController(requestPage, animated: true, completion: nil)
+        self.present(requestPage, animated: true, completion: nil)
     }
     
 
-    @IBAction func backButtonClicked(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func backButtonClicked(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func retrieveParticipants() {
-        REF_EVENTS.child(event!.id).child("participants").observeSingleEventOfType(.Value , withBlock: { (snapshot) in
+        REF_EVENTS.child(event!.id).child("participants").observeSingleEvent(of: .value , with: { (snapshot) in
             if snapshot.exists() {
                 let postDict = Array((snapshot.value as! [String : AnyObject]).values)
                 
                 for element in postDict {
-                    let id = element.valueForKey("id") as! String
+                    let id = element.value(forKey: "id") as! String
                     
-                    REF_USERS.child(id).observeSingleEventOfType(.Value, withBlock: { snapshot in
+                    REF_USERS.child(id).observeSingleEvent(of: .value, with: { snapshot in
                         if snapshot.exists() {
                             let user = User(snapshot: snapshot)
                             
-                            self.participants.insert(user, atIndex: 0)
+                            self.participants.insert(user, at: 0)
                             self.participantsCollectionView.reloadData()
                         }
                     })

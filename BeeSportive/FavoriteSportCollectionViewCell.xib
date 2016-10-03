@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,22 +15,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="357" height="123"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Billard" translatesAutoresizingMaskIntoConstraints="NO" id="zVv-DD-5tD">
-                        <rect key="frame" x="0.0" y="0.0" width="357" height="123"/>
-                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Billard" translatesAutoresizingMaskIntoConstraints="NO" id="zVv-DD-5tD"/>
                     <view alpha="0.34999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vie-Y9-LgZ">
-                        <rect key="frame" x="0.0" y="0.0" width="357" height="123"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hwu-NW-XDk">
-                        <rect key="frame" x="0.0" y="37" width="357" height="50"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="Jcy-pi-xmx"/>
                         </constraints>
                         <attributedString key="attributedText">
                             <fragment content="BILLARD">
                                 <attributes>
-                                    <color key="NSColor" red="1" green="1" blue="1" alpha="0.89582453547297303" colorSpace="calibratedRGB"/>
+                                    <color key="NSColor" red="1" green="1" blue="1" alpha="0.89582453547297303" colorSpace="custom" customColorSpace="sRGB"/>
                                     <font key="NSFont" size="23" name="AvenirNext-Heavy"/>
                                     <font key="NSOriginalFont" size="23" name="AvenirNext-Heavy"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -39,7 +36,6 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstItem="Hwu-NW-XDk" firstAttribute="top" secondItem="Zrb-rA-WHe" secondAttribute="top" constant="37" id="618-9O-fSW"/>

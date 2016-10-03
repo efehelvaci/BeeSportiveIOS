@@ -24,9 +24,9 @@
 		277C1CBD1D63B26A0008331F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277C1CBC1D63B26A0008331F /* Event.swift */; };
 		277C1CC01D64A2B20008331F /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277C1CBE1D64A2B20008331F /* EventCollectionViewCell.swift */; };
 		277C1CC11D64A2B20008331F /* EventCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277C1CBF1D64A2B20008331F /* EventCollectionViewCell.xib */; };
-		2786D7F31D7C451B00E1510F /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2786D7F21D7C451B00E1510F /* UIImageColors.swift */; };
 		279D900B1D72571D00F73F23 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279D900A1D72571D00F73F23 /* MapKit.framework */; };
 		279FBC451D7EFA0C00B0AFAE /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279FBC441D7EFA0C00B0AFAE /* TabBarController.swift */; };
+		27B977161DA23EFA00245D8C /* ScrollPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B977151DA23EFA00245D8C /* ScrollPager.swift */; };
 		27BFF2E61D778D3E002040D3 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BFF2E51D778D3E002040D3 /* RequestsViewController.swift */; };
 		27BFF2E91D778D82002040D3 /* RequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BFF2E81D778D82002040D3 /* RequestsTableViewCell.swift */; };
 		27BFF2ED1D77A4A3002040D3 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BFF2EC1D77A4A3002040D3 /* Helper.swift */; };
@@ -35,8 +35,6 @@
 		27CB27121D5D3CDD00F9ECF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */; };
 		27CB27141D5D3CDD00F9ECF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */; };
 		27CB27171D5D3CDD00F9ECF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27151D5D3CDD00F9ECF5 /* LaunchScreen.storyboard */; };
-		27CB27221D5D3CDD00F9ECF5 /* BeeSportiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB27211D5D3CDD00F9ECF5 /* BeeSportiveTests.swift */; };
-		27CB272D1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB272C1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift */; };
 		27CE1E911D6F7D76007C0DE7 /* LoginVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */; };
 		27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */; };
 		27EDE9A31D75DD7D00C90FC9 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */; };
@@ -53,27 +51,11 @@
 		9479C21AFCF6B88A59A4EBB0 /* Pods_BeeSportive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7241945FBE26C1B84697DC2F /* Pods_BeeSportive.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		27CB271E1D5D3CDD00F9ECF5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 27CB27011D5D3CDD00F9ECF5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 27CB27081D5D3CDD00F9ECF5;
-			remoteInfo = BeeSportive;
-		};
-		27CB27291D5D3CDD00F9ECF5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 27CB27011D5D3CDD00F9ECF5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 27CB27081D5D3CDD00F9ECF5;
-			remoteInfo = BeeSportive;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		2719B6491D75749300724EF5 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		2737B8911D9DB32500A36795 /* BeeSportive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BeeSportive.entitlements; sourceTree = "<group>"; };
 		273E575B1D61FE8B009DABFE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		273E57631D62032B009DABFE /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		2750C3181D90743300747B74 /* EventsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -89,9 +71,9 @@
 		277C1CBC1D63B26A0008331F /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		277C1CBE1D64A2B20008331F /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
 		277C1CBF1D64A2B20008331F /* EventCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCollectionViewCell.xib; sourceTree = "<group>"; };
-		2786D7F21D7C451B00E1510F /* UIImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageColors.swift; sourceTree = "<group>"; };
 		279D900A1D72571D00F73F23 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		279FBC441D7EFA0C00B0AFAE /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		27B977151DA23EFA00245D8C /* ScrollPager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollPager.swift; sourceTree = "<group>"; };
 		27BFF2E51D778D3E002040D3 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
 		27BFF2E81D778D82002040D3 /* RequestsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsTableViewCell.swift; sourceTree = "<group>"; };
 		27BFF2EC1D77A4A3002040D3 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
@@ -102,12 +84,6 @@
 		27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27CB27161D5D3CDD00F9ECF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27CB27181D5D3CDD00F9ECF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		27CB271D1D5D3CDD00F9ECF5 /* BeeSportiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeeSportiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		27CB27211D5D3CDD00F9ECF5 /* BeeSportiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeeSportiveTests.swift; sourceTree = "<group>"; };
-		27CB27231D5D3CDD00F9ECF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		27CB27281D5D3CDD00F9ECF5 /* BeeSportiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeeSportiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		27CB272C1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeeSportiveUITests.swift; sourceTree = "<group>"; };
-		27CB272E1D5D3CDD00F9ECF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LoginVideo.mp4; sourceTree = "<group>"; };
 		27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteSportCollectionViewCell.swift; sourceTree = "<group>"; };
 		27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoriteSportCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -140,31 +116,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		27CB271A1D5D3CDD00F9ECF5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		27CB27251D5D3CDD00F9ECF5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		273E57511D61EA26009DABFE /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				27743FE91D634DFC004EAD97 /* Models */,
-			);
-			name = Manager;
-			sourceTree = "<group>";
-		};
 		273E57561D61FBCB009DABFE /* Login View */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,6 +176,17 @@
 			name = "Tab Bar";
 			sourceTree = "<group>";
 		};
+		27B977191DA272F500245D8C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				27B977151DA23EFA00245D8C /* ScrollPager.swift */,
+				81E8DCF51D75BB4400234743 /* Constants.swift */,
+				27BFF2EC1D77A4A3002040D3 /* Helper.swift */,
+				27743FE91D634DFC004EAD97 /* Models */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		27BFF2E71D778D5B002040D3 /* Requests Page */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,8 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				27CB270B1D5D3CDD00F9ECF5 /* BeeSportive */,
-				27CB27201D5D3CDD00F9ECF5 /* BeeSportiveTests */,
-				27CB272B1D5D3CDD00F9ECF5 /* BeeSportiveUITests */,
 				27CB270A1D5D3CDD00F9ECF5 /* Products */,
 				DB02669BAE7114B9DEC23D01 /* Pods */,
 				D88B80E2702491BEC5AB6B21 /* Frameworks */,
@@ -247,8 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				27CB27091D5D3CDD00F9ECF5 /* BeeSportive.app */,
-				27CB271D1D5D3CDD00F9ECF5 /* BeeSportiveTests.xctest */,
-				27CB27281D5D3CDD00F9ECF5 /* BeeSportiveUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -256,44 +217,24 @@
 		27CB270B1D5D3CDD00F9ECF5 /* BeeSportive */ = {
 			isa = PBXGroup;
 			children = (
+				27B977191DA272F500245D8C /* Resources */,
+				2737B8911D9DB32500A36795 /* BeeSportive.entitlements */,
 				275F9B6D1D98729000E7744B /* Profile */,
 				279FBC431D7EF9F900B0AFAE /* Tab Bar */,
 				273E57561D61FBCB009DABFE /* Login View */,
 				274902831D6F230A00E6766B /* Event View */,
 				8114B4CC1D7ED28300CE0FF8 /* Users View */,
 				816948F51D75A1B100E7F5CD /* Chat View */,
-				273E57511D61EA26009DABFE /* Manager */,
-				81E8DCF51D75BB4400234743 /* Constants.swift */,
-				27BFF2EC1D77A4A3002040D3 /* Helper.swift */,
 				27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */,
 				27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */,
 				27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */,
 				27CB27151D5D3CDD00F9ECF5 /* LaunchScreen.storyboard */,
 				27CB27181D5D3CDD00F9ECF5 /* Info.plist */,
 				81AD82141D815ADA0027F3C6 /* GoogleService-Info.plist */,
-				2786D7F21D7C451B00E1510F /* UIImageColors.swift */,
 				273E57631D62032B009DABFE /* Bridging-Header.h */,
 				27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */,
 			);
 			path = BeeSportive;
-			sourceTree = "<group>";
-		};
-		27CB27201D5D3CDD00F9ECF5 /* BeeSportiveTests */ = {
-			isa = PBXGroup;
-			children = (
-				27CB27211D5D3CDD00F9ECF5 /* BeeSportiveTests.swift */,
-				27CB27231D5D3CDD00F9ECF5 /* Info.plist */,
-			);
-			path = BeeSportiveTests;
-			sourceTree = "<group>";
-		};
-		27CB272B1D5D3CDD00F9ECF5 /* BeeSportiveUITests */ = {
-			isa = PBXGroup;
-			children = (
-				27CB272C1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift */,
-				27CB272E1D5D3CDD00F9ECF5 /* Info.plist */,
-			);
-			path = BeeSportiveUITests;
 			sourceTree = "<group>";
 		};
 		27EDE9A01D75DD2E00C90FC9 /* Events Main Page */ = {
@@ -399,42 +340,6 @@
 			productReference = 27CB27091D5D3CDD00F9ECF5 /* BeeSportive.app */;
 			productType = "com.apple.product-type.application";
 		};
-		27CB271C1D5D3CDD00F9ECF5 /* BeeSportiveTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 27CB27341D5D3CDD00F9ECF5 /* Build configuration list for PBXNativeTarget "BeeSportiveTests" */;
-			buildPhases = (
-				27CB27191D5D3CDD00F9ECF5 /* Sources */,
-				27CB271A1D5D3CDD00F9ECF5 /* Frameworks */,
-				27CB271B1D5D3CDD00F9ECF5 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				27CB271F1D5D3CDD00F9ECF5 /* PBXTargetDependency */,
-			);
-			name = BeeSportiveTests;
-			productName = BeeSportiveTests;
-			productReference = 27CB271D1D5D3CDD00F9ECF5 /* BeeSportiveTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		27CB27271D5D3CDD00F9ECF5 /* BeeSportiveUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 27CB27371D5D3CDD00F9ECF5 /* Build configuration list for PBXNativeTarget "BeeSportiveUITests" */;
-			buildPhases = (
-				27CB27241D5D3CDD00F9ECF5 /* Sources */,
-				27CB27251D5D3CDD00F9ECF5 /* Frameworks */,
-				27CB27261D5D3CDD00F9ECF5 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				27CB272A1D5D3CDD00F9ECF5 /* PBXTargetDependency */,
-			);
-			name = BeeSportiveUITests;
-			productName = BeeSportiveUITests;
-			productReference = 27CB27281D5D3CDD00F9ECF5 /* BeeSportiveUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -442,26 +347,21 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = BeeSportive;
 				TargetAttributes = {
 					27CB27081D5D3CDD00F9ECF5 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 23RTVFLNF5;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Maps.iOS = {
 								enabled = 1;
 							};
 						};
-					};
-					27CB271C1D5D3CDD00F9ECF5 = {
-						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 23RTVFLNF5;
-						TestTargetID = 27CB27081D5D3CDD00F9ECF5;
-					};
-					27CB27271D5D3CDD00F9ECF5 = {
-						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 23RTVFLNF5;
-						TestTargetID = 27CB27081D5D3CDD00F9ECF5;
 					};
 				};
 			};
@@ -479,8 +379,6 @@
 			projectRoot = "";
 			targets = (
 				27CB27081D5D3CDD00F9ECF5 /* BeeSportive */,
-				27CB271C1D5D3CDD00F9ECF5 /* BeeSportiveTests */,
-				27CB27271D5D3CDD00F9ECF5 /* BeeSportiveUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -498,20 +396,6 @@
 				27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */,
 				27CB27121D5D3CDD00F9ECF5 /* Main.storyboard in Resources */,
 				277C1CC11D64A2B20008331F /* EventCollectionViewCell.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		27CB271B1D5D3CDD00F9ECF5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		27CB27261D5D3CDD00F9ECF5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,7 +457,6 @@
 				816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */,
 				27BFF2E61D778D3E002040D3 /* RequestsViewController.swift in Sources */,
 				279FBC451D7EFA0C00B0AFAE /* TabBarController.swift in Sources */,
-				2786D7F31D7C451B00E1510F /* UIImageColors.swift in Sources */,
 				8114B4D11D7ED2CB00CE0FF8 /* UserCell.swift in Sources */,
 				275F9B731D98748B00E7744B /* ProfileCommentTableViewCell.swift in Sources */,
 				81E8DCF81D75BD8400234743 /* Channel.swift in Sources */,
@@ -589,6 +472,7 @@
 				27BFF2ED1D77A4A3002040D3 /* Helper.swift in Sources */,
 				27C850A11D9120C9007168A6 /* ParticipantsCollectionViewCell.swift in Sources */,
 				8114B4CE1D7ED2A900CE0FF8 /* UsersVC.swift in Sources */,
+				27B977161DA23EFA00245D8C /* ScrollPager.swift in Sources */,
 				27CB270D1D5D3CDD00F9ECF5 /* AppDelegate.swift in Sources */,
 				27EDE9A31D75DD7D00C90FC9 /* EventDetailViewController.swift in Sources */,
 				816948FE1D75ADF800E7F5CD /* ChannelCell.swift in Sources */,
@@ -601,36 +485,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		27CB27191D5D3CDD00F9ECF5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				27CB27221D5D3CDD00F9ECF5 /* BeeSportiveTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		27CB27241D5D3CDD00F9ECF5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				27CB272D1D5D3CDD00F9ECF5 /* BeeSportiveUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		27CB271F1D5D3CDD00F9ECF5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 27CB27081D5D3CDD00F9ECF5 /* BeeSportive */;
-			targetProxy = 27CB271E1D5D3CDD00F9ECF5 /* PBXContainerItemProxy */;
-		};
-		27CB272A1D5D3CDD00F9ECF5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 27CB27081D5D3CDD00F9ECF5 /* BeeSportive */;
-			targetProxy = 27CB27291D5D3CDD00F9ECF5 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */ = {
@@ -666,8 +521,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -690,7 +547,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -713,8 +570,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -731,10 +590,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "BeeSportive/Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -743,17 +603,21 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 96DC1E17FA063DC29D2BCC46 /* Pods-BeeSportive.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BeeSportive/BeeSportive.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 23RTVFLNF5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BeeSportive/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -761,63 +625,21 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E2627E3253BB17FBA968F1C3 /* Pods-BeeSportive.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BeeSportive/BeeSportive.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 23RTVFLNF5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BeeSportive/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		27CB27351D5D3CDD00F9ECF5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = BeeSportiveTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportiveTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BeeSportive.app/BeeSportive";
-			};
-			name = Debug;
-		};
-		27CB27361D5D3CDD00F9ECF5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = BeeSportiveTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportiveTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BeeSportive.app/BeeSportive";
-			};
-			name = Release;
-		};
-		27CB27381D5D3CDD00F9ECF5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = BeeSportiveUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportiveUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = BeeSportive;
-			};
-			name = Debug;
-		};
-		27CB27391D5D3CDD00F9ECF5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = BeeSportiveUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = beesportive.BeeSportiveUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = BeeSportive;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -838,24 +660,6 @@
 			buildConfigurations = (
 				27CB27321D5D3CDD00F9ECF5 /* Debug */,
 				27CB27331D5D3CDD00F9ECF5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		27CB27341D5D3CDD00F9ECF5 /* Build configuration list for PBXNativeTarget "BeeSportiveTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				27CB27351D5D3CDD00F9ECF5 /* Debug */,
-				27CB27361D5D3CDD00F9ECF5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		27CB27371D5D3CDD00F9ECF5 /* Build configuration list for PBXNativeTarget "BeeSportiveUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				27CB27381D5D3CDD00F9ECF5 /* Debug */,
-				27CB27391D5D3CDD00F9ECF5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

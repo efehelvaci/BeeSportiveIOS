@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import Haneke
+import Alamofire
 
 class ChannelCell: UITableViewCell {
 
@@ -18,40 +18,42 @@ class ChannelCell: UITableViewCell {
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var sender: UILabel!
 
-    func configureCell(channel: Channel) {
-        self.hidden = true
+    func configureCell(_ channel: Channel) {
+        self.isHidden = true
         self.lastMessage.text = channel.lastMessage["message"]
         self.date.text = channel.lastMessage["date"]
         if channel.lastMessage["senderId"]! != "" {
-            REF_USERS.child(channel.lastMessage["senderId"]!).child("displayName").observeEventType(.Value, withBlock: { (snapshot) in
+            REF_USERS.child(channel.lastMessage["senderId"]!).child("displayName").observe(.value, with: { (snapshot) in
                 if let displayName = snapshot.value as? String {
                     self.sender.text = displayName
                 }
             })
         }
-        REF_EVENTS.child(channel.id).observeEventType(.Value, withBlock: { snapshot in
-            if let title = snapshot.childSnapshotForPath("name").value as? String {
+        REF_EVENTS.child(channel.id).observe(.value, with: { snapshot in
+            if let title = snapshot.childSnapshot(forPath: "name").value as? String {
                 self.title.text = title
             }
-            if let branch = snapshot.childSnapshotForPath("branch").value as? String {
+            if let branch = snapshot.childSnapshot(forPath: "branch").value as? String {
                 self.backgroundView = UIImageView(image: UIImage(named: branch))
-                self.backgroundView?.contentMode = .ScaleAspectFill
+                self.backgroundView?.contentMode = .scaleAspectFill
                 self.backgroundView?.alpha = 0.8
                 let layer = UIView(frame: CGRect(origin: self.contentView.bounds.origin, size: self.contentView.bounds.size))
-                layer.backgroundColor = UIColor.blackColor()
+                layer.backgroundColor = UIColor.black
                 layer.alpha = 0.3
-                layer.userInteractionEnabled = false
+                layer.isUserInteractionEnabled = false
                 self.backgroundView?.addSubview(layer)
             }
-            if let imgURLstr = snapshot.childSnapshotForPath("creatorImageURL").value as? String {
-                let imgURL = NSURL(string: imgURLstr)!
-                self.img.hnk_setImageFromURL(imgURL, placeholder: UIImage(), format: nil, failure: nil, success: { (image) in
-                    self.img.layer.masksToBounds = true
-                    self.img.layer.cornerRadius = self.img.frame.width / 2.0
-                    self.img.image = image
+            if let imgURLstr = snapshot.childSnapshot(forPath: "creatorImageURL").value as? String {
+
+                Alamofire.request(imgURLstr).responseImage(completionHandler: { response in
+                    if let image = response.result.value {
+                        self.img.layer.masksToBounds = true
+                        self.img.layer.cornerRadius = self.img.frame.width / 2.0
+                        self.img.image = image
+                    }
                 })
             }
-            self.hidden = false
+            self.isHidden = false
         })
     }
 

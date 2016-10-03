@@ -22,16 +22,16 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        REF_USERS.child(uid).child("eventsCreated").observeEventType(.Value, withBlock: { snapshot in
+        REF_USERS.child(uid).child("eventsCreated").observe(.value, with: { snapshot in
             self.channels.removeAll()
             self.channels.removeAll()
             for snap in snapshot.children {
                 guard let data = snap as? FIRDataSnapshot else { return }
                 let channelID = data.value as! String
-                REF_CHANNELS.child(channelID).observeEventType(.ChildChanged, withBlock: { (snapshot) in
+                REF_CHANNELS.child(channelID).observe(.childChanged, with: { (snapshot) in
                     self.viewDidLoad()
                 })
-                REF_CHANNELS.child(channelID).observeEventType(.Value, withBlock: { (snap) in
+                REF_CHANNELS.child(channelID).observe(.value, with: { (snap) in
                     if self.channels.count != Int(snapshot.childrenCount) {
                         let channel = Channel(snapshot: snap)
                         self.channels.append(channel)
@@ -42,47 +42,47 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         })
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let tabBarCont = tabBarController as! TabBarController
-        tabBarCont.menuButton.hidden = true
-        tabBarCont.tabBar.hidden = true
+        tabBarCont.menuButton.isHidden = true
+        tabBarCont.tabBar.isHidden = true
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         let tabBarCont = tabBarController as! TabBarController
-        tabBarCont.menuButton.hidden = false
-        tabBarCont.tabBar.hidden = false
+        tabBarCont.menuButton.isHidden = false
+        tabBarCont.tabBar.isHidden = false
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching { return filteredChannels.count }
         else { return channels.count }
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("ChannelCell") as? ChannelCell {
-            if isSearching { cell.configureCell(filteredChannels[indexPath.row]) }
-            else { cell.configureCell(channels[indexPath.row]) }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell") as? ChannelCell {
+            if isSearching { cell.configureCell(filteredChannels[(indexPath as NSIndexPath).row]) }
+            else { cell.configureCell(channels[(indexPath as NSIndexPath).row]) }
             return cell
         } else { return UITableViewCell() }
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if isSearching { self.selectedChannelID = filteredChannels[indexPath.row].id }
-        else { self.selectedChannelID = channels[indexPath.row].id }
-        guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? ChannelCell else { return }
-        performSegueWithIdentifier("toChatSegue", sender: cell)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isSearching { self.selectedChannelID = filteredChannels[(indexPath as NSIndexPath).row].id }
+        else { self.selectedChannelID = channels[(indexPath as NSIndexPath).row].id }
+        guard let cell = tableView.cellForRow(at: indexPath) as? ChannelCell else { return }
+        performSegue(withIdentifier: "toChatSegue", sender: cell)
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toChatSegue" {
-            if let destVC = segue.destinationViewController as? ChatVC {
+            if let destVC = segue.destination as? ChatVC {
                 destVC.channelID = self.selectedChannelID
                 guard let cell = sender as? ChannelCell else { return }
                 destVC.navigationItem.title = cell.title.text
@@ -90,17 +90,17 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         }
     }
 
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.view.endEditing(true)
     }
 
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text == nil || searchBar.text == "" {
             isSearching = false
         } else {
             isSearching = true
-            let key = searchBar.text!.capitalizedString
-            filteredChannels = channels.filter({$0.title.rangeOfString(key) != nil})
+            let key = searchBar.text!.capitalized
+            filteredChannels = channels.filter({$0.title.range(of: key) != nil})
         }; tableView.reloadData()
     }
 

@@ -32,10 +32,10 @@ class followingUsers {
     
     //MARK: Init
     
-    private init() {
+    fileprivate init() {
         users = [User]()
         
-        REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("following").observeSingleEventOfType(.Value, withBlock: { snapshot in
+        REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("following").observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 let payload = Array((snapshot.value as! Dictionary<String, AnyObject>).values)
                 var usrs = [User]()
@@ -43,9 +43,9 @@ class followingUsers {
                 for element in payload {
                     let id = element["id"] as! String
                     
-                    REF_USERS.child(id).observeSingleEventOfType(.Value, withBlock: {snapshot2 in
+                    REF_USERS.child(id).observeSingleEvent(of: .value, with: {snapshot2 in
                         if snapshot2.exists() {
-                            usrs.insert(User(snapshot: snapshot2), atIndex: 0)
+                            usrs.insert(User(snapshot: snapshot2), at: 0)
                             
                             if ((payload.last)!).isEqual(element) {self.users = usrs}
                         }
@@ -67,33 +67,33 @@ extension UIViewController {
         view.addGestureRecognizer(tap)
     }
 
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+    func showAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
-    func dateFromString(dateStr: String) -> NSDate {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .MediumStyle
-        dateFormatter.timeStyle = .ShortStyle
-        if let str = dateFormatter.dateFromString(dateStr) { return str }
-        else { return NSDate() }
+    func dateFromString(_ dateStr: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        if let str = dateFormatter.date(from: dateStr) { return str }
+        else { return Date() }
     }
 
-    func dateToString(date: NSDate) -> String {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .MediumStyle
-        dateFormatter.timeStyle = .ShortStyle
-        return dateFormatter.stringFromDate(date)
+    func dateToString(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        return dateFormatter.string(from: date)
     }
 }
 
 extension String {
-    func heightWithConstrainedWidth(width: CGFloat, font: UIFont) -> CGFloat {
-        let constraintRect = CGSize(width: width, height: CGFloat.max)
+    func heightWithConstrainedWidth(_ width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         
-        let boundingBox = self.boundingRectWithSize(constraintRect, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        let boundingBox = self.boundingRect(with: constraintRect, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
         
         return boundingBox.height
     }

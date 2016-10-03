@@ -14,11 +14,11 @@ class Channel {
     var id: String!
     var title: String!
     var lastMessage: Dictionary<String, String> = ["message":"There are no messages yet!", "senderId":"", "date":""]
-    var photoURL: NSURL?
+    var photoURL: URL?
 
     init(snapshot: FIRDataSnapshot) {
         self.id = snapshot.key
-        REF_EVENTS.child(snapshot.key).child("name").observeEventType(.Value, withBlock: { (snapshot) in
+        REF_EVENTS.child(snapshot.key).child("name").observe(.value, with: { (snapshot) in
             if let name = snapshot.value as? String {
                 self.title = name
             } else { self.title = "Channel" }
@@ -28,13 +28,12 @@ class Channel {
                 self.lastMessage = lastMessage
             }
             if let urlStr = data["photoURL"] as? String {
-                let url = NSURL(string: urlStr)
+                let url = URL(string: urlStr)
                 self.photoURL = url
             }
         } else {
             REF_CHANNELS.child(snapshot.key).child("title").setValue(self.title)
             REF_CHANNELS.child(snapshot.key).child("lastMessage").setValue(self.lastMessage)
-            self
         }
     }
 

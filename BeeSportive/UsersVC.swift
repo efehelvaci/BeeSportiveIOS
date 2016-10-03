@@ -31,9 +31,9 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         FTIndicator.showProgressWithmessage("Loading", userInteractionEnable: false)
         
         let nib = UINib(nibName: "UserCell", bundle:nil)
-        collectionView.registerNib(nib, forCellWithReuseIdentifier: "userCell")
+        collectionView.register(nib, forCellWithReuseIdentifier: "userCell")
         
-        REF_USERS.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+        REF_USERS.observeSingleEvent(of: .value, with: { (snapshot) in
             self.users.removeAll()
             
             for snap in snapshot.children {
@@ -51,11 +51,11 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         })
     }
 
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         if isSearching {
             return filteredUsers.count
@@ -64,30 +64,30 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         }
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("userCell", forIndexPath: indexPath) as? UserCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "userCell", for: indexPath) as? UserCell {
             cell.following = false
             cell.alpha = 0
             
             if isSearching {
                 for element in followedUsers {
-                    if element.id == filteredUsers[indexPath.row].id{
+                    if element.id == filteredUsers[(indexPath as NSIndexPath).row].id{
                         cell.following = true
                     }
                 }
                 
-                cell.configureCell(filteredUsers[indexPath.row])
+                cell.configureCell(filteredUsers[(indexPath as NSIndexPath).row])
             } else {
                 for element in followedUsers {
-                    if element.id == verifiedUsers[indexPath.row].id {
+                    if element.id == verifiedUsers[(indexPath as NSIndexPath).row].id {
                         cell.following = true
                     }
                 }
                 
-                cell.configureCell(users[indexPath.row])
+                cell.configureCell(users[(indexPath as NSIndexPath).row])
             }
             
-            UIView.animateWithDuration(0.5, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 cell.alpha = 1
             })
             
@@ -97,36 +97,36 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         }
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
-        return CGSizeMake(screenSize.width-6, 60)
+        return CGSize(width: screenSize.width-6, height: 60)
     }
 
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let viewController5 = storyboard!.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         
-        isSearching ? (viewController5.getUser(filteredUsers[indexPath.row].id)) : (viewController5.getUser(users[indexPath.row].id))
+        isSearching ? (viewController5.getUser(userID: filteredUsers[(indexPath as NSIndexPath).row].id)) : (viewController5.getUser(userID: users[(indexPath as NSIndexPath).row].id))
         
-        self.presentViewController(viewController5, animated: true, completion: nil)
+        self.present(viewController5, animated: true, completion: nil)
 
     }
 
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         view.endEditing(true)
     }
 
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         view.endEditing(true)
     }
 
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text == nil || searchBar.text == "" {
             isSearching = false
         } else {
             isSearching = true
-            let key = searchBar.text!.capitalizedString
-            filteredUsers = users.filter({$0.displayName.rangeOfString(key) != nil})
+            let key = searchBar.text!.capitalized
+            filteredUsers = users.filter({$0.displayName.range(of: key) != nil})
         }
         
         collectionView.reloadData()

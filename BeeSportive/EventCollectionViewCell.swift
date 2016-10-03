@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
+import Firebase
 
 class EventCollectionViewCell: UICollectionViewCell {
     
@@ -16,18 +19,54 @@ class EventCollectionViewCell: UICollectionViewCell {
     @IBOutlet var creatorImage: UIImageView!
     @IBOutlet var branchName: UILabel!
     @IBOutlet var date: UILabel!
+    @IBOutlet var eventName: UILabel!
+    @IBOutlet var capacity: UILabel!
+    @IBOutlet var verifiedImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    func offset(offset: CGPoint) {
-        backgroundImage.frame = CGRectOffset(self.backgroundImage.bounds, offset.x, offset.y)
+    func configureCell(event: Event) {
+        self.clipsToBounds = false
+        
+        REF_USERS.child(event.creatorID).observeSingleEvent(of: .value, with : { snapshot in
+            if snapshot.exists() {
+                let user = User(snapshot: snapshot)
+                
+                self.creatorName.text = user.displayName
+                self.creatorName.isHidden = false
+                
+                user.verified ? (self.verifiedImage.isHidden = false) : (self.verifiedImage.isHidden = true)
+                
+                Alamofire.request(user.photoURL!).responseImage(completionHandler: { response in
+                    if let image = response.result.value {
+                        self.creatorImage.image = image
+                        self.creatorImage.isHidden = false
+                    }
+                })
+            }
+        })
+        
+        self.date.text = event.day + " " + months[Int(event.month)! - 1] + ", " + event.time
+        self.backgroundImage.image = UIImage(named: event.branch)
+        self.creatorName.text = event.creatorName
+        self.location.text = event.location
+        self.location.adjustsFontSizeToFitWidth = true
+        self.branchName.text = (event.branch).lowercased()
+        self.eventName.text = event.name
+        self.capacity.text = (event.maxJoinNumber) + " People"
+        
+
     }
     
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    func offset(_ offset: CGPoint) {
+        backgroundImage.frame = self.backgroundImage.bounds.offsetBy(dx: offset.x, dy: offset.y)
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
     }
     
     

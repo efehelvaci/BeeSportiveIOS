@@ -22,7 +22,7 @@ class EventsCollectionViewController: UICollectionViewController {
         // Register cell classes
         let nibName = UINib(nibName: "EventCollectionViewCell", bundle: nil)
         
-        self.collectionView!.registerNib(nibName, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(nibName, forCellWithReuseIdentifier: reuseIdentifier)
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,47 +42,46 @@ class EventsCollectionViewController: UICollectionViewController {
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return events.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! EventCollectionViewCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! EventCollectionViewCell
         
         // Filling cell
-        cell.date.text = events[indexPath.row].day + " " + months[Int(events[indexPath.row].month)! - 1] + ", " + events[indexPath.row].time
-        cell.backgroundImage.image = UIImage(named: events[indexPath.row].branch)
-        cell.creatorName.text = events[indexPath.row].creatorName
-        cell.location.text = events[indexPath.row].location
+        cell.date.text = events[(indexPath as NSIndexPath).row].day + " " + months[Int(events[(indexPath as NSIndexPath).row].month)! - 1] + ", " + events[(indexPath as NSIndexPath).row].time
+        cell.backgroundImage.image = UIImage(named: events[(indexPath as NSIndexPath).row].branch)
+        cell.creatorName.text = events[(indexPath as NSIndexPath).row].creatorName
+        cell.location.text = events[(indexPath as NSIndexPath).row].location
         cell.location.adjustsFontSizeToFitWidth = true
-        cell.branchName.text = (events[indexPath.row].branch).uppercaseString
+        cell.branchName.text = (events[(indexPath as NSIndexPath).row].branch).uppercased()
         
-        Alamofire.request(.GET, (self.events[indexPath.row].creatorImageURL)).responseData{ response in
+        Alamofire.request(self.events[(indexPath as NSIndexPath).row].creatorImageURL).responseImage(completionHandler: { response in
             if let image = response.result.value {
                 cell.creatorImage.layer.masksToBounds = true
                 cell.creatorImage.layer.cornerRadius = cell.creatorImage.frame.width / 2.0
-                cell.creatorImage.image = UIImage(data: image)
-            }
-        }
+                cell.creatorImage.image = image            }
+        })
         
         return cell
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let eventDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
+        let eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
         
-        eventDetailVC.event = events[indexPath.row]
-        self.presentViewController(eventDetailVC, animated: true, completion: nil)
+        eventDetailVC.event = events[(indexPath as NSIndexPath).row]
+        self.present(eventDetailVC, animated: true, completion: nil)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(screenSize.width, 180)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+        return CGSize(width: screenSize.width, height: 180)
     }
 
 

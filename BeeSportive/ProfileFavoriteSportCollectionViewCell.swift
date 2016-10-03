@@ -14,6 +14,8 @@ class ProfileFavoriteSportCollectionViewCell: UICollectionViewCell {
     @IBOutlet var name: UILabel!
     
     override func awakeFromNib() {
+        self.layoutIfNeeded()
+        
         image.layer.masksToBounds = true
         image.layer.cornerRadius = image.frame.width/2.0
     }

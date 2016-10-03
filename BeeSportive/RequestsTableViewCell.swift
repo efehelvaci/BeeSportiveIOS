@@ -26,7 +26,7 @@ class RequestsTableViewCell: UITableViewCell {
         userImage.layer.borderWidth = 1.0
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -35,21 +35,21 @@ class RequestsTableViewCell: UITableViewCell {
     func deleteUserFromTable() {
         for i in 0 ..< delegate!.users.count {
             if requesterID! == delegate!.users[i].id {
-                delegate!.users.removeAtIndex(i)
+                delegate!.users.remove(at: i)
                 delegate!.tableView.reloadData()
             }
         }
         
-        if delegate!.users.count == 0 { delegate!.dismissViewControllerAnimated(true, completion: nil) }
+        if delegate!.users.count == 0 { delegate!.dismiss(animated: true, completion: nil) }
     }
     
-    @IBAction func declineButtonClicked(sender: AnyObject) {
+    @IBAction func declineButtonClicked(_ sender: AnyObject) {
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
         deleteUserFromTable()
     }
     
  
-    @IBAction func acceptButtonClicked(sender: AnyObject) {
+    @IBAction func acceptButtonClicked(_ sender: AnyObject) {
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("id").setValue(requesterID!)
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("status").setValue("accepted")

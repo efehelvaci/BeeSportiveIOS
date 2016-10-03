@@ -9,9 +9,10 @@
 import UIKit
 import Firebase
 import Async
-import Haneke
+import Alamofire
+import AlamofireImage
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ScrollPagerDelegate {
     
     @IBOutlet var profileImage: UIImageView!
     
@@ -27,16 +28,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
     
     @IBOutlet var favoriteSportsCollectionView: UICollectionView!
     
-    @IBOutlet var segmentedControl: UISegmentedControl!
-    
-    @IBOutlet var segmentBeeEventsLabel: UILabel!
-    
-    @IBOutlet var segmentCommentsLabel: UILabel!
-    
-    @IBOutlet var segmentFirstView: UIView!
-    
-    @IBOutlet var segmentSecondView: UIView!
-    
     @IBOutlet var eventsCollectionView: UICollectionView!
     
     @IBOutlet var commentsTableView: UITableView!
@@ -45,8 +36,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
     
     @IBOutlet var favoriteSportsHeight: NSLayoutConstraint!
     
-    @IBOutlet var scrollView: UIScrollView!
-    
     @IBOutlet var profileImageEditButton: UIButton!
     
     @IBOutlet var followersText: UILabel!
@@ -54,6 +43,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
     @IBOutlet var followingText: UILabel!
     
     @IBOutlet var followButton: UIButton!
+    
+    @IBOutlet var scrollPager: ScrollPager!
+
+    @IBOutlet var beeViewConstraint: NSLayoutConstraint!
     
     var user : User?
     
@@ -74,6 +67,20 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let eventNib = UINib(nibName: "EventCollectionViewCell", bundle: Bundle.main)
+        eventsCollectionView.register(eventNib, forCellWithReuseIdentifier: "eventCell")
+
+        self.view.layoutIfNeeded()
+
+        scrollPager.delegate = self
+        scrollPager.addSegmentsWithTitlesAndViews(segments: [
+            ("Past Events", eventsCollectionView),
+            ("Comments", commentsTableView)
+            ])
+        
+        eventsCollectionView.alwaysBounceVertical = true
+        commentsTableView.alwaysBounceVertical = true
+        
         profileImage.alpha = 0
         profileName.alpha = 0
         profileFollowers.alpha = 0
@@ -83,7 +90,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
 
         profileImage.layer.masksToBounds = true
         profileImage.layer.cornerRadius = profileImage.frame.width/2.0
-        profileImage.layer.borderColor = UIColor.grayColor().CGColor
+        profileImage.layer.borderColor = UIColor.gray.cgColor
         profileImage.layer.borderWidth = 1.0
         
         imagePicker.delegate = self
@@ -91,27 +98,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
         favoriteSportsCollectionView.reloadData()
         eventsCollectionView.reloadData()
         commentsTableView.reloadData()
-        
-        favoriteSportsHeight.constant = (screenSize.width / 5.0) + 10
-        
-        scrollView.alwaysBounceVertical = false
-        
-        let eventNib = UINib(nibName: "EventCollectionViewCell", bundle: nil)
-        eventsCollectionView.registerNib(eventNib, forCellWithReuseIdentifier: "eventCell")
-        
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        sender == 0 ? (backButton.hidden = true) : (backButton.hidden = false)
+        sender == 0 ? (backButton.isHidden = true) : (backButton.isHidden = false)
         
         if profileName.text == "null" && user != nil { setUser() }
     }
     
     // MARK: - Collection View Delegate Methods
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == eventsCollectionView {
             return eventsArray.count
         } else if collectionView == favoriteSportsCollectionView {
@@ -121,54 +120,39 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
         return 0
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
         if collectionView == eventsCollectionView {
-            return CGSizeMake(screenSize.width-8, 180)
+            return CGSize(width: screenSize.width-8, height: 180)
         } else if collectionView == favoriteSportsCollectionView {
-            return CGSizeMake((screenSize.width/5.0)-16, (screenSize.width/5.0)-16)
+            return CGSize(width: (screenSize.width/5.0)-16, height: (screenSize.width/5.0)-16)
         }
         
-        return CGSizeMake(0, 0)
+        return CGSize(width: 0, height: 0)
     }
 
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == eventsCollectionView {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCell", forIndexPath: indexPath) as! EventCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as! EventCollectionViewCell
             
-            cell.date.text = eventsArray[indexPath.row].day + " " + months[Int(eventsArray[indexPath.row].month)! - 1] + ", " + eventsArray[indexPath.row].time
-            cell.backgroundImage.image = UIImage(named: eventsArray[indexPath.row].branch)
-            cell.creatorName.text = eventsArray[indexPath.row].creatorName
-            cell.location.text = eventsArray[indexPath.row].location
-            cell.location.adjustsFontSizeToFitWidth = true
-            cell.branchName.text = (eventsArray[indexPath.row].branch).uppercaseString
-            cell.creatorImage.hnk_setImageFromURL(NSURL(string: self.eventsArray[indexPath.row].creatorImageURL)!, placeholder: UIImage(), format: nil, failure: nil, success: { image in
-                cell.creatorImage.layer.masksToBounds = true
-                cell.creatorImage.layer.cornerRadius = cell.creatorImage.frame.width / 2.0
-                cell.creatorImage.image = image
-            })
-            
-            cell.layer.borderWidth = 1.0
-            cell.layer.cornerRadius = 5.0
-            cell.layer.borderColor = UIColor.grayColor().CGColor
-            
+            cell.configureCell(event: eventsArray[indexPath.row])
             
             return cell
         } else if collectionView == favoriteSportsCollectionView {
-            if indexPath.row == 0 {
-                let cell = collectionView.dequeueReusableCellWithReuseIdentifier("firstItem", forIndexPath: indexPath)
+            if (indexPath as NSIndexPath).row == 0 {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "firstItem", for: indexPath)
                 
                 return cell
             } else {
-                let cell = collectionView.dequeueReusableCellWithReuseIdentifier("favoriteSportItem", forIndexPath: indexPath) as! ProfileFavoriteSportCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favoriteSportItem", for: indexPath) as! ProfileFavoriteSportCollectionViewCell
                 
-                cell.image.image = UIImage(named: favoriteSports[indexPath.row - 1])
-                cell.name.text = favoriteSports[indexPath.row - 1]
+                cell.image.image = UIImage(named: favoriteSports[(indexPath as NSIndexPath).row - 1])
+                cell.name.text = favoriteSports[(indexPath as NSIndexPath).row - 1]
                 
                 return cell
             }
@@ -177,11 +161,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
         return UICollectionViewCell()
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == eventsCollectionView {
-            let eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
-            eventDetailVC.event = eventsArray[indexPath.row]
-            self.presentViewController(eventDetailVC, animated: true, completion: nil)
+            let eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
+            eventDetailVC.event = eventsArray[(indexPath as NSIndexPath).row]
+            self.present(eventDetailVC, animated: true, completion: nil)
         }
     }
     
@@ -189,27 +173,30 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
     
     // MARK: - Table View Delegate Methods
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return commentsArray.count
     }
     
-    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return commentsArray[indexPath.row].height
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = commentsTableView.dequeueReusableCellWithIdentifier("commentCell", forIndexPath: indexPath) as! ProfileCommentTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = commentsTableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as! ProfileCommentTableViewCell
         
-        cell.comment.text = commentsArray[indexPath.row].comment
-        cell.date.text = commentsArray[indexPath.row].date
+        cell.comment.text = commentsArray[(indexPath as NSIndexPath).row].comment
+        cell.date.text = commentsArray[(indexPath as NSIndexPath).row].date
         
-        REF_USERS.child(commentsArray[indexPath.row].id).observeSingleEventOfType(.Value, withBlock: { snapshot in
+        REF_USERS.child(commentsArray[(indexPath as NSIndexPath).row].id).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 let commmentedUser = User(snapshot: snapshot)
                 
                 cell.name.text = commmentedUser.displayName
-                cell.userImage.hnk_setImageFromURL(NSURL(string: commmentedUser.photoURL!)!, placeholder: UIImage(), format: nil, failure: nil, success: { image in
-                    cell.userImage.image = image
+                
+                Alamofire.request(commmentedUser.photoURL!).responseImage(completionHandler: { response in
+                    if let image = response.result.value {
+                        cell.userImage.image = image
+                    }
                 })
             }
         
@@ -218,26 +205,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
         return cell
     }
     
-    // MARK: - Segmented Control
-    
-    @IBAction func segmentChanged(sender: AnyObject) {
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            segmentFirstView.hidden = false
-            segmentSecondView.hidden = true
-            break
-        case 1:
-            segmentFirstView.hidden = true
-            segmentSecondView.hidden = false
-            break
-        default:
-            break
-        }
-    }
-    
     // MARK: - Text Field
     
-    func animateTextField(textField: UITextField, up: Bool)
+    func animateTextField(_ textField: UITextField, up: Bool)
     {
         let movementDistance:CGFloat = -180
         let movementDuration: Double = 0.3
@@ -254,27 +224,27 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
         UIView.beginAnimations("animateTextField", context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
         UIView.setAnimationDuration(movementDuration)
-        self.view.frame = CGRectOffset(self.view.frame, 0, movement)
+        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
         UIView.commitAnimations()
     }
     
-    @IBAction func commentEditingBegin(sender: AnyObject) {
+    @IBAction func commentEditingBegin(_ sender: AnyObject) {
         let inputView = sender as! UITextField
         inputView.becomeFirstResponder()
         self.animateTextField(sender as! UITextField, up: true)
     }
     
     
-    @IBAction func commentSend(sender: AnyObject) {
+    @IBAction func commentSend(_ sender: AnyObject) {
         
         let inputView = sender as! UITextField
         inputView.resignFirstResponder()
         self.animateTextField(sender as! UITextField, up: false)
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         
         dateFormatter.dateFormat = "dd.M.yy, HH:mm"
-        let date = dateFormatter.stringFromDate(NSDate())
+        let date = dateFormatter.string(from: Date())
         
         let commentText = commentTextField.text!
         commentTextField.text = ""
@@ -293,51 +263,54 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
     // MARK: - Self created methods
     
     func getUser(userID: String) {
-        REF_USERS.child(userID).observeSingleEventOfType(.Value, withBlock: { snapshot in
+        REF_USERS.child(userID).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 self.user = User(snapshot: snapshot)
                 
-//                REF_USERS.child(userID).child("adminOptions").observeSingleEventOfType(.Value, withBlock: { snapshot in
-//                    if snapshot.exists() {
-//                        let data = snapshot.value as! Dictionary <String, AnyObject>
-//                        
-//                        if let verified = (data["verified"] as? Bool) {
-//                            self.user?.verified = verified
-//                        }
-//                    }
-//                })
+                REF_USERS.child(userID).child("adminOptions").observeSingleEvent(of: .value, with: { snapshot in
+                    if snapshot.exists() {
+                        let data = snapshot.value as! Dictionary <String, AnyObject>
+                        
+                        if let verified = (data["verified"] as? Bool) {
+                            self.user?.verified = verified
+                        }
+                    }
+                })
                 
                 self.setUser()
                 self.getEventsIDs()
                 self.getComments()
             }
         })
-        
-        REF_USERS.child(userID).child("favoriteSports").observeSingleEventOfType(.Value, withBlock: { snapshot in
+    
+        REF_USERS.child(userID).child("favoriteSports").observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 self.favoriteSports.removeAll()
                 
                 let postDict = snapshot.value as! Dictionary<String, String>
                 
-                if postDict["First"] != "nil" { self.favoriteSports.insert(postDict["First"]!, atIndex: 0) }
-                if postDict["Second"] != "nil" { self.favoriteSports.insert(postDict["Second"]!, atIndex: 0) }
-                if postDict["Third"] != "nil" { self.favoriteSports.insert(postDict["Third"]!, atIndex: 0) }
-                if postDict["Fourth"] != "nil" { self.favoriteSports.insert(postDict["Fourth"]!, atIndex: 0) }
+                if postDict["First"] != "nil" { self.favoriteSports.insert(postDict["First"]!, at: 0) }
+                if postDict["Second"] != "nil" { self.favoriteSports.insert(postDict["Second"]!, at: 0) }
+                if postDict["Third"] != "nil" { self.favoriteSports.insert(postDict["Third"]!, at: 0) }
+                if postDict["Fourth"] != "nil" { self.favoriteSports.insert(postDict["Fourth"]!, at: 0) }
                 
-                if self.isViewLoaded() { self.favoriteSportsCollectionView.reloadData() }
+                if self.isViewLoaded { self.favoriteSportsCollectionView.reloadData() }
                 
             }
         })
     }
     
     func setUser() {
-        if self.isViewLoaded() {
+        if self.isViewLoaded {
             profileName.text = self.user?.displayName
-            profileImage.hnk_setImageFromURL(NSURL(string: (user?.photoURL)!)!, placeholder: UIImage(), format: nil, failure: nil, success: { image in
-                self.profileImage.image = image
+            
+            Alamofire.request((user?.photoURL)!).responseImage(completionHandler: { response in
+                if let image = response.result.value {
+                    self.profileImage.image = image
+                }
             })
             
-            UIView.animateWithDuration(1, animations: { 
+            UIView.animate(withDuration: 1, animations: { 
                 self.profileImage.alpha = 1
                 self.profileName.alpha = 1
                 self.profileFollowers.alpha = 1
@@ -347,19 +320,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
             })
             
             if user!.id != FIRAuth.auth()?.currentUser?.uid {
-                profileImageEditButton.hidden = true
-                settingsButton.hidden = true
-                followButton.hidden = false
+                profileImageEditButton.isHidden = true
+                settingsButton.isHidden = true
+                followButton.isHidden = false
             } else {
-                profileImageEditButton.hidden = false
-                settingsButton.hidden = false
-                followButton.hidden = true
+                profileImageEditButton.isHidden = false
+                settingsButton.isHidden = false
+                followButton.isHidden = true
             }
             
             for element in followingUsers.instance.users {
                 if element.id == user!.id {
                     isFollowing = true
-                    followButton.setTitle("unfollow", forState: .Normal)
+                    followButton.setTitle("unfollow", for: UIControlState())
                 }
             }
             
@@ -367,14 +340,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
     }
     
     func getEventsIDs() {
-        REF_USERS.child(user!.id).child("eventsCreated").observeSingleEventOfType(.Value, withBlock: { snapshot in
+        REF_USERS.child(user!.id).child("eventsCreated").observeSingleEvent(of: .value, with: { snapshot in
             
             if snapshot.exists() {
                 let myEventsIDArray = Array((snapshot.value as! [String: String]).values)
                 var myEventIDs = [String]()
                 
                 for element in myEventsIDArray {
-                    myEventIDs.insert(element, atIndex: 0)
+                    myEventIDs.insert(element, at: 0)
                 }
                 
                 self.eventsArray = [Event]()
@@ -383,22 +356,22 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
         })
     }
     
-    func getEvents(events: [String]) {
+    func getEvents(_ events: [String]) {
         for element in 0...events.count-1 {
-            REF_EVENTS.child(events[element]).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            REF_EVENTS.child(events[element]).observeSingleEvent(of: .value, with: { (snapshot) in
                 if snapshot.exists() {
                     let eventElement = Event(snapshot: snapshot)
                     
-                    self.eventsArray.insert(eventElement, atIndex: 0)
+                    self.eventsArray.append(eventElement)
                     
-                    if element == events.count-1 && self.isViewLoaded() { self.eventsCollectionView.reloadData() }
+                    if element == events.count-1 && self.isViewLoaded { self.eventsCollectionView.reloadData() }
                 }
             })
         }
     }
     
     func getComments() {
-        REF_USERS.child(user!.id).child("comments").observeSingleEventOfType(.Value, withBlock: { snapshot in
+        REF_USERS.child(user!.id).child("comments").observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 self.commentsArray.removeAll()
                 
@@ -412,58 +385,58 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
                     
                     let newComment = Comment(id: id, date: date, comment: comment, height: height+60)
                     
-                    self.commentsArray.insert(newComment, atIndex: 0)
+                    self.commentsArray.insert(newComment, at: 0)
                 }
                 
-                if self.isViewLoaded() { self.commentsTableView.reloadData() }
+                if self.isViewLoaded { self.commentsTableView.reloadData() }
             }
         })
     }
     
-    @IBAction func backButtonClicked(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func backButtonClicked(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func profileImageEditButtonClicked(sender: AnyObject) {
-        imagePicker.sourceType = .PhotoLibrary
-        presentViewController(imagePicker, animated: true, completion: nil)
+    @IBAction func profileImageEditButtonClicked(_ sender: AnyObject) {
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         profileImage.image = image
         if let data = UIImageJPEGRepresentation(image, 0.2) {
-            var path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-            path = path.stringByAppendingString("/\(user!.id).jpg")
-            do { try data.writeToFile(path, options: .DataWritingAtomic) }
+            var path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+            path = path + "/\(user!.id).jpg"
+            do { try data.write(to: URL(fileURLWithPath: path), options: .atomic) }
             catch { print(error) }
-            let url = NSURL(fileURLWithPath: path)
+            let url = URL(fileURLWithPath: path)
             REF_STORAGE.child(user!.id).putFile(url, metadata: nil, completion: { (meta, error) in
                 if let meta = meta {
                     let url = meta.downloadURL()!
                     self.user!.photoURL = url.absoluteString
                     REF_USERS.child(self.user!.id).child("photoURL").setValue(url.absoluteString)
                 } else { print(error) }
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
             })
         }
     }
     
-    @IBAction func followButtonClicked(sender: AnyObject) {
+    @IBAction func followButtonClicked(_ sender: AnyObject) {
         if !isFollowing {
-            followButton.setTitle("unfollow", forState: .Normal)
+            followButton.setTitle("unfollow", for: UIControlState())
             isFollowing = true
             
-            followingUsers.instance.users.insert(user!, atIndex: 0)
+            followingUsers.instance.users.insert(user!, at: 0)
             REF_USERS.child(user!.id).child("followers").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue(FIRAuth.auth()?.currentUser?.uid)
             REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("following").child(user!.id).child("id").setValue(user!.id)
             
         } else {
-            followButton.setTitle("follow", forState: .Normal)
+            followButton.setTitle("follow", for: UIControlState())
             isFollowing = false
             
             for index in 0...followingUsers.instance.users.count-1 {
                 if user!.id == followingUsers.instance.users[index].id {
-                    followingUsers.instance.users.removeAtIndex(index)
+                    followingUsers.instance.users.remove(at: index)
                     break
                 }
             }
@@ -473,5 +446,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UIImagePic
         }
     }
     
-    
+     func scrollPager(scrollPager: ScrollPager, changedIndex: Int) {
+        switch changedIndex {
+        case 0:
+            beeViewConstraint.constant = 0
+            break
+        case 1:
+            beeViewConstraint.constant = screenSize.width / 2.0
+            break
+        default:
+            break
+        }
+    }
 }

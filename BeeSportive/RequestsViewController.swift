@@ -9,7 +9,8 @@
 import UIKit
 import Async
 import Firebase
-import Haneke
+import Alamofire
+import AlamofireImage
 
 class RequestsViewController: UIViewController, UITableViewDelegate {
 
@@ -26,7 +27,7 @@ class RequestsViewController: UIViewController, UITableViewDelegate {
         // Do any additional setup after loading the view.
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         getUsers()
@@ -37,38 +38,41 @@ class RequestsViewController: UIViewController, UITableViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as? RequestsTableViewCell {
+    private func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as? RequestsTableViewCell {
             
-            cell.requesterID = users[indexPath.row].id
+            cell.requesterID = users[(indexPath as NSIndexPath).row].id
             cell.eventID = eventID!
-            cell.userNameLabel.text = users[indexPath.row].displayName
+            cell.userNameLabel.text = users[(indexPath as NSIndexPath).row].displayName
             cell.delegate = self
-            cell.userImage.hnk_setImageFromURL(NSURL(string: self.users[indexPath.row].photoURL!)!, placeholder: UIImage(), format: nil, failure: nil, success: { image in
-                cell.userImage.image = image
+            
+            Alamofire.request(self.users[(indexPath as NSIndexPath).row].photoURL!).responseImage(completionHandler: { response in
+                if let image = response.result.value {
+                    cell.userImage.image = image
+                }
             })
             
             return cell
         } else { return UITableViewCell() }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let viewController5 = storyboard!.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
-        self.presentViewController(viewController5, animated: true, completion: { _ in
-            viewController5.getUser(self.users[indexPath.row].id)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        self.present(viewController5, animated: true, completion: { _ in
+            viewController5.getUser(userID: self.users[(indexPath as NSIndexPath).row].id)
         })
     }
     
     func getUsers() {
-        REF_EVENTS.child(eventID!).child("requested").observeSingleEventOfType(.Value, withBlock: { snapshot in
+        REF_EVENTS.child(eventID!).child("requested").observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 
                 self.users.removeAll()
@@ -76,8 +80,8 @@ class RequestsViewController: UIViewController, UITableViewDelegate {
                 let requesterIDs = Array((snapshot.value as! [String : AnyObject]).values)
                 
                 for element in requesterIDs {
-                    let id = element.valueForKey("id") as! String
-                    let result = element.valueForKey("result") as! String
+                    let id = element.value(forKey: "id") as! String
+                    let result = element.value(forKey: "result") as! String
                     
                     if result == "requested" { self.getUser(id) }
                 }
@@ -85,8 +89,8 @@ class RequestsViewController: UIViewController, UITableViewDelegate {
         })
     }
     
-    func getUser(userID : String) {
-        REF_USERS.child(userID).observeEventType(.Value, withBlock: { snapshot in
+    func getUser(_ userID : String) {
+        REF_USERS.child(userID).observe(.value, with: { snapshot in
             if snapshot.exists() {
                 
                 let dict = snapshot.value as! Dictionary<String, AnyObject>
@@ -98,7 +102,7 @@ class RequestsViewController: UIViewController, UITableViewDelegate {
                 
                 let user = User(displayName: displayName, photoURL: photoURL, email: email, id: id)
                 
-                self.users.insert(user, atIndex: 0)
+                self.users.insert(user, at: 0)
                 
                 Async.main{
                     self.tableView.reloadData()

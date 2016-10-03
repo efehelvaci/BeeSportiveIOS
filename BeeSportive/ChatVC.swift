@@ -20,99 +20,99 @@ class ChatVC: JSQMessagesViewController {
         automaticallyScrollsToMostRecentMessage = true
         self.senderId = FIRAuth.auth()?.currentUser?.uid
         self.senderDisplayName = FIRAuth.auth()?.currentUser?.displayName
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(ChatVC.segueToParticipants))
-        REF_CHANNELS.child(channelID).child("messages").observeEventType(.ChildAdded, withBlock: { snapshot in
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(ChatVC.segueToParticipants))
+        REF_CHANNELS.child(channelID).child("messages").observe(.childAdded, with: { snapshot in
             guard let data = snapshot.value as? Dictionary<String, String> else { return }
             let senderId = data["senderId"]!
-            REF_USERS.child(senderId).child("displayName").observeEventType(.Value, withBlock: { (snapshot) in
+            REF_USERS.child(senderId).child("displayName").observe(.value, with: { (snapshot) in
                 let displayName = snapshot.value as! String
-                self.addMessage(data["message"]!, senderId: data["senderId"]!, senderDisplayName: displayName, date: NSDate())
+                self.addMessage(data["message"]!, senderId: data["senderId"]!, senderDisplayName: displayName, date: Date())
             })
         })
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let tabBarCont = tabBarController as! TabBarController
-        tabBarCont.menuButton.hidden = true
-        tabBarCont.tabBar.hidden = true
+        tabBarCont.menuButton.isHidden = true
+        tabBarCont.tabBar.isHidden = true
     }
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages.count
     }
 
-    override func collectionView(collectionView: UICollectionView,
-                                 cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
+    override func collectionView(_ collectionView: UICollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
             as! JSQMessagesCollectionViewCell
-        let message = messages[indexPath.item]
-        if message.senderId == senderId { cell.textView!.textColor = UIColor.whiteColor() }
-        else { cell.textView!.textColor = UIColor.blackColor() }
+        let message = messages[(indexPath as NSIndexPath).item]
+        if message.senderId == senderId { cell.textView!.textColor = UIColor.white }
+        else { cell.textView!.textColor = UIColor.black }
         return cell
     }
 
-    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
         return messages[indexPath.row]
     }
 
-    override func collectionView(collectionView: JSQMessagesCollectionView!,
-                                 messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!,
+                                 messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         let factory = JSQMessagesBubbleImageFactory()
-        let outgoingBubbleImage = factory.outgoingMessagesBubbleImageWithColor(
-            UIColor.jsq_messageBubbleBlueColor())
-        let incomingBubbleImage = factory.incomingMessagesBubbleImageWithColor(
-            UIColor.jsq_messageBubbleLightGrayColor())
+        let outgoingBubbleImage = factory?.outgoingMessagesBubbleImage(
+            with: UIColor.jsq_messageBubbleBlue())
+        let incomingBubbleImage = factory?.incomingMessagesBubbleImage(
+            with: UIColor.jsq_messageBubbleLightGray())
         let message = messages[indexPath.item]
         if message.senderId == senderId { return outgoingBubbleImage }
         else { return incomingBubbleImage }
     }
 
-    override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
         let name = messages[indexPath.row].senderDisplayName
-        let components = name.componentsSeparatedByString(" ")
+        let components = name?.components(separatedBy: " ")
         var initials = ""
-        for component in components {
-            initials += String(component.characters.first!).capitalizedString
+        for component in components! {
+            initials += String(component.characters.first!).capitalized
         }
         let factory = JSQMessagesAvatarImageFactory.self
-        return factory.avatarImageWithUserInitials(initials, backgroundColor: UIColor.grayColor(), textColor: UIColor.whiteColor(), font: UIFont.systemFontOfSize(12), diameter: 30)
+        return factory.avatarImage(withUserInitials: initials, backgroundColor: UIColor.gray, textColor: UIColor.white, font: UIFont.systemFont(ofSize: 12), diameter: 30)
     }
 
-    override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-        let dict: Dictionary<String, String> = ["message":text, "senderId":senderId, "date":NSDate().description]
+    override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
+        let dict: Dictionary<String, String> = ["message":text, "senderId":senderId, "date":Date().description]
         REF_CHANNELS.child(channelID).child("messages").childByAutoId().setValue(dict)
         REF_CHANNELS.child(channelID).child("lastMessage").setValue(dict)
-        finishSendingMessageAnimated(true)
+        finishSendingMessage(animated: true)
     }
 
-    override func didPressAccessoryButton(sender: UIButton) {
+    override func didPressAccessoryButton(_ sender: UIButton) {
         self.inputToolbar.contentView!.textView!.resignFirstResponder()
-        let sheet = UIAlertController(title: "Media messages", message: nil, preferredStyle: .ActionSheet)
-        let photoAction = UIAlertAction(title: "Send photo", style: .Default) { (action) in
+        let sheet = UIAlertController(title: "Media messages", message: nil, preferredStyle: .actionSheet)
+        let photoAction = UIAlertAction(title: "Send photo", style: .default) { (action) in
             let photoItem = JSQPhotoMediaItem(image: UIImage(named: "pp"))
-            self.addMedia(photoItem)
+            self.addMedia(photoItem!)
         }
-        let locationAction = UIAlertAction(title: "Send location", style: .Default) { (action) in
+        let locationAction = UIAlertAction(title: "Send location", style: .default) { (action) in
             let locationItem = self.buildLocationItem()
             self.addMedia(locationItem)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         sheet.addAction(photoAction)
         sheet.addAction(locationAction)
         sheet.addAction(cancelAction)
-        self.presentViewController(sheet, animated: true, completion: nil)
+        self.present(sheet, animated: true, completion: nil)
     }
 
-    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, atIndexPath indexPath: NSIndexPath!) {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, at indexPath: IndexPath!) {
 
     }
 
-    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAt indexPath: IndexPath!) -> CGFloat {
         return 20
     }
 
-    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
         return NSAttributedString(string: messages[indexPath.row].senderDisplayName)
     }
 
@@ -125,25 +125,25 @@ class ChatVC: JSQMessagesViewController {
         return locationItem
     }
 
-    func addMedia(media:JSQMediaItem) {
+    func addMedia(_ media:JSQMediaItem) {
         let message = JSQMessage(senderId: senderId, displayName: senderDisplayName, media: media)
-        self.messages.append(message)
-        self.finishSendingMessageAnimated(true)
+        self.messages.append(message!)
+        self.finishSendingMessage(animated: true)
     }
 
-    func addMessage(text: String, senderId: String, senderDisplayName: String, date: NSDate) {
+    func addMessage(_ text: String, senderId: String, senderDisplayName: String, date: Date) {
         let message = JSQMessage(senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text)
-        messages.append(message)
+        messages.append(message!)
         self.collectionView.reloadData()
-        finishReceivingMessageAnimated(true)
+        finishReceivingMessage(animated: true)
     }
 
     func segueToParticipants() {
-        self.performSegueWithIdentifier("toParticipantsSegue", sender: self.navigationItem.rightBarButtonItem)
+        self.performSegue(withIdentifier: "toParticipantsSegue", sender: self.navigationItem.rightBarButtonItem)
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let destVC = segue.destinationViewController as? UsersVC {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destVC = segue.destination as? UsersVC {
             destVC.title = "Participants"
         }
     }

@@ -7,12 +7,12 @@
 //
 
 import UIKit
-import Async
 import Firebase
 import FirebaseDatabase
 import Alamofire
+import Async
 
-class EventViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate {
+class EventViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, ScrollPagerDelegate {
     
     @IBOutlet var firstView: UIView!
     @IBOutlet var secondView: UIView!
@@ -24,7 +24,9 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     @IBOutlet var thirdCollectionView: UICollectionView!
     @IBOutlet var fourthCollectionView: UICollectionView!
     
-    @IBOutlet var segmentedControl: UISegmentedControl!
+    @IBOutlet var scrollPager: ScrollPager!
+    
+    @IBOutlet var beeViewLeading: NSLayoutConstraint!
     
     let refreshControl1 = UIRefreshControl()
     let refreshControl2 = UIRefreshControl()
@@ -39,22 +41,19 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Check if user is logged in or not
-        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
-            if user != nil {
-                // User already logged
-                print("User already logged in")
-            } else {
-                // No user is signed in.
-                Async.main{
-                    self.performSegueWithIdentifier("EventsToLoginSegue", sender: self)
-                }
-            }
-        }
+        scrollPager.delegate = self
+        scrollPager.addSegmentsWithTitlesAndViews(segments: [
+            ("All", firstCollectionView),
+            ("Popular", secondCollectionView),
+            ("My Favorites", thirdCollectionView),
+            ("Branchs", fourthCollectionView)
+            ])
         
         // Navigation bar & controller settings
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Chat") , style: .Plain, target: self, action: #selector(leftBarButtonItemTouchUpInside))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Chat") , style: .Plain, target: self, action: #selector(rightBarButtonItemTouchUpInside))
+        let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Chat") , style: .plain, target: self, action: #selector(rightBarButtonItemTouchUpInside))
+        rightBarButtonItem.tintColor = UIColor.gray
+        
+        navigationItem.rightBarButtonItem = rightBarButtonItem
         navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         
         // Get data from database and update collection view
@@ -63,25 +62,25 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         // Pull to refresh
         refreshControl1.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl1.addTarget(self, action: #selector(retrieveAllEvents), forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl1.addTarget(self, action: #selector(retrieveAllEvents), for: UIControlEvents.valueChanged)
         firstCollectionView.addSubview(refreshControl1)
         
         refreshControl2.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl2.addTarget(self, action: #selector(retrievePopularEvents), forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl2.addTarget(self, action: #selector(retrievePopularEvents), for: UIControlEvents.valueChanged)
         secondCollectionView.addSubview(refreshControl2)
         
         refreshControl3.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl3.addTarget(self, action: #selector(retrieveAllEvents), forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl3.addTarget(self, action: #selector(retrieveAllEvents), for: UIControlEvents.valueChanged)
         thirdCollectionView.addSubview(refreshControl3)
         
         // Collection view cell nib register
         let nibName = UINib(nibName: "EventCollectionViewCell", bundle:nil)
         let nibName2 = UINib(nibName: "FavoriteSportCollectionViewCell", bundle:nil)
         
-        firstCollectionView.registerNib(nibName, forCellWithReuseIdentifier: "eventCell")
-        secondCollectionView.registerNib(nibName, forCellWithReuseIdentifier: "eventCell")
-        thirdCollectionView.registerNib(nibName, forCellWithReuseIdentifier: "eventCell")
-        fourthCollectionView.registerNib(nibName2, forCellWithReuseIdentifier: "FavoriteSportCell")
+        firstCollectionView.register(nibName, forCellWithReuseIdentifier: "eventCell")
+        secondCollectionView.register(nibName, forCellWithReuseIdentifier: "eventCell")
+        thirdCollectionView.register(nibName, forCellWithReuseIdentifier: "eventCell")
+        fourthCollectionView.register(nibName2, forCellWithReuseIdentifier: "FavoriteSportCell")
         
         // If there are not enough events to scroll, you can still pull to refresh
         firstCollectionView.alwaysBounceVertical = true
@@ -90,7 +89,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     // MARK: - CollectionView Delegate Methods
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == firstCollectionView {
             return allEvents.count
         } else if collectionView == secondCollectionView {
@@ -104,76 +103,30 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         return 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == firstCollectionView {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCell", forIndexPath: indexPath) as! EventCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as! EventCollectionViewCell
             
-            // Filling cell
-            cell.date.text = allEvents[indexPath.row].day + " " + months[Int(allEvents[indexPath.row].month)! - 1] + ", " + allEvents[indexPath.row].time
-            cell.backgroundImage.image = UIImage(named: allEvents[indexPath.row].branch)
-            cell.creatorName.text = allEvents[indexPath.row].creatorName
-            cell.location.text = allEvents[indexPath.row].location
-            cell.location.adjustsFontSizeToFitWidth = true
-            cell.branchName.text = (allEvents[indexPath.row].branch).uppercaseString
-            
-            Alamofire.request(.GET, (self.allEvents[indexPath.row].creatorImageURL)).responseData{ response in
-                if let image = response.result.value {
-                    cell.creatorImage.layer.masksToBounds = true
-                    cell.creatorImage.layer.cornerRadius = cell.creatorImage.frame.width / 2.0
-                    cell.creatorImage.image = UIImage(data: image)
-                }
-            }
-            
-            cell.layer.borderWidth = 1.0
-            cell.layer.cornerRadius = 5.0
-            cell.layer.borderColor = UIColor.grayColor().CGColor
+            cell.configureCell(event: allEvents[indexPath.row])
             
             return cell
         } else if collectionView == secondCollectionView {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCell", forIndexPath: indexPath) as! EventCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as! EventCollectionViewCell
             
-            // Filling cell
-            cell.date.text = popularEvents[indexPath.row].day + " " + months[Int(popularEvents[indexPath.row].month)! - 1] + ", " + popularEvents[indexPath.row].time
-            cell.backgroundImage.image = UIImage(named: popularEvents[indexPath.row].branch)
-            cell.creatorName.text = popularEvents[indexPath.row].creatorName
-            cell.location.text = popularEvents[indexPath.row].location
-            cell.location.adjustsFontSizeToFitWidth = true
-            cell.branchName.text = (popularEvents[indexPath.row].branch).uppercaseString
-            
-            Alamofire.request(.GET, (self.popularEvents[indexPath.row].creatorImageURL)).responseData{ response in
-                if let image = response.result.value {
-                    cell.creatorImage.layer.masksToBounds = true
-                    cell.creatorImage.layer.cornerRadius = cell.creatorImage.frame.width / 2.0
-                    cell.creatorImage.image = UIImage(data: image)
-                }
-            }
+            cell.configureCell(event: popularEvents[indexPath.row])
             
             return cell
         } else if collectionView == thirdCollectionView {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("eventCell", forIndexPath: indexPath) as! EventCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as! EventCollectionViewCell
             
-            // Filling cell
-            cell.date.text = favoriteEvents[indexPath.row].day + " " + months[Int(favoriteEvents[indexPath.row].month)! - 1] + ", " + favoriteEvents[indexPath.row].time
-            cell.backgroundImage.image = UIImage(named: favoriteEvents[indexPath.row].branch)
-            cell.creatorName.text = favoriteEvents[indexPath.row].creatorName
-            cell.location.text = favoriteEvents[indexPath.row].location
-            cell.location.adjustsFontSizeToFitWidth = true
-            cell.branchName.text = (favoriteEvents[indexPath.row].branch).uppercaseString
-            
-            Alamofire.request(.GET, (self.favoriteEvents[indexPath.row].creatorImageURL)).responseData{ response in
-                if let image = response.result.value {
-                    cell.creatorImage.layer.masksToBounds = true
-                    cell.creatorImage.layer.cornerRadius = cell.creatorImage.frame.width / 2.0
-                    cell.creatorImage.image = UIImage(data: image)
-                }
-            }
+            cell.configureCell(event: favoriteEvents[indexPath.row])
             
             return cell
         } else if collectionView == fourthCollectionView {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FavoriteSportCell", forIndexPath: indexPath) as! FavoriteSportCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteSportCell", for: indexPath) as! FavoriteSportCollectionViewCell
             
-            cell.favSportImage.image = UIImage(named: branchs[indexPath.row])
-            cell.favSportName.text = branchs[indexPath.row]
+            cell.favSportImage.image = UIImage(named: branchs[(indexPath as NSIndexPath).row])
+            cell.favSportName.text = branchs[(indexPath as NSIndexPath).row]
             
             return cell
         }
@@ -181,137 +134,98 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         return UICollectionViewCell()
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if collectionView == firstCollectionView {
-            let eventDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
-            eventDetailVC.event = allEvents[indexPath.row]
-            self.presentViewController(eventDetailVC, animated: true, completion: nil)
+            let eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
+            eventDetailVC.event = allEvents[(indexPath as NSIndexPath).row]
+            self.present(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == secondCollectionView {
-            let eventDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
-            eventDetailVC.event = popularEvents[indexPath.row]
-            self.presentViewController(eventDetailVC, animated: true, completion: nil)
+            let eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
+            eventDetailVC.event = popularEvents[(indexPath as NSIndexPath).row]
+            self.present(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == thirdCollectionView {
-            let eventDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("EventDetailViewController") as! EventDetailViewController
-            eventDetailVC.event = favoriteEvents[indexPath.row]
-            self.presentViewController(eventDetailVC, animated: true, completion: nil)
+            let eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
+            eventDetailVC.event = favoriteEvents[(indexPath as NSIndexPath).row]
+            self.present(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == fourthCollectionView {
             
-            let eventsVC = self.storyboard?.instantiateViewControllerWithIdentifier("EventsCollectionViewController") as! EventsCollectionViewController
+            let eventsVC = self.storyboard?.instantiateViewController(withIdentifier: "EventsCollectionViewController") as! EventsCollectionViewController
             
             var events = [Event]()
             
             for i in 0..<allEvents.count {
-                if allEvents[i].branch == branchs[indexPath.row] {events.insert(allEvents[i], atIndex: 0)  }
+                if allEvents[i].branch == branchs[(indexPath as NSIndexPath).row] {events.insert(allEvents[i], at: 0)  }
             }
             
-            eventsVC.branchName = branchs[indexPath.row]
+            eventsVC.branchName = branchs[(indexPath as NSIndexPath).row]
             eventsVC.events = events
             eventsVC.collectionView?.reloadData()
             
-            self.showViewController(eventsVC, sender: self)
+            self.show(eventsVC, sender: self)
         }
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
         if collectionView == firstCollectionView || collectionView == secondCollectionView || collectionView == thirdCollectionView {
-            return CGSizeMake(screenSize.width-8, 180)
+            return CGSize(width: screenSize.width-8, height: 180)
         }
         
-        return CGSizeMake(screenSize.width, 100)
-    }
-    
-    @IBAction func segmentChanged(sender: AnyObject) {
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            firstView.hidden = false
-            secondView.hidden = true
-            thirdView.hidden = true
-            fourthView.hidden = true
-            break
-        case 1:
-            firstView.hidden = true
-            secondView.hidden = false
-            thirdView.hidden = true
-            fourthView.hidden = true
-            break
-        case 2:
-            firstView.hidden = true
-            secondView.hidden = true
-            thirdView.hidden = false
-            fourthView.hidden = true
-            break
-        case 3:
-            firstView.hidden = true
-            secondView.hidden = true
-            thirdView.hidden = true
-            fourthView.hidden = false
-            break
-        default:
-            break
-        }
+        return CGSize(width: screenSize.width, height: 100)
     }
     
     //
-    // Self created methods
+    // MARK: -Self created methods
+    
     func retrieveAllEvents() {
-        allEvents.removeAll()
-        favoriteEvents.removeAll()
+       
+        var tempAllEvents = [Event]()
+        var tempFavEvents = [Event]()
         
-        REF_EVENTS.observeSingleEventOfType(.Value , withBlock: { (snapshot) in
+        
+        REF_EVENTS.observeSingleEvent(of: .value , with: { (snapshot) in
             if snapshot.exists() {
-                let postDict = Array((snapshot.value as! [String : AnyObject]).values)
+                let postDict = snapshot.children
                 
                 for element in postDict {
-                    let id = element.valueForKey("id") as! String
-                    let creatorID = element.valueForKey("creatorID") as! String
-                    let creatorImageURL = element.valueForKey("creatorImageURL") as! String
-                    let creatorName = element.valueForKey("creatorName") as! String
-                    let name = element.valueForKey("name") as! String
-                    let branch = element.valueForKey("branch") as! String
-                    let level = element.valueForKey("level") as! String
-                    let location = element.valueForKey("location") as! String
-                    let locationLat = element.valueForKey("locationLat") as! String
-                    let locationLon = element.valueForKey("locationLon") as! String
-                    let maxJoinNumber = element.valueForKey("maxJoinNumber") as! String
-                    let description = element.valueForKey("description") as! String
-                    let time = element.valueForKey("time") as! String
-                    let month = element.valueForKey("month") as! String
-                    let day = element.valueForKey("day") as! String
-                    let year = element.valueForKey("year") as! String
+                    let eventElement = Event(snapshot: element as! FIRDataSnapshot)
                     
-                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, locationLat: locationLat, locationLon : locationLon, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day, year: year, id: id)
-                    
-                    self.allEvents.insert(eventElement, atIndex: 0)
+                    tempAllEvents.append(eventElement)
                 }
+                
+                self.allEvents = tempAllEvents
                 
                 Async.main {
                     self.refreshControl1.endRefreshing()
                     self.firstCollectionView.reloadData()
                 }
                 
-                REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("favoriteSports").observeSingleEventOfType(.Value, withBlock: { snapshot in
+                
+                
+                REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("favoriteSports").observeSingleEvent(of: .value, with: { snapshot in
                     if snapshot.exists() {
                         let postDict = snapshot.value as! Dictionary<String, String>
-
-                        if postDict["First"] != "nil" { self.favoriteSports.insert(postDict["First"]!, atIndex: 0) }
-                        if postDict["Second"] != "nil" { self.favoriteSports.insert(postDict["Second"]!, atIndex: 0) }
-                        if postDict["Third"] != "nil" { self.favoriteSports.insert(postDict["Third"]!, atIndex: 0) }
-                        if postDict["Fourth"] != "nil" { self.favoriteSports.insert(postDict["Fourth"]!, atIndex: 0) }
+                        
+                        if postDict["First"] != "nil" { self.favoriteSports.insert(postDict["First"]!, at: 0) }
+                        if postDict["Second"] != "nil" { self.favoriteSports.insert(postDict["Second"]!, at: 0) }
+                        if postDict["Third"] != "nil" { self.favoriteSports.insert(postDict["Third"]!, at: 0) }
+                        if postDict["Fourth"] != "nil" { self.favoriteSports.insert(postDict["Fourth"]!, at: 0) }
                         
                         for k in 0 ..< self.allEvents.count {
                             for j in 0 ..< self.favoriteSports.count {
                                 if self.allEvents[k].branch == self.favoriteSports[j] {
-                                    self.favoriteEvents.insert(self.allEvents[k], atIndex: 0)
+                                    tempFavEvents.append(tempAllEvents[k])
                                 }
                             }
                         }
                     }
+                    
+                    self.favoriteEvents = tempFavEvents
                     
                     Async.main {
                         self.refreshControl1.endRefreshing()
@@ -323,57 +237,63 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     func retrievePopularEvents() {
-        popularEvents = [Event]()
+        var tempPopularEvents = [Event]()
         
-        REF_POPULAR_EVENTS.observeSingleEventOfType(.Value , withBlock: { (snapshot) in
+        REF_POPULAR_EVENTS.observeSingleEvent(of: .value , with: { (snapshot) in
             if snapshot.exists() {
-                let postDict = Array((snapshot.value as! [String : AnyObject]).values)
+                let postDict = snapshot.children
                 
                 for element in postDict {
-                    let id = element.valueForKey("id") as! String
-                    let creatorID = element.valueForKey("creatorID") as! String
-                    let creatorImageURL = element.valueForKey("creatorImageURL") as! String
-                    let creatorName = element.valueForKey("creatorName") as! String
-                    let name = element.valueForKey("name") as! String
-                    let branch = element.valueForKey("branch") as! String
-                    let level = element.valueForKey("level") as! String
-                    let location = element.valueForKey("location") as! String
-                    let locationLat = element.valueForKey("locationLat") as! String
-                    let locationLon = element.valueForKey("locationLon") as! String
-                    let maxJoinNumber = element.valueForKey("maxJoinNumber") as! String
-                    let description = element.valueForKey("description") as! String
-                    let time = element.valueForKey("time") as! String
-                    let month = element.valueForKey("month") as! String
-                    let day = element.valueForKey("day") as! String
-                    let year = element.valueForKey("year") as! String
+                    let eventElement = Event(snapshot: element as! FIRDataSnapshot)
                     
-                    let eventElement = Event(creatorID: creatorID, creatorImageURL: creatorImageURL, creatorName: creatorName, name: name, branch: branch, level: level, location: location, locationLat: locationLat, locationLon : locationLon, maxJoinNumber: maxJoinNumber, description: description, time: time, month: month, day: day, year: year, id: id)
-                    
-                    self.popularEvents.insert(eventElement, atIndex: 0)
+                    tempPopularEvents.append(eventElement)
+                }
+                
+                self.popularEvents = tempPopularEvents
+                
+                Async.main {
+                    self.refreshControl2.endRefreshing()
+                    self.secondCollectionView.reloadData()
                 }
             }
             
-            Async.main {
-                self.refreshControl2.endRefreshing()
-                self.secondCollectionView.reloadData()
-            }
+
         })
     }
     
     func leftBarButtonItemTouchUpInside() {
-        self.performSegueWithIdentifier("EventsToLoginSegue", sender: self)
+        self.performSegue(withIdentifier: "EventsToLoginSegue", sender: self)
     }
     
     func rightBarButtonItemTouchUpInside() {
-        self.performSegueWithIdentifier("toChannelsSegue", sender: self)
+        self.performSegue(withIdentifier: "toChannelsSegue", sender: self)
     }
+
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if let visibleCells = firstCollectionView.visibleCells() as? [EventCollectionViewCell] {
-            for parallaxCell in visibleCells {
-                let yOffset = ((firstCollectionView.contentOffset.y - parallaxCell.frame.origin.y) / 230) * 25
-                parallaxCell.offset(CGPointMake(0.0, yOffset))
-            }
+    func scrollPager(scrollPager: ScrollPager, changedIndex: Int) {
+        switch changedIndex {
+        case 0:
+            UIView.animate(withDuration: 0.2, animations: { 
+                self.beeViewLeading.constant = 0
+            })
+            break
+        case 1:
+            UIView.animate(withDuration: 0.2, animations: {
+                self.beeViewLeading.constant = screenSize.width * (1/4.0)
+            })
+            break
+        case 2:
+            UIView.animate(withDuration: 0.2, animations: {
+                self.beeViewLeading.constant = screenSize.width * (2/4.0)
+            })
+            break
+        case 3:
+            UIView.animate(withDuration: 0.2, animations: {
+                self.beeViewLeading.constant = screenSize.width * (3/4.0)
+            })
+            break
+        default:
+            break
         }
     }
 }

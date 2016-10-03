@@ -21,25 +21,25 @@ class TabBarController: UITabBarController {
         
         tabBar.tintColor = UIColor(red: 249/255, green: 225/255, blue: 6/255, alpha: 1)
 
-        let eventCreateVC = storyboard!.instantiateViewControllerWithIdentifier("EventFormViewController")
+        let eventCreateVC = storyboard!.instantiateViewController(withIdentifier: "EventFormViewController")
         eventCreationNavCon = UINavigationController(rootViewController: eventCreateVC)
         eventCreateVC.navigationItem.title = "Create Event"
         
-        let viewController1 = storyboard!.instantiateViewControllerWithIdentifier("EventViewController") as! EventViewController
+        let viewController1 = storyboard!.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
         viewController1.tabBarItem = UITabBarItem(title: "Events", image: UIImage(named: "Events"), tag: 1)
         let nav1 = UINavigationController(rootViewController: viewController1)
         
-        let viewController2 = storyboard!.instantiateViewControllerWithIdentifier("UsersVC") as! UsersVC
+        let viewController2 = storyboard!.instantiateViewController(withIdentifier: "UsersVC") as! UsersVC
         viewController2.tabBarItem = UITabBarItem(title: "Search", image: UIImage(named: "SearchPeople"), tag: 2)
         
         let viewController3 = UIViewController()
-        viewController3.tabBarItem.enabled = false
+        viewController3.tabBarItem.isEnabled = false
         
         let viewController4 = UIViewController()
         viewController4.tabBarItem = UITabBarItem(title: "Notifications", image: UIImage(named: "Notifications"), tag: 4)
         
-        let viewController5 = storyboard!.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
-        viewController5.getUser((FIRAuth.auth()?.currentUser?.uid)!)
+        let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        viewController5.getUser(userID: (FIRAuth.auth()?.currentUser?.uid)!)
         viewController5.sender = 0
         viewController5.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "Avatar"), tag: 5)
         
@@ -61,13 +61,13 @@ class TabBarController: UITabBarController {
         menuButton.frame = menuButtonFrame
         self.view.addSubview(menuButton)
         
-        menuButton.setImage(UIImage(named: "Add"), forState: UIControlState.Normal)
-        menuButton.addTarget(self, action: #selector(menuButtonAction), forControlEvents: UIControlEvents.TouchUpInside)
+        menuButton.setImage(UIImage(named: "Add"), for: UIControlState())
+        menuButton.addTarget(self, action: #selector(menuButtonAction), for: UIControlEvents.touchUpInside)
         
         self.view.layoutIfNeeded()
     }
     
     func menuButtonAction() {
-        presentViewController(eventCreationNavCon!, animated: true, completion: nil)
+        present(eventCreationNavCon!, animated: true, completion: nil)
     }
 }

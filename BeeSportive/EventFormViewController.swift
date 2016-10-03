@@ -7,14 +7,12 @@
 //
 
 import UIKit
-import Eureka
 import CoreLocation
-import Async
 import Firebase
 import FTIndicator
 import MapKit
 
-class EventFormViewController: FormViewController, CLLocationManagerDelegate {
+class EventFormViewController: UIViewController, CLLocationManagerDelegate {
 
     let locationManager = CLLocationManager()
     var location : CLLocation?
@@ -27,6 +25,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         
+        /*
         form +++ Section()
             <<< TextRow(){ row in
                 row.placeholder = "Event name"
@@ -34,18 +33,18 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
             }
             <<< TextAreaRow() {
                 $0.placeholder = "Description"
-                $0.textAreaHeight = .Dynamic(initialTextViewHeight: 110)
+                $0.textAreaHeight = .dynamic(initialTextViewHeight: 110)
                 $0.tag = "Description"
             }
             +++ Section("When & Where & What")
             <<< DateRow(){
                 $0.title = "Date"
-                $0.value = NSDate(timeIntervalSinceReferenceDate: 0)
+                $0.value = Date(timeIntervalSinceReferenceDate: 0)
                 $0.tag = "Date"
             }
             <<< TimeInlineRow(){
                 $0.title = "Time"
-                $0.value = NSDate()
+                $0.value = Date()
                 $0.tag = "Time"
             }
             <<< LocationRow(){
@@ -69,7 +68,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                     print(row.value)
                 }
                 .onPresent{ _, to in
-                    to.view.tintColor = .grayColor()
+                    to.view.tintColor = .gray()
             }
             <<< AlertRow<String>() {
                 $0.title = "Branch"
@@ -81,7 +80,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                     print(row.value)
                 }
                 .onPresent{ _, to in
-                    to.view.tintColor = .grayColor()
+                    to.view.tintColor = .gray()
             }
             <<< IntRow() {
                 $0.title = "Join Number"
@@ -96,31 +95,31 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                     
                     if let name = self.form.rowByTag("Name")?.baseValue as? String,
                         let description = self.form.rowByTag("Description")?.baseValue as? String,
-                        let date = self.form.rowByTag("Date")?.baseValue as? NSDate,
-                        let time = self.form.rowByTag("Time")?.baseValue as? NSDate,
+                        let date = self.form.rowByTag("Date")?.baseValue as? Date,
+                        let time = self.form.rowByTag("Time")?.baseValue as? Date,
                         let locationPin = self.form.rowByTag("LocationPin")?.baseValue as? CLLocation,
                         let locationName = self.form.rowByTag("LocationName")?.baseValue as? String,
                         let level = self.form.rowByTag("Level")?.baseValue as? String,
                         let branch = self.form.rowByTag("Branch")?.baseValue as? String,
                         let maxJoin = self.form.rowByTag("MaxJoin")?.baseValue as? Int
                     {
-                        self.view.userInteractionEnabled = false
+                        self.view.isUserInteractionEnabled = false
                         
-                        let dateFormatter = NSDateFormatter()
+                        let dateFormatter = DateFormatter()
                     
                         dateFormatter.dateFormat = "dd"
-                        let day = dateFormatter.stringFromDate(date)
+                        let day = dateFormatter.string(from: date)
                     
                         dateFormatter.dateFormat = "M"
-                        let month = dateFormatter.stringFromDate(date)
+                        let month = dateFormatter.string(from: date)
                     
                         dateFormatter.dateFormat = "yyyy"
-                        let year = dateFormatter.stringFromDate(date)
+                        let year = dateFormatter.string(from: date)
                     
                         dateFormatter.dateFormat = "HH:mm"
-                        let hour = dateFormatter.stringFromDate(time)
+                        let hour = dateFormatter.string(from: time)
                         
-                        let uuid = NSUUID().UUIDString
+                        let uuid = UUID().uuidString
                     
                         let newEvent = [
                             "id" : uuid,
@@ -143,28 +142,28 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                     
                         REF_EVENTS.child(uuid).setValue(newEvent)
                         REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("eventsCreated").childByAutoId().setValue(uuid)
-                        FTIndicator.showNotificationWithImage(UIImage(named: "Success"), title: "Yay!", message: "Event successfully created!")
+                        FTIndicator.showNotification(with: UIImage(named: "Success"), title: "Yay!", message: "Event successfully created!")
                     
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismiss(animated: true, completion: nil)
                     }
                 })
             }
             <<< ButtonRow("Cancel") { (row: ButtonRow) -> () in
                 row.title = row.tag
                 row.onCellSelection({ (cell, row) in
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 })
-            }
+            } */
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         
         self.location = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
-        self.form.rowByTag("LocationPin")?.baseValue = self.location
+//        self.form.rowByTag("LocationPin")?.baseValue = self.location
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error while updating location " + error.localizedDescription)
     }
 }
