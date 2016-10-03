@@ -78,6 +78,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             ("Comments", commentsTableView)
             ])
         
+        favoriteSportsHeight.constant = (screenSize.width / 5.0) + 10
+        
         eventsCollectionView.alwaysBounceVertical = true
         commentsTableView.alwaysBounceVertical = true
         
@@ -151,7 +153,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             } else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favoriteSportItem", for: indexPath) as! ProfileFavoriteSportCollectionViewCell
                 
-                cell.image.image = UIImage(named: favoriteSports[(indexPath as NSIndexPath).row - 1])
+                cell.image.image = UIImage(named: favoriteSports[(indexPath as NSIndexPath).row - 1])?.af_imageRoundedIntoCircle()
                 cell.name.text = favoriteSports[(indexPath as NSIndexPath).row - 1]
                 
                 return cell
@@ -174,14 +176,22 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Table View Delegate Methods
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return commentsArray.count
+        return commentsArray.count + 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == commentsArray.count { return 100 }
+        
         return commentsArray[indexPath.row].height
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == commentsArray.count {
+            let cell = commentsTableView.dequeueReusableCell(withIdentifier: "addCommentCell", for: indexPath)
+            
+            return cell
+        }
+        
         let cell = commentsTableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as! ProfileCommentTableViewCell
         
         cell.comment.text = commentsArray[(indexPath as NSIndexPath).row].comment
