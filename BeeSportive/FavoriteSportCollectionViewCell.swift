@@ -15,5 +15,7 @@ class FavoriteSportCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         favSportName.adjustsFontSizeToFitWidth = true
+        
+        self.clipsToBounds = false
     }
 }

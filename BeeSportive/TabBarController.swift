@@ -28,6 +28,7 @@ class TabBarController: UITabBarController {
         let viewController1 = storyboard!.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
         viewController1.tabBarItem = UITabBarItem(title: "Events", image: UIImage(named: "Events"), tag: 1)
         let nav1 = UINavigationController(rootViewController: viewController1)
+        nav1.navigationBar.barTintColor = UIColor.white
         
         let viewController2 = storyboard!.instantiateViewController(withIdentifier: "UsersVC") as! UsersVC
         viewController2.tabBarItem = UITabBarItem(title: "Search", image: UIImage(named: "SearchPeople"), tag: 2)
@@ -39,7 +40,6 @@ class TabBarController: UITabBarController {
         viewController4.tabBarItem = UITabBarItem(title: "Notifications", image: UIImage(named: "Notifications"), tag: 4)
         
         let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        viewController5.getUser(userID: (FIRAuth.auth()?.currentUser?.uid)!)
         viewController5.sender = 0
         viewController5.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "Avatar"), tag: 5)
         

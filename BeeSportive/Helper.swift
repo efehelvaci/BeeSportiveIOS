@@ -9,48 +9,24 @@
 import Foundation
 import Firebase
 
-protocol observeFollowing {
-    func followingsChanged()
+protocol observeUser {
+   func userChanged()
 }
 
-// TODO: -Get user info first, use all over the app
-
-class followingUsers {
+class currentUser {
+    static let instance = currentUser()
     
-    //MARK: Shared Instance
-    
-    static let instance = followingUsers()
-    
-    //MARK: Local Variable
-    
-    var delegate : observeFollowing?
-    var users : [User] {
+    var delegate : observeUser?
+    var user : User? {
         didSet{
-            delegate?.followingsChanged()
+            delegate?.userChanged()
         }
     }
     
-    //MARK: Init
-    
     fileprivate init() {
-        users = [User]()
-        
-        REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("following").observeSingleEvent(of: .value, with: { snapshot in
+        REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
-                let payload = Array((snapshot.value as! Dictionary<String, AnyObject>).values)
-                var usrs = [User]()
-                
-                for element in payload {
-                    let id = element["id"] as! String
-                    
-                    REF_USERS.child(id).observeSingleEvent(of: .value, with: {snapshot2 in
-                        if snapshot2.exists() {
-                            usrs.insert(User(snapshot: snapshot2), at: 0)
-                            
-                            if ((payload.last)!).isEqual(element) {self.users = usrs}
-                        }
-                    })
-                }
+                self.user = User(snapshot: snapshot)
             }
         })
     }

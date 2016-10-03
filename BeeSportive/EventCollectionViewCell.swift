@@ -56,7 +56,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         self.location.adjustsFontSizeToFitWidth = true
         self.branchName.text = (event.branch).lowercased()
         self.eventName.text = event.name
-        self.capacity.text = (event.maxJoinNumber) + " People"
+        self.capacity.text = "1/" + (event.maxJoinNumber) + " Free Spots"
         
 
     }

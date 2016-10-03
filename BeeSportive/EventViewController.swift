@@ -173,10 +173,10 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
         if collectionView == firstCollectionView || collectionView == secondCollectionView || collectionView == thirdCollectionView {
-            return CGSize(width: screenSize.width-8, height: 180)
+            return CGSize(width: screenSize.width - 8, height: 180)
         }
         
-        return CGSize(width: screenSize.width, height: 100)
+        return CGSize(width: screenSize.width - 8, height: 120)
     }
     
     //
@@ -205,22 +205,13 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                     self.firstCollectionView.reloadData()
                 }
                 
-                
-                
-                REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("favoriteSports").observeSingleEvent(of: .value, with: { snapshot in
-                    if snapshot.exists() {
-                        let postDict = snapshot.value as! Dictionary<String, String>
-                        
-                        if postDict["First"] != "nil" { self.favoriteSports.insert(postDict["First"]!, at: 0) }
-                        if postDict["Second"] != "nil" { self.favoriteSports.insert(postDict["Second"]!, at: 0) }
-                        if postDict["Third"] != "nil" { self.favoriteSports.insert(postDict["Third"]!, at: 0) }
-                        if postDict["Fourth"] != "nil" { self.favoriteSports.insert(postDict["Fourth"]!, at: 0) }
-                        
-                        for k in 0 ..< self.allEvents.count {
-                            for j in 0 ..< self.favoriteSports.count {
-                                if self.allEvents[k].branch == self.favoriteSports[j] {
-                                    tempFavEvents.append(tempAllEvents[k])
-                                }
+                if (currentUser.instance.user != nil) && (currentUser.instance.user?.favoriteSports != nil){
+                    self.favoriteSports = (currentUser.instance.user?.favoriteSports)!
+                    
+                    for k in 0 ..< self.allEvents.count {
+                        for j in 0 ..< self.favoriteSports.count {
+                            if self.allEvents[k].branch == self.favoriteSports[j] {
+                                tempFavEvents.append(tempAllEvents[k])
                             }
                         }
                     }
@@ -231,7 +222,30 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                         self.refreshControl1.endRefreshing()
                         self.thirdCollectionView.reloadData()
                     }
-                })
+                } else {
+                    REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("favoriteSports").observeSingleEvent(of: .value, with: { snapshot in
+                        if snapshot.exists() {
+                            if let postDict = (snapshot.value as? Dictionary<String, String>)?.values {
+                                self.favoriteSports = Array(postDict)
+                            }
+                            
+                            for k in 0 ..< self.allEvents.count {
+                                for j in 0 ..< self.favoriteSports.count {
+                                    if self.allEvents[k].branch == self.favoriteSports[j] {
+                                        tempFavEvents.append(tempAllEvents[k])
+                                    }
+                                }
+                            }
+                            
+                            self.favoriteEvents = tempFavEvents
+                            
+                            Async.main {
+                                self.refreshControl1.endRefreshing()
+                                self.thirdCollectionView.reloadData()
+                            }
+                        }
+                    })
+                }
             }
         })
     }

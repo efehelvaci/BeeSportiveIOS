@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FTIndicator
 
-class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, observeFollowing {
+class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, observeUser {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -19,14 +19,14 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     var users = [User]()
     var filteredUsers = [User]()
     var isSearching = false
-    var followedUsers = [User]()
+    var followedUsers = [String]()
     var verifiedUsers = [User]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        followingUsers.instance.delegate = self
-        followedUsers = followingUsers.instance.users
+        currentUser.instance.delegate = self
+        if currentUser.instance.user?.following != nil { followedUsers = (currentUser.instance.user?.following)! }
         
         FTIndicator.showProgressWithmessage("Loading", userInteractionEnable: false)
         
@@ -50,6 +50,13 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             FTIndicator.dismissProgress()
         })
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if currentUser.instance.user?.following != nil { followedUsers = (currentUser.instance.user?.following)! }
+        self.collectionView.reloadData()
+    }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -71,7 +78,7 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             
             if isSearching {
                 for element in followedUsers {
-                    if element.id == filteredUsers[(indexPath as NSIndexPath).row].id{
+                    if element == filteredUsers[(indexPath as NSIndexPath).row].id{
                         cell.following = true
                     }
                 }
@@ -79,7 +86,7 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
                 cell.configureCell(filteredUsers[(indexPath as NSIndexPath).row])
             } else {
                 for element in followedUsers {
-                    if element.id == verifiedUsers[(indexPath as NSIndexPath).row].id {
+                    if element == verifiedUsers[(indexPath as NSIndexPath).row].id {
                         cell.following = true
                     }
                 }
@@ -132,8 +139,8 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         collectionView.reloadData()
     }
     
-    func followingsChanged() {
-        followedUsers = followingUsers.instance.users
+    func userChanged() {
+        followedUsers = (currentUser.instance.user?.following)!
     }
 
 }

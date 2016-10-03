@@ -12,7 +12,7 @@ import Async
 import Alamofire
 import AlamofireImage
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ScrollPagerDelegate {
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ScrollPagerDelegate, observeUser {
     
     @IBOutlet var profileImage: UIImageView!
     
@@ -48,7 +48,21 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
     @IBOutlet var beeViewConstraint: NSLayoutConstraint!
     
-    var user : User?
+    @IBOutlet var verifiedImage: UIImageView!
+    
+    var user : User? {
+        didSet{
+            self.setUser()
+            self.getEventsIDs()
+            self.getComments()
+            
+            if user?.favoriteSports != nil {
+                self.favoriteSports = (user?.favoriteSports)!
+                
+                if self.isViewLoaded { self.favoriteSportsCollectionView.reloadData() }
+            }
+        }
+    }
     
     // Tab bar = 0
     // Presented = 1
@@ -67,6 +81,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        currentUser.instance.delegate = self
+        
         let eventNib = UINib(nibName: "EventCollectionViewCell", bundle: Bundle.main)
         eventsCollectionView.register(eventNib, forCellWithReuseIdentifier: "eventCell")
 
@@ -83,6 +99,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         eventsCollectionView.alwaysBounceVertical = true
         commentsTableView.alwaysBounceVertical = true
         
+        verifiedImage.alpha = 0
         profileImage.alpha = 0
         profileName.alpha = 0
         profileFollowers.alpha = 0
@@ -105,9 +122,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        sender == 0 ? (backButton.isHidden = true) : (backButton.isHidden = false)
+        if sender == 0 {
+            if user == nil { user = currentUser.instance.user }
+            backButton.isHidden = true
+        } else {
+            backButton.isHidden = false
+        }
         
-        if profileName.text == "null" && user != nil { setUser() }
+        if profileName.text == " " && user != nil { setUser() }
     }
     
     // MARK: - Collection View Delegate Methods
@@ -276,36 +298,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         REF_USERS.child(userID).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 self.user = User(snapshot: snapshot)
-                
-                REF_USERS.child(userID).child("adminOptions").observeSingleEvent(of: .value, with: { snapshot in
-                    if snapshot.exists() {
-                        let data = snapshot.value as! Dictionary <String, AnyObject>
-                        
-                        if let verified = (data["verified"] as? Bool) {
-                            self.user?.verified = verified
-                        }
-                    }
-                })
-                
-                self.setUser()
-                self.getEventsIDs()
-                self.getComments()
-            }
-        })
-    
-        REF_USERS.child(userID).child("favoriteSports").observeSingleEvent(of: .value, with: { snapshot in
-            if snapshot.exists() {
-                self.favoriteSports.removeAll()
-                
-                let postDict = snapshot.value as! Dictionary<String, String>
-                
-                if postDict["First"] != "nil" { self.favoriteSports.insert(postDict["First"]!, at: 0) }
-                if postDict["Second"] != "nil" { self.favoriteSports.insert(postDict["Second"]!, at: 0) }
-                if postDict["Third"] != "nil" { self.favoriteSports.insert(postDict["Third"]!, at: 0) }
-                if postDict["Fourth"] != "nil" { self.favoriteSports.insert(postDict["Fourth"]!, at: 0) }
-                
-                if self.isViewLoaded { self.favoriteSportsCollectionView.reloadData() }
-                
             }
         })
     }
@@ -313,6 +305,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     func setUser() {
         if self.isViewLoaded {
             profileName.text = self.user?.displayName
+            
+            (self.user?.verified)! ? (verifiedImage.isHidden = false) : (verifiedImage.isHidden = true)
+            
+            self.user?.following != nil ? (self.profileFollowing.text = String(describing: (self.user?.following.count)!)) : (self.profileFollowing.text = "0")
+            self.user?.followers != nil ? (self.profileFollowers.text = String(describing: (self.user?.followers.count)!)) : (self.profileFollowers.text = "0")
             
             Alamofire.request((user?.photoURL)!).responseImage(completionHandler: { response in
                 if let image = response.result.value {
@@ -327,6 +324,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.profileFollowing.alpha = 1
                 self.followersText.alpha = 1
                 self.followingText.alpha = 1
+                self.verifiedImage.alpha = 1
             })
             
             if user!.id != FIRAuth.auth()?.currentUser?.uid {
@@ -339,13 +337,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 followButton.isHidden = true
             }
             
-            for element in followingUsers.instance.users {
-                if element.id == user!.id {
-                    isFollowing = true
-                    followButton.setTitle("unfollow", for: UIControlState())
+            if let following = currentUser.instance.user?.following {
+                for element in following {
+                    if element == user!.id {
+                        isFollowing = true
+                        followButton.setTitle("unfollow", for: UIControlState())
+                    }
                 }
             }
-            
         }
     }
     
@@ -436,7 +435,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             followButton.setTitle("unfollow", for: UIControlState())
             isFollowing = true
             
-            followingUsers.instance.users.insert(user!, at: 0)
+            currentUser.instance.user?.following.insert(user!.id, at: 0)
+            
             REF_USERS.child(user!.id).child("followers").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue(FIRAuth.auth()?.currentUser?.uid)
             REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("following").child(user!.id).child("id").setValue(user!.id)
             
@@ -444,9 +444,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             followButton.setTitle("follow", for: UIControlState())
             isFollowing = false
             
-            for index in 0...followingUsers.instance.users.count-1 {
-                if user!.id == followingUsers.instance.users[index].id {
-                    followingUsers.instance.users.remove(at: index)
+            for index in 0...(currentUser.instance.user?.following.count)!-1 {
+                if user!.id == currentUser.instance.user?.following[index] {
+                    currentUser.instance.user?.following.remove(at: index)
                     break
                 }
             }
@@ -466,6 +466,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             break
         default:
             break
+        }
+    }
+    
+    func userChanged() {
+        if sender == 0 {
+            self.user = currentUser.instance.user
         }
     }
 }

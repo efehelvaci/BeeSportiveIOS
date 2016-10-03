@@ -56,16 +56,17 @@ class UserCell: UICollectionViewCell {
             followButton.setTitle("unfollow", for: UIControlState())
             following = true
             
-            followingUsers.instance.users.insert(user, at: 0)
+            currentUser.instance.user?.following.insert(user!.id, at: 0)
+            
             REF_USERS.child(user.id).child("followers").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue(FIRAuth.auth()?.currentUser?.uid)
             REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("following").child(user.id).child("id").setValue(user.id)
         } else {
             followButton.setTitle("follow", for: UIControlState())
             following = false
             
-            for index in 0...followingUsers.instance.users.count-1 {
-                if user.id == followingUsers.instance.users[index].id {
-                    followingUsers.instance.users.remove(at: index)
+            for index in 0...(currentUser.instance.user?.following.count)!-1 {
+                if user!.id == currentUser.instance.user?.following[index] {
+                    currentUser.instance.user?.following.remove(at: index)
                     break
                 }
             }

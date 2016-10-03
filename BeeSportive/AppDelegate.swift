@@ -17,6 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        let statusBar = UIApplication.shared.value(forKey: "statusBar") as! UIView
+        
+        if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
+            statusBar.backgroundColor = UIColor(red: 249/255.0, green: 223/255.0, blue: 6/255.0, alpha: 1.0)
+        }
+        
         // Use Firebase library to configure APIs
         FIRApp.configure()
         
@@ -28,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if FIRAuth.auth()?.currentUser != nil {
             window?.rootViewController = tabCon
+            print(currentUser.instance)
         } else {
             window?.rootViewController = loginVC
         }

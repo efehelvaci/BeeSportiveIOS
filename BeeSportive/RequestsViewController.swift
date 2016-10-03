@@ -92,15 +92,7 @@ class RequestsViewController: UIViewController, UITableViewDelegate {
     func getUser(_ userID : String) {
         REF_USERS.child(userID).observe(.value, with: { snapshot in
             if snapshot.exists() {
-                
-                let dict = snapshot.value as! Dictionary<String, AnyObject>
-                
-                let displayName = dict["displayName"] as! String
-                let email = dict["email"] as! String
-                let photoURL = dict["photoURL"] as! String
-                let id = dict["id"] as! String
-                
-                let user = User(displayName: displayName, photoURL: photoURL, email: email, id: id)
+                let user = User(snapshot: snapshot)
                 
                 self.users.insert(user, at: 0)
                 
