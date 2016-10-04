@@ -35,13 +35,27 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Verified" translatesAutoresizingMaskIntoConstraints="NO" id="PzD-oy-olx">
+                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="nNh-Cv-vOE"/>
+                            <constraint firstAttribute="height" constant="20" id="rZv-xd-e53"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="JbN-Oe-KoT" secondAttribute="bottom" constant="7" id="9mV-Wg-sCh"/>
+                <constraint firstItem="PzD-oy-olx" firstAttribute="top" secondItem="JbN-Oe-KoT" secondAttribute="top" constant="-5" id="B2h-36-O5D"/>
                 <constraint firstItem="WoI-E8-ar2" firstAttribute="centerY" secondItem="5f3-QU-Cy2" secondAttribute="centerY" id="IYt-Se-noN"/>
                 <constraint firstItem="5f3-QU-Cy2" firstAttribute="centerY" secondItem="JbN-Oe-KoT" secondAttribute="centerY" id="IcP-Mz-M9v"/>
                 <constraint firstAttribute="trailing" secondItem="WoI-E8-ar2" secondAttribute="trailing" constant="8" id="MTF-CC-VIZ"/>
+                <constraint firstItem="PzD-oy-olx" firstAttribute="trailing" secondItem="JbN-Oe-KoT" secondAttribute="trailing" constant="5" id="Pv3-4v-6rd"/>
                 <constraint firstItem="5f3-QU-Cy2" firstAttribute="leading" secondItem="JbN-Oe-KoT" secondAttribute="trailing" constant="10" id="WrW-cu-eaB"/>
                 <constraint firstItem="JbN-Oe-KoT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="e18-JO-Waa"/>
                 <constraint firstItem="WoI-E8-ar2" firstAttribute="leading" secondItem="5f3-QU-Cy2" secondAttribute="trailing" constant="8" id="svW-fl-Kka"/>
@@ -52,8 +66,12 @@
                 <outlet property="displayName" destination="5f3-QU-Cy2" id="PSq-h4-7IQ"/>
                 <outlet property="followButton" destination="WoI-E8-ar2" id="bUC-20-HTV"/>
                 <outlet property="img" destination="JbN-Oe-KoT" id="24T-mu-JSN"/>
+                <outlet property="verifiedImage" destination="PzD-oy-olx" id="iHu-Mw-YiC"/>
             </connections>
             <point key="canvasLocation" x="189" y="161"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="Verified" width="32" height="32"/>
+    </resources>
 </document>

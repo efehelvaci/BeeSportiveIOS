@@ -23,7 +23,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Facebook login button created
+        // Facebook login button create
         let loginButton = FBSDKLoginButton()
         loginButton.alpha = 0.0
         self.view.addSubview(loginButton)
@@ -39,8 +39,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             }, completion: nil)
     }
     
-    //
-    // Facebook Delegate Methods
+    // MARK: -Facebook Delegate Methods
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         print("User Logged In")
         
@@ -100,8 +99,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             }
             else
             {
-                // TODO
-                // Not all permissions are granted
+                // TODO: - Not all permissions are granted
             }
         }
     }

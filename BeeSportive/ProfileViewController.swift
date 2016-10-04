@@ -81,8 +81,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentUser.instance.delegate = self
-        
         let eventNib = UINib(nibName: "EventCollectionViewCell", bundle: Bundle.main)
         eventsCollectionView.register(eventNib, forCellWithReuseIdentifier: "eventCell")
 
@@ -122,8 +120,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        currentUser.instance.delegate = self
+        
         if sender == 0 {
-            if user == nil { user = currentUser.instance.user }
+            if (user == nil) && (currentUser.instance.user != nil) { user = currentUser.instance.user }
             backButton.isHidden = true
         } else {
             backButton.isHidden = false
@@ -153,7 +153,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if collectionView == eventsCollectionView {
             return CGSize(width: screenSize.width-8, height: 180)
         } else if collectionView == favoriteSportsCollectionView {
-            return CGSize(width: (screenSize.width/5.0)-16, height: (screenSize.width/5.0)-16)
+            return CGSize(width: (screenSize.width/5.0)-4, height: (screenSize.width/5.0))
         }
         
         return CGSize(width: 0, height: 0)
@@ -190,6 +190,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
             eventDetailVC.event = eventsArray[(indexPath as NSIndexPath).row]
             self.present(eventDetailVC, animated: true, completion: nil)
+        } else if collectionView == favoriteSportsCollectionView {
+            let favoriteSportPickerVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FavoriteSportPickerViewController") as! FavoriteSportPickerViewController
+            favoriteSportPickerVC.selectedBranchs = self.favoriteSports
+            favoriteSportPickerVC.modalTransitionStyle = .crossDissolve
+            present(favoriteSportPickerVC, animated: true, completion: nil)
         }
     }
     
@@ -303,7 +308,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func setUser() {
-        if self.isViewLoaded {
+        if self.isViewLoaded && user != nil{
             profileName.text = self.user?.displayName
             
             (self.user?.verified)! ? (verifiedImage.isHidden = false) : (verifiedImage.isHidden = true)
@@ -392,7 +397,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     let comment = element["comment"] as! String
                     let height = comment.heightWithConstrainedWidth(screenSize.width-76, font: UIFont(name: "Helvetica", size: 14)!)
                     
-                    let newComment = Comment(id: id, date: date, comment: comment, height: height+60)
+                    let newComment = Comment(id: id, date: date, comment: comment, height: height+80)
                     
                     self.commentsArray.insert(newComment, at: 0)
                 }

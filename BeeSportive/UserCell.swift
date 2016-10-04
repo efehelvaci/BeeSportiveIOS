@@ -17,6 +17,7 @@ class UserCell: UICollectionViewCell {
     @IBOutlet weak var displayName: UILabel!
     @IBOutlet weak var img: UIImageView!
     @IBOutlet var followButton: UIButton!
+    @IBOutlet var verifiedImage: UIImageView!
     
     var following = false
     var user : User!
@@ -31,6 +32,9 @@ class UserCell: UICollectionViewCell {
         }
         
         self.isHidden = true
+        
+        user.verified ? (verifiedImage.isHidden = false) : (verifiedImage.isHidden = true)
+        
         displayName.text = user.displayName
         if let urlStr = user.photoURL {
             let imgURL = URL(string: urlStr)!

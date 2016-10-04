@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270E8F2E1DA3C5EC0047AC20 /* FavoriteSportPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E8F2D1DA3C5EC0047AC20 /* FavoriteSportPickerViewController.swift */; };
+		270E8F301DA3D0DD0047AC20 /* FavoriteSportPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E8F2F1DA3D0DD0047AC20 /* FavoriteSportPickerCollectionViewCell.swift */; };
 		2719B64C1D75749300724EF5 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B6491D75749300724EF5 /* FBSDKCoreKit.framework */; };
 		2719B64D1D75749300724EF5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */; };
 		2719B64E1D75749300724EF5 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */; };
@@ -65,6 +67,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		270E8F2D1DA3C5EC0047AC20 /* FavoriteSportPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteSportPickerViewController.swift; sourceTree = "<group>"; };
+		270E8F2F1DA3D0DD0047AC20 /* FavoriteSportPickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteSportPickerCollectionViewCell.swift; sourceTree = "<group>"; };
 		2719B6491D75749300724EF5 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -179,6 +183,8 @@
 				275F9B6E1D9872B400E7744B /* ProfileViewController.swift */,
 				275F9B701D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift */,
 				275F9B721D98748B00E7744B /* ProfileCommentTableViewCell.swift */,
+				270E8F2D1DA3C5EC0047AC20 /* FavoriteSportPickerViewController.swift */,
+				270E8F2F1DA3D0DD0047AC20 /* FavoriteSportPickerCollectionViewCell.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -264,8 +270,8 @@
 		27CB270B1D5D3CDD00F9ECF5 /* BeeSportive */ = {
 			isa = PBXGroup;
 			children = (
-				27B977191DA272F500245D8C /* Resources */,
 				2737B8911D9DB32500A36795 /* BeeSportive.entitlements */,
+				27B977191DA272F500245D8C /* Resources */,
 				275F9B6D1D98729000E7744B /* Profile */,
 				279FBC431D7EF9F900B0AFAE /* Tab Bar */,
 				273E57561D61FBCB009DABFE /* Login View */,
@@ -515,7 +521,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */,
+				270E8F2E1DA3C5EC0047AC20 /* FavoriteSportPickerViewController.swift in Sources */,
 				27BFF2E61D778D3E002040D3 /* RequestsViewController.swift in Sources */,
+				270E8F301DA3D0DD0047AC20 /* FavoriteSportPickerCollectionViewCell.swift in Sources */,
 				279FBC451D7EFA0C00B0AFAE /* TabBarController.swift in Sources */,
 				8114B4D11D7ED2CB00CE0FF8 /* UserCell.swift in Sources */,
 				275F9B731D98748B00E7744B /* ProfileCommentTableViewCell.swift in Sources */,

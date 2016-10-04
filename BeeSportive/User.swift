@@ -15,10 +15,10 @@ class User {
     var photoURL: String?
     let email: String
     let id: String
-    var followers = [String]()
-    var following = [String]()
+    var followers = [String]()   // Follower users ID's
+    var following = [String]()   // Following users ID's
     var favoriteSports = [String]()
-    var verified = false
+    var verified = false   // Is user verified
     
     // MARK: Init
     init(snapshot: FIRDataSnapshot) {
