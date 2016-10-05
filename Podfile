@@ -7,9 +7,9 @@ target 'BeeSportive' do
 	pod 'Firebase/Database'
 	pod 'Firebase/Messaging'
 	pod 'Firebase/Auth'
-    pod 'Firebase/Storage'
+    	pod 'Firebase/Storage'
 	pod 'AsyncSwift', '~> 2.0.0’
 	pod 'FTIndicator'
-    pod 'JSQMessagesViewController'
-    pod 'SwifterSwift' , :git => 'https://github.com/omaralbeik/SwifterSwift.git'pod 'SwifterSwift' , :git => 'https://github.com/omaralbeik/SwifterSwift.git'
+    	pod 'JSQMessagesViewController'
+    	pod 'SwifterSwift' , :git => 'https://github.com/omaralbeik/SwifterSwift.git'
 end
