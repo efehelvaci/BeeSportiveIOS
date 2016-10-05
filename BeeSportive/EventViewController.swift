@@ -14,11 +14,6 @@ import Async
 
 class EventViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, ScrollPagerDelegate {
     
-    @IBOutlet var firstView: UIView!
-    @IBOutlet var secondView: UIView!
-    @IBOutlet var thirdView: UIView!
-    @IBOutlet var fourthView: UIView!
-    
     @IBOutlet var firstCollectionView: UICollectionView!
     @IBOutlet var secondCollectionView: UICollectionView!
     @IBOutlet var thirdCollectionView: UICollectionView!
@@ -273,10 +268,6 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             
 
         })
-    }
-    
-    func leftBarButtonItemTouchUpInside() {
-        self.performSegue(withIdentifier: "EventsToLoginSegue", sender: self)
     }
     
     func rightBarButtonItemTouchUpInside() {

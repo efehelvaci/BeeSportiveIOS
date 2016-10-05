@@ -129,7 +129,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             backButton.isHidden = false
         }
         
-        if profileName.text == " " && user != nil { setUser() }
+        if profileName.text == "" && user != nil { setUser() }
     }
     
     // MARK: - Collection View Delegate Methods
@@ -153,7 +153,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if collectionView == eventsCollectionView {
             return CGSize(width: screenSize.width-8, height: 180)
         } else if collectionView == favoriteSportsCollectionView {
-            return CGSize(width: (screenSize.width/5.0)-4, height: (screenSize.width/5.0))
+            return CGSize(width: (screenSize.width/5.0)-6, height: (screenSize.width/5.0))
         }
         
         return CGSize(width: 0, height: 0)
@@ -190,11 +190,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
             eventDetailVC.event = eventsArray[(indexPath as NSIndexPath).row]
             self.present(eventDetailVC, animated: true, completion: nil)
-        } else if collectionView == favoriteSportsCollectionView {
-            let favoriteSportPickerVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FavoriteSportPickerViewController") as! FavoriteSportPickerViewController
-            favoriteSportPickerVC.selectedBranchs = self.favoriteSports
-            favoriteSportPickerVC.modalTransitionStyle = .crossDissolve
-            present(favoriteSportPickerVC, animated: true, completion: nil)
+        } else if (collectionView == favoriteSportsCollectionView) && user != nil {
+            if user?.id == FIRAuth.auth()?.currentUser?.uid {
+                let favoriteSportPickerVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FavoriteSportPickerViewController") as! FavoriteSportPickerViewController
+                favoriteSportPickerVC.selectedBranchs = self.favoriteSports
+                favoriteSportPickerVC.modalTransitionStyle = .crossDissolve
+                present(favoriteSportPickerVC, animated: true, completion: nil)
+            }
+            
         }
     }
     
@@ -203,6 +206,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Table View Delegate Methods
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let usr = user else { return 0 }
+        
+        if usr.id == FIRAuth.auth()?.currentUser?.uid {
+            return commentsArray.count
+        }
+        
         return commentsArray.count + 1
     }
     
@@ -213,7 +222,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == commentsArray.count {
+        if indexPath.row == commentsArray.count && (user!.id != FIRAuth.auth()?.currentUser?.uid) {
             let cell = commentsTableView.dequeueReusableCell(withIdentifier: "addCommentCell", for: indexPath)
             
             return cell

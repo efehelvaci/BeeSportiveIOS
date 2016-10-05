@@ -51,7 +51,6 @@ class EventCollectionViewCell: UICollectionViewCell {
         
         self.date.text = event.day + " " + months[Int(event.month)! - 1] + ", " + event.time
         self.backgroundImage.image = UIImage(named: event.branch)
-        self.creatorName.text = event.creatorName
         self.location.text = event.location
         self.location.adjustsFontSizeToFitWidth = true
         self.branchName.text = (event.branch).lowercased()

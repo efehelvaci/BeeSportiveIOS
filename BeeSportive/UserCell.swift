@@ -25,17 +25,20 @@ class UserCell: UICollectionViewCell {
     func configureCell(_ user: User) {
         self.user = user
         
+        displayName.isHidden = true
+        img.isHidden = true
+        
         if following{
             if followButton.currentTitle != "unfollow" { followButton.setTitle("unfollow", for: UIControlState()) }
         } else {
             if followButton.currentTitle != "follow" { followButton.setTitle("follow", for: UIControlState()) }
         }
         
-        self.isHidden = true
-        
         user.verified ? (verifiedImage.isHidden = false) : (verifiedImage.isHidden = true)
         
         displayName.text = user.displayName
+        displayName.isHidden = false
+        
         if let urlStr = user.photoURL {
             let imgURL = URL(string: urlStr)!
             
@@ -44,11 +47,11 @@ class UserCell: UICollectionViewCell {
                     self.img.layer.masksToBounds = true
                     self.img.layer.cornerRadius = self.img.frame.width / 2.0
                     self.img.image = image
+                    self.img.isHidden = false
                     FTIndicator.dismissProgress()
                 }
             })
         }
-        self.isHidden = false
     }
 
     @IBAction func followButtonClicked(_ sender: AnyObject) {

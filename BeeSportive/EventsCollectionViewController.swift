@@ -55,19 +55,7 @@ class EventsCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! EventCollectionViewCell
         
         // Filling cell
-        cell.date.text = events[(indexPath as NSIndexPath).row].day + " " + months[Int(events[(indexPath as NSIndexPath).row].month)! - 1] + ", " + events[(indexPath as NSIndexPath).row].time
-        cell.backgroundImage.image = UIImage(named: events[(indexPath as NSIndexPath).row].branch)
-        cell.creatorName.text = events[(indexPath as NSIndexPath).row].creatorName
-        cell.location.text = events[(indexPath as NSIndexPath).row].location
-        cell.location.adjustsFontSizeToFitWidth = true
-        cell.branchName.text = (events[(indexPath as NSIndexPath).row].branch).uppercased()
-        
-        Alamofire.request(self.events[(indexPath as NSIndexPath).row].creatorImageURL).responseImage(completionHandler: { response in
-            if let image = response.result.value {
-                cell.creatorImage.layer.masksToBounds = true
-                cell.creatorImage.layer.cornerRadius = cell.creatorImage.frame.width / 2.0
-                cell.creatorImage.image = image            }
-        })
+        cell.configureCell(event: events[indexPath.row])
         
         return cell
     }

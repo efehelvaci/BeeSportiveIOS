@@ -13,6 +13,8 @@
 		2719B64D1D75749300724EF5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64A1D75749300724EF5 /* FBSDKLoginKit.framework */; };
 		2719B64E1D75749300724EF5 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2719B64B1D75749300724EF5 /* FBSDKShareKit.framework */; };
 		273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E575B1D61FE8B009DABFE /* LoginViewController.swift */; };
+		274351CD1DA517EB0001418D /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274351CC1DA517EB0001418D /* NotificationsViewController.swift */; };
+		274351CF1DA519210001418D /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274351CE1DA519210001418D /* NotificationTableViewCell.swift */; };
 		2750C3191D90743300747B74 /* EventsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2750C3181D90743300747B74 /* EventsCollectionViewController.swift */; };
 		275F9B6F1D9872B400E7744B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275F9B6E1D9872B400E7744B /* ProfileViewController.swift */; };
 		275F9B711D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275F9B701D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift */; };
@@ -50,7 +52,6 @@
 		27CB27121D5D3CDD00F9ECF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */; };
 		27CB27141D5D3CDD00F9ECF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */; };
 		27CB27171D5D3CDD00F9ECF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27151D5D3CDD00F9ECF5 /* LaunchScreen.storyboard */; };
-		27CE1E911D6F7D76007C0DE7 /* LoginVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */; };
 		27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */; };
 		27EDE9A31D75DD7D00C90FC9 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */; };
 		8114B4CE1D7ED2A900CE0FF8 /* UsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8114B4CD1D7ED2A900CE0FF8 /* UsersVC.swift */; };
@@ -75,6 +76,8 @@
 		2737B8911D9DB32500A36795 /* BeeSportive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BeeSportive.entitlements; sourceTree = "<group>"; };
 		273E575B1D61FE8B009DABFE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		273E57631D62032B009DABFE /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		274351CC1DA517EB0001418D /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		274351CE1DA519210001418D /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		2750C3181D90743300747B74 /* EventsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewController.swift; sourceTree = "<group>"; };
 		275F9B6E1D9872B400E7744B /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		275F9B701D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFavoriteSportCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -114,7 +117,6 @@
 		27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27CB27161D5D3CDD00F9ECF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27CB27181D5D3CDD00F9ECF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LoginVideo.mp4; sourceTree = "<group>"; };
 		27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteSportCollectionViewCell.swift; sourceTree = "<group>"; };
 		27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoriteSportCollectionViewCell.xib; sourceTree = "<group>"; };
 		27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
@@ -149,46 +151,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		273E57561D61FBCB009DABFE /* Login View */ = {
-			isa = PBXGroup;
-			children = (
-				273E575B1D61FE8B009DABFE /* LoginViewController.swift */,
-			);
-			name = "Login View";
-			sourceTree = "<group>";
-		};
-		274902831D6F230A00E6766B /* Event View */ = {
-			isa = PBXGroup;
-			children = (
-				27BFF2E71D778D5B002040D3 /* Requests Page */,
-				27EDE9A11D75DD3F00C90FC9 /* Event Detail Page */,
-				27EDE9A01D75DD2E00C90FC9 /* Events Main Page */,
-				274902841D6F237B00E6766B /* Event Add Page */,
-			);
-			name = "Event View";
-			sourceTree = "<group>";
-		};
-		274902841D6F237B00E6766B /* Event Add Page */ = {
-			isa = PBXGroup;
-			children = (
-				27788D231D7B2173002B6554 /* EventFormViewController.swift */,
-				27788D261D7B2BE2002B6554 /* CustomCells.swift */,
-			);
-			name = "Event Add Page";
-			sourceTree = "<group>";
-		};
-		275F9B6D1D98729000E7744B /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-				275F9B6E1D9872B400E7744B /* ProfileViewController.swift */,
-				275F9B701D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift */,
-				275F9B721D98748B00E7744B /* ProfileCommentTableViewCell.swift */,
-				270E8F2D1DA3C5EC0047AC20 /* FavoriteSportPickerViewController.swift */,
-				270E8F2F1DA3D0DD0047AC20 /* FavoriteSportPickerCollectionViewCell.swift */,
-			);
-			name = Profile;
-			sourceTree = "<group>";
-		};
 		27743FE91D634DFC004EAD97 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,22 +173,11 @@
 		27B977191DA272F500245D8C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2737B8911D9DB32500A36795 /* BeeSportive.entitlements */,
+				27CB27181D5D3CDD00F9ECF5 /* Info.plist */,
 				27C024371DA2BE69000885A3 /* Fonts */,
-				27B977151DA23EFA00245D8C /* ScrollPager.swift */,
-				81E8DCF51D75BB4400234743 /* Constants.swift */,
-				27BFF2EC1D77A4A3002040D3 /* Helper.swift */,
-				27743FE91D634DFC004EAD97 /* Models */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		27BFF2E71D778D5B002040D3 /* Requests Page */ = {
-			isa = PBXGroup;
-			children = (
-				27BFF2E51D778D3E002040D3 /* RequestsViewController.swift */,
-				27BFF2E81D778D82002040D3 /* RequestsTableViewCell.swift */,
-			);
-			name = "Requests Page";
 			sourceTree = "<group>";
 		};
 		27C024371DA2BE69000885A3 /* Fonts */ = {
@@ -270,82 +221,86 @@
 		27CB270B1D5D3CDD00F9ECF5 /* BeeSportive */ = {
 			isa = PBXGroup;
 			children = (
-				2737B8911D9DB32500A36795 /* BeeSportive.entitlements */,
+				27E45F4D1DA57E4B00409852 /* Helper */,
+				27E45F4C1DA57E0A00409852 /* Xibs */,
+				27E45F4B1DA57D7300409852 /* Table View Cells */,
+				27E45F4A1DA57D6700409852 /* Collection View Cells */,
+				27E45F491DA57D5D00409852 /* View Controllers */,
 				27B977191DA272F500245D8C /* Resources */,
-				275F9B6D1D98729000E7744B /* Profile */,
 				279FBC431D7EF9F900B0AFAE /* Tab Bar */,
-				273E57561D61FBCB009DABFE /* Login View */,
-				274902831D6F230A00E6766B /* Event View */,
-				8114B4CC1D7ED28300CE0FF8 /* Users View */,
-				816948F51D75A1B100E7F5CD /* Chat View */,
 				27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */,
 				27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */,
 				27CB27131D5D3CDD00F9ECF5 /* Assets.xcassets */,
 				27CB27151D5D3CDD00F9ECF5 /* LaunchScreen.storyboard */,
-				27CB27181D5D3CDD00F9ECF5 /* Info.plist */,
 				81AD82141D815ADA0027F3C6 /* GoogleService-Info.plist */,
 				273E57631D62032B009DABFE /* Bridging-Header.h */,
-				27CE1E901D6F7D6E007C0DE7 /* LoginVideo.mp4 */,
 			);
 			path = BeeSportive;
 			sourceTree = "<group>";
 		};
-		27EDE9A01D75DD2E00C90FC9 /* Events Main Page */ = {
+		27E45F491DA57D5D00409852 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				275F9B6E1D9872B400E7744B /* ProfileViewController.swift */,
+				274351CC1DA517EB0001418D /* NotificationsViewController.swift */,
+				270E8F2D1DA3C5EC0047AC20 /* FavoriteSportPickerViewController.swift */,
+				27BFF2E51D778D3E002040D3 /* RequestsViewController.swift */,
 				277C1CB81D6387100008331F /* EventViewController.swift */,
-				277C1CBE1D64A2B20008331F /* EventCollectionViewCell.swift */,
-				277C1CBF1D64A2B20008331F /* EventCollectionViewCell.xib */,
-				27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */,
-				27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */,
 				2750C3181D90743300747B74 /* EventsCollectionViewController.swift */,
-			);
-			name = "Events Main Page";
-			sourceTree = "<group>";
-		};
-		27EDE9A11D75DD3F00C90FC9 /* Event Detail Page */ = {
-			isa = PBXGroup;
-			children = (
-				27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */,
-				27C850A01D9120C9007168A6 /* ParticipantsCollectionViewCell.swift */,
-			);
-			name = "Event Detail Page";
-			sourceTree = "<group>";
-		};
-		8114B4CC1D7ED28300CE0FF8 /* Users View */ = {
-			isa = PBXGroup;
-			children = (
+				27788D231D7B2173002B6554 /* EventFormViewController.swift */,
 				8114B4CD1D7ED2A900CE0FF8 /* UsersVC.swift */,
+				816948F91D75A26000E7F5CD /* ChannelsVC.swift */,
+				816948FB1D75A27A00E7F5CD /* ChatVC.swift */,
+				27EDE9A21D75DD7D00C90FC9 /* EventDetailViewController.swift */,
+				273E575B1D61FE8B009DABFE /* LoginViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		27E45F4A1DA57D6700409852 /* Collection View Cells */ = {
+			isa = PBXGroup;
+			children = (
 				8114B4CF1D7ED2CB00CE0FF8 /* UserCell.swift */,
+				277C1CBE1D64A2B20008331F /* EventCollectionViewCell.swift */,
+				27EDE9981D759F4300C90FC9 /* FavoriteSportCollectionViewCell.swift */,
+				27C850A01D9120C9007168A6 /* ParticipantsCollectionViewCell.swift */,
+				270E8F2F1DA3D0DD0047AC20 /* FavoriteSportPickerCollectionViewCell.swift */,
+				275F9B701D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift */,
+			);
+			name = "Collection View Cells";
+			sourceTree = "<group>";
+		};
+		27E45F4B1DA57D7300409852 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				816948FD1D75ADF800E7F5CD /* ChannelCell.swift */,
+				27BFF2E81D778D82002040D3 /* RequestsTableViewCell.swift */,
+				275F9B721D98748B00E7744B /* ProfileCommentTableViewCell.swift */,
+				274351CE1DA519210001418D /* NotificationTableViewCell.swift */,
+			);
+			name = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		27E45F4C1DA57E0A00409852 /* Xibs */ = {
+			isa = PBXGroup;
+			children = (
+				277C1CBF1D64A2B20008331F /* EventCollectionViewCell.xib */,
+				27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */,
 				8114B4D01D7ED2CB00CE0FF8 /* UserCell.xib */,
 			);
-			name = "Users View";
+			name = Xibs;
 			sourceTree = "<group>";
 		};
-		8149CED71D7CF439005007BB /* Channels View */ = {
+		27E45F4D1DA57E4B00409852 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				816948F91D75A26000E7F5CD /* ChannelsVC.swift */,
-				816948FD1D75ADF800E7F5CD /* ChannelCell.swift */,
+				27788D261D7B2BE2002B6554 /* CustomCells.swift */,
+				27B977151DA23EFA00245D8C /* ScrollPager.swift */,
+				81E8DCF51D75BB4400234743 /* Constants.swift */,
+				27BFF2EC1D77A4A3002040D3 /* Helper.swift */,
+				27743FE91D634DFC004EAD97 /* Models */,
 			);
-			name = "Channels View";
-			sourceTree = "<group>";
-		};
-		816948F21D75A17900E7F5CD /* Chat View */ = {
-			isa = PBXGroup;
-			children = (
-				816948FB1D75A27A00E7F5CD /* ChatVC.swift */,
-			);
-			name = "Chat View";
-			sourceTree = "<group>";
-		};
-		816948F51D75A1B100E7F5CD /* Chat View */ = {
-			isa = PBXGroup;
-			children = (
-				8149CED71D7CF439005007BB /* Channels View */,
-				816948F21D75A17900E7F5CD /* Chat View */,
-			);
-			name = "Chat View";
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		D88B80E2702491BEC5AB6B21 /* Frameworks */ = {
@@ -443,7 +398,6 @@
 			files = (
 				8114B4D21D7ED2CB00CE0FF8 /* UserCell.xib in Resources */,
 				81AD82151D815ADA0027F3C6 /* GoogleService-Info.plist in Resources */,
-				27CE1E911D6F7D76007C0DE7 /* LoginVideo.mp4 in Resources */,
 				27C0244E1DA2BE80000885A3 /* SourceSansPro-LightIt.otf in Resources */,
 				27C024501DA2BE80000885A3 /* SourceSansPro-Semibold.otf in Resources */,
 				27C0244B1DA2BE80000885A3 /* SourceSansPro-ExtraLightIt.otf in Resources */,
@@ -523,6 +477,8 @@
 				816948FF1D75AFBF00E7F5CD /* ChannelsVC.swift in Sources */,
 				270E8F2E1DA3C5EC0047AC20 /* FavoriteSportPickerViewController.swift in Sources */,
 				27BFF2E61D778D3E002040D3 /* RequestsViewController.swift in Sources */,
+				274351CD1DA517EB0001418D /* NotificationsViewController.swift in Sources */,
+				274351CF1DA519210001418D /* NotificationTableViewCell.swift in Sources */,
 				270E8F301DA3D0DD0047AC20 /* FavoriteSportPickerCollectionViewCell.swift in Sources */,
 				279FBC451D7EFA0C00B0AFAE /* TabBarController.swift in Sources */,
 				8114B4D11D7ED2CB00CE0FF8 /* UserCell.swift in Sources */,

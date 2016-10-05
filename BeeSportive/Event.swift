@@ -12,8 +12,6 @@ import Firebase
 class Event {
     let id : String
     let creatorID : String
-    let creatorImageURL : String
-    let creatorName : String
     let name : String
     let branch : String
     let level : String
@@ -26,11 +24,11 @@ class Event {
     let time : String
     let day : String
     let year : String
+    var participants : Dictionary<String, AnyObject>? = nil
+    var creator : User? = nil
     
     init(creatorID: String, creatorImageURL: String, creatorName: String, name: String, branch: String, level: String, location: String, locationLat: String, locationLon : String, maxJoinNumber: String, description : String, time: String, month: String, day: String, year: String, id: String){
         self.creatorID = creatorID
-        self.creatorImageURL = creatorImageURL
-        self.creatorName = creatorName
         self.name = name
         self.branch = branch
         self.level = level
@@ -47,23 +45,31 @@ class Event {
     }
     
     init(snapshot: FIRDataSnapshot) {
-        let dict = snapshot.value as! Dictionary<String, AnyObject>
+        let data = snapshot.value as! Dictionary<String, AnyObject>
         
-        self.id = dict["id"] as! String
-        self.creatorID = dict["creatorID"] as! String
-        self.creatorImageURL = dict["creatorImageURL"] as! String
-        self.creatorName = dict["creatorName"] as! String
-        self.name = dict["name"] as! String
-        self.branch = dict["branch"] as! String
-        self.level = dict["level"] as! String
-        self.location = dict["location"] as! String
-        self.locationLat = dict["locationLat"] as! String
-        self.locationLon = dict["locationLon"] as! String
-        self.maxJoinNumber = dict["maxJoinNumber"] as! String
-        self.description = dict["description"] as! String
-        self.time = dict["time"] as! String
-        self.month = dict["month"] as! String
-        self.day = dict["day"] as! String
-        self.year = dict["year"] as! String
+        self.id = data["id"] as! String
+        self.creatorID = data["creatorID"] as! String
+        self.name = data["name"] as! String
+        self.branch = data["branch"] as! String
+        self.level = data["level"] as! String
+        self.location = data["location"] as! String
+        self.locationLat = data["locationLat"] as! String
+        self.locationLon = data["locationLon"] as! String
+        self.maxJoinNumber = data["maxJoinNumber"] as! String
+        self.description = data["description"] as! String
+        self.time = data["time"] as! String
+        self.month = data["month"] as! String
+        self.day = data["day"] as! String
+        self.year = data["year"] as! String
+        
+        if let prtcpnts = data["participants"] as? Dictionary<String, AnyObject> {
+            self.participants = prtcpnts
+        }
+        
+        REF_USERS.child(creatorID).observeSingleEvent(of: .value, with: { snapshot2 in
+            if snapshot2.exists() {
+                self.creator = User(snapshot: snapshot2)
+            }
+        })
     }
 }

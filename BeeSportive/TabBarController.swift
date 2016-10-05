@@ -36,7 +36,7 @@ class TabBarController: UITabBarController {
         let viewController3 = UIViewController()
         viewController3.tabBarItem.isEnabled = false
         
-        let viewController4 = UIViewController()
+        let viewController4 = storyboard!.instantiateViewController(withIdentifier: "NotificationsViewController") as! NotificationsViewController
         viewController4.tabBarItem = UITabBarItem(title: "Notifications", image: UIImage(named: "Notifications"), tag: 4)
         
         let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController

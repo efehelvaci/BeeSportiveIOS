@@ -15,50 +15,74 @@ private let reuseIdentifier = "participantsCell"
 
 class EventDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    @IBOutlet var creatorProfileView: UIView!
-    @IBOutlet var creatorName: UILabel!
-    @IBOutlet var creatorImage: UIImageView!
-    @IBOutlet var descriptionLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet var eventNameLabel: UILabel!
-    @IBOutlet var eventDescriptionLabel: UILabel!
-    @IBOutlet var eventBrancImage: UIImageView!
     @IBOutlet var eventAddressLabel: UILabel!
     @IBOutlet var eventDateLabel: UILabel!
     @IBOutlet var map: MKMapView!
+    @IBOutlet var requestsButton: UIButton!
+    @IBOutlet var joinButton: UIButton!
+    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var yellowLineWidth: NSLayoutConstraint!
     
     @IBOutlet var participantsCollectionView: UICollectionView!
     
+    @IBOutlet var hexagon1: UIImageView!
+    @IBOutlet var hexagon2: UIImageView!
+    @IBOutlet var hexagon3: UIImageView!
+    @IBOutlet var hexagon4: UIImageView!
+    @IBOutlet var hexagon5: UIImageView!
     
-    internal var event : Event?
+    var event : Event!
+    var creator : User! = nil
     var participants = [User]()
-    let font = UIFont(name: "Helvetica", size: 15.0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setPageOutlets()
+        if event.creator != nil {
+            self.creator = event.creator
+        } else {
+            REF_USERS.child(event.creatorID).observeSingleEvent(of: .value, with : { snapshot in
+                if snapshot.exists() {
+                    self.creator = User(snapshot: snapshot)
+                }
+            })
+        }
         
+        setPageOutlets()
         retrieveParticipants()
         
         // If visitor is creator or not
         if event?.creatorID == FIRAuth.auth()?.currentUser?.uid {
-            
+            joinButton.isEnabled = false
+            requestsButton.isHidden = false
         } else {
-            
+            joinButton.isEnabled = true
+            requestsButton.isHidden = true
         }
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = participantsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ParticipantsCollectionViewCell
         
-        cell.name.text = participants[(indexPath as NSIndexPath).row].displayName
+        if indexPath.row == 0 {
+            cell.configureCell(user: creator)
+            
+            cell.name.text = cell.name.text! + " (Creator)"
+            
+            return cell
+        }
+        
+        cell.configureCell(user: participants[indexPath.row - 1])
         
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if creator != nil {
+            return participants.count + 1
+        }
+        
         return participants.count
     }
     
@@ -67,55 +91,69 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-        
-        return CGSize(width: screenSize.width/4.0, height: participantsCollectionView.bounds.height)
+        return CGSize(width: 80 , height: participantsCollectionView.bounds.height-2)
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 0 && creator != nil {
+            let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+            self.present(viewController5, animated: true, completion: { _ in
+                viewController5.user = self.creator
+            })
+        } else {
+            let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+            self.present(viewController5, animated: true, completion: { _ in
+                viewController5.getUser(userID: self.participants[indexPath.row].id)
+            })
+        }
+    }
+    
     func setPageOutlets () {
-        eventNameLabel.text = event!.name
-        descriptionLabelHeightConstraint.constant = heightForView(event!.description, font: font!, width: screenSize.width-40)
-        eventDescriptionLabel.text = event!.description
-        eventBrancImage.image = UIImage(named: event!.branch)
-        eventAddressLabel.text = event!.location
-        eventDateLabel.text = event!.day + "/" + event!.month + "/" + event!.year + "  " + event!.time
-        creatorProfileView.layer.borderWidth = 1.0
-        creatorProfileView.layer.cornerRadius = 10.0
+        eventNameLabel.text = event.name
+        descriptionTextView.text = event.description
+        eventAddressLabel.text = event.location
+        eventDateLabel.text = event.day + "." + event.month + "." + event.year + ", " + event!.time
+        
+        if levels[0] == event.level {
+            hexagon1.image = UIImage(named: "YellowHexagon")
+            hexagon2.image = UIImage(named: "Hexagon")
+            hexagon3.image = UIImage(named: "Hexagon")
+            hexagon4.image = UIImage(named: "Hexagon")
+            hexagon5.image = UIImage(named: "Hexagon")
+        } else if levels[1] == event.level {
+            hexagon1.image = UIImage(named: "YellowHexagon")
+            hexagon2.image = UIImage(named: "YellowHexagon")
+            hexagon3.image = UIImage(named: "Hexagon")
+            hexagon4.image = UIImage(named: "Hexagon")
+            hexagon5.image = UIImage(named: "Hexagon")
+        } else if levels[2] == event.level {
+            hexagon1.image = UIImage(named: "YellowHexagon")
+            hexagon2.image = UIImage(named: "YellowHexagon")
+            hexagon3.image = UIImage(named: "YellowHexagon")
+            hexagon4.image = UIImage(named: "Hexagon")
+            hexagon5.image = UIImage(named: "Hexagon")
+        } else if levels[3] == event.level {
+            hexagon1.image = UIImage(named: "YellowHexagon")
+            hexagon2.image = UIImage(named: "YellowHexagon")
+            hexagon3.image = UIImage(named: "YellowHexagon")
+            hexagon4.image = UIImage(named: "YellowHexagon")
+            hexagon5.image = UIImage(named: "Hexagon")
+        } else if levels[4] == event.level {
+            hexagon1.image = UIImage(named: "YellowHexagon")
+            hexagon2.image = UIImage(named: "YellowHexagon")
+            hexagon3.image = UIImage(named: "YellowHexagon")
+            hexagon4.image = UIImage(named: "YellowHexagon")
+            hexagon5.image = UIImage(named: "YellowHexagon")
+        }
         
         let centerLocation = CLLocationCoordinate2DMake(Double(event!.locationLat)!, Double(event!.locationLon)!)
-        let mapSpan = MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
+        let mapSpan = MKCoordinateSpan(latitudeDelta: 0.004, longitudeDelta: 0.004)
         
         let pin = MKPointAnnotation()
         pin.coordinate = centerLocation
         map.addAnnotation(pin)
         
         map.region = MKCoordinateRegion(center: centerLocation, span: mapSpan)
-        
-        Alamofire.request(self.event!.creatorImageURL).responseImage(completionHandler: { response in
-            if let image = response.result.value {
-                self.creatorImage.layer.masksToBounds = true
-                self.creatorImage.layer.cornerRadius = self.creatorImage.frame.width / 2.0
-                self.creatorImage.image = image
-                self.creatorName.text = self.event!.creatorName
-            }
-        })
-    }
-    
-    func heightForView(_ text:String, font:UIFont, width:CGFloat) -> CGFloat{
-        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.font = font
-        label.text = text
-        
-        label.sizeToFit()
-        return label.frame.height
-    }
-    
-    @IBAction func creatorProfileClicked(_ sender: AnyObject) {
-        let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        self.present(viewController5, animated: true, completion: { _ in
-            viewController5.getUser(userID: (self.event?.creatorID)!)
-        })
     }
     
     @IBAction func joinEventButtonClicked(_ sender: AnyObject) {
@@ -137,24 +175,26 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func reportButtonClicked(_ sender: AnyObject) {
+        
+    }
+    
+    
     func retrieveParticipants() {
-        REF_EVENTS.child(event!.id).child("participants").observeSingleEvent(of: .value , with: { (snapshot) in
-            if snapshot.exists() {
-                let postDict = Array((snapshot.value as! [String : AnyObject]).values)
-                
-                for element in postDict {
-                    let id = element.value(forKey: "id") as! String
-                    
-                    REF_USERS.child(id).observeSingleEvent(of: .value, with: { snapshot in
-                        if snapshot.exists() {
-                            let user = User(snapshot: snapshot)
-                            
-                            self.participants.insert(user, at: 0)
-                            self.participantsCollectionView.reloadData()
-                        }
-                    })
-                }
+        
+        if let data = event.participants?.keys {
+            let postDict = Array(data)
+            
+            for element in postDict {
+                REF_USERS.child(element).observeSingleEvent(of: .value, with: { snapshot in
+                    if snapshot.exists() {
+                        let user = User(snapshot: snapshot)
+                        
+                        self.participants.append(user)
+                        self.participantsCollectionView.reloadData()
+                    }
+                })
             }
-        })
+        }
     }
 }
