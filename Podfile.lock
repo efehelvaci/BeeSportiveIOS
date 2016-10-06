@@ -64,6 +64,7 @@ PODS:
   - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
+  - SDCAlertView (7.0.1)
   - SwifterSwift (1.1)
 
 DEPENDENCIES:
@@ -78,6 +79,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - FTIndicator
   - JSQMessagesViewController
+  - SDCAlertView (~> 7.0)
   - SwifterSwift (from `https://github.com/omaralbeik/SwifterSwift.git`)
 
 EXTERNAL SOURCES:
@@ -110,8 +112,9 @@ SPEC CHECKSUMS:
   GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  SDCAlertView: e04c5a8985e4490768cc9608bf0a13c44215fcf2
   SwifterSwift: 73a46af6592832d8d0ccea035e5ede15116a0895
 
-PODFILE CHECKSUM: cbfc6e6267f73ecf25eceb3d578809bbfed3cef4
+PODFILE CHECKSUM: 55a18db80ba62467d19a1ca4d811def7c1398608
 
 COCOAPODS: 1.1.0.rc.2

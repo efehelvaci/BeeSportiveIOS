@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import Alamofire
 import MapKit
+import SDCAlertView
+import Async
 
 private let reuseIdentifier = "participantsCell"
 
@@ -21,23 +23,35 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     @IBOutlet var map: MKMapView!
     @IBOutlet var requestsButton: UIButton!
     @IBOutlet var joinButton: UIButton!
-    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var yellowLineWidth: NSLayoutConstraint!
-    
+    @IBOutlet var descriptionHeight: NSLayoutConstraint!
     @IBOutlet var participantsCollectionView: UICollectionView!
-    
     @IBOutlet var hexagon1: UIImageView!
     @IBOutlet var hexagon2: UIImageView!
     @IBOutlet var hexagon3: UIImageView!
     @IBOutlet var hexagon4: UIImageView!
     @IBOutlet var hexagon5: UIImageView!
     
+    let grayLineWidth = screenSize.width - 90.0
+    
+    var joinAlert : AlertController!
     var event : Event!
-    var creator : User! = nil
-    var participants = [User]()
+    var creator : User! = nil {
+        didSet {
+            self.participantsCollectionView.reloadData()
+        }
+    }
+    var participants = [User]() {
+        didSet{
+            yellowLineWidth.constant = ( CGFloat(participants.count) / CGFloat(Double(event.maxJoinNumber)!)) * grayLineWidth
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.layoutIfNeeded()
         
         if event.creator != nil {
             self.creator = event.creator
@@ -48,6 +62,54 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
                 }
             })
         }
+        
+        joinAlert = AlertController(title: ("Join '" + event.name + "' BeeEvent?"), message: (event.day + "." + event.month + "." + event.year + ", " + event!.time + "\n" +
+            event.location + "\n" +
+            "\n" +
+            "You will be notified when event owner considers your application."), preferredStyle: AlertControllerStyle.alert)
+        joinAlert.add(AlertAction(title: "Cancel", style: .destructive, handler: { _ in
+                self.joinAlert.dismiss()
+            })
+        )
+        joinAlert.add(AlertAction(title: "Join!", style: .preferred, handler: { _ in
+            if self.event!.creatorID != FIRAuth.auth()?.currentUser?.uid {
+                REF_EVENTS.child(self.event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue((FIRAuth.auth()?.currentUser?.uid)!)
+                REF_EVENTS.child(self.event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("result").setValue("requested")
+                
+                self.joinButton.setTitle("Requested", for: .disabled)
+                self.joinButton.layer.borderColor = UIColor.gray.cgColor
+                self.joinButton.isEnabled = false
+            }
+        })
+        )
+        
+        
+        if let reqIDs = event.requesters?.keys {
+            let allReq = Array(reqIDs)
+            
+            if allReq.contains((FIRAuth.auth()?.currentUser?.uid)!){
+                Async.main{
+                    self.joinButton.setTitle("Requested", for: .disabled)
+                    self.joinButton.layer.borderColor = UIColor.gray.cgColor
+                    self.joinButton.isEnabled = false
+                }
+                
+            }
+        }
+        
+        if let partpIDs = event.participants?.keys {
+            let allPart = Array(partpIDs)
+            
+            if allPart.contains((FIRAuth.auth()?.currentUser?.uid)!){
+                Async.main{
+                    self.joinButton.setTitle("Joined", for: .disabled)
+                    self.joinButton.layer.borderColor = UIColor.gray.cgColor
+                    self.joinButton.isEnabled = false
+                }
+            }
+        }
+        
+        yellowLineWidth.constant = ( CGFloat(participants.count) / CGFloat(Double(event.maxJoinNumber)!)) * grayLineWidth
         
         setPageOutlets()
         retrieveParticipants()
@@ -110,9 +172,17 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func setPageOutlets () {
         eventNameLabel.text = event.name
-        descriptionTextView.text = event.description
+        descriptionLabel.text = event.description
+        
+        if let font = UIFont(name: "Source Sans Pro", size: 15) {
+            descriptionHeight.constant = event.description.heightWithConstrainedWidth(screenSize.width - 16, font: font)
+        } else {
+            descriptionHeight.constant = 180.0
+        }
+        
+        
         eventAddressLabel.text = event.location
-        eventDateLabel.text = event.day + "." + event.month + "." + event.year + ", " + event!.time
+        eventDateLabel.text = event.day + "." + event.month + "." + event.year + "  " + event!.time
         
         if levels[0] == event.level {
             hexagon1.image = UIImage(named: "YellowHexagon")
@@ -157,11 +227,7 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     @IBAction func joinEventButtonClicked(_ sender: AnyObject) {
-        if event!.creatorID != FIRAuth.auth()?.currentUser?.uid {
-        
-            REF_EVENTS.child(event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue((FIRAuth.auth()?.currentUser?.uid)!)
-            REF_EVENTS.child(event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("result").setValue("requested")
-        }
+        joinAlert.present()
     }
     
     @IBAction func requestsButtonClicked(_ sender: AnyObject) {

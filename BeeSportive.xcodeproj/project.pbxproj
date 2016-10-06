@@ -178,6 +178,7 @@
 				27C024371DA2BE69000885A3 /* Fonts */,
 			);
 			name = Resources;
+			path = BeeSportive;
 			sourceTree = "<group>";
 		};
 		27C024371DA2BE69000885A3 /* Fonts */ = {
@@ -204,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				27CB270B1D5D3CDD00F9ECF5 /* BeeSportive */,
+				27B977191DA272F500245D8C /* Resources */,
 				27CB270A1D5D3CDD00F9ECF5 /* Products */,
 				DB02669BAE7114B9DEC23D01 /* Pods */,
 				D88B80E2702491BEC5AB6B21 /* Frameworks */,
@@ -226,7 +228,6 @@
 				27E45F4B1DA57D7300409852 /* Table View Cells */,
 				27E45F4A1DA57D6700409852 /* Collection View Cells */,
 				27E45F491DA57D5D00409852 /* View Controllers */,
-				27B977191DA272F500245D8C /* Resources */,
 				279FBC431D7EF9F900B0AFAE /* Tab Bar */,
 				27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */,
 				27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */,

@@ -114,5 +114,22 @@ extension Date {
         //Return Result
         return isEqualTo
     }
+    
+    func addDays(daysToAdd: Int) -> NSDate {
+        let secondsInDays: TimeInterval = Double(daysToAdd) * 60 * 60 * 24
+        let dateWithDaysAdded: NSDate = self.addingTimeInterval(secondsInDays) as NSDate
+        
+        //Return Result
+        return dateWithDaysAdded
+    }
+    
+    func addHours(hoursToAdd: Int) -> NSDate {
+        let secondsInHours: TimeInterval = Double(hoursToAdd) * 60 * 60
+        let dateWithHoursAdded: NSDate = self.addingTimeInterval(secondsInHours) as NSDate
+        
+        //Return Result
+        return dateWithHoursAdded
+    }
+    
 }
 

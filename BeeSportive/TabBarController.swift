@@ -13,7 +13,7 @@ import Async
 
 class TabBarController: UITabBarController {
     
-    let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 72))
+    let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
     var eventCreationNavCon : UINavigationController?
     
     override func viewDidLoad() {
@@ -60,7 +60,7 @@ class TabBarController: UITabBarController {
     func setupMiddleButton() {
         
         var menuButtonFrame = menuButton.frame
-        menuButtonFrame.origin.y = self.view.bounds.height - menuButtonFrame.height
+        menuButtonFrame.origin.y = self.view.bounds.height - menuButtonFrame.height - 8
         menuButtonFrame.origin.x = self.view.bounds.width/2 - menuButtonFrame.size.width/2
         menuButton.frame = menuButtonFrame
         self.view.addSubview(menuButton)

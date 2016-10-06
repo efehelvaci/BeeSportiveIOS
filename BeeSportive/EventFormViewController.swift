@@ -115,20 +115,9 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
     
     func createEvent() {
         
-        let time = self.form.rowBy(tag: "Time")?.baseValue as? Date
-        let date = self.form.rowBy(tag: "Date")?.baseValue as? Date
-        
-        print(time!)
-        print(date!)
-        
-        print(time?.isGreaterThanDate(dateToCompare: Date() as NSDate))
-        print(time?.isLessThanDate(dateToCompare: Date() as NSDate))
-        
-        print(date!.equalToDate(dateToCompare: Date() as NSDate))
-        
         if let name = self.form.rowBy(tag: "Name")?.baseValue as? String,
             let description = self.form.rowBy(tag: "Description")?.baseValue as? String,
-            let date = self.form.rowBy(tag: "Date")?.baseValue as? Date,
+            var date = self.form.rowBy(tag: "Date")?.baseValue as? Date,
             let time = self.form.rowBy(tag: "Time")?.baseValue as? Date,
             let locationPin = self.form.rowBy(tag: "LocationPin")?.baseValue as? CLLocation,
             let locationName = self.form.rowBy(tag: "LocationName")?.baseValue as? String,
@@ -136,58 +125,68 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
             let branch = self.form.rowBy(tag: "Branch")?.baseValue as? String,
             let maxJoin = self.form.rowBy(tag: "MaxJoin")?.baseValue as? Int
         {
-            if date.isLessThanDate(dateToCompare: Date() as Date as NSDate) {
+            date = date.addHours(hoursToAdd: 1) as Date
+            if date.isLessThanDate(dateToCompare: Date() as Date as NSDate){
                 FTIndicator.showInfo(withMessage: "You can't create event to past time")
                 return
             }
+            FTIndicator.showProgressWithmessage("Adding your event!", userInteractionEnable: false)
             
-            if date.equalToDate(dateToCompare: Date() as NSDate) {
+            var locationAddress = ""
+            let geocoder = CLGeocoder()
+            geocoder.reverseGeocodeLocation(locationPin, completionHandler: { (placemark, error) in
+                if error != nil {
+                    print("Error getting location address")
+                } else {
+                    let placemrk = placemark?.last
+                    locationAddress = (placemrk?.addressDictionary!["FormattedAddressLines"] as! [String]).joined(separator: " ")
+                }
+            
                 
-            }
-            
-            
-            self.view.isUserInteractionEnabled = false
-            
-            let dateFormatter = DateFormatter()
-            
-            dateFormatter.dateFormat = "dd"
-            let day = dateFormatter.string(from: date)
-            
-            dateFormatter.dateFormat = "M"
-            let month = dateFormatter.string(from: date)
-            
-            dateFormatter.dateFormat = "yyyy"
-            let year = dateFormatter.string(from: date)
-            
-            dateFormatter.dateFormat = "HH:mm"
-            let hour = dateFormatter.string(from: time)
-            
-            let uuid = UUID().uuidString
-            
-            let newEvent = [
-                "id" : uuid,
-                "creatorID" : (FIRAuth.auth()?.currentUser?.uid)!,
-                "creatorImageURL" : (FIRAuth.auth()?.currentUser?.photoURL?.absoluteString)!,
-                "creatorName" : (FIRAuth.auth()?.currentUser?.displayName)!,
-                "name" : name,
-                "branch" : branch,
-                "location" : locationName,
-                "locationLat" : String(locationPin.coordinate.latitude),
-                "locationLon" : String(locationPin.coordinate.longitude),
-                "time" : hour,
-                "year" : year,
-                "month" : month,
-                "day" : day,
-                "maxJoinNumber" : String(maxJoin),
-                "level" : level,
-                "description" : description
-            ]
-            
-            REF_EVENTS.child(uuid).setValue(newEvent)
-            REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("eventsCreated").childByAutoId().setValue(uuid)
-            FTIndicator.showNotification(with: UIImage(named: "Success"), title: "Yay!", message: "Event successfully created!")
-            
-            self.dismiss(animated: true, completion: nil)
+                let dateFormatter = DateFormatter()
+                
+                dateFormatter.dateFormat = "dd"
+                let day = dateFormatter.string(from: date)
+                
+                dateFormatter.dateFormat = "M"
+                let month = dateFormatter.string(from: date)
+                
+                dateFormatter.dateFormat = "yyyy"
+                let year = dateFormatter.string(from: date)
+                
+                dateFormatter.dateFormat = "HH:mm"
+                let hour = dateFormatter.string(from: time)
+                
+                let uuid = UUID().uuidString
+                
+                let newEvent = [
+                    "id" : uuid,
+                    "creatorID" : (FIRAuth.auth()?.currentUser?.uid)!,
+                    "creatorImageURL" : (FIRAuth.auth()?.currentUser?.photoURL?.absoluteString)!,
+                    "creatorName" : (FIRAuth.auth()?.currentUser?.displayName)!,
+                    "name" : name,
+                    "branch" : branch,
+                    "location" : locationName,
+                    "locationLat" : String(locationPin.coordinate.latitude),
+                    "locationLon" : String(locationPin.coordinate.longitude),
+                    "address" : locationAddress,
+                    "time" : hour,
+                    "year" : year,
+                    "month" : month,
+                    "day" : day,
+                    "maxJoinNumber" : String(maxJoin),
+                    "level" : level,
+                    "description" : description
+                ]
+                
+                REF_EVENTS.child(uuid).setValue(newEvent)
+                REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("eventsCreated").childByAutoId().setValue(uuid)
+                
+                FTIndicator.showNotification(with: UIImage(named: "Success"), title: "Yay!", message: "Event successfully created!")
+                FTIndicator.dismissProgress()
+                self.view.isUserInteractionEnabled = true
+                self.dismiss(animated: true, completion: nil)
+            })
         } else {
             FTIndicator.showInfo(withMessage: "You must fill all the areas!")
         }

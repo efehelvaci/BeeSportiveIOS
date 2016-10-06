@@ -49,15 +49,19 @@ class EventCollectionViewCell: UICollectionViewCell {
             }
         })
         
+        var attendeeCount = 0
+        if let prtcpnts = event.participants?.keys {
+            let arr = Array(prtcpnts)
+            attendeeCount = arr.count
+        }
+        
         self.date.text = event.day + " " + months[Int(event.month)! - 1] + ", " + event.time
         self.backgroundImage.image = UIImage(named: event.branch)
         self.location.text = event.location
         self.location.adjustsFontSizeToFitWidth = true
         self.branchName.text = (event.branch).lowercased()
         self.eventName.text = event.name
-        self.capacity.text = "1/" + (event.maxJoinNumber) + " Free Spots"
-        
-
+        self.capacity.text = "\(attendeeCount)/" + (event.maxJoinNumber) + " Free Spots"
     }
     
     func offset(_ offset: CGPoint) {

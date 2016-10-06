@@ -25,7 +25,9 @@ class Event {
     let day : String
     let year : String
     var participants : Dictionary<String, AnyObject>? = nil
+    var requesters : Dictionary<String, AnyObject>? = nil
     var creator : User? = nil
+    var address : String? = nil
     
     init(creatorID: String, creatorImageURL: String, creatorName: String, name: String, branch: String, level: String, location: String, locationLat: String, locationLon : String, maxJoinNumber: String, description : String, time: String, month: String, day: String, year: String, id: String){
         self.creatorID = creatorID
@@ -62,8 +64,16 @@ class Event {
         self.day = data["day"] as! String
         self.year = data["year"] as! String
         
+        if let addrss = data["address"] as? String {
+            self.address = addrss
+        }
+        
         if let prtcpnts = data["participants"] as? Dictionary<String, AnyObject> {
             self.participants = prtcpnts
+        }
+        
+        if let rqstrs = data["requested"] as? Dictionary<String, AnyObject> {
+            self.requesters = rqstrs
         }
         
         REF_USERS.child(creatorID).observeSingleEvent(of: .value, with: { snapshot2 in
