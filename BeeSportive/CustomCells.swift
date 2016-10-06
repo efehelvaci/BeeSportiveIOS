@@ -9,40 +9,42 @@
 import Foundation
 import UIKit
 import MapKit
-/*
-public final class LocationRow : SelectorRow<CLLocation, PushSelectorCell<CLLocation>, MapViewController>, RowType {
+import Eureka
+
+public final class LocationRow : SelectorRow<PushSelectorCell<CLLocation>, MapViewController>, RowType {
     public required init(tag: String?) {
         super.init(tag: tag)
-        presentationMode = .show(controllerProvider: ControllerProvider.callback { return MapViewController(){ _ in } }, completionCallback: { vc in vc.navigationController?.popViewController(animated: true) })
+        presentationMode = .show(controllerProvider: ControllerProvider.callback { return MapViewController(){ _ in } }, onDismiss: { vc in _ = vc.navigationController?.popViewController(animated: true) })
+        
         displayValueFor = {
             guard let location = $0 else { return "" }
             let fmt = NumberFormatter()
             fmt.maximumFractionDigits = 4
             fmt.minimumFractionDigits = 4
-            let latitude = fmt.string(from: location.coordinate.latitude)!
-            let longitude = fmt.string(from: location.coordinate.longitude)!
+            let latitude = fmt.string(from: NSNumber(value: location.coordinate.latitude))!
+            let longitude = fmt.string(from: NSNumber(value: location.coordinate.longitude))!
             return  "\(latitude), \(longitude)"
         }
     }
 }
 
-open class MapViewController : UIViewController, TypedRowControllerType, MKMapViewDelegate {
+public class MapViewController : UIViewController, TypedRowControllerType, MKMapViewDelegate {
     
-    open var row: RowOf<CLLocation>!
-    open var completionCallback : ((UIViewController) -> ())?
+    public var row: RowOf<CLLocation>!
+    public var onDismissCallback: ((UIViewController) -> ())?
     
     lazy var mapView : MKMapView = { [unowned self] in
         let v = MKMapView(frame: self.view.bounds)
-        v.autoresizingMask = UIViewAutoresizing.flexibleWidth.union(UIViewAutoresizing.flexibleHeight)
+        v.autoresizingMask = UIViewAutoresizing.flexibleWidth.union(.flexibleHeight)
         return v
         }()
     
     lazy var pinView: UIImageView = { [unowned self] in
-        let v = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let v = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         v.image = UIImage(named: "LocationPin", in: Bundle(for: MapViewController.self), compatibleWith: nil)
         v.image = v.image?.withRenderingMode(.alwaysTemplate)
         v.tintColor = self.view.tintColor
-        v.backgroundColor = .clear()
+        v.backgroundColor = .clear
         v.clipsToBounds = true
         v.contentMode = .scaleAspectFit
         v.isUserInteractionEnabled = false
@@ -53,7 +55,7 @@ open class MapViewController : UIViewController, TypedRowControllerType, MKMapVi
     let height: CGFloat = 5.0
     
     lazy var ellipse: UIBezierPath = { [unowned self] in
-        let ellipse = UIBezierPath(ovalIn: CGRect(x: 0 , y: 0, width: self.width, height: self.height))
+        let ellipse = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: self.width, height: self.height))
         return ellipse
         }()
     
@@ -83,12 +85,12 @@ open class MapViewController : UIViewController, TypedRowControllerType, MKMapVi
         super.init(nibName: nil, bundle: nil)
     }
     
-    convenience public init(_ callback: @escaping (UIViewController) -> ()){
+    convenience public init(_ callback: ((UIViewController) -> ())?){
         self.init(nibName: nil, bundle: nil)
-        completionCallback = callback
+        onDismissCallback = callback
     }
     
-    open override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(mapView)
         
@@ -111,7 +113,7 @@ open class MapViewController : UIViewController, TypedRowControllerType, MKMapVi
         
     }
     
-    open override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         let center = mapView.convert(mapView.centerCoordinate, toPointTo: pinView)
@@ -122,27 +124,27 @@ open class MapViewController : UIViewController, TypedRowControllerType, MKMapVi
     
     func tappedDone(_ sender: UIBarButtonItem){
         let target = mapView.convert(ellipsisLayer.position, toCoordinateFrom: mapView)
-        row.value? = CLLocation(latitude: target.latitude, longitude: target.longitude)
-        completionCallback?(self)
+        row.value = CLLocation(latitude: target.latitude, longitude: target.longitude)
+        onDismissCallback?(self)
     }
     
     func updateTitle(){
         let fmt = NumberFormatter()
         fmt.maximumFractionDigits = 4
         fmt.minimumFractionDigits = 4
-        let latitude = fmt.string(from: NSNumber(mapView.centerCoordinate.latitude))!
-        let longitude = fmt.string(from: NSNumber(mapView.centerCoordinate.longitude))!
+        let latitude = fmt.string(from: NSNumber(value: mapView.centerCoordinate.latitude))!
+        let longitude = fmt.string(from: NSNumber(value: mapView.centerCoordinate.longitude))!
         title = "\(latitude), \(longitude)"
     }
     
-    open func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+    public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
         ellipsisLayer.transform = CATransform3DMakeScale(0.5, 0.5, 1)
         UIView.animate(withDuration: 0.2, animations: { [weak self] in
             self?.pinView.center = CGPoint(x: self!.pinView.center.x, y: self!.pinView.center.y - 10)
             })
     }
     
-    open func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         ellipsisLayer.transform = CATransform3DIdentity
         UIView.animate(withDuration: 0.2, animations: { [weak self] in
             self?.pinView.center = CGPoint(x: self!.pinView.center.x, y: self!.pinView.center.y + 10)
@@ -150,4 +152,3 @@ open class MapViewController : UIViewController, TypedRowControllerType, MKMapVi
         updateTitle()
     }
 }
-*/

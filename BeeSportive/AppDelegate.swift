@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let statusBar = UIApplication.shared.value(forKey: "statusBar") as! UIView
         
         if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
-            statusBar.backgroundColor = UIColor(red: 249/255.0, green: 223/255.0, blue: 6/255.0, alpha: 1.0)
+            statusBar.backgroundColor = UIColor(red: 249/255, green: 225/255, blue: 6/255, alpha: 1)
         }
         
         // Use Firebase library to configure APIs

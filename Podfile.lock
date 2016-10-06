@@ -1,32 +1,36 @@
 PODS:
   - Alamofire (4.0.1)
-  - AlamofireImage (3.0.0):
+  - AlamofireImage (3.1.0):
     - Alamofire (~> 4.0)
   - AsyncSwift (2.0.0)
-  - Firebase/Analytics (3.6.0):
-    - FirebaseAnalytics (= 3.4.2)
-  - Firebase/Auth (3.6.0):
-    - Firebase/Analytics
+  - Eureka (2.0.0-beta.1)
+  - Firebase/Auth (3.7.0):
+    - Firebase/Core
     - FirebaseAuth (= 3.0.5)
-  - Firebase/Core (3.6.0):
-    - Firebase/Analytics
-  - Firebase/Database (3.6.0):
-    - Firebase/Analytics
+  - Firebase/Core (3.7.0):
+    - FirebaseAnalytics (= 3.4.3)
+    - FirebaseCore (= 3.4.3)
+  - Firebase/Database (3.7.0):
+    - Firebase/Core
     - FirebaseDatabase (= 3.0.3)
-  - Firebase/Messaging (3.6.0):
-    - Firebase/Analytics
+  - Firebase/Messaging (3.7.0):
+    - Firebase/Core
     - FirebaseMessaging (= 1.2.0)
-  - Firebase/Storage (3.6.0):
-    - Firebase/Analytics
+  - Firebase/Storage (3.7.0):
+    - Firebase/Core
     - FirebaseStorage (= 1.0.3)
-  - FirebaseAnalytics (3.4.2):
+  - FirebaseAnalytics (3.4.3):
+    - FirebaseCore (~> 3.4)
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
-    - GoogleUtilities (~> 1.2)
+    - GoogleUtilities (~> 1.3)
   - FirebaseAuth (3.0.5):
     - FirebaseAnalytics (~> 3.3)
     - GoogleNetworkingUtilities (~> 1.2)
+    - GoogleUtilities (~> 1.2)
+  - FirebaseCore (3.4.3):
+    - GoogleInterchangeUtilities (~> 1.2)
     - GoogleUtilities (~> 1.2)
   - FirebaseDatabase (3.0.3):
     - FirebaseAnalytics (~> 3.3)
@@ -47,16 +51,16 @@ PODS:
   - FTIndicator/FTNotificationIndicator (1.1.5)
   - FTIndicator/FTProgressIndicator (1.1.5)
   - FTIndicator/FTToastIndicator (1.1.5)
-  - GoogleInterchangeUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleInterchangeUtilities (1.2.2):
+    - GoogleSymbolUtilities (~> 1.1)
   - GoogleIPhoneUtilities (1.2.1):
     - GoogleSymbolUtilities (~> 1.0)
     - GoogleUtilities (~> 1.0)
-  - GoogleNetworkingUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
-  - GoogleSymbolUtilities (1.1.1)
-  - GoogleUtilities (1.3.1):
-    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleNetworkingUtilities (1.2.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleSymbolUtilities (1.1.2)
+  - GoogleUtilities (1.3.2):
+    - GoogleSymbolUtilities (~> 1.1)
   - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
@@ -66,6 +70,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.0.1)
   - AlamofireImage (~> 3.0)
   - AsyncSwift (~> 2.0.0)
+  - Eureka (~> 2.0.0-beta.1)
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -81,30 +86,32 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwifterSwift:
-    :commit: 4d4a9e5366a8b6eab3b84fa0ade6e10f84c3f853
+    :commit: 264d2e7afd283e6e46a91b0aa7f5327ea9a0a464
     :git: https://github.com/omaralbeik/SwifterSwift.git
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
-  AlamofireImage: 6594aa1139a67dcd36cde6da79ea4e5b318e60fb
+  AlamofireImage: bb8c8351c51cb1633bb6be69b6dbbaff37ce65b7
   AsyncSwift: 6ba6ed9ecb51344458063f7c86fe447ab824e313
-  Firebase: 34187200ef4979dbd485c7aa685ef078bf587c86
-  FirebaseAnalytics: 3f5358d9104adf159cc8d99b7b501e50099a39ad
+  Eureka: d014adf16406745e1a78d5790ea37ed130a0a8e5
+  Firebase: 3875e140d77c7572c6d4852faf94144ffcdb0704
+  FirebaseAnalytics: 02d0aed8c6246a9c8683ac3e9825c67ceb657bde
   FirebaseAuth: 75a062bbf2d3c97d1e6e55bbc110e13a6853e25d
+  FirebaseCore: 5a885548bbc5f0c410b04f8e9ac9d73ff1221907
   FirebaseDatabase: 750a4a0fe18ef114318876fd654b2d9c671e0992
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   FirebaseMessaging: 789d23fd796594dfb55dcf36cd325541df887c22
   FirebaseStorage: 3992817bf405f5c1a4f8349678d22724cd0ef509
   FTIndicator: 8b9885b84340a19029ad13672add3bb8183feba8
-  GoogleInterchangeUtilities: def8415a862effc67d549d5b5b0b9c7a2f97d4de
+  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleIPhoneUtilities: 63f25e93a3ddcb66884d182aab3a660d98f1479b
-  GoogleNetworkingUtilities: 3e83269048cfb498dc7ec83ab36813360965c74f
-  GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
-  GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
+  GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
+  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
+  GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
-  SwifterSwift: 640164de070c0df5fe7b26cecb23c12e35504d2a
+  SwifterSwift: 73a46af6592832d8d0ccea035e5ede15116a0895
 
-PODFILE CHECKSUM: 9a90a5047f96835da93467dfd6645b7579e7c8df
+PODFILE CHECKSUM: cbfc6e6267f73ecf25eceb3d578809bbfed3cef4
 
 COCOAPODS: 1.1.0.rc.2

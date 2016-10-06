@@ -24,6 +24,10 @@ class TabBarController: UITabBarController {
         let eventCreateVC = storyboard!.instantiateViewController(withIdentifier: "EventFormViewController")
         eventCreationNavCon = UINavigationController(rootViewController: eventCreateVC)
         eventCreateVC.navigationItem.title = "Create Event"
+        eventCreationNavCon?.navigationBar.barTintColor = UIColor(red: 249/255, green: 225/255, blue: 6/255, alpha: 1)
+        eventCreationNavCon?.navigationBar.tintColor = UIColor.gray
+        eventCreationNavCon?.navigationBar.isTranslucent = false
+        eventCreationNavCon?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Source Sans Pro", size: 24)!]
         
         let viewController1 = storyboard!.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
         viewController1.tabBarItem = UITabBarItem(title: "Events", image: UIImage(named: "Events"), tag: 1)

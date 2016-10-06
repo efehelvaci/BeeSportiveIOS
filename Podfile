@@ -12,4 +12,5 @@ target 'BeeSportive' do
 	pod 'FTIndicator'
     	pod 'JSQMessagesViewController'
     	pod 'SwifterSwift' , :git => 'https://github.com/omaralbeik/SwifterSwift.git'
+	pod ‘Eureka’, ‘~> 2.0.0-beta.1’
 end
