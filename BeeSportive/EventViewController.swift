@@ -19,6 +19,8 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     @IBOutlet var thirdCollectionView: UICollectionView!
     @IBOutlet var fourthCollectionView: UICollectionView!
     
+    @IBOutlet var beeView: UIView!
+    
     @IBOutlet var scrollPager: ScrollPager!
     
     @IBOutlet var beeViewLeading: NSLayoutConstraint!
@@ -32,6 +34,8 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     var popularEvents = [Event]()
     var favoriteEvents = [Event]()
     var selectedEventNo : Int?
+    
+    var startAnimation = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,6 +106,21 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         if collectionView == firstCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as! EventCollectionViewCell
             
+            if startAnimation {
+                let frame = cell.frame
+                
+                if (indexPath.row % 2) == 0 {
+                    cell.frame.origin = CGPoint(x: -screenSize.width, y: frame.origin.y)
+                } else {
+                    cell.frame.origin = CGPoint(x: screenSize.width, y: frame.origin.y)
+                }
+                
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: { 
+                        cell.frame = frame
+                    }, completion: nil)
+            }
+            
+            
             cell.configureCell(event: allEvents[indexPath.row])
             
             return cell
@@ -146,6 +165,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         } else if collectionView == fourthCollectionView {
             
             let eventsVC = self.storyboard?.instantiateViewController(withIdentifier: "EventsCollectionViewController") as! EventsCollectionViewController
+            eventsVC.navigationItem.title = branchs[(indexPath as NSIndexPath).row]
             
             var events = [Event]()
             
@@ -168,7 +188,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
         if collectionView == firstCollectionView || collectionView == secondCollectionView || collectionView == thirdCollectionView {
-            return CGSize(width: screenSize.width - 8, height: 180)
+            return CGSize(width: screenSize.width - 8, height: 164)
         }
         
         return CGSize(width: screenSize.width - 8, height: 120)
@@ -198,6 +218,10 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                 Async.main {
                     self.refreshControl1.endRefreshing()
                     self.firstCollectionView.reloadData()
+                    
+                    Async.main(after: 0.5, { _ in
+                        self.startAnimation = false
+                    })
                 }
                 
                 if (currentUser.instance.user != nil) && (currentUser.instance.user?.favoriteSports != nil){

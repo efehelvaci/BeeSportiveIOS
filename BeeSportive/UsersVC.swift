@@ -28,7 +28,7 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         currentUser.instance.delegate = self
         if currentUser.instance.user?.following != nil { followedUsers = (currentUser.instance.user?.following)! }
         
-        FTIndicator.showProgressWithmessage("Loading", userInteractionEnable: false)
+        FTIndicator.showProgressWithmessage("Loading", userInteractionEnable: true)
         
         let nib = UINib(nibName: "UserCell", bundle:nil)
         collectionView.register(nib, forCellWithReuseIdentifier: "userCell")
@@ -58,6 +58,12 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         self.collectionView.reloadData()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        FTIndicator.dismissProgress()
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }

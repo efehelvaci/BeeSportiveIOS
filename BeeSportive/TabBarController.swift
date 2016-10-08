@@ -13,8 +13,9 @@ import Async
 
 class TabBarController: UITabBarController {
     
-    let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
+    let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
     var eventCreationNavCon : UINavigationController?
+    let tabBarImageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,22 +31,26 @@ class TabBarController: UITabBarController {
         eventCreationNavCon?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Source Sans Pro", size: 24)!]
         
         let viewController1 = storyboard!.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
-        viewController1.tabBarItem = UITabBarItem(title: "Events", image: UIImage(named: "Events"), tag: 1)
+        viewController1.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Events"), tag: 1)
+        viewController1.tabBarItem.imageInsets = tabBarImageInsets
         let nav1 = UINavigationController(rootViewController: viewController1)
         nav1.navigationBar.barTintColor = UIColor.white
         
         let viewController2 = storyboard!.instantiateViewController(withIdentifier: "UsersVC") as! UsersVC
-        viewController2.tabBarItem = UITabBarItem(title: "Search", image: UIImage(named: "SearchPeople"), tag: 2)
+        viewController2.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Search"), tag: 2)
+        viewController2.tabBarItem.imageInsets = tabBarImageInsets
         
         let viewController3 = UIViewController()
         viewController3.tabBarItem.isEnabled = false
         
         let viewController4 = storyboard!.instantiateViewController(withIdentifier: "NotificationsViewController") as! NotificationsViewController
-        viewController4.tabBarItem = UITabBarItem(title: "Notifications", image: UIImage(named: "Notifications"), tag: 4)
+        viewController4.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Notifications"), tag: 4)
+        viewController4.tabBarItem.imageInsets = tabBarImageInsets
         
         let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         viewController5.sender = 0
-        viewController5.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "Avatar"), tag: 5)
+        viewController5.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Avatar"), tag: 5)
+        viewController5.tabBarItem.imageInsets = tabBarImageInsets
         
         setupMiddleButton()
         

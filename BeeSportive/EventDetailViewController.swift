@@ -12,14 +12,17 @@ import Alamofire
 import MapKit
 import SDCAlertView
 import Async
+import FBSDKShareKit
 
 private let reuseIdentifier = "participantsCell"
 
-class EventDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class EventDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPopoverPresentationControllerDelegate {
     
     @IBOutlet var eventNameLabel: UILabel!
     @IBOutlet var eventAddressLabel: UILabel!
     @IBOutlet var eventDateLabel: UILabel!
+    @IBOutlet var eventFullAddressLabel: UILabel!
+    @IBOutlet var capacityLabel: UILabel!
     @IBOutlet var map: MKMapView!
     @IBOutlet var requestsButton: UIButton!
     @IBOutlet var joinButton: UIButton!
@@ -35,6 +38,8 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     
     let grayLineWidth = screenSize.width - 90.0
     
+    let fbButton : FBSDKShareButton = FBSDKShareButton()
+    
     var joinAlert : AlertController!
     var event : Event!
     var creator : User! = nil {
@@ -45,6 +50,7 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     var participants = [User]() {
         didSet{
             yellowLineWidth.constant = ( CGFloat(participants.count) / CGFloat(Double(event.maxJoinNumber)!)) * grayLineWidth
+            capacityLabel.text = String(participants.count) + "/" + String(event.maxJoinNumber)
         }
     }
 
@@ -62,6 +68,16 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
                 }
             })
         }
+        var eventAddress = ""
+        if let address = event.address { eventAddress = " - " + address }
+        
+        let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
+        content.contentURL = URL(string: "http://www.beesportive.com/")
+        content.contentTitle = "BeeEvent: " + "'" + event.name + "' - Let's BeeSportive!"
+        content.contentDescription = "Nerede? : " + event.location + eventAddress + " - " +
+                                    "Ne zaman? : " + event.day + "." + event.month + "." + event.year + ", " + event.time + " \u{1F41D} Download the app from the App Store and join this event of your friend! \u{1F41D}"
+        content.imageURL = URL(string: "https://s15.postimg.org/ph36t3vt7/Logo2.png")
+        fbButton.shareContent = content
         
         joinAlert = AlertController(title: ("Join '" + event.name + "' BeeEvent?"), message: (event.day + "." + event.month + "." + event.year + ", " + event!.time + "\n" +
             event.location + "\n" +
@@ -116,11 +132,12 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         
         // If visitor is creator or not
         if event?.creatorID == FIRAuth.auth()?.currentUser?.uid {
+            joinButton.layer.borderColor = UIColor.gray.cgColor
             joinButton.isEnabled = false
-            requestsButton.isHidden = false
+//            requestsButton.isHidden = false
         } else {
             joinButton.isEnabled = true
-            requestsButton.isHidden = true
+//            requestsButton.isHidden = true
         }
     }
     
@@ -171,59 +188,62 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func setPageOutlets () {
-        eventNameLabel.text = event.name
-        descriptionLabel.text = event.description
-        
-        if let font = UIFont(name: "Source Sans Pro", size: 15) {
-            descriptionHeight.constant = event.description.heightWithConstrainedWidth(screenSize.width - 16, font: font)
-        } else {
-            descriptionHeight.constant = 180.0
+        if self.isViewLoaded {
+            eventNameLabel.text = event.name
+            descriptionLabel.text = event.description
+            
+            if let font = UIFont(name: "Source Sans Pro", size: 15) {
+                descriptionHeight.constant = event.description.heightWithConstrainedWidth(screenSize.width - 16, font: font)
+            } else {
+                descriptionHeight.constant = 180.0
+            }
+            
+            event.address != nil ? (eventFullAddressLabel.text = event.address) : (eventFullAddressLabel.text = "")
+            
+            eventAddressLabel.text = event.location
+            eventDateLabel.text = event.day + "." + event.month + "." + event.year + "  " + event!.time
+            
+            if levels[0] == event.level {
+                hexagon1.image = UIImage(named: "YellowHexagon")
+                hexagon2.image = UIImage(named: "Hexagon")
+                hexagon3.image = UIImage(named: "Hexagon")
+                hexagon4.image = UIImage(named: "Hexagon")
+                hexagon5.image = UIImage(named: "Hexagon")
+            } else if levels[1] == event.level {
+                hexagon1.image = UIImage(named: "YellowHexagon")
+                hexagon2.image = UIImage(named: "YellowHexagon")
+                hexagon3.image = UIImage(named: "Hexagon")
+                hexagon4.image = UIImage(named: "Hexagon")
+                hexagon5.image = UIImage(named: "Hexagon")
+            } else if levels[2] == event.level {
+                hexagon1.image = UIImage(named: "YellowHexagon")
+                hexagon2.image = UIImage(named: "YellowHexagon")
+                hexagon3.image = UIImage(named: "YellowHexagon")
+                hexagon4.image = UIImage(named: "Hexagon")
+                hexagon5.image = UIImage(named: "Hexagon")
+            } else if levels[3] == event.level {
+                hexagon1.image = UIImage(named: "YellowHexagon")
+                hexagon2.image = UIImage(named: "YellowHexagon")
+                hexagon3.image = UIImage(named: "YellowHexagon")
+                hexagon4.image = UIImage(named: "YellowHexagon")
+                hexagon5.image = UIImage(named: "Hexagon")
+            } else if levels[4] == event.level {
+                hexagon1.image = UIImage(named: "YellowHexagon")
+                hexagon2.image = UIImage(named: "YellowHexagon")
+                hexagon3.image = UIImage(named: "YellowHexagon")
+                hexagon4.image = UIImage(named: "YellowHexagon")
+                hexagon5.image = UIImage(named: "YellowHexagon")
+            }
+            
+            let centerLocation = CLLocationCoordinate2DMake(Double(event!.locationLat)!, Double(event!.locationLon)!)
+            let mapSpan = MKCoordinateSpan(latitudeDelta: 0.004, longitudeDelta: 0.004)
+            
+            let pin = MKPointAnnotation()
+            pin.coordinate = centerLocation
+            map.addAnnotation(pin)
+            
+            map.region = MKCoordinateRegion(center: centerLocation, span: mapSpan)
         }
-        
-        
-        eventAddressLabel.text = event.location
-        eventDateLabel.text = event.day + "." + event.month + "." + event.year + "  " + event!.time
-        
-        if levels[0] == event.level {
-            hexagon1.image = UIImage(named: "YellowHexagon")
-            hexagon2.image = UIImage(named: "Hexagon")
-            hexagon3.image = UIImage(named: "Hexagon")
-            hexagon4.image = UIImage(named: "Hexagon")
-            hexagon5.image = UIImage(named: "Hexagon")
-        } else if levels[1] == event.level {
-            hexagon1.image = UIImage(named: "YellowHexagon")
-            hexagon2.image = UIImage(named: "YellowHexagon")
-            hexagon3.image = UIImage(named: "Hexagon")
-            hexagon4.image = UIImage(named: "Hexagon")
-            hexagon5.image = UIImage(named: "Hexagon")
-        } else if levels[2] == event.level {
-            hexagon1.image = UIImage(named: "YellowHexagon")
-            hexagon2.image = UIImage(named: "YellowHexagon")
-            hexagon3.image = UIImage(named: "YellowHexagon")
-            hexagon4.image = UIImage(named: "Hexagon")
-            hexagon5.image = UIImage(named: "Hexagon")
-        } else if levels[3] == event.level {
-            hexagon1.image = UIImage(named: "YellowHexagon")
-            hexagon2.image = UIImage(named: "YellowHexagon")
-            hexagon3.image = UIImage(named: "YellowHexagon")
-            hexagon4.image = UIImage(named: "YellowHexagon")
-            hexagon5.image = UIImage(named: "Hexagon")
-        } else if levels[4] == event.level {
-            hexagon1.image = UIImage(named: "YellowHexagon")
-            hexagon2.image = UIImage(named: "YellowHexagon")
-            hexagon3.image = UIImage(named: "YellowHexagon")
-            hexagon4.image = UIImage(named: "YellowHexagon")
-            hexagon5.image = UIImage(named: "YellowHexagon")
-        }
-        
-        let centerLocation = CLLocationCoordinate2DMake(Double(event!.locationLat)!, Double(event!.locationLon)!)
-        let mapSpan = MKCoordinateSpan(latitudeDelta: 0.004, longitudeDelta: 0.004)
-        
-        let pin = MKPointAnnotation()
-        pin.coordinate = centerLocation
-        map.addAnnotation(pin)
-        
-        map.region = MKCoordinateRegion(center: centerLocation, span: mapSpan)
     }
     
     @IBAction func joinEventButtonClicked(_ sender: AnyObject) {
@@ -242,9 +262,27 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     @IBAction func reportButtonClicked(_ sender: AnyObject) {
-        
+        let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "ReportViewController") as! ReportViewController
+        popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
+        popoverContent.preferredContentSize = CGSize(width: screenSize.width-16, height: 250)
+        popoverContent.reporting = .event
+        popoverContent.reported = event
+        let popoverController = popoverContent.popoverPresentationController
+        popoverController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+        popoverController?.delegate = self
+        popoverController?.sourceView = self.view
+        popoverController?.sourceRect = CGRect(x: 80, y: 80, width: 50, height: 50)
+        present(popoverContent, animated: true, completion: nil)
     }
     
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+    
+    @IBAction func shareButtonClicked(_ sender: AnyObject) {
+        fbButton.sendActions(for: .touchUpInside)
+    }
+   
     
     func retrieveParticipants() {
         

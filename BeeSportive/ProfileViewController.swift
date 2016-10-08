@@ -12,7 +12,7 @@ import Async
 import Alamofire
 import AlamofireImage
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ScrollPagerDelegate, observeUser {
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ScrollPagerDelegate, observeUser, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet var profileImage: UIImageView!
     
@@ -115,6 +115,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         favoriteSportsCollectionView.reloadData()
         eventsCollectionView.reloadData()
         commentsTableView.reloadData()
+        
+        let lpgr : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
+        lpgr.delegate = self
+        commentsTableView.addGestureRecognizer(lpgr)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -230,8 +234,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let cell = commentsTableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as! ProfileCommentTableViewCell
         
-        cell.comment.text = commentsArray[(indexPath as NSIndexPath).row].comment
-        cell.date.text = commentsArray[(indexPath as NSIndexPath).row].date
+        cell.comment.text = commentsArray[(indexPath as IndexPath).row].comment
+        cell.date.text = commentsArray[(indexPath as IndexPath).row].date
+        cell.id = commentsArray[(indexPath as IndexPath).row].id
         
         REF_USERS.child(commentsArray[(indexPath as NSIndexPath).row].id).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
@@ -249,6 +254,24 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         })
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if (user?.id != FIRAuth.auth()?.currentUser?.uid) && (indexPath.row == commentsArray.count) {
+            let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
+            popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
+            popoverContent.preferredContentSize = CGSize(width: screenSize.width-16, height: 250)
+            popoverContent.senderVC = self
+            popoverContent.user = self.user
+            let popoverController = popoverContent.popoverPresentationController
+            popoverController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+            popoverController?.delegate = self
+            popoverController?.sourceView = self.view
+            popoverController?.sourceRect = CGRect(x: 80, y: 80, width: 50, height: 50)
+            present(popoverContent, animated: true, completion: nil)
+        }
     }
     
     // MARK: - Text Field
@@ -470,6 +493,23 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
+    @IBAction func settingsButtonClicked(_ sender: AnyObject) {
+
+        let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "SettingsTableViewController") as! SettingsTableViewController
+        popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
+        popoverContent.preferredContentSize = CGSize(width: screenSize.width-16, height: 195)
+        let popoverController = popoverContent.popoverPresentationController
+        popoverController?.permittedArrowDirections = .any
+        popoverController?.delegate = self
+        popoverController?.sourceView = self.view
+        popoverController?.sourceRect = CGRect(origin: CGPoint(x:self.settingsButton.frame.origin.x , y:self.settingsButton.frame.origin.y+15), size: self.settingsButton.frame.size)
+        present(popoverContent, animated: true, completion: nil)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+    
      func scrollPager(scrollPager: ScrollPager, changedIndex: Int) {
         switch changedIndex {
         case 0:
@@ -488,4 +528,35 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             self.user = currentUser.instance.user
         }
     }
+    
+    func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
+        
+        let p = gestureRecognizer.location(in: self.commentsTableView)
+        
+        if let indexPath : IndexPath = (self.commentsTableView.indexPathForRow(at: p)){
+            if let cell = self.commentsTableView.cellForRow(at: indexPath) as? ProfileCommentTableViewCell {
+                if (user?.id == FIRAuth.auth()?.currentUser?.uid) || !(indexPath.row < commentsArray.count) { return }
+                if cell.id != FIRAuth.auth()?.currentUser?.uid { return }
+                
+                if cell.name.text == currentUser.instance.user?.displayName {
+                    print("Change comment")
+
+                    let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
+                    popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
+                    popoverContent.preferredContentSize = CGSize(width: screenSize.width-16, height: 250)
+                    popoverContent.senderVC = self
+                    popoverContent.user = self.user
+                    popoverContent.comment = cell.comment.text!
+                    let popoverController = popoverContent.popoverPresentationController
+                    popoverController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+                    popoverController?.delegate = self
+                    popoverController?.sourceView = self.view
+                    popoverController?.sourceRect = CGRect(x: 80, y: 80, width: 50, height: 50)
+                    present(popoverContent, animated: true, completion: nil)
+                }
+            }
+        }
+        
+    }
+    
 }

@@ -18,6 +18,8 @@ class ProfileCommentTableViewCell: UITableViewCell {
     
     @IBOutlet var date: UILabel!
     
+    var id : String?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

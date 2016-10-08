@@ -76,7 +76,7 @@ extension String {
 }
 
 extension Date {
-    func isGreaterThanDate(dateToCompare: NSDate) -> Bool {
+    func isGreaterThanDate(dateToCompare: Date) -> Bool {
         //Declare Variables
         var isGreater = false
         
@@ -89,7 +89,7 @@ extension Date {
         return isGreater
     }
     
-    func isLessThanDate(dateToCompare: NSDate) -> Bool {
+    func isLessThanDate(dateToCompare: Date) -> Bool {
         //Declare Variables
         var isLess = false
         
@@ -102,7 +102,7 @@ extension Date {
         return isLess
     }
     
-    func equalToDate(dateToCompare: NSDate) -> Bool {
+    func equalToDate(dateToCompare: Date) -> Bool {
         //Declare Variables
         var isEqualTo = false
         
@@ -115,17 +115,17 @@ extension Date {
         return isEqualTo
     }
     
-    func addDays(daysToAdd: Int) -> NSDate {
+    func addDays(daysToAdd: Int) -> Date {
         let secondsInDays: TimeInterval = Double(daysToAdd) * 60 * 60 * 24
-        let dateWithDaysAdded: NSDate = self.addingTimeInterval(secondsInDays) as NSDate
+        let dateWithDaysAdded: Date = self.addingTimeInterval(secondsInDays) as Date
         
         //Return Result
         return dateWithDaysAdded
     }
     
-    func addHours(hoursToAdd: Int) -> NSDate {
+    func addHours(hoursToAdd: Int) -> Date {
         let secondsInHours: TimeInterval = Double(hoursToAdd) * 60 * 60
-        let dateWithHoursAdded: NSDate = self.addingTimeInterval(secondsInHours) as NSDate
+        let dateWithHoursAdded: Date = self.addingTimeInterval(secondsInHours) as Date
         
         //Return Result
         return dateWithHoursAdded

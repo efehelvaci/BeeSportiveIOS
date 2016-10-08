@@ -6,8 +6,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="SourceSansPro-Bold.otf">
-            <string>SourceSansPro-Bold</string>
+        <array key="SourceSansPro-Light.otf">
+            <string>SourceSansPro-Light</string>
         </array>
         <array key="SourceSansPro-Regular.otf">
             <string>SourceSansPro-Regular</string>
@@ -25,39 +25,38 @@
                 <subviews>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vzX-Lb-Svv">
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Hiking" translatesAutoresizingMaskIntoConstraints="NO" id="CDp-oJ-DaP">
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Hiking" translatesAutoresizingMaskIntoConstraints="NO" id="CDp-oJ-DaP">
                                 <color key="tintColor" red="1" green="0.40000000000000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="basketball" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pU-S6-IFJ">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="sxr-ag-FqD"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="19"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="19"/>
                                 <color key="textColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="shadowOffset" width="1" height="0.0"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QSV-84-d5m">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QSV-84-d5m">
                                 <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="32"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <size key="shadowOffset" width="0.5" height="0.5"/>
+                                <color key="highlightedColor" red="0.96470588239999999" green="0.99215686270000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="shadowOffset" width="0.29999999999999999" height="0.29999999999999999"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="QSV-84-d5m" secondAttribute="bottom" id="2FY-cB-o8O"/>
                             <constraint firstItem="CDp-oJ-DaP" firstAttribute="leading" secondItem="vzX-Lb-Svv" secondAttribute="leading" id="9T7-ph-Qn0"/>
-                            <constraint firstAttribute="height" constant="100" id="ALY-wc-Yyq"/>
+                            <constraint firstAttribute="height" constant="96" id="ALY-wc-Yyq"/>
                             <constraint firstItem="7pU-S6-IFJ" firstAttribute="leading" secondItem="vzX-Lb-Svv" secondAttribute="leading" id="Uaa-D5-beg"/>
                             <constraint firstAttribute="bottom" secondItem="CDp-oJ-DaP" secondAttribute="bottom" id="V6A-KF-qlF"/>
                             <constraint firstAttribute="trailing" secondItem="CDp-oJ-DaP" secondAttribute="trailing" id="h0j-dR-Umx"/>
                             <constraint firstItem="QSV-84-d5m" firstAttribute="leading" secondItem="vzX-Lb-Svv" secondAttribute="leading" id="hpG-0u-6zR"/>
                             <constraint firstItem="QSV-84-d5m" firstAttribute="top" secondItem="vzX-Lb-Svv" secondAttribute="top" id="kE7-51-dgY"/>
-                            <constraint firstAttribute="trailing" secondItem="7pU-S6-IFJ" secondAttribute="trailing" id="kkA-sX-PLf"/>
+                            <constraint firstAttribute="trailing" secondItem="7pU-S6-IFJ" secondAttribute="trailing" constant="5" id="kkA-sX-PLf"/>
                             <constraint firstAttribute="trailing" secondItem="QSV-84-d5m" secondAttribute="trailing" id="m7m-f6-oUU"/>
                             <constraint firstItem="CDp-oJ-DaP" firstAttribute="top" secondItem="vzX-Lb-Svv" secondAttribute="top" id="oJH-8c-oAs"/>
                             <constraint firstAttribute="bottom" secondItem="7pU-S6-IFJ" secondAttribute="bottom" id="sVE-Jv-3QC"/>
@@ -66,7 +65,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E1e-Jn-3pc">
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2b-Oc-Ijf">
-                                <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -75,7 +74,7 @@
                                     <constraint firstAttribute="width" constant="104" id="fMK-Ns-FYC"/>
                                     <constraint firstAttribute="height" constant="56" id="w5U-Cp-X88"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -97,12 +96,12 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5/32 Free Spots" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWB-cK-22Z">
-                                <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tarih" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nLF-lI-CPF">
-                                <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -125,6 +124,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                         </subviews>
+                        <color key="backgroundColor" red="0.96470588235294119" green="0.99215686274509807" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="A2f-iq-8Be" firstAttribute="leading" secondItem="auP-CK-KDZ" secondAttribute="trailing" constant="12" id="Hrh-F7-fXN"/>
                             <constraint firstItem="nLF-lI-CPF" firstAttribute="leading" secondItem="m2b-Oc-Ijf" secondAttribute="leading" id="NJh-Df-7pu"/>
@@ -132,7 +132,7 @@
                             <constraint firstItem="A2f-iq-8Be" firstAttribute="centerY" secondItem="E1e-Jn-3pc" secondAttribute="centerY" id="OiF-zz-BCV"/>
                             <constraint firstAttribute="trailing" secondItem="A2f-iq-8Be" secondAttribute="trailing" constant="10" id="U5v-ip-hfA"/>
                             <constraint firstItem="auP-CK-KDZ" firstAttribute="centerY" secondItem="A2f-iq-8Be" secondAttribute="centerY" id="Whw-jh-vhz"/>
-                            <constraint firstItem="nLF-lI-CPF" firstAttribute="top" secondItem="m2b-Oc-Ijf" secondAttribute="bottom" id="XEN-Qr-gxK"/>
+                            <constraint firstItem="nLF-lI-CPF" firstAttribute="top" secondItem="m2b-Oc-Ijf" secondAttribute="bottom" constant="-2" id="XEN-Qr-gxK"/>
                             <constraint firstItem="m2b-Oc-Ijf" firstAttribute="top" secondItem="A2f-iq-8Be" secondAttribute="top" id="ZYz-cT-eHK"/>
                             <constraint firstItem="nLF-lI-CPF" firstAttribute="trailing" secondItem="m2b-Oc-Ijf" secondAttribute="trailing" id="aq3-4Q-DUE"/>
                             <constraint firstItem="m2b-Oc-Ijf" firstAttribute="leading" secondItem="E1e-Jn-3pc" secondAttribute="leading" constant="8" id="cmf-HT-Cpz"/>
@@ -151,14 +151,14 @@
                 <constraint firstItem="vzX-Lb-Svv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="55Y-jk-aO2"/>
                 <constraint firstItem="vzX-Lb-Svv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Jrt-VU-rXB"/>
                 <constraint firstAttribute="trailing" secondItem="vzX-Lb-Svv" secondAttribute="trailing" id="Jwg-8q-QeH"/>
-                <constraint firstItem="E1e-Jn-3pc" firstAttribute="top" secondItem="vzX-Lb-Svv" secondAttribute="bottom" constant="1" id="QRe-kZ-Wvt"/>
+                <constraint firstItem="E1e-Jn-3pc" firstAttribute="top" secondItem="vzX-Lb-Svv" secondAttribute="bottom" id="QRe-kZ-Wvt"/>
                 <constraint firstItem="E1e-Jn-3pc" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="wJ8-St-SnQ"/>
                 <constraint firstAttribute="bottom" secondItem="E1e-Jn-3pc" secondAttribute="bottom" id="wWG-71-HmD"/>
             </constraints>
             <size key="customSize" width="508" height="175.5"/>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                    <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </userDefinedRuntimeAttribute>
                 <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
                     <size key="value" width="1" height="1"/>
@@ -167,7 +167,7 @@
                     <real key="value" value="1"/>
                 </userDefinedRuntimeAttribute>
                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                    <real key="value" value="1"/>
+                    <real key="value" value="0.0"/>
                 </userDefinedRuntimeAttribute>
                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                     <real key="value" value="1"/>

@@ -73,7 +73,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qYI-VA-taI">
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="2" id="fNX-YD-TK7"/>
+                            <constraint firstAttribute="height" constant="1" id="fNX-YD-TK7"/>
                         </constraints>
                     </view>
                 </subviews>

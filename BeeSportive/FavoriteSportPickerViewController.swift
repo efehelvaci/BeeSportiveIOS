@@ -72,7 +72,7 @@ class FavoriteSportPickerViewController: UIViewController, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-        return CGSize(width: screenSize.width/5 - 8, height: (screenSize.width/5 - 8) + 40)
+        return CGSize(width: screenSize.width/5 - 10, height: (screenSize.width/5 - 10) + 40)
     }
     
     @IBAction func doneButtonClicked(_ sender: AnyObject) {

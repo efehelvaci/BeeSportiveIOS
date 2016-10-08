@@ -125,11 +125,61 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
             let branch = self.form.rowBy(tag: "Branch")?.baseValue as? String,
             let maxJoin = self.form.rowBy(tag: "MaxJoin")?.baseValue as? Int
         {
+            let currentDate = Date()
+            
             date = date.addHours(hoursToAdd: 1) as Date
-            if date.isLessThanDate(dateToCompare: Date() as Date as NSDate){
-                FTIndicator.showInfo(withMessage: "You can't create event to past time")
+            if date.isLessThanDate(dateToCompare: currentDate){
+                FTIndicator.showInfo(withMessage: "Cannot create event to past time.")
                 return
             }
+            
+            if maxJoin > 100 {
+                FTIndicator.showInfo(withMessage: "Cannot create event for +100 people.")
+                return
+            } else if maxJoin < 1 {
+                FTIndicator.showInfo(withMessage: "Cannot create event for less than 1 person")
+                return
+            }
+            
+            if currentDate.addDays(daysToAdd: 120) < date {
+                FTIndicator.showInfo(withMessage: "Cannot create event for >4 months later.")
+                return
+            }
+            
+            if description.characters.count < 20 {
+                FTIndicator.showInfo(withMessage: "Event description too short (Minimum 20 characters)")
+                return
+            } else if description.characters.count > 1000 {
+                FTIndicator.showInfo(withMessage: "Event description too long (Maximum 1000 characters)")
+                return
+            }
+            
+            if name.characters.count < 8 {
+                FTIndicator.showInfo(withMessage: "Event name too short (Minimum 8 characters)")
+                return
+            } else if name.characters.count > 120 {
+                FTIndicator.showInfo(withMessage: "Event name too long (Maximum 120 characters)")
+                return
+            }
+            
+            if locationName.characters.count < 4 {
+                FTIndicator.showInfo(withMessage: "Location name too short (Minimum 4 characters)")
+                return
+            } else if locationName.characters.count > 30 {
+                FTIndicator.showInfo(withMessage: "Event name too long (Maximum 30 characters)")
+                return
+            }
+            
+            if !branchs.contains(branch) {
+                FTIndicator.showInfo(withMessage: "Unknown branch!")
+                return
+            }
+            
+            if !levels.contains(level) {
+                FTIndicator.showInfo(withMessage: "Unknown level!")
+                return
+            }
+            
             FTIndicator.showProgressWithmessage("Adding your event!", userInteractionEnable: false)
             
             var locationAddress = ""
