@@ -21,8 +21,6 @@ class RequestsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     
-        userImage.layer.masksToBounds = true
-        userImage.layer.cornerRadius = userImage.frame.width/2.0
         userImage.layer.borderWidth = 1.0
     }
 
@@ -32,9 +30,10 @@ class RequestsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func deleteUserFromTable() {
+    func deleteUserFromTable(accepted: Bool) {
         for i in 0 ..< delegate!.users.count {
             if requesterID! == delegate!.users[i].id {
+                if accepted { delegate!.senderVC?.event.participants.append(requesterID!) }
                 delegate!.users.remove(at: i)
                 delegate!.tableView.reloadData()
             }
@@ -45,7 +44,7 @@ class RequestsTableViewCell: UITableViewCell {
     
     @IBAction func declineButtonClicked(_ sender: AnyObject) {
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
-        deleteUserFromTable()
+        deleteUserFromTable(accepted: false)
     }
     
  
@@ -53,6 +52,7 @@ class RequestsTableViewCell: UITableViewCell {
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("id").setValue(requesterID!)
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("status").setValue("accepted")
-        deleteUserFromTable()
+        REF_USERS.child(requesterID!).child("joinedEvents").child(eventID!).setValue("accepted")
+        deleteUserFromTable(accepted: true)
     }
 }

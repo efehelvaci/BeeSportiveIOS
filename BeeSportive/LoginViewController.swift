@@ -84,6 +84,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                         }
                     })
                     
+                    REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).observeSingleEvent(of: .value, with: { snapshot in
+                        if snapshot.exists() {
+                            currentUser.instance.user = User(snapshot: snapshot)
+                        }
+                    })
+                    
                     Async.main{
                         let tabCon = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController")
                         

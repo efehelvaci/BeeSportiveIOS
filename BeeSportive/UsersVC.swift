@@ -25,7 +25,7 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentUser.instance.delegate = self
+        currentUser.instance.delegate1 = self
         if currentUser.instance.user?.following != nil { followedUsers = (currentUser.instance.user?.following)! }
         
         FTIndicator.showProgressWithmessage("Loading", userInteractionEnable: true)
@@ -97,7 +97,7 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
                     }
                 }
                 
-                cell.configureCell(users[(indexPath as NSIndexPath).row])
+                cell.configureCell(verifiedUsers[(indexPath as NSIndexPath).row])
             }
             
             UIView.animate(withDuration: 0.5, animations: {
@@ -119,10 +119,9 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         
         let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         
-        isSearching ? (viewController5.getUser(userID: filteredUsers[(indexPath as NSIndexPath).row].id)) : (viewController5.getUser(userID: users[(indexPath as NSIndexPath).row].id))
+        isSearching ? (viewController5.user = filteredUsers[indexPath.row]) : (viewController5.user = verifiedUsers[indexPath.row])
         
         self.present(viewController5, animated: true, completion: nil)
-
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

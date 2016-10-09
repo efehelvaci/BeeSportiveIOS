@@ -40,6 +40,8 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     
     let fbButton : FBSDKShareButton = FBSDKShareButton()
     
+    var mainMenuSender : EventViewController? = nil
+    
     var joinAlert : AlertController!
     var event : Event!
     var creator : User! = nil {
@@ -53,12 +55,25 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
             capacityLabel.text = String(participants.count) + "/" + String(event.maxJoinNumber)
         }
     }
+    
+    var eventRequsters = [User]() {
+        didSet {
+            self.requestsButton.setTitle("Requests (\(eventRequsters.count))", for: .normal)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.layoutIfNeeded()
         
+        eventNameLabel.adjustsFontSizeToFitWidth = true
+        eventAddressLabel.adjustsFontSizeToFitWidth = true
+        eventFullAddressLabel.adjustsFontSizeToFitWidth = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+
         if event.creator != nil {
             self.creator = event.creator
         } else {
@@ -75,7 +90,7 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         content.contentURL = URL(string: "http://www.beesportive.com/")
         content.contentTitle = "BeeEvent: " + "'" + event.name + "' - Let's BeeSportive!"
         content.contentDescription = "Nerede? : " + event.location + eventAddress + " - " +
-                                    "Ne zaman? : " + event.day + "." + event.month + "." + event.year + ", " + event.time + " \u{1F41D} Download the app from the App Store and join this event of your friend! \u{1F41D}"
+            "Ne zaman? : " + event.day + "." + event.month + "." + event.year + ", " + event.time + " \u{1F41D} Download the app from the App Store and join this event of your friend! \u{1F41D}"
         content.imageURL = URL(string: "https://s15.postimg.org/ph36t3vt7/Logo2.png")
         fbButton.shareContent = content
         
@@ -84,13 +99,17 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
             "\n" +
             "You will be notified when event owner considers your application."), preferredStyle: AlertControllerStyle.alert)
         joinAlert.add(AlertAction(title: "Cancel", style: .destructive, handler: { _ in
-                self.joinAlert.dismiss()
-            })
+            self.joinAlert.dismiss()
+        })
         )
         joinAlert.add(AlertAction(title: "Join!", style: .preferred, handler: { _ in
             if self.event!.creatorID != FIRAuth.auth()?.currentUser?.uid {
                 REF_EVENTS.child(self.event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue((FIRAuth.auth()?.currentUser?.uid)!)
                 REF_EVENTS.child(self.event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("result").setValue("requested")
+                
+                if self.mainMenuSender != nil {
+                    self.mainMenuSender?.retrieveAllEvents()
+                }
                 
                 self.joinButton.setTitle("Requested", for: .disabled)
                 self.joinButton.layer.borderColor = UIColor.gray.cgColor
@@ -99,7 +118,7 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         })
         )
         
-        
+        self.eventRequsters = [User]()
         if let reqIDs = event.requesters?.keys {
             let allReq = Array(reqIDs)
             
@@ -109,19 +128,32 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
                     self.joinButton.layer.borderColor = UIColor.gray.cgColor
                     self.joinButton.isEnabled = false
                 }
-                
+            }
+            
+            for reqID in allReq {
+                REF_USERS.child(reqID).observeSingleEvent(of: .value, with: { snapshot in
+                    if snapshot.exists() {
+                        let newReqUser = User(snapshot: snapshot)
+                        
+                        self.eventRequsters.append(newReqUser)
+                    }
+                })
             }
         }
         
-        if let partpIDs = event.participants?.keys {
-            let allPart = Array(partpIDs)
-            
-            if allPart.contains((FIRAuth.auth()?.currentUser?.uid)!){
-                Async.main{
-                    self.joinButton.setTitle("Joined", for: .disabled)
-                    self.joinButton.layer.borderColor = UIColor.gray.cgColor
-                    self.joinButton.isEnabled = false
-                }
+        if event.participants.contains((FIRAuth.auth()?.currentUser?.uid)!){
+            Async.main{
+                self.joinButton.setTitle("Joined", for: .disabled)
+                self.joinButton.layer.borderColor = UIColor.gray.cgColor
+                self.joinButton.isEnabled = false
+            }
+        }
+        
+        if event.creatorID == FIRAuth.auth()?.currentUser?.uid {
+            Async.main{
+                self.joinButton.setTitle("Your Beevent", for: .disabled)
+                self.joinButton.layer.borderColor = UIColor.gray.cgColor
+                self.joinButton.isEnabled = false
             }
         }
         
@@ -134,11 +166,12 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         if event?.creatorID == FIRAuth.auth()?.currentUser?.uid {
             joinButton.layer.borderColor = UIColor.gray.cgColor
             joinButton.isEnabled = false
-//            requestsButton.isHidden = false
+            requestsButton.isHidden = false
         } else {
             joinButton.isEnabled = true
-//            requestsButton.isHidden = true
+            requestsButton.isHidden = true
         }
+
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -192,8 +225,8 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
             eventNameLabel.text = event.name
             descriptionLabel.text = event.description
             
-            if let font = UIFont(name: "Source Sans Pro", size: 15) {
-                descriptionHeight.constant = event.description.heightWithConstrainedWidth(screenSize.width - 16, font: font)
+            if let font = UIFont(name: "Open Sans", size: 14) {
+                descriptionHeight.constant = event.description.heightWithConstrainedWidth(screenSize.width - 16, font: font) + 10
             } else {
                 descriptionHeight.constant = 180.0
             }
@@ -243,6 +276,8 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
             map.addAnnotation(pin)
             
             map.region = MKCoordinateRegion(center: centerLocation, span: mapSpan)
+            
+            capacityLabel.text = String(event.participants.count) + "/" + event.maxJoinNumber
         }
     }
     
@@ -251,9 +286,19 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     @IBAction func requestsButtonClicked(_ sender: AnyObject) {
-        let requestPage = self.storyboard!.instantiateViewController(withIdentifier: "RequestsViewController") as! RequestsViewController
-        requestPage.eventID = event?.id
-        self.present(requestPage, animated: true, completion: nil)
+        let popoverContent = self.storyboard!.instantiateViewController(withIdentifier: "RequestsViewController") as! RequestsViewController
+        popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
+        popoverContent.preferredContentSize = CGSize(width: screenSize.width-16, height: 250)
+        popoverContent.eventID = self.event.id
+        popoverContent.users = self.eventRequsters
+        popoverContent.senderVC = self
+        let popoverController = popoverContent.popoverPresentationController
+        popoverController?.permittedArrowDirections = .any
+        popoverController?.delegate = self
+        popoverController?.sourceView = self.view
+        popoverController?.sourceRect = (sender as! UIButton).frame
+
+        self.present(popoverContent, animated: true, completion: nil)
     }
     
 
@@ -286,19 +331,19 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func retrieveParticipants() {
         
-        if let data = event.participants?.keys {
-            let postDict = Array(data)
-            
-            for element in postDict {
-                REF_USERS.child(element).observeSingleEvent(of: .value, with: { snapshot in
-                    if snapshot.exists() {
-                        let user = User(snapshot: snapshot)
-                        
-                        self.participants.append(user)
-                        self.participantsCollectionView.reloadData()
-                    }
-                })
-            }
+        self.participants.removeAll()
+        
+        for element in event.participants {
+            REF_USERS.child(element).observeSingleEvent(of: .value, with: { snapshot in
+                
+                
+                if snapshot.exists() {
+                    let user = User(snapshot: snapshot)
+                    
+                    self.participants.append(user)
+                    self.participantsCollectionView.reloadData()
+                }
+            })
         }
     }
 }

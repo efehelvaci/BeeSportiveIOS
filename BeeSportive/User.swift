@@ -15,7 +15,7 @@ class User {
     var photoURL: String?
     let email: String
     let id: String
-    var bio: String = "Please modify your bio!"
+    var bio: String = "Sportive! \u{1F41D}"
     var followers = [String]()   // Follower users ID's
     var following = [String]()   // Following users ID's
     var favoriteSports = [String]()

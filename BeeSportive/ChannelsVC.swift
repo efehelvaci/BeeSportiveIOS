@@ -23,19 +23,29 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     override func viewDidLoad() {
         super.viewDidLoad()
         REF_USERS.child(uid).child("eventsCreated").observe(.value, with: { snapshot in
-            self.channels.removeAll()
-            self.channels.removeAll()
-            for snap in snapshot.children {
-                guard let data = snap as? FIRDataSnapshot else { return }
-                let channelID = data.value as! String
-                REF_CHANNELS.child(channelID).observe(.childChanged, with: { (snapshot) in
-                    self.viewDidLoad()
-                })
-                REF_CHANNELS.child(channelID).observe(.value, with: { (snap) in
-                    if self.channels.count != Int(snapshot.childrenCount) {
-                        let channel = Channel(snapshot: snap)
-                        self.channels.append(channel)
-                        self.tableView.reloadData()
+            if snapshot.exists() {
+                self.channels.removeAll()
+                var snaps = snapshot.children.allObjects as! [FIRDataSnapshot]
+                
+                REF_USERS.child(self.uid).child("joinedEvents").observe(.value, with: { snapshot2 in
+                    if snapshot2.exists(){
+                        for snap in snapshot2.children {
+                            snaps.append(snap as! FIRDataSnapshot)
+                        }
+                    }
+                    
+                    for snap in snaps {
+                        let channelID = snap.value as! String
+                        REF_CHANNELS.child(channelID).observe(.childChanged, with: { (snapshot) in
+                            self.viewDidLoad()
+                        })
+                        REF_CHANNELS.child(channelID).observe(.value, with: { (snap) in
+                            if self.channels.count != Int(snapshot.childrenCount) {
+                                let channel = Channel(snapshot: snap)
+                                self.channels.append(channel)
+                                self.tableView.reloadData()
+                            }
+                        })
                     }
                 })
             }

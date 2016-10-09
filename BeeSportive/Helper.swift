@@ -16,10 +16,12 @@ protocol observeUser {
 class currentUser {
     static let instance = currentUser()
     
-    var delegate : observeUser?
+    var delegate1 : observeUser?
+    var delegate2 : observeUser?
     var user : User? {
         didSet{
-            delegate?.userChanged()
+            delegate1?.userChanged()
+            delegate2?.userChanged()
         }
     }
     

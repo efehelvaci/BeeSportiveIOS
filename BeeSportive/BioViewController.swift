@@ -28,6 +28,7 @@ class BioViewController: UIViewController {
     }
     
     @IBAction func cancelButtonClicked(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func doneButtonClicked(_ sender: AnyObject) {

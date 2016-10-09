@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FTIndicator
 import Firebase
 import Alamofire
 import AlamofireImage
@@ -48,7 +47,6 @@ class UserCell: UICollectionViewCell {
                     self.img.layer.cornerRadius = self.img.frame.width / 2.0
                     self.img.image = image
                     self.img.isHidden = false
-                    FTIndicator.dismissProgress()
                 }
             })
         }

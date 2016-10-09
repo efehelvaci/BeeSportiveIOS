@@ -195,14 +195,8 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                 
                 let dateFormatter = DateFormatter()
                 
-                dateFormatter.dateFormat = "dd"
-                let day = dateFormatter.string(from: date)
-                
-                dateFormatter.dateFormat = "M"
-                let month = dateFormatter.string(from: date)
-                
-                dateFormatter.dateFormat = "yyyy"
-                let year = dateFormatter.string(from: date)
+                dateFormatter.dateFormat = "dd.M.yyyy"
+                let fullDate = dateFormatter.string(from: date)
                 
                 dateFormatter.dateFormat = "HH:mm"
                 let hour = dateFormatter.string(from: time)
@@ -220,14 +214,12 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                     "locationLat" : String(locationPin.coordinate.latitude),
                     "locationLon" : String(locationPin.coordinate.longitude),
                     "address" : locationAddress,
+                    "fullDate" : fullDate,
                     "time" : hour,
-                    "year" : year,
-                    "month" : month,
-                    "day" : day,
                     "maxJoinNumber" : String(maxJoin),
                     "level" : level,
                     "description" : description
-                ]
+                ] as [String : Any]
                 
                 REF_EVENTS.child(uuid).setValue(newEvent)
                 REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("eventsCreated").childByAutoId().setValue(uuid)
@@ -235,7 +227,20 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                 FTIndicator.showNotification(with: UIImage(named: "Success"), title: "Yay!", message: "Event successfully created!")
                 FTIndicator.dismissProgress()
                 self.view.isUserInteractionEnabled = true
-                self.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true, completion: { _ in
+
+                        self.form.rowBy(tag: "Name")?.baseValue = ""
+                        self.form.rowBy(tag: "Name")?.reload()
+                        
+                        self.form.rowBy(tag: "Description")?.baseValue = ""
+                        self.form.rowBy(tag: "Description")?.reload()
+                        
+                        self.form.rowBy(tag: "LocationName")?.baseValue = ""
+                        self.form.rowBy(tag: "LocationName")?.reload()
+                        
+                        self.form.rowBy(tag: "MaxJoin")?.baseValue = 10
+                        self.form.rowBy(tag: "MaxJoin")?.reload()
+                })
             })
         } else {
             FTIndicator.showInfo(withMessage: "You must fill all the areas!")

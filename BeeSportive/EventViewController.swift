@@ -29,6 +29,8 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     let refreshControl2 = UIRefreshControl()
     let refreshControl3 = UIRefreshControl()
     
+    var eventDetailVC : EventDetailViewController!
+    
     var allEvents = [Event]()
     var favoriteSports = [String]()
     var popularEvents = [Event]()
@@ -39,6 +41,9 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
+        eventDetailVC.mainMenuSender = self
         
         scrollPager.delegate = self
         scrollPager.addSegmentsWithTitlesAndViews(segments: [
@@ -150,16 +155,15 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        
+        
         if collectionView == firstCollectionView {
-            let eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
             eventDetailVC.event = allEvents[(indexPath as NSIndexPath).row]
             self.present(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == secondCollectionView {
-            let eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
             eventDetailVC.event = popularEvents[(indexPath as NSIndexPath).row]
             self.present(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == thirdCollectionView {
-            let eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
             eventDetailVC.event = favoriteEvents[(indexPath as NSIndexPath).row]
             self.present(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == fourthCollectionView {
@@ -191,6 +195,13 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             return CGSize(width: screenSize.width - 8, height: 144)
         }
         
+        var events = [Event]()
+        
+        for i in 0..<allEvents.count {
+            if allEvents[i].branch == branchs[(indexPath as NSIndexPath).row] {events.insert(allEvents[i], at: 0)  }
+        }
+        if events.count == 0 { return CGSize(width: 4, height: 0) }
+        
         return CGSize(width: screenSize.width - 8, height: 120)
     }
     
@@ -218,6 +229,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                 Async.main {
                     self.refreshControl1.endRefreshing()
                     self.firstCollectionView.reloadData()
+                    self.fourthCollectionView.reloadData()
                     
                     Async.main(after: 0.5, { _ in
                         self.startAnimation = false

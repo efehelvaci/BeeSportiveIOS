@@ -34,11 +34,11 @@ import UIKit
 		didSet { redrawComponents() }
 	}
 	
-	@IBInspectable public var font: UIFont = UIFont.systemFont(ofSize: 13) {
+	@IBInspectable public var font: UIFont = UIFont.init(name: "Open Sans", size: 12)! {
 		didSet { redrawComponents() }
 	}
 
-	@IBInspectable public var selectedFont: UIFont = UIFont.boldSystemFont(ofSize: 13) {
+	@IBInspectable public var selectedFont: UIFont = UIFont.init(name: "OpenSans-Semibold", size: 12)! {
 		didSet { redrawComponents() }
 	}
 	
@@ -78,7 +78,7 @@ import UIKit
 	
 	private func initialize() {
 		#if TARGET_INTERFACE_BUILDER
-			addSegmentsWithTitles(["One", "Two", "Three", "Four"])
+			addSegmentsWithTitles(segmentTitles: ["One", "Two", "Three", "Four"])
 		#endif
 	}
 	

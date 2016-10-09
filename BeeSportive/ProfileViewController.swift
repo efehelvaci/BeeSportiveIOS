@@ -14,6 +14,8 @@ import AlamofireImage
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ScrollPagerDelegate, observeUser, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate {
     
+    @IBOutlet var noEventsToShowLabel: UILabel!
+    
     @IBOutlet var profileImage: UIImageView!
     
     @IBOutlet var backButton: UIButton!
@@ -31,8 +33,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet var eventsCollectionView: UICollectionView!
     
     @IBOutlet var commentsTableView: UITableView!
-    
-    @IBOutlet var commentTextField: UITextField!
     
     @IBOutlet var favoriteSportsHeight: NSLayoutConstraint!
     
@@ -64,6 +64,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             self.getEventsIDs()
             self.getComments()
             
+            if isViewLoaded { commentsTableView.reloadData() }
+            
             if user?.favoriteSports != nil {
                 self.favoriteSports = (user?.favoriteSports)!
                 
@@ -88,6 +90,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        currentUser.instance.delegate2 = self
         
         let eventNib = UINib(nibName: "EventCollectionViewCell", bundle: Bundle.main)
         eventsCollectionView.register(eventNib, forCellWithReuseIdentifier: "eventCell")
@@ -114,6 +118,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         followingText.alpha = 0
         bioChangeButton.alpha = 0
         settingsButton.alpha = 0
+        profileBioLabel.alpha = 0
 
         profileImage.layer.masksToBounds = true
         profileImage.layer.cornerRadius = profileImage.frame.width/2.0
@@ -134,18 +139,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        currentUser.instance.delegate = self
-        
         if sender == 0 {
             if (user == nil) && (currentUser.instance.user != nil) { user = currentUser.instance.user }
             backButton.isHidden = true
-            navBarTitle.text = "Sportives"
+//            scrollViewBottomConstraint.constant = 0
         } else {
             backButton.isHidden = false
-            navBarTitle.text = "My profile"
+//            scrollViewBottomConstraint.constant = 40.0
         }
         
-        if profileName.text == "" && user != nil { setUser() }
+        if profileName.text == "Name" && user != nil { setUser() }
     }
     
     // MARK: - Collection View Delegate Methods
@@ -154,7 +157,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if collectionView == eventsCollectionView {
             return eventsArray.count
         } else if collectionView == favoriteSportsCollectionView {
-            return favoriteSports.count + 1
+            if user?.id == FIRAuth.auth()?.currentUser?.uid {
+                return 5
+            } else {
+                return favoriteSports.count+1
+            }
         }
         
         return 0
@@ -169,7 +176,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if collectionView == eventsCollectionView {
             return CGSize(width: screenSize.width-8, height: 144)
         } else if collectionView == favoriteSportsCollectionView {
-            return CGSize(width: (screenSize.width/5.0)-6, height: (screenSize.width/5.0))
+            return CGSize(width: (screenSize.width/5.0) - 6, height: (screenSize.width/5.0) - 6)
         }
         
         return CGSize(width: 0, height: 0)
@@ -189,14 +196,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 cell.layer.borderColor = UIColor(red: 65/255.0, green: 65/255.0, blue: 65/255.0, alpha: 1.0).cgColor
                 cell.layer.borderWidth = 1
-                cell.layer.cornerRadius = screenSize.width/10.0
+                cell.layer.cornerRadius = (screenSize.width/10.0) - 3
                 
                 return cell
             } else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favoriteSportItem", for: indexPath) as! ProfileFavoriteSportCollectionViewCell
                 
-                cell.image.image = UIImage(named: favoriteSports[(indexPath as NSIndexPath).row - 1])?.af_imageRoundedIntoCircle()
-                cell.name.text = favoriteSports[(indexPath as NSIndexPath).row - 1]
+                if indexPath.row <= favoriteSports.count {
+                    cell.image.image = UIImage(named: favoriteSports[(indexPath as NSIndexPath).row - 1])?.af_imageRoundedIntoCircle()
+                    cell.name.text = favoriteSports[(indexPath as NSIndexPath).row - 1]
+                } else {
+                    cell.image.image = UIImage(named: "Add2")?.af_imageRoundedIntoCircle()
+                    cell.name.text = "Add"
+                }
                 
                 return cell
             }
@@ -226,9 +238,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Table View Delegate Methods
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let usr = user else { return 0 }
+        guard user != nil else { return 0 }
         
-        if usr.id == FIRAuth.auth()?.currentUser?.uid {
+        if user?.id == FIRAuth.auth()?.currentUser?.uid {
             return commentsArray.count
         }
         
@@ -290,61 +302,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
-    // MARK: - Text Field
-    
-    func animateTextField(_ textField: UITextField, up: Bool)
-    {
-        let movementDistance:CGFloat = -180
-        let movementDuration: Double = 0.3
-        
-        var movement:CGFloat = 0
-        if up
-        {
-            movement = movementDistance
-        }
-        else
-        {
-            movement = -movementDistance
-        }
-        UIView.beginAnimations("animateTextField", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(movementDuration)
-        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
-        UIView.commitAnimations()
-    }
-    
-    @IBAction func commentEditingBegin(_ sender: AnyObject) {
-        let inputView = sender as! UITextField
-        inputView.becomeFirstResponder()
-        self.animateTextField(sender as! UITextField, up: true)
-    }
-    
-    
-    @IBAction func commentSend(_ sender: AnyObject) {
-        
-        let inputView = sender as! UITextField
-        inputView.resignFirstResponder()
-        self.animateTextField(sender as! UITextField, up: false)
-        
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "dd.M.yy, HH:mm"
-        let date = dateFormatter.string(from: Date())
-        
-        let commentText = commentTextField.text!
-        commentTextField.text = ""
-        
-        let comment = [
-            "id" : (FIRAuth.auth()?.currentUser?.uid)!,
-            "date" : date,
-            "comment" : commentText
-        ]
-        
-        REF_USERS.child(user!.id).child("comments").child((FIRAuth.auth()?.currentUser?.uid)!).setValue(comment)
-        
-        getComments()
-    }
-    
     // MARK: - Self created methods
     
     func getUser(userID: String) {
@@ -384,6 +341,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.verifiedImage.alpha = 1
                 self.bioChangeButton.alpha = 1
                 self.settingsButton.alpha = 1
+                self.profileBioLabel.alpha = 1
             })
             
             if user!.id != FIRAuth.auth()?.currentUser?.uid {
@@ -391,11 +349,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 settingsButton.isHidden = true
                 followButton.isHidden = false
                 bioChangeButton.isHidden = true
+                navBarTitle.text = "Sportives"
             } else {
                 profileImageEditButton.isHidden = false
                 settingsButton.isHidden = false
                 followButton.isHidden = true
                 bioChangeButton.isHidden = false
+                navBarTitle.text = "My profile"
             }
             
             if let following = currentUser.instance.user?.following {
@@ -410,9 +370,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func getEventsIDs() {
-        REF_USERS.child(user!.id).child("eventsCreated").observeSingleEvent(of: .value, with: { snapshot in
-            
+        REF_USERS.child(user!.id).child("eventsCreated").observe(.value, with: { snapshot in
+
             if snapshot.exists() {
+                self.noEventsToShowLabel.isHidden = true
+                
                 let myEventsIDArray = Array((snapshot.value as! [String: String]).values)
                 var myEventIDs = [String]()
                 
@@ -422,6 +384,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 self.eventsArray = [Event]()
                 self.getEvents(myEventIDs)
+            } else {
+                self.noEventsToShowLabel.isHidden = false
             }
         })
     }
@@ -451,7 +415,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     let id = element["id"] as! String
                     let date = element["date"] as! String
                     let comment = element["comment"] as! String
-                    let height = comment.heightWithConstrainedWidth(screenSize.width-76, font: UIFont(name: "Helvetica", size: 14)!)
+                    let height = comment.heightWithConstrainedWidth(screenSize.width-76, font: UIFont(name: "Open Sans", size: 10)!)
                     
                     let newComment = Comment(id: id, date: date, comment: comment, height: height+80)
                     
@@ -460,6 +424,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 if self.isViewLoaded { self.commentsTableView.reloadData() }
             }
+            
+            
         })
     }
     
@@ -538,9 +504,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         switch changedIndex {
         case 0:
             beeViewConstraint.constant = 0
+            
+            if eventsArray.count == 0 {
+                noEventsToShowLabel.isHidden = false
+            } else {
+                noEventsToShowLabel.isHidden = true
+            }
             break
         case 1:
             beeViewConstraint.constant = screenSize.width / 2.0
+            noEventsToShowLabel.isHidden = true
             break
         default:
             break

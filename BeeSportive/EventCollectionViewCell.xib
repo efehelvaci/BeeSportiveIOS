@@ -55,7 +55,7 @@
                                 <size key="shadowOffset" width="0.29999999999999999" height="0.29999999999999999"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.35686274509803922" blue="0.49803921568627452" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.20000000000000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="QSV-84-d5m" secondAttribute="bottom" id="2FY-cB-o8O"/>
                             <constraint firstItem="CDp-oJ-DaP" firstAttribute="leading" secondItem="vzX-Lb-Svv" secondAttribute="leading" id="9T7-ph-Qn0"/>
@@ -110,7 +110,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Verified" translatesAutoresizingMaskIntoConstraints="NO" id="8xu-dn-x9d">
-                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="17" id="g1m-CN-D84"/>
                                     <constraint firstAttribute="height" constant="17" id="vuO-lg-mfF"/>
@@ -153,6 +152,9 @@
                             <constraint firstItem="nLF-lI-CPF" firstAttribute="top" secondItem="m2b-Oc-Ijf" secondAttribute="bottom" constant="2" id="w9U-y2-DJQ"/>
                         </constraints>
                     </view>
+                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HA5-Ud-kXU">
+                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
                 </subviews>
             </view>
             <color key="backgroundColor" red="0.96470588235294119" green="0.99215686274509807" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -162,14 +164,18 @@
                 <constraint firstItem="vzX-Lb-Svv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Jrt-VU-rXB"/>
                 <constraint firstAttribute="trailing" secondItem="vzX-Lb-Svv" secondAttribute="trailing" id="Jwg-8q-QeH"/>
                 <constraint firstItem="E1e-Jn-3pc" firstAttribute="top" secondItem="vzX-Lb-Svv" secondAttribute="bottom" id="QRe-kZ-Wvt"/>
+                <constraint firstItem="HA5-Ud-kXU" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Rwg-9h-aVo"/>
                 <constraint firstItem="A2f-iq-8Be" firstAttribute="top" secondItem="vzX-Lb-Svv" secondAttribute="bottom" constant="11" id="SY9-BR-Jjk"/>
+                <constraint firstAttribute="trailing" secondItem="HA5-Ud-kXU" secondAttribute="trailing" id="gax-EU-3xT"/>
+                <constraint firstItem="HA5-Ud-kXU" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ihr-dP-aSX"/>
+                <constraint firstAttribute="bottom" secondItem="HA5-Ud-kXU" secondAttribute="bottom" id="jdZ-pW-jwi"/>
                 <constraint firstItem="E1e-Jn-3pc" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="wJ8-St-SnQ"/>
                 <constraint firstAttribute="bottom" secondItem="E1e-Jn-3pc" secondAttribute="bottom" id="wWG-71-HmD"/>
             </constraints>
             <size key="customSize" width="508" height="140.5"/>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                    <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="value" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                 </userDefinedRuntimeAttribute>
                 <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
                     <size key="value" width="1" height="1"/>
@@ -184,14 +190,15 @@
                     <real key="value" value="1"/>
                 </userDefinedRuntimeAttribute>
                 <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                    <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="value" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                 </userDefinedRuntimeAttribute>
                 <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                    <real key="value" value="1"/>
+                    <real key="value" value="0.80000000000000004"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="backgroundImage" destination="CDp-oJ-DaP" id="U3H-Wm-A1W"/>
+                <outlet property="blackWhiteView" destination="HA5-Ud-kXU" id="ZIL-hH-h2v"/>
                 <outlet property="branchName" destination="7pU-S6-IFJ" id="guj-pL-Wel"/>
                 <outlet property="capacity" destination="gWB-cK-22Z" id="sgF-mp-gte"/>
                 <outlet property="creatorImage" destination="A2f-iq-8Be" id="41b-9w-Kd6"/>
@@ -206,6 +213,6 @@
     </objects>
     <resources>
         <image name="Hiking" width="750" height="355"/>
-        <image name="Verified" width="32" height="32"/>
+        <image name="Verified" width="37" height="37"/>
     </resources>
 </document>

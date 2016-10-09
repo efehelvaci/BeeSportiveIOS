@@ -20,15 +20,16 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tabBar.tintColor = UIColor(red: 249/255, green: 225/255, blue: 6/255, alpha: 1)
-
+        // Hex: 005B7F
+        tabBar.tintColor = UIColor(red: 0/255, green: 94/255, blue: 127/255, alpha: 1)
+        
         let eventCreateVC = storyboard!.instantiateViewController(withIdentifier: "EventFormViewController")
         eventCreationNavCon = UINavigationController(rootViewController: eventCreateVC)
         eventCreateVC.navigationItem.title = "Create Event"
         eventCreationNavCon?.navigationBar.barTintColor = UIColor(red: 249/255, green: 225/255, blue: 6/255, alpha: 1)
         eventCreationNavCon?.navigationBar.tintColor = UIColor.gray
         eventCreationNavCon?.navigationBar.isTranslucent = false
-        eventCreationNavCon?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Source Sans Pro", size: 24)!]
+        eventCreationNavCon?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Open Sans", size: 22)!]
         
         let viewController1 = storyboard!.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
         viewController1.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Events"), tag: 1)

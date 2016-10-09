@@ -49,19 +49,6 @@
 		27BFF2E61D778D3E002040D3 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BFF2E51D778D3E002040D3 /* RequestsViewController.swift */; };
 		27BFF2E91D778D82002040D3 /* RequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BFF2E81D778D82002040D3 /* RequestsTableViewCell.swift */; };
 		27BFF2ED1D77A4A3002040D3 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BFF2EC1D77A4A3002040D3 /* Helper.swift */; };
-		27C024451DA2BE80000885A3 /* SIL Open Font License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 27C024381DA2BE80000885A3 /* SIL Open Font License.txt */; };
-		27C024461DA2BE80000885A3 /* SourceSansPro-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C024391DA2BE80000885A3 /* SourceSansPro-Black.otf */; };
-		27C024471DA2BE80000885A3 /* SourceSansPro-BlackIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C0243A1DA2BE80000885A3 /* SourceSansPro-BlackIt.otf */; };
-		27C024481DA2BE80000885A3 /* SourceSansPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C0243B1DA2BE80000885A3 /* SourceSansPro-Bold.otf */; };
-		27C024491DA2BE80000885A3 /* SourceSansPro-BoldIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C0243C1DA2BE80000885A3 /* SourceSansPro-BoldIt.otf */; };
-		27C0244A1DA2BE80000885A3 /* SourceSansPro-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C0243D1DA2BE80000885A3 /* SourceSansPro-ExtraLight.otf */; };
-		27C0244B1DA2BE80000885A3 /* SourceSansPro-ExtraLightIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C0243E1DA2BE80000885A3 /* SourceSansPro-ExtraLightIt.otf */; };
-		27C0244C1DA2BE80000885A3 /* SourceSansPro-It.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C0243F1DA2BE80000885A3 /* SourceSansPro-It.otf */; };
-		27C0244D1DA2BE80000885A3 /* SourceSansPro-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C024401DA2BE80000885A3 /* SourceSansPro-Light.otf */; };
-		27C0244E1DA2BE80000885A3 /* SourceSansPro-LightIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C024411DA2BE80000885A3 /* SourceSansPro-LightIt.otf */; };
-		27C0244F1DA2BE80000885A3 /* SourceSansPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C024421DA2BE80000885A3 /* SourceSansPro-Regular.otf */; };
-		27C024501DA2BE80000885A3 /* SourceSansPro-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C024431DA2BE80000885A3 /* SourceSansPro-Semibold.otf */; };
-		27C024511DA2BE80000885A3 /* SourceSansPro-SemiboldIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27C024441DA2BE80000885A3 /* SourceSansPro-SemiboldIt.otf */; };
 		27C850A11D9120C9007168A6 /* ParticipantsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C850A01D9120C9007168A6 /* ParticipantsCollectionViewCell.swift */; };
 		27CB270D1D5D3CDD00F9ECF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */; };
 		27CB27121D5D3CDD00F9ECF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */; };
@@ -128,19 +115,6 @@
 		27BFF2E51D778D3E002040D3 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
 		27BFF2E81D778D82002040D3 /* RequestsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsTableViewCell.swift; sourceTree = "<group>"; };
 		27BFF2EC1D77A4A3002040D3 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
-		27C024381DA2BE80000885A3 /* SIL Open Font License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SIL Open Font License.txt"; sourceTree = "<group>"; };
-		27C024391DA2BE80000885A3 /* SourceSansPro-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Black.otf"; sourceTree = "<group>"; };
-		27C0243A1DA2BE80000885A3 /* SourceSansPro-BlackIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-BlackIt.otf"; sourceTree = "<group>"; };
-		27C0243B1DA2BE80000885A3 /* SourceSansPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Bold.otf"; sourceTree = "<group>"; };
-		27C0243C1DA2BE80000885A3 /* SourceSansPro-BoldIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-BoldIt.otf"; sourceTree = "<group>"; };
-		27C0243D1DA2BE80000885A3 /* SourceSansPro-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-ExtraLight.otf"; sourceTree = "<group>"; };
-		27C0243E1DA2BE80000885A3 /* SourceSansPro-ExtraLightIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-ExtraLightIt.otf"; sourceTree = "<group>"; };
-		27C0243F1DA2BE80000885A3 /* SourceSansPro-It.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-It.otf"; sourceTree = "<group>"; };
-		27C024401DA2BE80000885A3 /* SourceSansPro-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Light.otf"; sourceTree = "<group>"; };
-		27C024411DA2BE80000885A3 /* SourceSansPro-LightIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-LightIt.otf"; sourceTree = "<group>"; };
-		27C024421DA2BE80000885A3 /* SourceSansPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.otf"; sourceTree = "<group>"; };
-		27C024431DA2BE80000885A3 /* SourceSansPro-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.otf"; sourceTree = "<group>"; };
-		27C024441DA2BE80000885A3 /* SourceSansPro-SemiboldIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-SemiboldIt.otf"; sourceTree = "<group>"; };
 		27C850A01D9120C9007168A6 /* ParticipantsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsCollectionViewCell.swift; sourceTree = "<group>"; };
 		27CB27091D5D3CDD00F9ECF5 /* BeeSportive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeeSportive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -194,26 +168,6 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		2798A76A1DA9A0CF00BE8154 /* Source sans */ = {
-			isa = PBXGroup;
-			children = (
-				27C024381DA2BE80000885A3 /* SIL Open Font License.txt */,
-				27C024391DA2BE80000885A3 /* SourceSansPro-Black.otf */,
-				27C0243A1DA2BE80000885A3 /* SourceSansPro-BlackIt.otf */,
-				27C0243B1DA2BE80000885A3 /* SourceSansPro-Bold.otf */,
-				27C0243C1DA2BE80000885A3 /* SourceSansPro-BoldIt.otf */,
-				27C0243D1DA2BE80000885A3 /* SourceSansPro-ExtraLight.otf */,
-				27C0243E1DA2BE80000885A3 /* SourceSansPro-ExtraLightIt.otf */,
-				27C0243F1DA2BE80000885A3 /* SourceSansPro-It.otf */,
-				27C024401DA2BE80000885A3 /* SourceSansPro-Light.otf */,
-				27C024411DA2BE80000885A3 /* SourceSansPro-LightIt.otf */,
-				27C024421DA2BE80000885A3 /* SourceSansPro-Regular.otf */,
-				27C024431DA2BE80000885A3 /* SourceSansPro-Semibold.otf */,
-				27C024441DA2BE80000885A3 /* SourceSansPro-SemiboldIt.otf */,
-			);
-			name = "Source sans";
-			sourceTree = "<group>";
-		};
 		2798A76B1DA9A0D900BE8154 /* Open sans */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,7 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				2798A76B1DA9A0D900BE8154 /* Open sans */,
-				2798A76A1DA9A0CF00BE8154 /* Source sans */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -467,32 +420,19 @@
 				2798A77E1DA9A0EB00BE8154 /* OpenSans-LightItalic.ttf in Resources */,
 				2798A77F1DA9A0EB00BE8154 /* OpenSans-Regular.ttf in Resources */,
 				8114B4D21D7ED2CB00CE0FF8 /* UserCell.xib in Resources */,
-				27C0244E1DA2BE80000885A3 /* SourceSansPro-LightIt.otf in Resources */,
-				27C024501DA2BE80000885A3 /* SourceSansPro-Semibold.otf in Resources */,
-				27C0244B1DA2BE80000885A3 /* SourceSansPro-ExtraLightIt.otf in Resources */,
-				27C024461DA2BE80000885A3 /* SourceSansPro-Black.otf in Resources */,
-				27C0244F1DA2BE80000885A3 /* SourceSansPro-Regular.otf in Resources */,
-				27C024451DA2BE80000885A3 /* SIL Open Font License.txt in Resources */,
 				27CB27171D5D3CDD00F9ECF5 /* LaunchScreen.storyboard in Resources */,
 				27CB27141D5D3CDD00F9ECF5 /* Assets.xcassets in Resources */,
 				2798A77A1DA9A0EB00BE8154 /* OpenSans-ExtraBold.ttf in Resources */,
-				27C0244D1DA2BE80000885A3 /* SourceSansPro-Light.otf in Resources */,
 				27EDE99B1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib in Resources */,
 				27CB27121D5D3CDD00F9ECF5 /* Main.storyboard in Resources */,
 				2798A77D1DA9A0EB00BE8154 /* OpenSans-Light.ttf in Resources */,
 				277C1CC11D64A2B20008331F /* EventCollectionViewCell.xib in Resources */,
-				27C024491DA2BE80000885A3 /* SourceSansPro-BoldIt.otf in Resources */,
 				2798A77C1DA9A0EB00BE8154 /* OpenSans-Italic.ttf in Resources */,
 				2798A77B1DA9A0EB00BE8154 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
 				2798A7791DA9A0EB00BE8154 /* OpenSans-BoldItalic.ttf in Resources */,
-				27C0244C1DA2BE80000885A3 /* SourceSansPro-It.otf in Resources */,
 				2798A7801DA9A0EB00BE8154 /* OpenSans-Semibold.ttf in Resources */,
-				27C0244A1DA2BE80000885A3 /* SourceSansPro-ExtraLight.otf in Resources */,
-				27C024481DA2BE80000885A3 /* SourceSansPro-Bold.otf in Resources */,
 				27CC6DE51DA94BCB00E1061E /* GoogleService-Info.plist in Resources */,
-				27C024511DA2BE80000885A3 /* SourceSansPro-SemiboldIt.otf in Resources */,
 				2798A7811DA9A0EB00BE8154 /* OpenSans-SemiboldItalic.ttf in Resources */,
-				27C024471DA2BE80000885A3 /* SourceSansPro-BlackIt.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,8 +675,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BeeSportive/BeeSportive.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Efe Helvaci (NG2H4EFXTS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Efe Helvaci (NG2H4EFXTS)";
 				DEVELOPMENT_TEAM = NG2H4EFXTS;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
