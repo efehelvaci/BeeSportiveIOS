@@ -188,7 +188,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
         if collectionView == firstCollectionView || collectionView == secondCollectionView || collectionView == thirdCollectionView {
-            return CGSize(width: screenSize.width - 8, height: 164)
+            return CGSize(width: screenSize.width - 8, height: 144)
         }
         
         return CGSize(width: screenSize.width - 8, height: 120)

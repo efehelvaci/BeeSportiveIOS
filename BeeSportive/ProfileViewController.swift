@@ -50,6 +50,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet var verifiedImage: UIImageView!
     
+    @IBOutlet var profileBioLabel: UILabel!
+    
+    @IBOutlet var bioChangeButton: UIButton!
+    
+    @IBOutlet var bioHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet var navBarTitle: UILabel!
+    
     var user : User? {
         didSet{
             self.setUser()
@@ -104,6 +112,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         profileFollowing.alpha = 0
         followersText.alpha = 0
         followingText.alpha = 0
+        bioChangeButton.alpha = 0
+        settingsButton.alpha = 0
 
         profileImage.layer.masksToBounds = true
         profileImage.layer.cornerRadius = profileImage.frame.width/2.0
@@ -129,8 +139,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if sender == 0 {
             if (user == nil) && (currentUser.instance.user != nil) { user = currentUser.instance.user }
             backButton.isHidden = true
+            navBarTitle.text = "Sportives"
         } else {
             backButton.isHidden = false
+            navBarTitle.text = "My profile"
         }
         
         if profileName.text == "" && user != nil { setUser() }
@@ -155,7 +167,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
         if collectionView == eventsCollectionView {
-            return CGSize(width: screenSize.width-8, height: 180)
+            return CGSize(width: screenSize.width-8, height: 144)
         } else if collectionView == favoriteSportsCollectionView {
             return CGSize(width: (screenSize.width/5.0)-6, height: (screenSize.width/5.0))
         }
@@ -174,6 +186,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         } else if collectionView == favoriteSportsCollectionView {
             if (indexPath as NSIndexPath).row == 0 {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "firstItem", for: indexPath)
+                
+                cell.layer.borderColor = UIColor(red: 65/255.0, green: 65/255.0, blue: 65/255.0, alpha: 1.0).cgColor
+                cell.layer.borderWidth = 1
+                cell.layer.cornerRadius = screenSize.width/10.0
                 
                 return cell
             } else {
@@ -343,6 +359,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if self.isViewLoaded && user != nil{
             profileName.text = self.user?.displayName
             
+            profileBioLabel.text = self.user?.bio
+            
+            bioHeightConstraint.constant = (self.user?.bio.heightWithConstrainedWidth(profileName.frame.width, font: UIFont(name: "Open Sans", size: 10)!))!
+            
             (self.user?.verified)! ? (verifiedImage.isHidden = false) : (verifiedImage.isHidden = true)
             
             self.user?.following != nil ? (self.profileFollowing.text = String(describing: (self.user?.following.count)!)) : (self.profileFollowing.text = "0")
@@ -362,16 +382,20 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.followersText.alpha = 1
                 self.followingText.alpha = 1
                 self.verifiedImage.alpha = 1
+                self.bioChangeButton.alpha = 1
+                self.settingsButton.alpha = 1
             })
             
             if user!.id != FIRAuth.auth()?.currentUser?.uid {
                 profileImageEditButton.isHidden = true
                 settingsButton.isHidden = true
                 followButton.isHidden = false
+                bioChangeButton.isHidden = true
             } else {
                 profileImageEditButton.isHidden = false
                 settingsButton.isHidden = false
                 followButton.isHidden = true
+                bioChangeButton.isHidden = false
             }
             
             if let following = currentUser.instance.user?.following {
@@ -556,7 +580,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 }
             }
         }
-        
+    }
+    
+    @IBAction func bioChangeButtonClicked(_ sender: AnyObject) {
+        let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "BioViewController") as! BioViewController
+        popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
+        popoverContent.preferredContentSize = CGSize(width: screenSize.width - 60, height: 195)
+        popoverContent.senderVC = self
+        let popoverController = popoverContent.popoverPresentationController
+        popoverController?.permittedArrowDirections = .any
+        popoverController?.delegate = self
+        popoverController?.sourceView = self.view
+        popoverController?.sourceRect = bioChangeButton.frame
+        present(popoverContent, animated: true, completion: nil)
     }
     
 }

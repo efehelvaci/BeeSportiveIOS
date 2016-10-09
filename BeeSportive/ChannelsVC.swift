@@ -78,6 +78,8 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         else { self.selectedChannelID = channels[(indexPath as NSIndexPath).row].id }
         guard let cell = tableView.cellForRow(at: indexPath) as? ChannelCell else { return }
         performSegue(withIdentifier: "toChatSegue", sender: cell)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

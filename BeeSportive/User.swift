@@ -15,6 +15,7 @@ class User {
     var photoURL: String?
     let email: String
     let id: String
+    var bio: String = "Please modify your bio!"
     var followers = [String]()   // Follower users ID's
     var following = [String]()   // Following users ID's
     var favoriteSports = [String]()
@@ -39,6 +40,10 @@ class User {
         
         if let favoriteSports = (data["favoriteSports"] as? Dictionary<String, String>)?.values {
             self.favoriteSports = Array(favoriteSports)
+        }
+        
+        if let biography = data["bio"] as? String {
+            self.bio = biography
         }
         
         if let adminOptions = data["adminOptions"] as? Dictionary<String, AnyObject> {

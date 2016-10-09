@@ -69,7 +69,7 @@ class EventsCollectionViewController: UICollectionViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-        return CGSize(width: screenSize.width, height: 180)
+        return CGSize(width: screenSize.width, height: 144)
     }
 
 
