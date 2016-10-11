@@ -318,7 +318,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             
             profileBioLabel.text = self.user?.bio
             
-            bioHeightConstraint.constant = (self.user?.bio.heightWithConstrainedWidth(profileName.frame.width, font: UIFont(name: "Open Sans", size: 10)!))!
+            bioHeightConstraint.constant = (self.user?.bio.heightWithConstrainedWidth(profileName.frame.width, font: UIFont(name: "Open Sans", size: 11)!))!
             
             (self.user?.verified)! ? (verifiedImage.isHidden = false) : (verifiedImage.isHidden = true)
             

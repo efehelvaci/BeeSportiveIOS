@@ -18,6 +18,7 @@ class currentUser {
     
     var delegate1 : observeUser?
     var delegate2 : observeUser?
+    
     var user : User? {
         didSet{
             delegate1?.userChanged()
