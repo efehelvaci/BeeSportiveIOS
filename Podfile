@@ -14,4 +14,6 @@ target 'BeeSportive' do
     	pod 'SwifterSwift' , :git => 'https://github.com/omaralbeik/SwifterSwift.git'
 	pod 'Eureka', '~> 2.0.0-beta.1'
 	pod 'SDCAlertView', '~> 7.0'
+	pod 'Fabric'
+	pod 'Crashlytics'
 end

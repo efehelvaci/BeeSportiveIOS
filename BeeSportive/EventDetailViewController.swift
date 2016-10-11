@@ -215,7 +215,7 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         } else {
             let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
             self.present(viewController5, animated: true, completion: { _ in
-                viewController5.getUser(userID: self.participants[indexPath.row].id)
+                viewController5.getUser(userID: self.participants[indexPath.row-1].id)
             })
         }
     }

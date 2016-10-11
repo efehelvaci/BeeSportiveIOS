@@ -3,7 +3,10 @@ PODS:
   - AlamofireImage (3.1.0):
     - Alamofire (~> 4.0)
   - AsyncSwift (2.0.0)
+  - Crashlytics (3.8.2):
+    - Fabric (~> 1.6.3)
   - Eureka (2.0.0-beta.1)
+  - Fabric (1.6.9)
   - Firebase/Auth (3.7.0):
     - Firebase/Core
     - FirebaseAuth (= 3.0.5)
@@ -71,7 +74,9 @@ DEPENDENCIES:
   - Alamofire (~> 4.0.1)
   - AlamofireImage (~> 3.0)
   - AsyncSwift (~> 2.0.0)
+  - Crashlytics
   - Eureka (~> 2.0.0-beta.1)
+  - Fabric
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -95,7 +100,9 @@ SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
   AlamofireImage: bb8c8351c51cb1633bb6be69b6dbbaff37ce65b7
   AsyncSwift: 6ba6ed9ecb51344458063f7c86fe447ab824e313
+  Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
   Eureka: d014adf16406745e1a78d5790ea37ed130a0a8e5
+  Fabric: bc5bec42cef4bcf1ee3ce0e218fc518e4b44dfbb
   Firebase: 3875e140d77c7572c6d4852faf94144ffcdb0704
   FirebaseAnalytics: 02d0aed8c6246a9c8683ac3e9825c67ceb657bde
   FirebaseAuth: 75a062bbf2d3c97d1e6e55bbc110e13a6853e25d
@@ -115,6 +122,6 @@ SPEC CHECKSUMS:
   SDCAlertView: e04c5a8985e4490768cc9608bf0a13c44215fcf2
   SwifterSwift: 73a46af6592832d8d0ccea035e5ede15116a0895
 
-PODFILE CHECKSUM: 55a18db80ba62467d19a1ca4d811def7c1398608
+PODFILE CHECKSUM: bb2e88854de13b523bd80b457786eba233eaadd7
 
 COCOAPODS: 1.1.0.rc.2

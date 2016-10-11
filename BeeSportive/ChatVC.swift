@@ -17,10 +17,12 @@ class ChatVC: JSQMessagesViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         automaticallyScrollsToMostRecentMessage = true
+        
         self.senderId = FIRAuth.auth()?.currentUser?.uid
         self.senderDisplayName = FIRAuth.auth()?.currentUser?.displayName
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(ChatVC.segueToParticipants))
+
         REF_CHANNELS.child(channelID).child("messages").observe(.childAdded, with: { snapshot in
             guard let data = snapshot.value as? Dictionary<String, String> else { return }
             let senderId = data["senderId"]!
@@ -33,6 +35,7 @@ class ChatVC: JSQMessagesViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         let tabBarCont = tabBarController as! TabBarController
         tabBarCont.menuButton.isHidden = true
         tabBarCont.tabBar.isHidden = true
@@ -42,13 +45,16 @@ class ChatVC: JSQMessagesViewController {
         return messages.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView,
-                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
-            as! JSQMessagesCollectionViewCell
-        let message = messages[(indexPath as NSIndexPath).item]
-        if message.senderId == senderId { cell.textView!.textColor = UIColor.white }
-        else { cell.textView!.textColor = UIColor.black }
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
+        
+        let message = messages[indexPath.item]
+        if message.senderId == senderId {
+            cell.textView!.textColor = UIColor.white
+        } else {
+            cell.textView!.textColor = UIColor.black
+        }
+        
         return cell
     }
 
@@ -56,8 +62,7 @@ class ChatVC: JSQMessagesViewController {
         return messages[indexPath.row]
     }
 
-    override func collectionView(_ collectionView: JSQMessagesCollectionView!,
-                                 messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         let factory = JSQMessagesBubbleImageFactory()
         let outgoingBubbleImage = factory?.outgoingMessagesBubbleImage(
             with: UIColor.jsq_messageBubbleBlue())
@@ -136,16 +141,6 @@ class ChatVC: JSQMessagesViewController {
         messages.append(message!)
         self.collectionView.reloadData()
         finishReceivingMessage(animated: true)
-    }
-
-    func segueToParticipants() {
-        self.performSegue(withIdentifier: "toParticipantsSegue", sender: self.navigationItem.rightBarButtonItem)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destVC = segue.destination as? UsersVC {
-            destVC.title = "Participants"
-        }
     }
     
 }

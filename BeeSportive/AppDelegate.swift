@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Use Firebase library to configure APIs
         FIRApp.configure()
+        
+        // Crashlytics
+        Fabric.with([Crashlytics.self])
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

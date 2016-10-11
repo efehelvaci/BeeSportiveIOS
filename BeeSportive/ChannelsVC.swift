@@ -40,7 +40,7 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
                             self.viewDidLoad()
                         })
                         REF_CHANNELS.child(channelID).observe(.value, with: { (snap) in
-                            if self.channels.count != Int(snapshot.childrenCount) {
+                            if self.channels.count != Int(snaps.count) {
                                 let channel = Channel(snapshot: snap)
                                 self.channels.append(channel)
                                 self.tableView.reloadData()
