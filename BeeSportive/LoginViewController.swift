@@ -81,12 +81,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                                 ]
                     
                             REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).setValue(newUser)
-                        }
-                    })
-                    
-                    REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).observeSingleEvent(of: .value, with: { snapshot in
-                        if snapshot.exists() {
-                            currentUser.instance.user = User(snapshot: snapshot)
+                            
+                            
+                            REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).observeSingleEvent(of: .value, with: { snapshot in
+                                if snapshot.exists() {
+                                    currentUser.instance.user = User(snapshot: snapshot)
+                                }
+                            })
                         }
                     })
                     

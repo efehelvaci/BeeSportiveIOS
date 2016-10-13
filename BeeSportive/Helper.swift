@@ -27,7 +27,7 @@ class currentUser {
     }
     
     fileprivate init() {
-        REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).observeSingleEvent(of: .value, with: { snapshot in
+        REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).observe(.value, with: { snapshot in
             if snapshot.exists() {
                 self.user = User(snapshot: snapshot)
             }

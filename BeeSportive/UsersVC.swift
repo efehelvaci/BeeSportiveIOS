@@ -119,7 +119,7 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         
         let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         
-        isSearching ? (viewController5.user = filteredUsers[indexPath.row]) : (viewController5.user = verifiedUsers[indexPath.row])
+        isSearching ? (viewController5.getUser(userID: filteredUsers[indexPath.row].id)) : (viewController5.getUser(userID: verifiedUsers[indexPath.row].id))
         
         self.present(viewController5, animated: true, completion: nil)
     }

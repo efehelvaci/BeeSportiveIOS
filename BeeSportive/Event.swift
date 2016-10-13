@@ -29,6 +29,7 @@ class Event {
     var creator : User? = nil
     var address : String? = nil
     var fullDate : Date? = nil
+    var isPast : Bool = false
     
     init(snapshot: FIRDataSnapshot) {
         let data = snapshot.value as! Dictionary<String, AnyObject>
@@ -74,6 +75,10 @@ class Event {
             
             dateFormatter.dateFormat = "yyyy"
             self.year = dateFormatter.string(from: self.fullDate!)
+            
+            if (self.fullDate?.isLessThanDate(dateToCompare: Date()))! {
+                self.isPast = true
+            }
         }
         
         REF_USERS.child(creatorID).observeSingleEvent(of: .value, with: { snapshot2 in
@@ -81,5 +86,6 @@ class Event {
                 self.creator = User(snapshot: snapshot2)
             }
         })
+        
     }
 }

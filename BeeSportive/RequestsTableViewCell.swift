@@ -36,6 +36,7 @@ class RequestsTableViewCell: UITableViewCell {
                 if accepted { delegate!.senderVC?.event.participants.append(requesterID!) }
                 delegate!.users.remove(at: i)
                 delegate!.tableView.reloadData()
+                break
             }
         }
         
@@ -52,7 +53,7 @@ class RequestsTableViewCell: UITableViewCell {
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("id").setValue(requesterID!)
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("status").setValue("accepted")
-        REF_USERS.child(requesterID!).child("joinedEvents").child(eventID!).setValue("accepted")
+        REF_USERS.child(requesterID!).child("joinedEvents").child(eventID!).setValue(eventID!)
         deleteUserFromTable(accepted: true)
     }
 }

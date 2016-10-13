@@ -53,6 +53,8 @@ class TabBarController: UITabBarController {
         viewController5.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Avatar"), tag: 5)
         viewController5.tabBarItem.imageInsets = tabBarImageInsets
         
+        currentUser.instance.delegate2 = viewController5
+        
         setupMiddleButton()
         
         self.viewControllers = [nav1, viewController2, viewController3, viewController4, viewController5]

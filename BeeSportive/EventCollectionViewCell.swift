@@ -72,11 +72,9 @@ class EventCollectionViewCell: UICollectionViewCell {
         self.eventName.text = event.name
         self.capacity.text = "\(event.participants.count)/" + (event.maxJoinNumber) + " Free Spots"
         
-        if event.fullDate != nil {
-            if (event.fullDate?.isLessThanDate(dateToCompare: Date()))! {
-                blackWhiteView.alpha = 0.5
-                capacity.text = "Event past!"
-            }
+        if event.isPast {
+            blackWhiteView.alpha = 0.5
+            capacity.text = "Event past!"
         }
     }
     

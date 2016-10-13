@@ -11,6 +11,7 @@ import Firebase
 import FirebaseDatabase
 import Alamofire
 import Async
+import FTIndicator
 
 class EventViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, ScrollPagerDelegate {
     
@@ -41,6 +42,8 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        FTIndicator.showProgressWithmessage("Loading!")
         
         eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
         eventDetailVC.mainMenuSender = self
@@ -105,6 +108,12 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         }
         
         return 0
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        FTIndicator.dismissProgress()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -214,26 +223,36 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         var tempFavEvents = [Event]()
         
         
-        REF_EVENTS.observeSingleEvent(of: .value , with: { (snapshot) in
+        REF_EVENTS.observe(.value , with: { (snapshot) in
+            
+            tempAllEvents.removeAll()
+            tempFavEvents.removeAll()
+    
             if snapshot.exists() {
+                
                 let postDict = snapshot.children
                 
                 for element in postDict {
                     let eventElement = Event(snapshot: element as! FIRDataSnapshot)
                     
-                    tempAllEvents.append(eventElement)
+                    if !eventElement.isPast {
+                        tempAllEvents.append(eventElement)
+                    }
                 }
                 
                 self.allEvents = tempAllEvents
+                FTIndicator.dismissProgress()
                 
                 Async.main {
                     self.refreshControl1.endRefreshing()
                     self.firstCollectionView.reloadData()
                     self.fourthCollectionView.reloadData()
                     
-                    Async.main(after: 0.5, { _ in
-                        self.startAnimation = false
-                    })
+                    if self.startAnimation {
+                        Async.main(after: 0.5, { _ in
+                            self.startAnimation = false
+                        })
+                    }
                 }
                 
                 if (currentUser.instance.user != nil) && (currentUser.instance.user?.favoriteSports != nil){
@@ -254,7 +273,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                         self.thirdCollectionView.reloadData()
                     }
                 } else {
-                    REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("favoriteSports").observeSingleEvent(of: .value, with: { snapshot in
+                    REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("favoriteSports").observe(.value, with: { snapshot in
                         if snapshot.exists() {
                             if let postDict = (snapshot.value as? Dictionary<String, String>)?.values {
                                 self.favoriteSports = Array(postDict)
@@ -284,7 +303,9 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     func retrievePopularEvents() {
         var tempPopularEvents = [Event]()
         
-        REF_POPULAR_EVENTS.observeSingleEvent(of: .value , with: { (snapshot) in
+        REF_POPULAR_EVENTS.observe(.value , with: { (snapshot) in
+            tempPopularEvents.removeAll()
+            
             if snapshot.exists() {
                 let postDict = snapshot.children
                 

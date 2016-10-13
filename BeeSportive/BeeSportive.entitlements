@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)beesportive.BeeSportive</string>
+		<string>$(AppIdentifierPrefix)com.efehelvaci.BeeSportive</string>
 	</array>
 </dict>
 </plist>

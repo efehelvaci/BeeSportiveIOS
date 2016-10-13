@@ -383,6 +383,9 @@
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
 							com.apple.Keychain = {
 								enabled = 1;
 							};
@@ -677,7 +680,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BeeSportive/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.efehelvaci.BeeSportive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -702,7 +705,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BeeSportive/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.efehelvaci.BeeSportive;
 				PRODUCT_NAME = "$(TARGET_NAME)";

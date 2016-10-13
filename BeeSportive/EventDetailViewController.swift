@@ -209,14 +209,12 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 && creator != nil {
             let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-            self.present(viewController5, animated: true, completion: { _ in
-                viewController5.user = self.creator
-            })
+            viewController5.getUser(userID: event.creatorID)
+            self.present(viewController5, animated: true, completion: nil)
         } else {
             let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-            self.present(viewController5, animated: true, completion: { _ in
-                viewController5.getUser(userID: self.participants[indexPath.row-1].id)
-            })
+            viewController5.getUser(userID: self.participants[indexPath.row-1].id)
+            self.present(viewController5, animated: true, completion: nil)
         }
     }
     

@@ -82,7 +82,17 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     var favoriteSports = [String]()
     
-    var eventsArray = [Event]()
+    var eventsArray = [Event]() {
+        didSet{
+            if isViewLoaded {
+                if eventsArray.count == 0 {
+                    self.noEventsToShowLabel.isHidden = false
+                } else {
+                    self.noEventsToShowLabel.isHidden = true
+                }
+            }
+        }
+    }
     
     var commentsArray = [Comment]()
     
@@ -90,8 +100,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        currentUser.instance.delegate2 = self
         
         let eventNib = UINib(nibName: "EventCollectionViewCell", bundle: Bundle.main)
         eventsCollectionView.register(eventNib, forCellWithReuseIdentifier: "eventCell")
@@ -139,13 +147,17 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if eventsArray.count == 0 {
+            self.noEventsToShowLabel.isHidden = false
+        } else {
+            self.noEventsToShowLabel.isHidden = true
+        }
+        
         if sender == 0 {
             if (user == nil) && (currentUser.instance.user != nil) { user = currentUser.instance.user }
             backButton.isHidden = true
-//            scrollViewBottomConstraint.constant = 0
         } else {
             backButton.isHidden = false
-//            scrollViewBottomConstraint.constant = 40.0
         }
         
         if profileName.text == "Name" && user != nil { setUser() }
@@ -262,11 +274,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let cell = commentsTableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as! ProfileCommentTableViewCell
         
-        cell.comment.text = commentsArray[(indexPath as IndexPath).row].comment
-        cell.date.text = commentsArray[(indexPath as IndexPath).row].date
-        cell.id = commentsArray[(indexPath as IndexPath).row].id
+        cell.comment.text = commentsArray[indexPath.row].comment
+        cell.date.text = commentsArray[indexPath.row].date
+        cell.id = commentsArray[indexPath.row].id
         
-        REF_USERS.child(commentsArray[(indexPath as NSIndexPath).row].id).observeSingleEvent(of: .value, with: { snapshot in
+        REF_USERS.child(commentsArray[indexPath.row].id).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 let commmentedUser = User(snapshot: snapshot)
                 
@@ -305,7 +317,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Self created methods
     
     func getUser(userID: String) {
-        REF_USERS.child(userID).observeSingleEvent(of: .value, with: { snapshot in
+        REF_USERS.child(userID).observe(.value, with: { snapshot in
             if snapshot.exists() {
                 self.user = User(snapshot: snapshot)
             }
@@ -373,7 +385,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         REF_USERS.child(user!.id).child("eventsCreated").observe(.value, with: { snapshot in
 
             if snapshot.exists() {
-                self.noEventsToShowLabel.isHidden = true
                 
                 let myEventsIDArray = Array((snapshot.value as! [String: String]).values)
                 var myEventIDs = [String]()
@@ -384,8 +395,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 self.eventsArray = [Event]()
                 self.getEvents(myEventIDs)
-            } else {
-                self.noEventsToShowLabel.isHidden = false
             }
         })
     }
@@ -405,7 +414,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func getComments() {
-        REF_USERS.child(user!.id).child("comments").observeSingleEvent(of: .value, with: { snapshot in
+        REF_USERS.child(user!.id).child("comments").observe(.value, with: { snapshot in
             if snapshot.exists() {
                 self.commentsArray.removeAll()
                 
@@ -424,8 +433,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 if self.isViewLoaded { self.commentsTableView.reloadData() }
             }
-            
-            
         })
     }
     
