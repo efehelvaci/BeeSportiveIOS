@@ -19,6 +19,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     @IBOutlet var secondCollectionView: UICollectionView!
     @IBOutlet var thirdCollectionView: UICollectionView!
     @IBOutlet var fourthCollectionView: UICollectionView!
+    @IBOutlet var followingCollectionView: UICollectionView!
     
     @IBOutlet var beeView: UIView!
     
@@ -36,6 +37,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     var favoriteSports = [String]()
     var popularEvents = [Event]()
     var favoriteEvents = [Event]()
+    var followingEvents = [Event]()
     var selectedEventNo : Int?
     
     var startAnimation = true
@@ -53,6 +55,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             ("All", firstCollectionView),
             ("Popular", secondCollectionView),
             ("My Favorites", thirdCollectionView),
+            ("Followed", followingCollectionView),
             ("Branchs", fourthCollectionView)
             ])
         
@@ -87,7 +90,9 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         firstCollectionView.register(nibName, forCellWithReuseIdentifier: "eventCell")
         secondCollectionView.register(nibName, forCellWithReuseIdentifier: "eventCell")
         thirdCollectionView.register(nibName, forCellWithReuseIdentifier: "eventCell")
+        followingCollectionView.register(nibName, forCellWithReuseIdentifier: "eventCell")
         fourthCollectionView.register(nibName2, forCellWithReuseIdentifier: "FavoriteSportCell")
+        
         
         // If there are not enough events to scroll, you can still pull to refresh
         firstCollectionView.alwaysBounceVertical = true
@@ -105,6 +110,8 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             return favoriteEvents.count
         } else if collectionView == fourthCollectionView {
             return branchs.count
+        } else if collectionView == followingCollectionView {
+            return followingEvents.count
         }
         
         return 0
@@ -157,6 +164,13 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             cell.favSportName.text = branchs[(indexPath as NSIndexPath).row]
             
             return cell
+        } else if collectionView == followingCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as! EventCollectionViewCell
+            
+            cell.configureCell(event: followingEvents[indexPath.row])
+            
+            return cell
+
         }
         
         return UICollectionViewCell()
@@ -167,30 +181,33 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         
         if collectionView == firstCollectionView {
-            eventDetailVC.event = allEvents[(indexPath as NSIndexPath).row]
+            eventDetailVC.event = allEvents[indexPath.row]
             self.present(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == secondCollectionView {
-            eventDetailVC.event = popularEvents[(indexPath as NSIndexPath).row]
+            eventDetailVC.event = popularEvents[indexPath.row]
             self.present(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == thirdCollectionView {
-            eventDetailVC.event = favoriteEvents[(indexPath as NSIndexPath).row]
+            eventDetailVC.event = favoriteEvents[indexPath.row]
             self.present(eventDetailVC, animated: true, completion: nil)
         } else if collectionView == fourthCollectionView {
             
             let eventsVC = self.storyboard?.instantiateViewController(withIdentifier: "EventsCollectionViewController") as! EventsCollectionViewController
-            eventsVC.navigationItem.title = branchs[(indexPath as NSIndexPath).row]
+            eventsVC.navigationItem.title = branchs[indexPath.row]
             
             var events = [Event]()
             
             for i in 0..<allEvents.count {
-                if allEvents[i].branch == branchs[(indexPath as NSIndexPath).row] {events.insert(allEvents[i], at: 0)  }
+                if allEvents[i].branch == branchs[indexPath.row] {events.insert(allEvents[i], at: 0)  }
             }
             
-            eventsVC.branchName = branchs[(indexPath as NSIndexPath).row]
+            eventsVC.branchName = branchs[indexPath.row]
             eventsVC.events = events
             eventsVC.collectionView?.reloadData()
             
             self.show(eventsVC, sender: self)
+        } else if collectionView == followingCollectionView {
+            eventDetailVC.event = followingEvents[indexPath.row]
+            self.present(eventDetailVC, animated: true, completion: nil)
         }
     }
     
@@ -200,7 +217,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
-        if collectionView == firstCollectionView || collectionView == secondCollectionView || collectionView == thirdCollectionView {
+        if collectionView == firstCollectionView || collectionView == secondCollectionView || collectionView == thirdCollectionView || collectionView == followingCollectionView {
             return CGSize(width: screenSize.width - 8, height: 144)
         }
         
@@ -221,13 +238,15 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
        
         var tempAllEvents = [Event]()
         var tempFavEvents = [Event]()
+        var tempFolEvents = [Event]()
         
         
         REF_EVENTS.observe(.value , with: { (snapshot) in
             
             tempAllEvents.removeAll()
             tempFavEvents.removeAll()
-    
+            tempFolEvents.removeAll()
+            
             if snapshot.exists() {
                 
                 let postDict = snapshot.children
@@ -296,6 +315,39 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                         }
                     })
                 }
+                
+                if (currentUser.instance.user != nil) && (currentUser.instance.user?.following != nil) {
+                    for eventElement in self.allEvents {
+                        if (currentUser.instance.user?.following.contains(eventElement.creatorID))! {
+                            tempFolEvents.append(eventElement)
+                        }
+                    }
+                    
+                    self.followingEvents = tempFolEvents
+                    
+                    Async.main {
+                        self.followingCollectionView.reloadData()
+                    }
+                } else {
+                    REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("following").observe(.value, with: { snapshot in
+                        if snapshot.exists() {
+                            if let followingUsersIDs = (snapshot.value as? Dictionary<String, AnyObject>)?.keys {
+                                for eventElement in self.allEvents {
+                                    if followingUsersIDs.contains(eventElement.creatorID) {
+                                        tempFolEvents.append(eventElement)
+                                    }
+                                }
+                                
+                                self.followingEvents = tempFolEvents
+                                
+                                Async.main {
+                                    self.followingCollectionView.reloadData()
+                                }
+                            }
+                        }
+                    })
+                }
+                
             }
         })
     }
@@ -322,8 +374,6 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                     self.secondCollectionView.reloadData()
                 }
             }
-            
-
         })
     }
     
@@ -341,17 +391,22 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             break
         case 1:
             UIView.animate(withDuration: 0.2, animations: {
-                self.beeViewLeading.constant = screenSize.width * (1/4.0)
+                self.beeViewLeading.constant = screenSize.width * (1/5.0)
             })
             break
         case 2:
             UIView.animate(withDuration: 0.2, animations: {
-                self.beeViewLeading.constant = screenSize.width * (2/4.0)
+                self.beeViewLeading.constant = screenSize.width * (2/5.0)
             })
             break
         case 3:
             UIView.animate(withDuration: 0.2, animations: {
-                self.beeViewLeading.constant = screenSize.width * (3/4.0)
+                self.beeViewLeading.constant = screenSize.width * (3/5.0)
+            })
+            break
+        case 4:
+            UIView.animate(withDuration: 0.2, animations: {
+                self.beeViewLeading.constant = screenSize.width * (4/5.0)
             })
             break
         default:
