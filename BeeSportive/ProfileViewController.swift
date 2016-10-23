@@ -9,8 +9,6 @@
 import UIKit
 import Firebase
 import Async
-import Alamofire
-import AlamofireImage
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ScrollPagerDelegate, observeUser, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate {
     
@@ -215,10 +213,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favoriteSportItem", for: indexPath) as! ProfileFavoriteSportCollectionViewCell
                 
                 if indexPath.row <= favoriteSports.count {
-                    cell.image.image = UIImage(named: favoriteSports[(indexPath as NSIndexPath).row - 1])?.af_imageRoundedIntoCircle()
+                    cell.image.image = UIImage(named: favoriteSports[(indexPath as NSIndexPath).row - 1])
                     cell.name.text = favoriteSports[(indexPath as NSIndexPath).row - 1]
                 } else {
-                    cell.image.image = UIImage(named: "Add2")?.af_imageRoundedIntoCircle()
+                    cell.image.image = UIImage(named: "Add2")
                     cell.name.text = "Add"
                 }
                 
@@ -284,11 +282,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 cell.name.text = commmentedUser.displayName
                 
-                Alamofire.request(commmentedUser.photoURL!).responseImage(completionHandler: { response in
-                    if let image = response.result.value {
-                        cell.userImage.image = image
-                    }
-                })
+                cell.userImage.kf.setImage(with: URL(string: commmentedUser.photoURL!))
             }
         
         })
@@ -337,11 +331,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             self.user?.following != nil ? (self.profileFollowing.text = String(describing: (self.user?.following.count)!)) : (self.profileFollowing.text = "0")
             self.user?.followers != nil ? (self.profileFollowers.text = String(describing: (self.user?.followers.count)!)) : (self.profileFollowers.text = "0")
             
-            Alamofire.request((user?.photoURL)!).responseImage(completionHandler: { response in
-                if let image = response.result.value {
-                    self.profileImage.image = image
-                }
-            })
+            self.profileImage.kf.setImage(with: URL(string: (user?.photoURL)!))
             
             UIView.animate(withDuration: 1, animations: { 
                 self.profileImage.alpha = 1
@@ -567,6 +557,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
         popoverContent.preferredContentSize = CGSize(width: screenSize.width - 60, height: 195)
         popoverContent.senderVC = self
+        popoverContent.oldBio = profileBioLabel.text!
         let popoverController = popoverContent.popoverPresentationController
         popoverController?.permittedArrowDirections = .any
         popoverController?.delegate = self

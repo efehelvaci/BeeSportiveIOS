@@ -20,6 +20,7 @@ class Event {
     let locationLon : String
     let maxJoinNumber : String
     let description : String
+    var dayName : String! = "Monday"
     var month : String! = "1"
     var time : String! = ""
     var day : String! = ""
@@ -75,6 +76,9 @@ class Event {
             
             dateFormatter.dateFormat = "yyyy"
             self.year = dateFormatter.string(from: self.fullDate!)
+            
+            dateFormatter.dateFormat = "EEEE"
+            self.dayName = dateFormatter.string(from: self.fullDate!)
             
             if (self.fullDate?.isLessThanDate(dateToCompare: Date()))! {
                 self.isPast = true

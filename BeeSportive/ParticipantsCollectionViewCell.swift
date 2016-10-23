@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import Alamofire
-import AlamofireImage
+import Kingfisher
 
 class ParticipantsCollectionViewCell: UICollectionViewCell {
 
@@ -31,11 +30,7 @@ class ParticipantsCollectionViewCell: UICollectionViewCell {
         imageView.isHidden = true
         name.text = user.displayName
         
-        Alamofire.request(user.photoURL!).responseImage(completionHandler: { response in
-            if let image = response.result.value {
-                self.imageView.image = image
-                self.imageView.isHidden = false
-            }
-        })
+        imageView.kf.setImage(with: URL(string: user.photoURL!))
+        imageView.isHidden = false
     }
 }

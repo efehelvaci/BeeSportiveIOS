@@ -30,7 +30,7 @@ class FavoriteSportPickerViewController: UIViewController, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favoriteSportPickerCell", for: indexPath) as! FavoriteSportPickerCollectionViewCell
         
-        cell.branchImage.image = UIImage(named: branchs[indexPath.row])?.af_imageRoundedIntoCircle()
+        cell.branchImage.image = UIImage(named: branchs[indexPath.row])
         cell.branchName.text = branchs[indexPath.row]
         
         if selectedBranchs.contains(branchs[indexPath.row]) {

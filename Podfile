@@ -1,8 +1,6 @@
 use_frameworks!
 
 target 'BeeSportive' do
-	pod 'Alamofire', '~> 4.0.1'
-	pod 'AlamofireImage', '~> 3.0'
 	pod 'Firebase/Core'
 	pod 'Firebase/Database'
 	pod 'Firebase/Messaging'
@@ -14,6 +12,5 @@ target 'BeeSportive' do
     	pod 'SwifterSwift' , :git => 'https://github.com/omaralbeik/SwifterSwift.git'
 	pod 'Eureka', '~> 2.0.0-beta.1'
 	pod 'SDCAlertView', '~> 7.0'
-	pod 'Fabric'
-	pod 'Crashlytics'
+	pod 'Kingfisher', '~> 3.0'
 end

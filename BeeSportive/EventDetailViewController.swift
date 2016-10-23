@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import Alamofire
 import MapKit
 import SDCAlertView
 import Async
@@ -37,11 +36,10 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     @IBOutlet var hexagon5: UIImageView!
     
     let grayLineWidth = screenSize.width - 90.0
-    
     let fbButton : FBSDKShareButton = FBSDKShareButton()
+    let pin = MKPointAnnotation()
     
     var mainMenuSender : EventViewController? = nil
-    
     var joinAlert : AlertController!
     var event : Event!
     var creator : User! = nil {
@@ -174,6 +172,12 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
 
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        map.removeAnnotation(self.pin)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = participantsCollectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ParticipantsCollectionViewCell
         
@@ -224,7 +228,7 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
             descriptionLabel.text = event.description
             
             if let font = UIFont(name: "Open Sans", size: 14) {
-                descriptionHeight.constant = event.description.heightWithConstrainedWidth(screenSize.width - 16, font: font) + 10
+                descriptionHeight.constant = event.description.heightWithConstrainedWidth(screenSize.width - 18, font: font) + 10
             } else {
                 descriptionHeight.constant = 180.0
             }
@@ -269,9 +273,10 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
             let centerLocation = CLLocationCoordinate2DMake(Double(event!.locationLat)!, Double(event!.locationLon)!)
             let mapSpan = MKCoordinateSpan(latitudeDelta: 0.004, longitudeDelta: 0.004)
             
-            let pin = MKPointAnnotation()
-            pin.coordinate = centerLocation
-            map.addAnnotation(pin)
+            self.pin.coordinate = centerLocation
+            map.addAnnotation(self.pin)
+            
+            
             
             map.region = MKCoordinateRegion(center: centerLocation, span: mapSpan)
             

@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Alamofire
-import AlamofireImage
 import Firebase
 
 class EventCollectionViewCell: UICollectionViewCell {
@@ -22,12 +20,14 @@ class EventCollectionViewCell: UICollectionViewCell {
     @IBOutlet var eventName: UILabel!
     @IBOutlet var capacity: UILabel!
     @IBOutlet var verifiedImage: UIImageView!
-    
     @IBOutlet var blackWhiteView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    var user : User!
     
     func configureCell(event: Event) {
         clipsToBounds = false
@@ -36,24 +36,19 @@ class EventCollectionViewCell: UICollectionViewCell {
         self.layer.borderColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1.0).cgColor
         self.layer.borderWidth = 1.0
         
-        creatorImage.isHidden = true
         blackWhiteView.alpha = 0
         
         REF_USERS.child(event.creatorID).observeSingleEvent(of: .value, with : { snapshot in
             if snapshot.exists() {
-                let user = User(snapshot: snapshot)
+                self.user = User(snapshot: snapshot)
                 
-                self.creatorName.text = user.displayName
+                self.creatorName.text = self.user.displayName
                 self.creatorName.isHidden = false
                 
-                user.verified ? (self.verifiedImage.isHidden = false) : (self.verifiedImage.isHidden = true)
+                self.user.verified ? (self.verifiedImage.isHidden = false) : (self.verifiedImage.isHidden = true)
                 
-                Alamofire.request(user.photoURL!).responseImage(completionHandler: { response in
-                    if let image = response.result.value {
-                        self.creatorImage.image = image
-                        self.creatorImage.isHidden = false
-                    }
-                })
+                let url = URL(string: self.user.photoURL!)
+                self.creatorImage.kf.setImage(with: url)
             }
         })
         
@@ -64,7 +59,7 @@ class EventCollectionViewCell: UICollectionViewCell {
             self.layer.cornerRadius = 1.0
         }
         
-        self.date.text = event.day + " " + months[Int(event.month)! - 1] + ", " + event.time
+        self.date.text = event.day + " " + months[Int(event.month)! - 1] + ", " + event.dayName + ", " + event.time
         self.backgroundImage.image = UIImage(named: event.branch)
         self.location.text = event.location
         self.location.adjustsFontSizeToFitWidth = true
@@ -73,18 +68,8 @@ class EventCollectionViewCell: UICollectionViewCell {
         self.capacity.text = "\(event.participants.count)/" + (event.maxJoinNumber) + " Free Spots"
         
         if event.isPast {
-            blackWhiteView.alpha = 0.5
+            blackWhiteView.alpha = 0.6
             capacity.text = "Event past!"
         }
     }
-    
-    func offset(_ offset: CGPoint) {
-        backgroundImage.frame = self.backgroundImage.bounds.offsetBy(dx: offset.x, dy: offset.y)
-    }
-    
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-    }
-    
-    
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FTIndicator
 
 enum Reporting { case user, event, comment }
 
@@ -55,5 +56,9 @@ class ReportViewController: UIViewController {
         case .comment:
             break
         }
+        
+        dismiss(animated: true, completion: {
+            FTIndicator.showToastMessage("Report sent! Thanks for your concern!")
+        })
     }
 }

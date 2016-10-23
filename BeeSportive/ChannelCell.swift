@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import Alamofire
 
 class ChannelCell: UITableViewCell {
 

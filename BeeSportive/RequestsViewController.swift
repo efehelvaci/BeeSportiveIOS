@@ -9,8 +9,6 @@
 import UIKit
 import Async
 import Firebase
-import Alamofire
-import AlamofireImage
 
 class RequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -51,11 +49,7 @@ class RequestsViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.userNameLabel.text = users[(indexPath as NSIndexPath).row].displayName
             cell.delegate = self
             
-            Alamofire.request(self.users[(indexPath as NSIndexPath).row].photoURL!).responseImage(completionHandler: { response in
-                if let image = response.result.value {
-                    cell.userImage.image = image
-                }
-            })
+            cell.userImage.kf.setImage(with: URL(string: self.users[(indexPath as NSIndexPath).row].photoURL!))
             
             return cell
         } else { return UITableViewCell() }
@@ -66,5 +60,7 @@ class RequestsViewController: UIViewController, UITableViewDataSource, UITableVi
         self.present(viewController5, animated: true, completion: { _ in
             viewController5.user = self.users[indexPath.row]
         })
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

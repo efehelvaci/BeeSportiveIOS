@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseDatabase
+import Async
 
 class RequestsTableViewCell: UITableViewCell {
     
@@ -34,22 +35,35 @@ class RequestsTableViewCell: UITableViewCell {
         for i in 0 ..< delegate!.users.count {
             if requesterID! == delegate!.users[i].id {
                 if accepted { delegate!.senderVC?.event.participants.append(requesterID!) }
-                delegate!.users.remove(at: i)
-                delegate!.tableView.reloadData()
+                
+                Async.background{
+                    self.delegate!.tableView.beginUpdates()
+                    
+                    self.delegate!.users.remove(at: i)
+                    let indexPath = IndexPath(item: i, section: 0)
+                    
+                    self.delegate!.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.left)
+                    Async.main(after: 0.1, { _ in
+                        self.delegate!.tableView.endUpdates()
+                        if self.delegate!.users.count == 0 { self.delegate!.dismiss(animated: true, completion: nil) }
+                        self.delegate!.tableView.isUserInteractionEnabled = true
+                    })
+                }
+
                 break
             }
         }
-        
-        if delegate!.users.count == 0 { delegate!.dismiss(animated: true, completion: nil) }
     }
     
     @IBAction func declineButtonClicked(_ sender: AnyObject) {
+        delegate!.tableView.isUserInteractionEnabled = false
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
         deleteUserFromTable(accepted: false)
     }
     
  
     @IBAction func acceptButtonClicked(_ sender: AnyObject) {
+        delegate!.tableView.isUserInteractionEnabled = false
         REF_EVENTS.child(eventID!).child("requested").child(requesterID!).removeValue()
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("id").setValue(requesterID!)
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("status").setValue("accepted")

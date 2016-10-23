@@ -8,8 +8,6 @@
 
 import UIKit
 import Firebase
-import FirebaseDatabase
-import Alamofire
 import Async
 import FTIndicator
 

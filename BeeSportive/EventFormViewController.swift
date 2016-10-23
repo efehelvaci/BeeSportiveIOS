@@ -16,11 +16,17 @@ import Eureka
 class EventFormViewController: FormViewController, CLLocationManagerDelegate {
 
     let locationManager = CLLocationManager()
+    var timesToLocateAccurate = 10
     var location : CLLocation? {
         didSet{
             self.form.rowBy(tag: "LocationPin")?.baseValue = location
             self.form.rowBy(tag: "LocationPin")?.reload()
-            locationManager.stopUpdatingLocation()
+            
+            timesToLocateAccurate = timesToLocateAccurate - 1
+            
+            if timesToLocateAccurate <= 0 {
+                locationManager.stopUpdatingLocation()
+            }
         }
     }
     
@@ -31,7 +37,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
         
         locationManager.delegate = self;
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
         let backButton = UIBarButtonItem()
@@ -52,7 +58,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                 }
                 <<< TextAreaRow() {
                     $0.placeholder = "Description"
-                    $0.textAreaHeight = .dynamic(initialTextViewHeight: 110)
+                    $0.textAreaHeight = .dynamic(initialTextViewHeight: 80)
                     $0.tag = "Description"
                 }
 
@@ -68,7 +74,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                         $0.tag = "Time"
                     }
                 <<< LocationRow(){
-                        $0.value = CLLocation()
+                        $0.value = CLLocation(latitude: 41.015137, longitude: 28.979530)
                         $0.title = "Location Pin"
                     
                         $0.tag = "LocationPin"
@@ -96,6 +102,12 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                         $0.value = 10
                         $0.tag = "MaxJoin"
                     }
+            +++ Section()
+            <<< ButtonRow("Add Event") { row in
+                row.title = row.tag
+            }.onCellSelection({ [weak self] (cell, row) in
+                self?.createEvent()
+            })
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -134,20 +146,20 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
             }
             
             if maxJoin > 100 {
-                FTIndicator.showInfo(withMessage: "Cannot create event for +100 people.")
+                FTIndicator.showInfo(withMessage: "Cannot create event for more than 100 people.")
                 return
             } else if maxJoin < 1 {
                 FTIndicator.showInfo(withMessage: "Cannot create event for less than 1 person")
                 return
             }
             
-            if currentDate.addDays(daysToAdd: 120) < date {
-                FTIndicator.showInfo(withMessage: "Cannot create event for >4 months later.")
+            if currentDate.addDays(daysToAdd: 90) < date {
+                FTIndicator.showInfo(withMessage: "Cannot create event for >3 months later.")
                 return
             }
             
-            if description.characters.count < 20 {
-                FTIndicator.showInfo(withMessage: "Event description too short (Minimum 20 characters)")
+            if description.characters.count < 10 {
+                FTIndicator.showInfo(withMessage: "Event description too short (Minimum 10 characters)")
                 return
             } else if description.characters.count > 1000 {
                 FTIndicator.showInfo(withMessage: "Event description too long (Maximum 1000 characters)")
@@ -240,6 +252,15 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                         
                         self.form.rowBy(tag: "MaxJoin")?.baseValue = 10
                         self.form.rowBy(tag: "MaxJoin")?.reload()
+                    
+                        self.form.rowBy(tag: "Level")?.baseValue = "Not chosen"
+                        self.form.rowBy(tag: "Level")?.reload()
+                    
+                        self.form.rowBy(tag: "Branch")?.baseValue = "Not chosen"
+                        self.form.rowBy(tag: "Branch")?.reload()
+                    
+                        self.form.rowBy(tag: "Date")?.baseValue = Date()
+                        self.form.rowBy(tag: "Date")?.reload()
                 })
             })
         } else {

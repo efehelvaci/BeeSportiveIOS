@@ -8,8 +8,6 @@
 
 import UIKit
 import Firebase
-import Alamofire
-import AlamofireImage
 
 class UserCell: UICollectionViewCell {
 
@@ -41,14 +39,10 @@ class UserCell: UICollectionViewCell {
         if let urlStr = user.photoURL {
             let imgURL = URL(string: urlStr)!
             
-            Alamofire.request(imgURL).responseImage(completionHandler: { response in
-                if let image = response.result.value {
-                    self.img.layer.masksToBounds = true
-                    self.img.layer.cornerRadius = self.img.frame.width / 2.0
-                    self.img.image = image
-                    self.img.isHidden = false
-                }
-            })
+            self.img.kf.setImage(with: imgURL)
+            self.img.layer.masksToBounds = true
+            self.img.layer.cornerRadius = self.img.frame.width / 2.0
+            self.img.isHidden = false
         }
     }
 

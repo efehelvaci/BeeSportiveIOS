@@ -26,7 +26,7 @@ class TabBarController: UITabBarController {
         let eventCreateVC = storyboard!.instantiateViewController(withIdentifier: "EventFormViewController")
         eventCreationNavCon = UINavigationController(rootViewController: eventCreateVC)
         eventCreateVC.navigationItem.title = "Create Event"
-        eventCreationNavCon?.navigationBar.barTintColor = UIColor(red: 249/255, green: 225/255, blue: 6/255, alpha: 1)
+        eventCreationNavCon?.navigationBar.barTintColor = UIColor.white
         eventCreationNavCon?.navigationBar.tintColor = UIColor.gray
         eventCreationNavCon?.navigationBar.isTranslucent = false
         eventCreationNavCon?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Open Sans", size: 22)!]
@@ -36,6 +36,8 @@ class TabBarController: UITabBarController {
         viewController1.tabBarItem.imageInsets = tabBarImageInsets
         let nav1 = UINavigationController(rootViewController: viewController1)
         nav1.navigationBar.barTintColor = UIColor.white
+        nav1.navigationBar.tintColor = UIColor.gray
+        nav1.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Open Sans", size: 22)!]
         
         let viewController2 = storyboard!.instantiateViewController(withIdentifier: "UsersVC") as! UsersVC
         viewController2.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Search"), tag: 2)

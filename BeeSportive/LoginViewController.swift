@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import FirebaseDatabase
 import Async
 import FTIndicator
 
@@ -20,11 +19,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    let loginButton = FBSDKLoginButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Facebook login button create
-        let loginButton = FBSDKLoginButton()
+        
         loginButton.alpha = 0.0
         self.view.addSubview(loginButton)
         loginButton.center = CGPoint(x: UIScreen.main.bounds.maxX/2.0, y: UIScreen.main.bounds.maxY-150)
@@ -33,41 +34,48 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.logoImageView.alpha = 1.0
-            loginButton.alpha = 1.0
+            self.loginButton.alpha = 1.0
             self.backgroundImage.alpha = 0.2
             self.sloganLabel.alpha = 1.0
             }, completion: nil)
     }
     
     // MARK: -Facebook Delegate Methods
-    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        print("User Logged In")
-        
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!)
+    {
         if (error != nil)
         {
             print(error)
             print("Process error")
             // Process error
         }
-        else if result.isCancelled {
+        else if result.isCancelled
+        {
             print("Login cancelled")
             // Handle cancellations
         }
-        else {
+        else
+        {
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
-            if result.grantedPermissions.contains("email") && result.grantedPermissions.contains("user_friends") && result.grantedPermissions.contains("public_profile")
+            if result.grantedPermissions.contains("public_profile")
             {   
                 let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
                 
                 FIRAuth.auth()?.signIn(with: credential) { (user, error) in
                     guard user != nil else {
                         print(error)
-                        // Toast
-                        
                         return
                     }
+                    
                     FTIndicator.showNotification(with: UIImage(named: "Success"), title: "Yay!", message: "You logged in succesfully!")
+                    
+                    var email = " "
+                    
+                    if result.grantedPermissions.contains("email")
+                    {
+                        email = (user?.email)!
+                    }
                     
                     // Check if user already signed in before
                     // If not, create user object into database/users
@@ -75,7 +83,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                         if !snapshot.exists() {
                             let newUser : [String : AnyObject] = [
                                 "displayName" : (user?.displayName)! as AnyObject,
-                                "email" : (user?.email)! as AnyObject,
+                                "email" : email as AnyObject,
                                 "photoURL" : (user?.photoURL?.absoluteString)! as AnyObject,
                                 "id" : (user?.uid)! as AnyObject
                                 ]

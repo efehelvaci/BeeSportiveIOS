@@ -15,9 +15,16 @@ class BioViewController: UIViewController {
     @IBOutlet var bioTextView: UITextView!
     
     var senderVC: ProfileViewController?
+    var oldBio = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        bioTextView.text = oldBio
     }
     
     // MARK: -IBActions
