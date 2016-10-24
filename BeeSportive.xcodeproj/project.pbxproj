@@ -45,6 +45,8 @@
 		2798A7831DA9C95800BE8154 /* BioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2798A7821DA9C95800BE8154 /* BioViewController.swift */; };
 		279D900B1D72571D00F73F23 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279D900A1D72571D00F73F23 /* MapKit.framework */; };
 		279FBC451D7EFA0C00B0AFAE /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279FBC441D7EFA0C00B0AFAE /* TabBarController.swift */; };
+		27A0FBEF1DBCDF2200F2D370 /* FollowerFollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0FBEE1DBCDF2200F2D370 /* FollowerFollowingViewController.swift */; };
+		27A0FBF11DBD602F00F2D370 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0FBF01DBD602F00F2D370 /* Notification.swift */; };
 		27B977161DA23EFA00245D8C /* ScrollPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B977151DA23EFA00245D8C /* ScrollPager.swift */; };
 		27BFF2E61D778D3E002040D3 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BFF2E51D778D3E002040D3 /* RequestsViewController.swift */; };
 		27BFF2E91D778D82002040D3 /* RequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BFF2E81D778D82002040D3 /* RequestsTableViewCell.swift */; };
@@ -111,6 +113,8 @@
 		2798A7821DA9C95800BE8154 /* BioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BioViewController.swift; sourceTree = "<group>"; };
 		279D900A1D72571D00F73F23 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		279FBC441D7EFA0C00B0AFAE /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		27A0FBEE1DBCDF2200F2D370 /* FollowerFollowingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowerFollowingViewController.swift; sourceTree = "<group>"; };
+		27A0FBF01DBD602F00F2D370 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		27B977151DA23EFA00245D8C /* ScrollPager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollPager.swift; sourceTree = "<group>"; };
 		27BFF2E51D778D3E002040D3 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
 		27BFF2E81D778D82002040D3 /* RequestsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsTableViewCell.swift; sourceTree = "<group>"; };
@@ -164,6 +168,7 @@
 				81E8DCF71D75BD8400234743 /* Channel.swift */,
 				277C1CBC1D63B26A0008331F /* Event.swift */,
 				276F4D1B1D9957F700AA90C0 /* Comment.swift */,
+				27A0FBF01DBD602F00F2D370 /* Notification.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -244,6 +249,7 @@
 				279FBC431D7EF9F900B0AFAE /* Tab Bar */,
 				27CB270C1D5D3CDD00F9ECF5 /* AppDelegate.swift */,
 				27CB27101D5D3CDD00F9ECF5 /* Main.storyboard */,
+				27CC6DE41DA94BCB00E1061E /* GoogleService-Info.plist */,
 				27CB27151D5D3CDD00F9ECF5 /* LaunchScreen.storyboard */,
 				273E57631D62032B009DABFE /* Bridging-Header.h */,
 			);
@@ -258,7 +264,6 @@
 				270E8F2D1DA3C5EC0047AC20 /* FavoriteSportPickerViewController.swift */,
 				27BFF2E51D778D3E002040D3 /* RequestsViewController.swift */,
 				277C1CB81D6387100008331F /* EventViewController.swift */,
-				27CC6DE41DA94BCB00E1061E /* GoogleService-Info.plist */,
 				2750C3181D90743300747B74 /* EventsCollectionViewController.swift */,
 				27788D231D7B2173002B6554 /* EventFormViewController.swift */,
 				8114B4CD1D7ED2A900CE0FF8 /* UsersVC.swift */,
@@ -270,6 +275,7 @@
 				2798A7661DA960FD00BE8154 /* CommentViewController.swift */,
 				2798A7681DA974CB00BE8154 /* ReportViewController.swift */,
 				2798A7821DA9C95800BE8154 /* BioViewController.swift */,
+				27A0FBEE1DBCDF2200F2D370 /* FollowerFollowingViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -509,6 +515,7 @@
 				275F9B731D98748B00E7744B /* ProfileCommentTableViewCell.swift in Sources */,
 				81E8DCF81D75BD8400234743 /* Channel.swift in Sources */,
 				275F9B711D98745E00E7744B /* ProfileFavoriteSportCollectionViewCell.swift in Sources */,
+				27A0FBEF1DBCDF2200F2D370 /* FollowerFollowingViewController.swift in Sources */,
 				277C1CBD1D63B26A0008331F /* Event.swift in Sources */,
 				27743FEE1D634E47004EAD97 /* User.swift in Sources */,
 				273E575C1D61FE8B009DABFE /* LoginViewController.swift in Sources */,
@@ -516,6 +523,7 @@
 				2798A7831DA9C95800BE8154 /* BioViewController.swift in Sources */,
 				27BFF2E91D778D82002040D3 /* RequestsTableViewCell.swift in Sources */,
 				277C1CC01D64A2B20008331F /* EventCollectionViewCell.swift in Sources */,
+				27A0FBF11DBD602F00F2D370 /* Notification.swift in Sources */,
 				275F9B6F1D9872B400E7744B /* ProfileViewController.swift in Sources */,
 				2750C3191D90743300747B74 /* EventsCollectionViewController.swift in Sources */,
 				27788D241D7B2173002B6554 /* EventFormViewController.swift in Sources */,

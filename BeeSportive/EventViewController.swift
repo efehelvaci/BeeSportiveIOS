@@ -52,9 +52,9 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         scrollPager.addSegmentsWithTitlesAndViews(segments: [
             ("All", firstCollectionView),
             ("Popular", secondCollectionView),
-            ("My Favorites", thirdCollectionView),
-            ("Followed", followingCollectionView),
-            ("Branchs", fourthCollectionView)
+            ("Favorites", thirdCollectionView),
+            ("Following", followingCollectionView),
+            ("Branches", fourthCollectionView)
             ])
         
         // Navigation bar & controller settings

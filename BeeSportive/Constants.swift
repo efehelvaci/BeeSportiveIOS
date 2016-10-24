@@ -12,6 +12,7 @@ import UIKit
 let screenSize = UIScreen.main.bounds.size
 
 let REF_DATA = FIRDatabase.database().reference()
+let REF_NOTIFICATIONS = REF_DATA.child("notifications")
 let REF_CHANNELS = REF_DATA.child("channels")
 let REF_USERS = REF_DATA.child("users")
 let REF_EVENTS = REF_DATA.child("events")

@@ -80,7 +80,7 @@
             </view>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="qYI-VA-taI" secondAttribute="trailing" id="3kn-K4-0m8"/>
-                <constraint firstAttribute="bottom" secondItem="JbN-Oe-KoT" secondAttribute="bottom" constant="7" id="9mV-Wg-sCh"/>
+                <constraint firstAttribute="bottom" secondItem="JbN-Oe-KoT" secondAttribute="bottom" constant="8" id="9mV-Wg-sCh"/>
                 <constraint firstItem="PzD-oy-olx" firstAttribute="top" secondItem="JbN-Oe-KoT" secondAttribute="top" constant="-5" id="B2h-36-O5D"/>
                 <constraint firstItem="WoI-E8-ar2" firstAttribute="centerY" secondItem="5f3-QU-Cy2" secondAttribute="centerY" id="IYt-Se-noN"/>
                 <constraint firstItem="5f3-QU-Cy2" firstAttribute="centerY" secondItem="JbN-Oe-KoT" secondAttribute="centerY" id="IcP-Mz-M9v"/>

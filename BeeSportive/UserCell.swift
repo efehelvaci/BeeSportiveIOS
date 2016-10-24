@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Async
 
 class UserCell: UICollectionViewCell {
 
@@ -36,13 +37,21 @@ class UserCell: UICollectionViewCell {
         displayName.text = user.displayName
         displayName.isHidden = false
         
-        if let urlStr = user.photoURL {
-            let imgURL = URL(string: urlStr)!
-            
-            self.img.kf.setImage(with: imgURL)
-            self.img.layer.masksToBounds = true
-            self.img.layer.cornerRadius = self.img.frame.width / 2.0
-            self.img.isHidden = false
+        Async.main{
+            if let urlStr = user.photoURL {
+                let imgURL = URL(string: urlStr)!
+                
+                self.img.kf.setImage(with: imgURL)
+                self.img.layer.masksToBounds = true
+                self.img.layer.cornerRadius = self.img.frame.width / 2.0
+                self.img.isHidden = false
+            }
+        }
+        
+        if user.id == FIRAuth.auth()?.currentUser?.uid {
+            followButton.isHidden = true
+        } else {
+            followButton.isHidden = false
         }
     }
 
@@ -59,6 +68,14 @@ class UserCell: UICollectionViewCell {
             
             REF_USERS.child(user.id).child("followers").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue(FIRAuth.auth()?.currentUser?.uid)
             REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("following").child(user.id).child("id").setValue(user.id)
+            
+            let notifier = [
+                "notification": (currentUser.instance.user?.displayName)! + " followed you!" ,
+                "notificationConnection": (FIRAuth.auth()?.currentUser?.uid)!,
+                "type": "newFollower"
+            ]
+            
+            REF_NOTIFICATIONS.child(user.id).childByAutoId().setValue(notifier)
         } else {
             followButton.setTitle("follow", for: UIControlState())
             following = false

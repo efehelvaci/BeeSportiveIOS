@@ -112,6 +112,14 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
                 self.joinButton.setTitle("Requested", for: .disabled)
                 self.joinButton.layer.borderColor = UIColor.gray.cgColor
                 self.joinButton.isEnabled = false
+                
+                let notifier = [
+                    "notification": (currentUser.instance.user?.displayName)! + " wanted to join your event: '" + self.event.name + "'." ,
+                    "notificationConnection": self.event.id,
+                    "type": "incomingJoinRequest"
+                ]
+                
+                REF_NOTIFICATIONS.child(self.event.creatorID).childByAutoId().setValue(notifier)
             }
         })
         )
@@ -165,12 +173,31 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
             joinButton.layer.borderColor = UIColor.gray.cgColor
             joinButton.isEnabled = false
             requestsButton.isHidden = false
+            
+            REF_EVENTS.child(event.id).child("requested").observe(.value, with: { snapshot in
+                var tempReqs = [User]()
+                
+                if snapshot.exists() {
+                    for snap in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                        if let data = snap.value as? Dictionary<String, String> {
+                            REF_USERS.child(data["id"]!).observeSingleEvent(of: .value, with: { snapshot2 in
+                                tempReqs.append(User(snapshot: snapshot2))
+                                
+                                self.eventRequsters = tempReqs
+                            })
+                        }
+                    }
+                } else {
+                    self.eventRequsters.removeAll()
+                }
+            })
+            
         } else {
             joinButton.isEnabled = true
             requestsButton.isHidden = true
         }
 
-    }
+    } // End of viewWillAppear
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -275,8 +302,6 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
             
             self.pin.coordinate = centerLocation
             map.addAnnotation(self.pin)
-            
-            
             
             map.region = MKCoordinateRegion(center: centerLocation, span: mapSpan)
             

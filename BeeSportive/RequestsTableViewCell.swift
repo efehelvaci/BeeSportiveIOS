@@ -68,6 +68,14 @@ class RequestsTableViewCell: UITableViewCell {
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("id").setValue(requesterID!)
         REF_EVENTS.child(eventID!).child("participants").child(requesterID!).child("status").setValue("accepted")
         REF_USERS.child(requesterID!).child("joinedEvents").child(eventID!).setValue(eventID!)
+        
+        let notifier = [
+            "notification": "You are accepted to the event: '" + delegate!.senderVC!.event.name + "'. Now you can chat with other sportives participating!" ,
+            "notificationConnection": delegate!.senderVC!.event.id,
+            "type": "joinRequestAccepted"
+        ]
+        REF_NOTIFICATIONS.child(requesterID!).childByAutoId().setValue(notifier)
+        
         deleteUserFromTable(accepted: true)
     }
 }

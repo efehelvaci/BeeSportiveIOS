@@ -23,5 +23,23 @@ class NotificationTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func configureCell(notification: Notification) {
+        notificationLabel.text = notification.notification
+        
+        switch notification.notificationType {
+        case .general:
+            notificationImage.image = UIImage(named: "Bee")
+            break
+        case .joinRequestAccepted:
+            notificationImage.image = UIImage(named: "AcceptedToEvent")
+            break
+        case .newFollower:
+            notificationImage.image = UIImage(named: "NewFollower")
+            break
+        default:
+            break
+        }
+    }
 
 }

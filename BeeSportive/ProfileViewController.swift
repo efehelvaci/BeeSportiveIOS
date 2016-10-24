@@ -106,7 +106,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
         scrollPager.delegate = self
         scrollPager.addSegmentsWithTitlesAndViews(segments: [
-            ("Past Events", eventsCollectionView),
+            ("My Events", eventsCollectionView),
             ("Comments", commentsTableView)
             ])
         
@@ -242,7 +242,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             
         }
     }
-    
     
     
     // MARK: - Table View Delegate Methods
@@ -464,6 +463,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             REF_USERS.child(user!.id).child("followers").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue(FIRAuth.auth()?.currentUser?.uid)
             REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).child("following").child(user!.id).child("id").setValue(user!.id)
             
+            let notifier = [
+                "notification": (currentUser.instance.user?.displayName)! + " followed you!" ,
+                "notificationConnection": (FIRAuth.auth()?.currentUser?.uid)!,
+                "type": "newFollower"
+            ]
+            
+            REF_NOTIFICATIONS.child(user!.id).childByAutoId().setValue(notifier)
+            
         } else {
             followButton.setTitle("follow", for: UIControlState())
             isFollowing = false
@@ -565,5 +572,24 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         popoverController?.sourceRect = bioChangeButton.frame
         present(popoverContent, animated: true, completion: nil)
     }
+
+    @IBAction func followersButtonClicked(_ sender: AnyObject) {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "FollowerFollowingViewController") as? FollowerFollowingViewController {
+            vc.userIDs = (self.user?.followers)!
+            vc.headerText = "Followers"
+            
+            present(vc, animated: false, completion: nil)
+        }
+    }
+    
+    @IBAction func followingButtonClicked(_ sender: AnyObject) {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "FollowerFollowingViewController") as? FollowerFollowingViewController {
+            vc.userIDs = (self.user?.following)!
+            vc.headerText = "Following"
+            
+            present(vc, animated: false, completion: nil)
+        }
+    }
+    
     
 }

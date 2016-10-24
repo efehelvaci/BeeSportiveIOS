@@ -53,14 +53,11 @@ class SettingsTableViewController: UITableViewController {
         switch cellClicked {
         case cell1:
             button.sendActions(for: UIControlEvents.touchUpInside)
-            print("1")
             break
         case cell2:
             privacyAlert.present()
-            print("2")
             break
         case cell3:
-            print("3")
             do {
                 try FIRAuth.auth()!.signOut()
                 FTIndicator.showNotification(with: UIImage(named: "Success"), title: "You logged off!", message: "You logged off successfully")
@@ -90,7 +87,5 @@ class SettingsTableViewController: UITableViewController {
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        dismiss(animated: true, completion: nil)
     }
 }
