@@ -28,8 +28,6 @@ class FollowerFollowingViewController: UIViewController, UICollectionViewDelegat
         navigationItem.backBarButtonItem = backButton
         
         profileVC = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        
-        FTIndicator.showProgressWithmessage("Loading...")
 
         let nib = UINib(nibName: "UserCell", bundle:nil)
         collectionView.register(nib, forCellWithReuseIdentifier: "userCell")
@@ -41,7 +39,14 @@ class FollowerFollowingViewController: UIViewController, UICollectionViewDelegat
         navigationItem.title = headerText
         followedUsers = (currentUser.instance.user?.following)!
         
+        collectionView.reloadData()
         retrieveUsers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        FTIndicator.dismissProgress()
     }
 
     override func didReceiveMemoryWarning() {
@@ -99,9 +104,11 @@ class FollowerFollowingViewController: UIViewController, UICollectionViewDelegat
     func retrieveUsers() {
         self.users.removeAll()
         var counter = 0
+        FTIndicator.showProgressWithmessage("Loading...")
         
         for element in userIDs {
             REF_USERS.child(element).observeSingleEvent(of: .value, with: { snapshot in
+                
                 counter = counter + 1
                 
                 if snapshot.exists() {

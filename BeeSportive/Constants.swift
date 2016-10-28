@@ -10,6 +10,7 @@ import Firebase
 import UIKit
 
 let screenSize = UIScreen.main.bounds.size
+let primaryButtonColor = UIColor(red: 0, green: 91/255.0, blue: 127/255.0, alpha: 1) // 005B7F
 
 let REF_DATA = FIRDatabase.database().reference()
 let REF_NOTIFICATIONS = REF_DATA.child("notifications")

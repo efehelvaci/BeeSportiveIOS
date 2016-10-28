@@ -37,6 +37,9 @@ class NotificationTableViewCell: UITableViewCell {
         case .newFollower:
             notificationImage.image = UIImage(named: "NewFollower")
             break
+        case .incomingJoinRequest:
+            notificationImage.image = UIImage(named: "JoinRequest")
+            break
         default:
             break
         }

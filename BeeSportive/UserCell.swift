@@ -33,9 +33,17 @@ class UserCell: UICollectionViewCell {
         img.isHidden = true
         
         if following{
-            if followButton.currentTitle != "unfollow" { followButton.setTitle("unfollow", for: UIControlState()) }
+            if followButton.currentTitle != "following" {
+                followButton.setTitle("following", for: UIControlState())
+                followButton.backgroundColor = primaryButtonColor
+                followButton.setTitleColor(UIColor.white, for: UIControlState())
+            }
         } else {
-            if followButton.currentTitle != "follow" { followButton.setTitle("follow", for: UIControlState()) }
+            if followButton.currentTitle != "follow" {
+                followButton.setTitle("follow", for: UIControlState())
+                followButton.backgroundColor = UIColor.clear
+                followButton.setTitleColor(primaryButtonColor, for: UIControlState())
+            }
         }
         
         user.verified ? (verifiedImage.isHidden = false) : (verifiedImage.isHidden = true)
@@ -67,7 +75,9 @@ class UserCell: UICollectionViewCell {
         }
         
         if !following {
-            followButton.setTitle("unfollow", for: UIControlState())
+            followButton.setTitle("following", for: UIControlState())
+            followButton.backgroundColor = primaryButtonColor
+            followButton.setTitleColor(UIColor.white, for: UIControlState())
             following = true
          
             if delegate != nil {
@@ -88,6 +98,8 @@ class UserCell: UICollectionViewCell {
             REF_NOTIFICATIONS.child(user.id).childByAutoId().setValue(notifier)
         } else {
             followButton.setTitle("follow", for: UIControlState())
+            followButton.backgroundColor = UIColor.clear
+            followButton.setTitleColor(primaryButtonColor, for: UIControlState())
             following = false
             
             if delegate != nil {

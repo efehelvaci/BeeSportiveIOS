@@ -21,8 +21,7 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         
         // Selected item color at tab bar
-        // Hex: 005B7F
-        tabBar.tintColor = UIColor(red: 0/255, green: 94/255, blue: 127/255, alpha: 1)
+        tabBar.tintColor = primaryButtonColor
         
         // View Controllers of tab bar
         let eventVC = storyboard!.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController

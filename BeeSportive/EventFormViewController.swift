@@ -38,7 +38,6 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
         locationManager.delegate = self;
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
         
         let backButton = UIBarButtonItem()
         backButton.title = ""
@@ -99,7 +98,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                         }
                 <<< IntRow() {
                         $0.title = "Join Number"
-                        $0.placeholder = "Max. 100"
+                        $0.placeholder = "1 ~ 100"
                         $0.tag = "MaxJoin"
                     }
             +++ Section()
@@ -110,11 +109,17 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
             })
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        timesToLocateAccurate = 10
+        locationManager.startUpdatingLocation()
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         
         self.location = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
-//        self.form.rowByTag("LocationPin")?.baseValue = self.location
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

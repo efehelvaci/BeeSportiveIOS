@@ -13,27 +13,25 @@ import FTIndicator
 
 class EventViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, ScrollPagerDelegate {
     
-    @IBOutlet var firstCollectionView: UICollectionView!
-    @IBOutlet var secondCollectionView: UICollectionView!
-    @IBOutlet var thirdCollectionView: UICollectionView!
-    @IBOutlet var fourthCollectionView: UICollectionView!
-    @IBOutlet var followingCollectionView: UICollectionView!
+    @IBOutlet var firstCollectionView: UICollectionView! // All Events
+    @IBOutlet var thirdCollectionView: UICollectionView! // Favorite Events
+    @IBOutlet var fourthCollectionView: UICollectionView! // Branchs
+    @IBOutlet var followingCollectionView: UICollectionView! // Followed Events
     
     @IBOutlet var beeView: UIView!
     
     @IBOutlet var scrollPager: ScrollPager!
     
     @IBOutlet var beeViewLeading: NSLayoutConstraint!
-    
-    let refreshControl1 = UIRefreshControl()
-    let refreshControl2 = UIRefreshControl()
-    let refreshControl3 = UIRefreshControl()
+
+    let allEventsRefreshControl = UIRefreshControl()
+    let favoritesRefreshControl = UIRefreshControl()
+    let followingRefreshControl = UIRefreshControl()
     let backButton = UIBarButtonItem()
     
     var eventDetailVC : EventDetailViewController!
     var allEvents = [Event]()
     var favoriteSports = [String]()
-    var popularEvents = [Event]()
     var favoriteEvents = [Event]()
     var followingEvents = [Event]()
     var selectedEventNo : Int?
@@ -41,6 +39,13 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        allEventsRefreshControl.addTarget(self, action: #selector(fakeAllEventsRefresh), for: UIControlEvents.valueChanged)
+        favoritesRefreshControl.addTarget(self, action: #selector(retrieveFavoriteEvents), for: UIControlEvents.valueChanged)
+        followingRefreshControl.addTarget(self, action: #selector(retrieveFollowingEvents), for: UIControlEvents.valueChanged)
+        firstCollectionView.addSubview(allEventsRefreshControl)
+        thirdCollectionView.addSubview(favoritesRefreshControl)
+        followingCollectionView.addSubview(followingRefreshControl)
         
         backButton.title = ""
         navigationItem.backBarButtonItem = backButton
@@ -53,7 +58,6 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         scrollPager.delegate = self
         scrollPager.addSegmentsWithTitlesAndViews(segments: [
             ("All", firstCollectionView),
-            ("Popular", secondCollectionView),
             ("Favorites", thirdCollectionView),
             ("Following", followingCollectionView),
             ("Branches", fourthCollectionView)
@@ -68,35 +72,19 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         // Get data from database and update collection view
         retrieveAllEvents()
-        retrievePopularEvents()
-        
-        // Pull to refresh
-        refreshControl1.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl1.addTarget(self, action: #selector(retrieveAllEvents), for: UIControlEvents.valueChanged)
-        firstCollectionView.addSubview(refreshControl1)
-        
-        refreshControl2.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl2.addTarget(self, action: #selector(retrievePopularEvents), for: UIControlEvents.valueChanged)
-        secondCollectionView.addSubview(refreshControl2)
-        
-        refreshControl3.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl3.addTarget(self, action: #selector(retrieveAllEvents), for: UIControlEvents.valueChanged)
-        thirdCollectionView.addSubview(refreshControl3)
         
         // Collection view cell nib register
         let nibName = UINib(nibName: "EventCollectionViewCell", bundle:nil)
         let nibName2 = UINib(nibName: "FavoriteSportCollectionViewCell", bundle:nil)
         
         firstCollectionView.register(nibName, forCellWithReuseIdentifier: "eventCell")
-        secondCollectionView.register(nibName, forCellWithReuseIdentifier: "eventCell")
         thirdCollectionView.register(nibName, forCellWithReuseIdentifier: "eventCell")
         followingCollectionView.register(nibName, forCellWithReuseIdentifier: "eventCell")
         fourthCollectionView.register(nibName2, forCellWithReuseIdentifier: "FavoriteSportCell")
         
         
-        // If there are not enough events to scroll, you can still pull to refresh
+        // If there are not enough events to scroll, you can still scroll
         firstCollectionView.alwaysBounceVertical = true
-        secondCollectionView.alwaysBounceVertical = true
         thirdCollectionView.alwaysBounceVertical = true
     }
     
@@ -104,8 +92,6 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == firstCollectionView {
             return allEvents.count
-        } else if collectionView == secondCollectionView {
-            return popularEvents.count
         } else if collectionView == thirdCollectionView {
             return favoriteEvents.count
         } else if collectionView == fourthCollectionView {
@@ -145,12 +131,6 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             cell.configureCell(event: allEvents[indexPath.row])
             
             return cell
-        } else if collectionView == secondCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as! EventCollectionViewCell
-            
-            cell.configureCell(event: popularEvents[indexPath.row])
-            
-            return cell
         } else if collectionView == thirdCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as! EventCollectionViewCell
             
@@ -180,9 +160,6 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         if collectionView == firstCollectionView {
             eventDetailVC.event = allEvents[indexPath.row]
-            show(eventDetailVC, sender: self)
-        } else if collectionView == secondCollectionView {
-            eventDetailVC.event = popularEvents[indexPath.row]
             show(eventDetailVC, sender: self)
         } else if collectionView == thirdCollectionView {
             eventDetailVC.event = favoriteEvents[indexPath.row]
@@ -215,7 +192,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
-        if collectionView == firstCollectionView || collectionView == secondCollectionView || collectionView == thirdCollectionView || collectionView == followingCollectionView {
+        if collectionView == firstCollectionView || collectionView == thirdCollectionView || collectionView == followingCollectionView {
             return CGSize(width: screenSize.width - 8, height: 144)
         }
         
@@ -235,21 +212,14 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     func retrieveAllEvents() {
        
         var tempAllEvents = [Event]()
-        var tempFavEvents = [Event]()
-        var tempFolEvents = [Event]()
-        
         
         REF_EVENTS.observe(.value , with: { (snapshot) in
             
             tempAllEvents.removeAll()
-            tempFavEvents.removeAll()
-            tempFolEvents.removeAll()
             
             if snapshot.exists() {
                 
-                let postDict = snapshot.children
-                
-                for element in postDict {
+                for element in snapshot.children.allObjects {
                     let eventElement = Event(snapshot: element as! FIRDataSnapshot)
                     
                     if !eventElement.isPast {
@@ -257,11 +227,10 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                     }
                 }
                 
-                self.allEvents = tempAllEvents
+                self.allEvents = tempAllEvents.sorted(by: { ($0.fullDate?.isLessThanDate(dateToCompare: $1.fullDate!))!})
                 FTIndicator.dismissProgress()
                 
                 Async.main {
-                    self.refreshControl1.endRefreshing()
                     self.firstCollectionView.reloadData()
                     self.fourthCollectionView.reloadData()
                     
@@ -272,106 +241,104 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                     }
                 }
                 
-                if (currentUser.instance.user != nil) && (currentUser.instance.user?.favoriteSports != nil){
-                    self.favoriteSports = (currentUser.instance.user?.favoriteSports)!
-                    
-                    for k in 0 ..< self.allEvents.count {
-                        for j in 0 ..< self.favoriteSports.count {
-                            if self.allEvents[k].branch == self.favoriteSports[j] {
-                                tempFavEvents.append(tempAllEvents[k])
-                            }
-                        }
-                    }
-                    
-                    self.favoriteEvents = tempFavEvents
-                    
-                    Async.main {
-                        self.refreshControl1.endRefreshing()
-                        self.thirdCollectionView.reloadData()
-                    }
-                } else {
-                    REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("favoriteSports").observe(.value, with: { snapshot in
-                        if snapshot.exists() {
-                            if let postDict = (snapshot.value as? Dictionary<String, String>)?.values {
-                                self.favoriteSports = Array(postDict)
-                            }
-                            
-                            for k in 0 ..< self.allEvents.count {
-                                for j in 0 ..< self.favoriteSports.count {
-                                    if self.allEvents[k].branch == self.favoriteSports[j] {
-                                        tempFavEvents.append(tempAllEvents[k])
-                                    }
-                                }
-                            }
-                            
-                            self.favoriteEvents = tempFavEvents
-                            
-                            Async.main {
-                                self.refreshControl1.endRefreshing()
-                                self.thirdCollectionView.reloadData()
-                            }
-                        }
-                    })
-                }
-                
-                if (currentUser.instance.user != nil) && (currentUser.instance.user?.following != nil) {
-                    for eventElement in self.allEvents {
-                        if (currentUser.instance.user?.following.contains(eventElement.creatorID))! {
-                            tempFolEvents.append(eventElement)
-                        }
-                    }
-                    
-                    self.followingEvents = tempFolEvents
-                    
-                    Async.main {
-                        self.followingCollectionView.reloadData()
-                    }
-                } else {
-                    REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("following").observe(.value, with: { snapshot in
-                        if snapshot.exists() {
-                            if let followingUsersIDs = (snapshot.value as? Dictionary<String, AnyObject>)?.keys {
-                                for eventElement in self.allEvents {
-                                    if followingUsersIDs.contains(eventElement.creatorID) {
-                                        tempFolEvents.append(eventElement)
-                                    }
-                                }
-                                
-                                self.followingEvents = tempFolEvents
-                                
-                                Async.main {
-                                    self.followingCollectionView.reloadData()
-                                }
-                            }
-                        }
-                    })
-                }
-                
+                self.retrieveFavoriteEvents()
+                self.retrieveFollowingEvents()
             }
         })
     }
     
-    func retrievePopularEvents() {
-        var tempPopularEvents = [Event]()
+    func retrieveFollowingEvents () {
+        var tempFolEvents = [Event]()
         
-        REF_POPULAR_EVENTS.observe(.value , with: { (snapshot) in
-            tempPopularEvents.removeAll()
-            
-            if snapshot.exists() {
-                let postDict = snapshot.children
-                
-                for element in postDict {
-                    let eventElement = Event(snapshot: element as! FIRDataSnapshot)
-                    
-                    tempPopularEvents.append(eventElement)
-                }
-                
-                self.popularEvents = tempPopularEvents
-                
-                Async.main {
-                    self.refreshControl2.endRefreshing()
-                    self.secondCollectionView.reloadData()
+        if (currentUser.instance.user != nil) && (currentUser.instance.user?.following != nil) {
+            for eventElement in self.allEvents {
+                if (currentUser.instance.user?.following.contains(eventElement.creatorID))! {
+                    tempFolEvents.append(eventElement)
                 }
             }
+            
+            self.followingEvents = tempFolEvents.sorted(by: { ($0.fullDate?.isLessThanDate(dateToCompare: $1.fullDate!))!})
+            
+            Async.main {
+                self.followingCollectionView.reloadData()
+                self.followingRefreshControl.endRefreshing()
+            }
+        } else {
+            REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("following").observeSingleEvent(of: .value, with: { snapshot in
+                if snapshot.exists() {
+                    tempFolEvents.removeAll()
+                    
+                    if let followingUsersIDs = (snapshot.value as? Dictionary<String, AnyObject>)?.keys {
+                        for eventElement in self.allEvents {
+                            if followingUsersIDs.contains(eventElement.creatorID) {
+                                tempFolEvents.append(eventElement)
+                            }
+                        }
+                        
+                        self.followingEvents = tempFolEvents.sorted(by: { ($0.fullDate?.isLessThanDate(dateToCompare: $1.fullDate!))!})
+                        
+                        Async.main {
+                            self.followingCollectionView.reloadData()
+                            self.followingRefreshControl.endRefreshing()
+                        }
+                    }
+                }
+            })
+        }
+    }
+    
+    func retrieveFavoriteEvents () {
+        var tempFavEvents = [Event]()
+        
+        if (currentUser.instance.user != nil) && (currentUser.instance.user?.favoriteSports != nil){
+            self.favoriteSports = (currentUser.instance.user?.favoriteSports)!
+            tempFavEvents.removeAll()
+            
+            for k in 0 ..< self.allEvents.count {
+                for j in 0 ..< self.favoriteSports.count {
+                    if self.allEvents[k].branch == self.favoriteSports[j] {
+                        tempFavEvents.append(self.allEvents[k])
+                    }
+                }
+            }
+            
+            self.favoriteEvents = tempFavEvents.sorted(by: { ($0.fullDate?.isLessThanDate(dateToCompare: $1.fullDate!))!})
+            
+            Async.main {
+                self.thirdCollectionView.reloadData()
+                self.favoritesRefreshControl.endRefreshing()
+            }
+        } else {
+            REF_USERS.child((FIRAuth.auth()?.currentUser!.uid)!).child("favoriteSports").observeSingleEvent(of: .value, with: { snapshot in
+                if snapshot.exists() {
+                    tempFavEvents.removeAll()
+                    
+                    if let postDict = (snapshot.value as? Dictionary<String, String>)?.values {
+                        self.favoriteSports = Array(postDict)
+                    }
+                    
+                    for k in 0 ..< self.allEvents.count {
+                        for j in 0 ..< self.favoriteSports.count {
+                            if self.allEvents[k].branch == self.favoriteSports[j] {
+                                tempFavEvents.append(self.allEvents[k])
+                            }
+                        }
+                    }
+                    
+                    self.favoriteEvents = tempFavEvents.sorted(by: { ($0.fullDate?.isLessThanDate(dateToCompare: $1.fullDate!))!})
+                }
+                
+                Async.main {
+                    self.thirdCollectionView.reloadData()
+                    self.favoritesRefreshControl.endRefreshing()
+                }
+            })
+        }
+    }
+    
+    func fakeAllEventsRefresh() {
+        Async.main(after: 0.5, { _ in
+            self.allEventsRefreshControl.endRefreshing()
         })
     }
     
@@ -383,28 +350,23 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     func scrollPager(scrollPager: ScrollPager, changedIndex: Int) {
         switch changedIndex {
         case 0:
-            UIView.animate(withDuration: 0.2, animations: { 
+            UIView.animate(withDuration: 0.2, animations: {
                 self.beeViewLeading.constant = 0
             })
             break
         case 1:
             UIView.animate(withDuration: 0.2, animations: {
-                self.beeViewLeading.constant = screenSize.width * (1/5.0)
+                self.beeViewLeading.constant = screenSize.width * (1/4.0)
             })
             break
         case 2:
             UIView.animate(withDuration: 0.2, animations: {
-                self.beeViewLeading.constant = screenSize.width * (2/5.0)
+                self.beeViewLeading.constant = screenSize.width * (2/4.0)
             })
             break
         case 3:
             UIView.animate(withDuration: 0.2, animations: {
-                self.beeViewLeading.constant = screenSize.width * (3/5.0)
-            })
-            break
-        case 4:
-            UIView.animate(withDuration: 0.2, animations: {
-                self.beeViewLeading.constant = screenSize.width * (4/5.0)
+                self.beeViewLeading.constant = screenSize.width * (3/4.0)
             })
             break
         default:

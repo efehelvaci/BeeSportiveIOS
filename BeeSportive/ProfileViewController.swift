@@ -372,7 +372,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 for element in following {
                     if element == user!.id {
                         isFollowing = true
-                        followButton.setTitle("unfollow", for: UIControlState())
+                        followButton.setTitle("following", for: UIControlState())
+                        followButton.backgroundColor = primaryButtonColor
+                        followButton.setTitleColor(UIColor.white, for: UIControlState())
                     }
                 }
             }
@@ -464,7 +466,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBAction func followButtonClicked(_ sender: AnyObject) {
         if !isFollowing {
-            followButton.setTitle("unfollow", for: UIControlState())
+            followButton.setTitle("following", for: UIControlState())
+            followButton.backgroundColor = primaryButtonColor
+            followButton.setTitleColor(UIColor.white, for: UIControlState())
             isFollowing = true
             
             currentUser.instance.user?.following.insert(user!.id, at: 0)
@@ -482,6 +486,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             
         } else {
             followButton.setTitle("follow", for: UIControlState())
+            followButton.backgroundColor = UIColor.clear
+            followButton.setTitleColor(primaryButtonColor, for: UIControlState())
             isFollowing = false
             
             for index in 0...(currentUser.instance.user?.following.count)!-1 {
@@ -585,14 +591,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBAction func followersButtonClicked(_ sender: AnyObject) {
         followeringVC.userIDs = (self.user?.followers)!
         followeringVC.headerText = "Followers"
-            
+        followeringVC.users.removeAll()
+        
         show(followeringVC, sender: self)
     }
     
     @IBAction func followingButtonClicked(_ sender: AnyObject) {
         followeringVC.userIDs = (self.user?.following)!
         followeringVC.headerText = "Following"
-            
+        followeringVC.users.removeAll()
+        
         show(followeringVC, sender: self)
     }
     

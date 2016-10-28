@@ -129,12 +129,34 @@ public class MapViewController : UIViewController, TypedRowControllerType, MKMap
     }
     
     func updateTitle(){
-        let fmt = NumberFormatter()
-        fmt.maximumFractionDigits = 4
-        fmt.minimumFractionDigits = 4
-        let latitude = fmt.string(from: NSNumber(value: mapView.centerCoordinate.latitude))!
-        let longitude = fmt.string(from: NSNumber(value: mapView.centerCoordinate.longitude))!
-        title = "\(latitude), \(longitude)"
+        let centerCoordinate = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
+        
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(centerCoordinate, completionHandler: { (placemark, error) in
+            if error != nil {
+                print("Error getting location address")
+            } else {
+                let placemrk = placemark?.last
+                
+                var sublocal = ""
+                if placemrk?.subLocality != nil {sublocal = (placemrk?.subLocality)! + ", "}
+                
+                var local = ""
+                if placemrk?.locality != nil {local = (placemrk?.locality)!}
+                
+                self.title = sublocal + local
+                
+                if local == "" && sublocal == "" && placemrk?.country != nil {
+                    self.title = placemrk?.country
+                }
+            }
+        })
+//        let fmt = NumberFormatter()
+//        fmt.maximumFractionDigits = 4
+//        fmt.minimumFractionDigits = 4
+//        let latitude = fmt.string(from: NSNumber(value: mapView.centerCoordinate.latitude))!
+//        let longitude = fmt.string(from: NSNumber(value: mapView.centerCoordinate.longitude))!
+//        title = "\(latitude), \(longitude)"
     }
     
     public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {

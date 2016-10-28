@@ -100,10 +100,13 @@ class ChatVC: JSQMessagesViewController {
         
         dateFormatter.dateFormat = "HH.mm - dd.M.yy"
         
+        let formattedDate = dateFormatter.string(from: Date())
+        
         let dict: Dictionary<String, String> = [
             "message":text,
             "senderId":senderId,
-            "date":Date().description]
+            "date":formattedDate
+        ]
         REF_CHANNELS.child(channelID).child("messages").childByAutoId().setValue(dict)
         REF_CHANNELS.child(channelID).child("lastMessage").setValue(dict)
         finishSendingMessage(animated: true)
