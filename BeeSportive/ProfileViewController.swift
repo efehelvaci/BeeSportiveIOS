@@ -16,9 +16,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet var profileImage: UIImageView!
     
-    @IBOutlet var backButton: UIButton!
-    
-    @IBOutlet var settingsButton: UIButton!
+    var settingsButton: UIBarButtonItem!
     
     @IBOutlet var profileName: UILabel!
     
@@ -54,8 +52,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet var bioHeightConstraint: NSLayoutConstraint!
     
-    @IBOutlet var navBarTitle: UILabel!
-    
     var user : User? {
         didSet{
             self.setUser()
@@ -75,11 +71,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     // Tab bar = 0
     // Presented = 1
     var sender =  1
-    
     var isFollowing = false
-    
     var favoriteSports = [String]()
-    
     var eventsArray = [Event]() {
         didSet{
             if isViewLoaded {
@@ -91,13 +84,30 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
         }
     }
-    
     var commentsArray = [Comment]()
+    var eventDetailVC : EventDetailViewController!
+    var favoriteSportPickerVC : FavoriteSportPickerViewController!
+    var commentVC : CommentViewController!
+    var popoverController : UIPopoverPresentationController!
+    var settingsVC : SettingsTableViewController!
+    var bioVC : BioViewController!
+    var followeringVC : FollowerFollowingViewController!
     
     let imagePicker = UIImagePickerController()
+    let backButton = UIBarButtonItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        backButton.title = ""
+        navigationItem.backBarButtonItem = backButton
+        
+        followeringVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowerFollowingViewController") as? FollowerFollowingViewController
+        bioVC = self.storyboard?.instantiateViewController(withIdentifier: "BioViewController") as! BioViewController
+        settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsTableViewController") as! SettingsTableViewController
+        commentVC = self.storyboard?.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
+        eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
+        favoriteSportPickerVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FavoriteSportPickerViewController") as! FavoriteSportPickerViewController
         
         let eventNib = UINib(nibName: "EventCollectionViewCell", bundle: Bundle.main)
         eventsCollectionView.register(eventNib, forCellWithReuseIdentifier: "eventCell")
@@ -109,6 +119,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             ("My Events", eventsCollectionView),
             ("Comments", commentsTableView)
             ])
+
+        settingsButton = UIBarButtonItem(image: UIImage(named: "Settings"), style: .plain, target: self, action: #selector(settingsButtonClicked))
         
         favoriteSportsHeight.constant = (screenSize.width / 5.0) + 10
         
@@ -123,7 +135,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         followersText.alpha = 0
         followingText.alpha = 0
         bioChangeButton.alpha = 0
-        settingsButton.alpha = 0
         profileBioLabel.alpha = 0
 
         profileImage.layer.masksToBounds = true
@@ -153,9 +164,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         if sender == 0 {
             if (user == nil) && (currentUser.instance.user != nil) { user = currentUser.instance.user }
-            backButton.isHidden = true
-        } else {
-            backButton.isHidden = false
         }
         
         if profileName.text == "Name" && user != nil { setUser() }
@@ -229,12 +237,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == eventsCollectionView {
-            let eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
             eventDetailVC.event = eventsArray[(indexPath as NSIndexPath).row]
-            self.present(eventDetailVC, animated: true, completion: nil)
+            show(eventDetailVC, sender: self)
         } else if (collectionView == favoriteSportsCollectionView) && user != nil {
             if user?.id == FIRAuth.auth()?.currentUser?.uid {
-                let favoriteSportPickerVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FavoriteSportPickerViewController") as! FavoriteSportPickerViewController
                 favoriteSportPickerVC.selectedBranchs = self.favoriteSports
                 favoriteSportPickerVC.modalTransitionStyle = .crossDissolve
                 present(favoriteSportPickerVC, animated: true, completion: nil)
@@ -293,17 +299,17 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.deselectRow(at: indexPath, animated: true)
         
         if (user?.id != FIRAuth.auth()?.currentUser?.uid) && (indexPath.row == commentsArray.count) {
-            let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
-            popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
-            popoverContent.preferredContentSize = CGSize(width: screenSize.width-16, height: 250)
-            popoverContent.senderVC = self
-            popoverContent.user = self.user
-            let popoverController = popoverContent.popoverPresentationController
+            commentVC.modalPresentationStyle = UIModalPresentationStyle.popover
+            commentVC.preferredContentSize = CGSize(width: screenSize.width-16, height: 250)
+            commentVC.senderVC = self
+            commentVC.user = self.user
+            
+            popoverController = commentVC.popoverPresentationController
             popoverController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
             popoverController?.delegate = self
             popoverController?.sourceView = self.view
             popoverController?.sourceRect = CGRect(x: 80, y: 80, width: 50, height: 50)
-            present(popoverContent, animated: true, completion: nil)
+            present(commentVC, animated: true, completion: nil)
         }
     }
     
@@ -323,6 +329,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             
             profileBioLabel.text = self.user?.bio
             
+            if user?.id == FIRAuth.auth()?.currentUser?.uid {
+                navigationItem.rightBarButtonItem = settingsButton
+            } else {
+                navigationItem.rightBarButtonItem = nil
+            }
+            
             bioHeightConstraint.constant = (self.user?.bio.heightWithConstrainedWidth(profileName.frame.width, font: UIFont(name: "Open Sans", size: 11)!))!
             
             (self.user?.verified)! ? (verifiedImage.isHidden = false) : (verifiedImage.isHidden = true)
@@ -341,22 +353,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.followingText.alpha = 1
                 self.verifiedImage.alpha = 1
                 self.bioChangeButton.alpha = 1
-                self.settingsButton.alpha = 1
                 self.profileBioLabel.alpha = 1
             })
             
             if user!.id != FIRAuth.auth()?.currentUser?.uid {
                 profileImageEditButton.isHidden = true
-                settingsButton.isHidden = true
                 followButton.isHidden = false
                 bioChangeButton.isHidden = true
-                navBarTitle.text = "Sportives"
+                navigationItem.title = "Sportives"
             } else {
                 profileImageEditButton.isHidden = false
-                settingsButton.isHidden = false
                 followButton.isHidden = true
                 bioChangeButton.isHidden = false
-                navBarTitle.text = "My profile"
+                navigationItem.title = "My profile"
             }
             
             if let following = currentUser.instance.user?.following {
@@ -487,17 +496,17 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
-    @IBAction func settingsButtonClicked(_ sender: AnyObject) {
-
-        let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "SettingsTableViewController") as! SettingsTableViewController
-        popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
-        popoverContent.preferredContentSize = CGSize(width: screenSize.width-16, height: 195)
-        let popoverController = popoverContent.popoverPresentationController
-        popoverController?.permittedArrowDirections = .any
+    func settingsButtonClicked(_ sender: AnyObject) {
+        
+        settingsVC.modalPresentationStyle = UIModalPresentationStyle.popover
+        settingsVC.preferredContentSize = CGSize(width: screenSize.width-16, height: 195)
+        
+        popoverController = settingsVC.popoverPresentationController
+        popoverController?.permittedArrowDirections = .up
         popoverController?.delegate = self
         popoverController?.sourceView = self.view
-        popoverController?.sourceRect = CGRect(origin: CGPoint(x:self.settingsButton.frame.origin.x , y:self.settingsButton.frame.origin.y+15), size: self.settingsButton.frame.size)
-        present(popoverContent, animated: true, completion: nil)
+        popoverController?.sourceRect = CGRect(origin: CGPoint(x:screenSize.width-16 , y:-40), size: CGSize(width: 32, height: 32))
+        present(settingsVC, animated: true, completion: nil)
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -560,35 +569,31 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func bioChangeButtonClicked(_ sender: AnyObject) {
-        let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "BioViewController") as! BioViewController
-        popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
-        popoverContent.preferredContentSize = CGSize(width: screenSize.width - 60, height: 195)
-        popoverContent.senderVC = self
-        popoverContent.oldBio = profileBioLabel.text!
-        let popoverController = popoverContent.popoverPresentationController
+        bioVC.modalPresentationStyle = UIModalPresentationStyle.popover
+        bioVC.preferredContentSize = CGSize(width: screenSize.width - 60, height: 195)
+        bioVC.senderVC = self
+        bioVC.oldBio = profileBioLabel.text!
+        
+        popoverController = bioVC.popoverPresentationController
         popoverController?.permittedArrowDirections = .any
         popoverController?.delegate = self
         popoverController?.sourceView = self.view
         popoverController?.sourceRect = bioChangeButton.frame
-        present(popoverContent, animated: true, completion: nil)
+        present(bioVC, animated: true, completion: nil)
     }
 
     @IBAction func followersButtonClicked(_ sender: AnyObject) {
-        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "FollowerFollowingViewController") as? FollowerFollowingViewController {
-            vc.userIDs = (self.user?.followers)!
-            vc.headerText = "Followers"
+        followeringVC.userIDs = (self.user?.followers)!
+        followeringVC.headerText = "Followers"
             
-            present(vc, animated: false, completion: nil)
-        }
+        show(followeringVC, sender: self)
     }
     
     @IBAction func followingButtonClicked(_ sender: AnyObject) {
-        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "FollowerFollowingViewController") as? FollowerFollowingViewController {
-            vc.userIDs = (self.user?.following)!
-            vc.headerText = "Following"
+        followeringVC.userIDs = (self.user?.following)!
+        followeringVC.headerText = "Following"
             
-            present(vc, animated: false, completion: nil)
-        }
+        show(followeringVC, sender: self)
     }
     
     

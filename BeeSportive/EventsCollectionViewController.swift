@@ -14,12 +14,20 @@ class EventsCollectionViewController: UICollectionViewController {
     
     var branchName : String?
     var events = [Event]()
+    var eventDetailVC : EventDetailViewController!
+    
+    let backButton = UIBarButtonItem()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        backButton.title = ""
+        navigationItem.backBarButtonItem = backButton
+        
         // Register cell classes
         let nibName = UINib(nibName: "EventCollectionViewCell", bundle: nil)
+        
+        eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
         
         self.collectionView!.register(nibName, forCellWithReuseIdentifier: reuseIdentifier)
     }
@@ -60,11 +68,8 @@ class EventsCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
-        
-        eventDetailVC.event = events[(indexPath as NSIndexPath).row]
-        self.present(eventDetailVC, animated: true, completion: nil)
+        eventDetailVC.event = events[indexPath.row]
+        show(eventDetailVC, sender: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {

@@ -7,19 +7,29 @@
 //
 
 import UIKit
+import FTIndicator
 
-class FollowerFollowingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class FollowerFollowingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, whatHappensAfterFollow {
     
-    @IBOutlet var headerLabel: UILabel!
     @IBOutlet var collectionView: UICollectionView!
     
     var headerText = ""
     var userIDs = [String]()
     var users = [User]()
     var followedUsers = [String]()
+    var profileVC : ProfileViewController!
+    
+    let backButton = UIBarButtonItem()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        backButton.title = ""
+        navigationItem.backBarButtonItem = backButton
+        
+        profileVC = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        
+        FTIndicator.showProgressWithmessage("Loading...")
 
         let nib = UINib(nibName: "UserCell", bundle:nil)
         collectionView.register(nib, forCellWithReuseIdentifier: "userCell")
@@ -28,7 +38,7 @@ class FollowerFollowingViewController: UIViewController, UICollectionViewDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        headerLabel.text = headerText
+        navigationItem.title = headerText
         followedUsers = (currentUser.instance.user?.following)!
         
         retrieveUsers()
@@ -51,6 +61,7 @@ class FollowerFollowingViewController: UIViewController, UICollectionViewDelegat
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "userCell", for: indexPath) as? UserCell {
             cell.following = false
             cell.alpha = 0
+            cell.delegate = self
             
             for element in followedUsers {
                 if element == users[indexPath.row].id {
@@ -76,12 +87,9 @@ class FollowerFollowingViewController: UIViewController, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        profileVC.getUser(userID: users[indexPath.row].id)
         
-        let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        
-        viewController5.getUser(userID: users[indexPath.row].id)
-        
-        self.present(viewController5, animated: true, completion: nil)
+        show(profileVC, sender: self)
     }
     
     @IBAction func backButtonClicked(_ sender: AnyObject) {
@@ -90,16 +98,38 @@ class FollowerFollowingViewController: UIViewController, UICollectionViewDelegat
     
     func retrieveUsers() {
         self.users.removeAll()
+        var counter = 0
         
         for element in userIDs {
             REF_USERS.child(element).observeSingleEvent(of: .value, with: { snapshot in
+                counter = counter + 1
+                
                 if snapshot.exists() {
                     self.users.append(User(snapshot: snapshot))
-                    
+                }
+                
+                if self.userIDs.count == counter {
                     self.collectionView.reloadData()
+                    FTIndicator.dismissProgress()
                 }
             })
         }
-
+        
+        if userIDs.count == 0 {
+            FTIndicator.dismissProgress()
+            FTIndicator.showInfo(withMessage: "No users to show.")
+        }
+    }
+    
+    
+    // MARK: - Whats Happens After Follow or Unfollow protocol
+    func afterUnfollowingUser(activeUser: User) {
+        if let removeThisID = self.followedUsers.index(of: activeUser.id) {
+            self.followedUsers.remove(at: removeThisID)
+        }
+    }
+    
+    func afterFollowingUser(activeUser: User) {
+        self.followedUsers.append(activeUser.id)
     }
 }

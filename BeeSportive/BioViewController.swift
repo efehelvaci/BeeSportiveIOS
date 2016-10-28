@@ -51,6 +51,7 @@ class BioViewController: UIViewController {
             
             dismiss(animated: true, completion: { _ in
                 self.senderVC?.setUser()
+                FTIndicator.showToastMessage("You successfully changed your bio!")
             })
         }
     }

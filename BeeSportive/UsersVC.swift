@@ -21,33 +21,41 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     var isSearching = false
     var followedUsers = [String]()
     var verifiedUsers = [User]()
-
+    
+    let backButton = UIBarButtonItem()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        backButton.title = ""
+        navigationItem.backBarButtonItem = backButton
+        
         currentUser.instance.delegate1 = self
         if currentUser.instance.user?.following != nil { followedUsers = (currentUser.instance.user?.following)! }
-        
-        FTIndicator.showProgressWithmessage("Loading", userInteractionEnable: true)
         
         let nib = UINib(nibName: "UserCell", bundle:nil)
         collectionView.register(nib, forCellWithReuseIdentifier: "userCell")
         
         REF_USERS.observeSingleEvent(of: .value, with: { (snapshot) in
-            self.users.removeAll()
-            
-            for snap in snapshot.children {
-                let user = User(snapshot: snap as! FIRDataSnapshot)
+            if snapshot.exists() {
+                FTIndicator.showProgressWithmessage("Loading...", userInteractionEnable: true)
                 
-                if user.id == FIRAuth.auth()?.currentUser?.uid { continue }
+                self.users.removeAll()
                 
-                if user.verified { self.verifiedUsers.append(user) }
+                for snap in snapshot.children {
+                    let user = User(snapshot: snap as! FIRDataSnapshot)
+                    
+                    if user.id == FIRAuth.auth()?.currentUser?.uid { continue }
+                    
+                    if user.verified { self.verifiedUsers.append(user) }
+                    
+                    self.users.append(user)
+                }
                 
-                self.users.append(user)
+                self.collectionView.reloadData()
+                
+                FTIndicator.dismissProgress()
             }
-            
-            self.collectionView.reloadData()
-            FTIndicator.dismissProgress()
         })
     }
     
@@ -118,10 +126,10 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        
+
         isSearching ? (viewController5.getUser(userID: filteredUsers[indexPath.row].id)) : (viewController5.getUser(userID: verifiedUsers[indexPath.row].id))
         
-        self.present(viewController5, animated: true, completion: nil)
+        show(viewController5, sender: self)
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -137,8 +145,8 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             isSearching = false
         } else {
             isSearching = true
-            let key = searchBar.text!.capitalized
-            filteredUsers = users.filter({$0.displayName.range(of: key) != nil})
+            let key = searchBar.text!.lowercased()
+            filteredUsers = users.filter({$0.displayName.lowercased().range(of: key) != nil})
         }
         
         collectionView.reloadData()

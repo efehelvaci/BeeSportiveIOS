@@ -61,8 +61,8 @@
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Verified" translatesAutoresizingMaskIntoConstraints="NO" id="PzD-oy-olx">
                         <constraints>
-                            <constraint firstAttribute="width" constant="20" id="nNh-Cv-vOE"/>
-                            <constraint firstAttribute="height" constant="20" id="rZv-xd-e53"/>
+                            <constraint firstAttribute="width" constant="16" id="nNh-Cv-vOE"/>
+                            <constraint firstAttribute="height" constant="16" id="rZv-xd-e53"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -81,11 +81,11 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="qYI-VA-taI" secondAttribute="trailing" id="3kn-K4-0m8"/>
                 <constraint firstAttribute="bottom" secondItem="JbN-Oe-KoT" secondAttribute="bottom" constant="8" id="9mV-Wg-sCh"/>
-                <constraint firstItem="PzD-oy-olx" firstAttribute="top" secondItem="JbN-Oe-KoT" secondAttribute="top" constant="-5" id="B2h-36-O5D"/>
+                <constraint firstItem="PzD-oy-olx" firstAttribute="top" secondItem="JbN-Oe-KoT" secondAttribute="top" constant="-2" id="B2h-36-O5D"/>
                 <constraint firstItem="WoI-E8-ar2" firstAttribute="centerY" secondItem="5f3-QU-Cy2" secondAttribute="centerY" id="IYt-Se-noN"/>
                 <constraint firstItem="5f3-QU-Cy2" firstAttribute="centerY" secondItem="JbN-Oe-KoT" secondAttribute="centerY" id="IcP-Mz-M9v"/>
                 <constraint firstAttribute="trailing" secondItem="WoI-E8-ar2" secondAttribute="trailing" constant="8" id="MTF-CC-VIZ"/>
-                <constraint firstItem="PzD-oy-olx" firstAttribute="trailing" secondItem="JbN-Oe-KoT" secondAttribute="trailing" constant="5" id="Pv3-4v-6rd"/>
+                <constraint firstItem="PzD-oy-olx" firstAttribute="trailing" secondItem="JbN-Oe-KoT" secondAttribute="trailing" constant="2" id="Pv3-4v-6rd"/>
                 <constraint firstItem="5f3-QU-Cy2" firstAttribute="leading" secondItem="JbN-Oe-KoT" secondAttribute="trailing" constant="10" id="WrW-cu-eaB"/>
                 <constraint firstItem="qYI-VA-taI" firstAttribute="leading" secondItem="5f3-QU-Cy2" secondAttribute="leading" id="YA7-E8-Tgf"/>
                 <constraint firstItem="JbN-Oe-KoT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="e18-JO-Waa"/>

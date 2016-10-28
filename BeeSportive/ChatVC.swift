@@ -14,6 +14,7 @@ class ChatVC: JSQMessagesViewController {
     
     var channelID: String!
     var messages = [JSQMessage]()
+    let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         
@@ -97,7 +98,12 @@ class ChatVC: JSQMessagesViewController {
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
-        let dict: Dictionary<String, String> = ["message":text, "senderId":senderId, "date":Date().description]
+        dateFormatter.dateFormat = "HH.mm - dd.M.yy"
+        
+        let dict: Dictionary<String, String> = [
+            "message":text,
+            "senderId":senderId,
+            "date":Date().description]
         REF_CHANNELS.child(channelID).child("messages").childByAutoId().setValue(dict)
         REF_CHANNELS.child(channelID).child("lastMessage").setValue(dict)
         finishSendingMessage(animated: true)
@@ -113,14 +119,9 @@ class ChatVC: JSQMessagesViewController {
             let photoItem = JSQPhotoMediaItem(image: UIImage(named: "pp"))
             self.addMedia(photoItem!)
         }
-        let locationAction = UIAlertAction(title: "Send location", style: .default) { (action) in
-            let locationItem = self.buildLocationItem()
-            self.addMedia(locationItem)
-        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         sheet.addAction(photoAction)
-        sheet.addAction(locationAction)
         sheet.addAction(cancelAction)
         self.present(sheet, animated: true, completion: nil)
         

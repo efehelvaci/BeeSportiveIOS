@@ -10,20 +10,32 @@ import UIKit
 import FirebaseDatabase
 import FirebaseAuth
 import Async
+import FTIndicator
 
 class NotificationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var tableView: UITableView!
     
     var notifications = [Notification]()
+    var eventDetailVC : EventDetailViewController!
+    var usersProfileVC : ProfileViewController!
+    
+    let backButton = UIBarButtonItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        backButton.title = ""
+        navigationItem.backBarButtonItem = backButton
+        
+        eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
+        usersProfileVC = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        
         var tempNotifications = [Notification]()
         
         REF_NOTIFICATIONS.child(FIRAuth.auth()!.currentUser!.uid).observe(.value, with: { snapshot in
             if snapshot.exists() {
+                FTIndicator.showProgressWithmessage("Loading...")
                 
                 tempNotifications.removeAll()
                 
@@ -49,6 +61,10 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
 
                 }
             }
+            
+            self.tabBarItem.image = UIImage(named: "NotificationsRed")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+            
+            FTIndicator.dismissProgress()
         })
     }
     
@@ -56,6 +72,21 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewWillAppear(animated)
         
         self.tableView.reloadData()
+        Async.main{
+            self.tabBarItem.image = UIImage(named: "Notifications")
+            self.tabBarItem.selectedImage = UIImage(named: "Notifications")
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        Async.main{
+            self.tabBarItem.image = UIImage(named: "Notifications")
+            self.tabBarItem.selectedImage = UIImage(named: "Notifications")
+        }
+        
+        FTIndicator.dismissProgress()
     }
 
     override func didReceiveMemoryWarning() {
@@ -95,9 +126,8 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
                     if snapshot.exists(){
                         let event = Event(snapshot: snapshot)
                         
-                        let eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
-                        eventDetailVC.event = event
-                        self.present(eventDetailVC, animated: true, completion: nil)
+                        self.eventDetailVC.event = event
+                        self.show(self.eventDetailVC, sender: self)
                     }
                 })
             }
@@ -106,9 +136,8 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
             
             // Go to followers profile page
             if notifications[indexPath.row].notificationConnection != "" {
-                let usersProfileVC = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
                 usersProfileVC.getUser(userID: notifications[indexPath.row].notificationConnection)
-                present(usersProfileVC, animated: true, completion: nil)
+                show(usersProfileVC, sender: self)
             }
             
             break

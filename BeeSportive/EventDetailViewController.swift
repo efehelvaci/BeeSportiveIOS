@@ -12,12 +12,14 @@ import MapKit
 import SDCAlertView
 import Async
 import FBSDKShareKit
+import FTIndicator
 
 private let reuseIdentifier = "participantsCell"
 
 class EventDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPopoverPresentationControllerDelegate {
     
-    @IBOutlet var eventNameLabel: UILabel!
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var reportButton: UIButton!
     @IBOutlet var eventAddressLabel: UILabel!
     @IBOutlet var eventDateLabel: UILabel!
     @IBOutlet var eventFullAddressLabel: UILabel!
@@ -38,7 +40,15 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     let grayLineWidth = screenSize.width - 90.0
     let fbButton : FBSDKShareButton = FBSDKShareButton()
     let pin = MKPointAnnotation()
+    let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: screenSize.width - 80, height: 40))
+    let backButton = UIBarButtonItem()
     
+    // Popover View Controllers
+    var requestVC : RequestsViewController!
+    var reportVC : ReportViewController!
+    var popoverController : UIPopoverPresentationController!
+    
+    var userVC : ProfileViewController!
     var mainMenuSender : EventViewController? = nil
     var joinAlert : AlertController!
     var event : Event!
@@ -63,15 +73,34 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.layoutIfNeeded()
+        backButton.title = ""
+        navigationItem.backBarButtonItem = backButton
         
-        eventNameLabel.adjustsFontSizeToFitWidth = true
+        view.layoutIfNeeded()
+
+        requestVC = self.storyboard!.instantiateViewController(withIdentifier: "RequestsViewController") as! RequestsViewController
+        reportVC = self.storyboard?.instantiateViewController(withIdentifier: "ReportViewController") as! ReportViewController
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Share"), style: .plain, target: self, action: #selector(shareButtonClicked))
+        
+        userVC = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        
+        titleLabel.textColor = UIColor.black
+        titleLabel.font = UIFont(name: "Open Sans", size: 18)
+        titleLabel.backgroundColor = UIColor.clear
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 2
+        navigationItem.titleView = titleLabel
+        
         eventAddressLabel.adjustsFontSizeToFitWidth = true
         eventFullAddressLabel.adjustsFontSizeToFitWidth = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
 
+        scrollView.contentOffset = CGPoint.zero
+        
         if event.creator != nil {
             self.creator = event.creator
         } else {
@@ -168,6 +197,8 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         setPageOutlets()
         retrieveParticipants()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Share"), style: .plain, target: self, action: #selector(shareButtonClicked))
+        
         // If visitor is creator or not
         if event?.creatorID == FIRAuth.auth()?.currentUser?.uid {
             joinButton.layer.borderColor = UIColor.gray.cgColor
@@ -239,19 +270,17 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 && creator != nil {
-            let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-            viewController5.getUser(userID: event.creatorID)
-            self.present(viewController5, animated: true, completion: nil)
+            userVC.getUser(userID: event.creatorID)
         } else {
-            let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-            viewController5.getUser(userID: self.participants[indexPath.row-1].id)
-            self.present(viewController5, animated: true, completion: nil)
+            userVC.getUser(userID: self.participants[indexPath.row-1].id)
         }
+        
+        show(userVC, sender: self)
     }
     
     func setPageOutlets () {
         if self.isViewLoaded {
-            eventNameLabel.text = event.name
+            titleLabel.text = event.name
             descriptionLabel.text = event.description
             
             if let font = UIFont(name: "Open Sans", size: 14) {
@@ -314,48 +343,47 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     @IBAction func requestsButtonClicked(_ sender: AnyObject) {
-        let popoverContent = self.storyboard!.instantiateViewController(withIdentifier: "RequestsViewController") as! RequestsViewController
-        popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
-        popoverContent.preferredContentSize = CGSize(width: screenSize.width-16, height: 250)
-        popoverContent.eventID = self.event.id
-        popoverContent.users = self.eventRequsters
-        popoverContent.senderVC = self
-        let popoverController = popoverContent.popoverPresentationController
-        popoverController?.permittedArrowDirections = .any
-        popoverController?.delegate = self
-        popoverController?.sourceView = self.view
-        popoverController?.sourceRect = (sender as! UIButton).frame
-
-        self.present(popoverContent, animated: true, completion: nil)
-    }
-    
-
-    @IBAction func backButtonClicked(_ sender: AnyObject) {
-        self.dismiss(animated: true, completion: nil)
+        if eventRequsters.count > 0 {
+            requestVC.modalPresentationStyle = UIModalPresentationStyle.popover
+            requestVC.preferredContentSize = CGSize(width: screenSize.width-16, height: 250)
+            requestVC.eventID = self.event.id
+            requestVC.users = self.eventRequsters
+            requestVC.senderVC = self
+            
+            popoverController = requestVC.popoverPresentationController
+            popoverController?.permittedArrowDirections = .any
+            popoverController?.delegate = self
+            popoverController?.sourceView = self.view
+            popoverController?.sourceRect = (sender as! UIButton).frame
+            
+            present(requestVC, animated: true, completion: nil)
+        }
+        else {
+            FTIndicator.showInfo(withMessage: "There are no requests. Wait for it! :)")
+        }
     }
     
     @IBAction func reportButtonClicked(_ sender: AnyObject) {
-        let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "ReportViewController") as! ReportViewController
-        popoverContent.modalPresentationStyle = UIModalPresentationStyle.popover
-        popoverContent.preferredContentSize = CGSize(width: screenSize.width-16, height: 250)
-        popoverContent.reporting = .event
-        popoverContent.reported = event
-        let popoverController = popoverContent.popoverPresentationController
-        popoverController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+        reportVC.modalPresentationStyle = UIModalPresentationStyle.popover
+        reportVC.preferredContentSize = CGSize(width: screenSize.width-16, height: 250)
+        reportVC.reporting = .event
+        reportVC.reported = event
+        
+        popoverController = reportVC.popoverPresentationController
+        popoverController?.permittedArrowDirections = .down
         popoverController?.delegate = self
         popoverController?.sourceView = self.view
-        popoverController?.sourceRect = CGRect(x: 80, y: 80, width: 50, height: 50)
-        present(popoverContent, animated: true, completion: nil)
+        popoverController?.sourceRect = CGRect(x: reportButton.frame.origin.x, y: screenSize.height-135, width: reportButton.frame.size.width, height: reportButton.frame.size.height)
+        present(reportVC, animated: true, completion: nil)
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.none
     }
     
-    @IBAction func shareButtonClicked(_ sender: AnyObject) {
+    func shareButtonClicked(_ sender: AnyObject) {
         fbButton.sendActions(for: .touchUpInside)
     }
-   
     
     func retrieveParticipants() {
         

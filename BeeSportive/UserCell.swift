@@ -10,6 +10,11 @@ import UIKit
 import Firebase
 import Async
 
+protocol whatHappensAfterFollow {
+    func afterFollowingUser(activeUser: User)
+    func afterUnfollowingUser(activeUser: User)
+}
+
 class UserCell: UICollectionViewCell {
 
     @IBOutlet weak var displayName: UILabel!
@@ -19,6 +24,7 @@ class UserCell: UICollectionViewCell {
     
     var following = false
     var user : User!
+    var delegate : whatHappensAfterFollow!
 
     func configureCell(_ user: User) {
         self.user = user
@@ -63,6 +69,10 @@ class UserCell: UICollectionViewCell {
         if !following {
             followButton.setTitle("unfollow", for: UIControlState())
             following = true
+         
+            if delegate != nil {
+                self.delegate.afterFollowingUser(activeUser: self.user)
+            }
             
             currentUser.instance.user?.following.insert(user!.id, at: 0)
             
@@ -79,6 +89,10 @@ class UserCell: UICollectionViewCell {
         } else {
             followButton.setTitle("follow", for: UIControlState())
             following = false
+            
+            if delegate != nil {
+                self.delegate.afterUnfollowingUser(activeUser: self.user)
+            }
             
             for index in 0...(currentUser.instance.user?.following.count)!-1 {
                 if user!.id == currentUser.instance.user?.following[index] {

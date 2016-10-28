@@ -14,52 +14,60 @@ import Async
 class TabBarController: UITabBarController {
     
     let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
-    var eventCreationNavCon : UINavigationController?
     let tabBarImageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+    var eventCreationNavCon : UINavigationController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Selected item color at tab bar
         // Hex: 005B7F
         tabBar.tintColor = UIColor(red: 0/255, green: 94/255, blue: 127/255, alpha: 1)
         
-        let eventCreateVC = storyboard!.instantiateViewController(withIdentifier: "EventFormViewController")
+        // View Controllers of tab bar
+        let eventVC = storyboard!.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
+        let usersVC = storyboard!.instantiateViewController(withIdentifier: "UsersVC") as! UsersVC
+        let eventCreateVC = storyboard!.instantiateViewController(withIdentifier: "EventFormViewController") as! EventFormViewController
+        let notificationsVC = storyboard!.instantiateViewController(withIdentifier: "NotificationsViewController") as! NotificationsViewController
+        let profileVC = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        
+        // Tab Bar Item Images
+        eventVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Events"), tag: 1)
+        usersVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Search"), tag: 2)
+        notificationsVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "NotificationsRed")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal) , tag: 4)
+        profileVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Avatar"), tag: 5)
+        
+        // Tab bar items stand centered at the bar
+        eventVC.tabBarItem.imageInsets = tabBarImageInsets
+        usersVC.tabBarItem.imageInsets = tabBarImageInsets
+        notificationsVC.tabBarItem.imageInsets = tabBarImageInsets
+        profileVC.tabBarItem.imageInsets = tabBarImageInsets
+        
+        // Navigation controller for view controllers (except the middle one)
+        let navigationController1 = UINavigationController(rootViewController: eventVC)
+        let navigationController2 = UINavigationController(rootViewController: usersVC)
         eventCreationNavCon = UINavigationController(rootViewController: eventCreateVC)
+        let navigationController4 = UINavigationController(rootViewController: notificationsVC)
+        let navigationController5 = UINavigationController(rootViewController: profileVC)
+        
+        // Navigation Bar Titles
         eventCreateVC.navigationItem.title = "Create Event"
-        eventCreationNavCon?.navigationBar.barTintColor = UIColor.white
-        eventCreationNavCon?.navigationBar.tintColor = UIColor.gray
-        eventCreationNavCon?.navigationBar.isTranslucent = false
-        eventCreationNavCon?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Open Sans", size: 22)!]
+        usersVC.navigationItem.title = "Search & Explore"
+        notificationsVC.navigationItem.title = "Notifications"
+        profileVC.navigationItem.title = "Profile"
         
-        let viewController1 = storyboard!.instantiateViewController(withIdentifier: "EventViewController") as! EventViewController
-        viewController1.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Events"), tag: 1)
-        viewController1.tabBarItem.imageInsets = tabBarImageInsets
-        let nav1 = UINavigationController(rootViewController: viewController1)
-        nav1.navigationBar.barTintColor = UIColor.white
-        nav1.navigationBar.tintColor = UIColor.gray
-        nav1.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Open Sans", size: 22)!]
-        
-        let viewController2 = storyboard!.instantiateViewController(withIdentifier: "UsersVC") as! UsersVC
-        viewController2.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Search"), tag: 2)
-        viewController2.tabBarItem.imageInsets = tabBarImageInsets
-        
+        // Empty VC for middle item of the tab bar
         let viewController3 = UIViewController()
         viewController3.tabBarItem.isEnabled = false
-        
-        let viewController4 = storyboard!.instantiateViewController(withIdentifier: "NotificationsViewController") as! NotificationsViewController
-        viewController4.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Notifications"), tag: 4)
-        viewController4.tabBarItem.imageInsets = tabBarImageInsets
-        
-        let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        viewController5.sender = 0
-        viewController5.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Avatar"), tag: 5)
-        viewController5.tabBarItem.imageInsets = tabBarImageInsets
-        
-        currentUser.instance.delegate2 = viewController5
+
+        profileVC.sender = 0
+
+        // Get profile
+        currentUser.instance.delegate2 = profileVC
         
         setupMiddleButton()
         
-        self.viewControllers = [nav1, viewController2, viewController3, viewController4, viewController5]
+        self.viewControllers = [navigationController1, navigationController2, viewController3, navigationController4, navigationController5]
     }
     
     override func didReceiveMemoryWarning() {

@@ -99,7 +99,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                         }
                 <<< IntRow() {
                         $0.title = "Join Number"
-                        $0.value = 10
+                        $0.placeholder = "Max. 100"
                         $0.tag = "MaxJoin"
                     }
             +++ Section()
@@ -169,8 +169,8 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
             if name.characters.count < 8 {
                 FTIndicator.showInfo(withMessage: "Event name too short (Minimum 8 characters)")
                 return
-            } else if name.characters.count > 120 {
-                FTIndicator.showInfo(withMessage: "Event name too long (Maximum 120 characters)")
+            } else if name.characters.count > 60 {
+                FTIndicator.showInfo(withMessage: "Event name too long (Maximum 60 characters)")
                 return
             }
             

@@ -16,6 +16,7 @@ class RequestsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     let reuseIdentifier = "RequestCell"
     
+    var profileVC : ProfileViewController!
     var senderVC : EventDetailViewController? = nil
     var eventID : String?
     var users = [User]()
@@ -23,6 +24,8 @@ class RequestsViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        profileVC = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        
         tableView.reloadData()
         // Do any additional setup after loading the view.
     }
@@ -56,10 +59,8 @@ class RequestsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController5 = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        self.present(viewController5, animated: true, completion: { _ in
-            viewController5.user = self.users[indexPath.row]
-        })
+        profileVC.getUser(userID: users[indexPath.row].id)
+        show(profileVC, sender: self)
         
         tableView.deselectRow(at: indexPath, animated: true)
     }

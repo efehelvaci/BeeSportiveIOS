@@ -31,6 +31,11 @@ class ReportViewController: UIViewController {
 
     
     @IBAction func doneButtonClicked(_ sender: AnyObject) {
+        if reportTextView.text.characters.count == 0 {
+            FTIndicator.showInfo(withMessage: "Report can't be blank!")
+            return
+        }
+        
         switch reporting {
         case .user:
             

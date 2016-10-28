@@ -28,22 +28,24 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     let refreshControl1 = UIRefreshControl()
     let refreshControl2 = UIRefreshControl()
     let refreshControl3 = UIRefreshControl()
+    let backButton = UIBarButtonItem()
     
     var eventDetailVC : EventDetailViewController!
-    
     var allEvents = [Event]()
     var favoriteSports = [String]()
     var popularEvents = [Event]()
     var favoriteEvents = [Event]()
     var followingEvents = [Event]()
     var selectedEventNo : Int?
-    
     var startAnimation = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FTIndicator.showProgressWithmessage("Loading!")
+        backButton.title = ""
+        navigationItem.backBarButtonItem = backButton
+        
+        FTIndicator.showProgressWithmessage("Loading...")
         
         eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
         eventDetailVC.mainMenuSender = self
@@ -176,17 +178,18 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        
-        
         if collectionView == firstCollectionView {
             eventDetailVC.event = allEvents[indexPath.row]
-            self.present(eventDetailVC, animated: true, completion: nil)
+            show(eventDetailVC, sender: self)
         } else if collectionView == secondCollectionView {
             eventDetailVC.event = popularEvents[indexPath.row]
-            self.present(eventDetailVC, animated: true, completion: nil)
+            show(eventDetailVC, sender: self)
         } else if collectionView == thirdCollectionView {
             eventDetailVC.event = favoriteEvents[indexPath.row]
-            self.present(eventDetailVC, animated: true, completion: nil)
+            show(eventDetailVC, sender: self)
+        } else if collectionView == followingCollectionView {
+            eventDetailVC.event = followingEvents[indexPath.row]
+            show(eventDetailVC, sender: self)
         } else if collectionView == fourthCollectionView {
             
             let eventsVC = self.storyboard?.instantiateViewController(withIdentifier: "EventsCollectionViewController") as! EventsCollectionViewController
@@ -202,10 +205,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             eventsVC.events = events
             eventsVC.collectionView?.reloadData()
             
-            self.show(eventsVC, sender: self)
-        } else if collectionView == followingCollectionView {
-            eventDetailVC.event = followingEvents[indexPath.row]
-            self.present(eventDetailVC, animated: true, completion: nil)
+            show(eventsVC, sender: self)
         }
     }
     

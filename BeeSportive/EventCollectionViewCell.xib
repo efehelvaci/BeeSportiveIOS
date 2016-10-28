@@ -37,6 +37,14 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Hiking" translatesAutoresizingMaskIntoConstraints="NO" id="CDp-oJ-DaP">
                                 <color key="tintColor" red="1" green="0.40000000000000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QSV-84-d5m">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" red="0.96470588239999999" green="0.99215686270000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="shadowOffset" width="0.29999999999999999" height="0.29999999999999999"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="basketball" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pU-S6-IFJ">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="sxr-ag-FqD"/>
@@ -46,13 +54,6 @@
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QSV-84-d5m">
-                                <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="30"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="highlightedColor" red="0.96470588239999999" green="0.99215686270000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="shadowOffset" width="0.29999999999999999" height="0.29999999999999999"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -111,8 +112,8 @@
                             </label>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Verified" translatesAutoresizingMaskIntoConstraints="NO" id="8xu-dn-x9d">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="17" id="g1m-CN-D84"/>
-                                    <constraint firstAttribute="height" constant="17" id="vuO-lg-mfF"/>
+                                    <constraint firstAttribute="width" constant="16" id="g1m-CN-D84"/>
+                                    <constraint firstAttribute="height" constant="16" id="vuO-lg-mfF"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
@@ -140,10 +141,10 @@
                             <constraint firstAttribute="trailing" secondItem="A2f-iq-8Be" secondAttribute="trailing" constant="8" id="G39-BA-eLU"/>
                             <constraint firstItem="m2b-Oc-Ijf" firstAttribute="leading" secondItem="nLF-lI-CPF" secondAttribute="leading" id="GWe-cY-l2z"/>
                             <constraint firstItem="m2b-Oc-Ijf" firstAttribute="trailing" secondItem="nLF-lI-CPF" secondAttribute="trailing" id="Hvk-Hc-lm4"/>
-                            <constraint firstItem="8xu-dn-x9d" firstAttribute="trailing" secondItem="A2f-iq-8Be" secondAttribute="trailing" id="IHz-mj-bVt"/>
+                            <constraint firstItem="8xu-dn-x9d" firstAttribute="trailing" secondItem="A2f-iq-8Be" secondAttribute="trailing" constant="2" id="IHz-mj-bVt"/>
                             <constraint firstItem="auP-CK-KDZ" firstAttribute="centerY" secondItem="A2f-iq-8Be" secondAttribute="centerY" id="KaN-MP-Gc2"/>
                             <constraint firstItem="auP-CK-KDZ" firstAttribute="top" secondItem="A2f-iq-8Be" secondAttribute="top" id="Mvw-1k-Gv0"/>
-                            <constraint firstItem="8xu-dn-x9d" firstAttribute="top" secondItem="A2f-iq-8Be" secondAttribute="top" id="Oee-ag-rRd"/>
+                            <constraint firstItem="8xu-dn-x9d" firstAttribute="top" secondItem="A2f-iq-8Be" secondAttribute="top" constant="-2" id="Oee-ag-rRd"/>
                             <constraint firstItem="gWB-cK-22Z" firstAttribute="leading" secondItem="nLF-lI-CPF" secondAttribute="leading" id="hTT-JF-KMi"/>
                             <constraint firstItem="nLF-lI-CPF" firstAttribute="leading" secondItem="E1e-Jn-3pc" secondAttribute="leading" constant="8" id="iKq-99-9o2"/>
                             <constraint firstItem="A2f-iq-8Be" firstAttribute="leading" secondItem="auP-CK-KDZ" secondAttribute="trailing" constant="8" id="myd-Rr-Gkv"/>
