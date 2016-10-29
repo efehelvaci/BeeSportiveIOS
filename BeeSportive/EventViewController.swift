@@ -10,13 +10,20 @@ import UIKit
 import Firebase
 import Async
 import FTIndicator
+import CoreLocation
 
-class EventViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, ScrollPagerDelegate {
+class EventViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, ScrollPagerDelegate, CLLocationManagerDelegate {
     
     @IBOutlet var firstCollectionView: UICollectionView! // All Events
     @IBOutlet var thirdCollectionView: UICollectionView! // Favorite Events
     @IBOutlet var fourthCollectionView: UICollectionView! // Branchs
     @IBOutlet var followingCollectionView: UICollectionView! // Followed Events
+    
+    @IBOutlet var setDistanceButton: UIButton!
+    @IBOutlet var distanceLabel: UILabel!
+    @IBOutlet var distanceSlider: UISlider!
+    @IBOutlet var SetDistanceView: UIView!
+    @IBOutlet var needYourLocationView: UIView!
     
     @IBOutlet var beeView: UIView!
     
@@ -24,11 +31,15 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     @IBOutlet var beeViewLeading: NSLayoutConstraint!
 
+    let userDefaults = UserDefaults.standard
+    let locationManager = CLLocationManager()
     let allEventsRefreshControl = UIRefreshControl()
     let favoritesRefreshControl = UIRefreshControl()
     let followingRefreshControl = UIRefreshControl()
     let backButton = UIBarButtonItem()
     
+    var distanceMax : Float = 25
+    var timesToLocateAccurate = 5
     var eventDetailVC : EventDetailViewController!
     var allEvents = [Event]()
     var favoriteSports = [String]()
@@ -36,9 +47,56 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     var followingEvents = [Event]()
     var selectedEventNo : Int?
     var startAnimation = true
-    
+    var location = CLLocation(latitude: 41.01513, longitude: 28.97953) { // Kennedy Street, Istanbul
+        didSet {
+            if timesToLocateAccurate <= 0 {
+                let locationData = NSKeyedArchiver.archivedData(withRootObject: location)
+                userDefaults.set(locationData, forKey: "lastLocation")
+                retrieveAllEvents()
+                locationManager.stopUpdatingLocation()
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.delegate = self;
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        
+        if let distanceDefault = userDefaults.value(forKey: "maxDistance") as? Float {
+            distanceMax = distanceDefault
+            distanceSlider.value = distanceMax
+            distanceLabel.text = String(format: "%.1f km", distanceMax)
+        }
+        
+        var isFirstLocationExists = false
+        if let lastLocationData = userDefaults.value(forKey: "lastLocation") as? Data {
+            if let storedLocation = NSKeyedUnarchiver.unarchiveObject(with: lastLocationData) as? CLLocation {
+                location = storedLocation
+                isFirstLocationExists = true
+                retrieveAllEvents()
+                print("MY STORED LOCATION : ")
+                print(location)
+            }
+        }
+        
+        if CLLocationManager.locationServicesEnabled() {
+            switch(CLLocationManager.authorizationStatus()) {
+            case .notDetermined, .restricted, .denied:
+                if !isFirstLocationExists {
+                    needYourLocationView.isHidden = false
+                    FTIndicator.showNotification(with: UIImage(named: "LocationPin"), title: "Can't update location!", message: "Give us location permission to list the events based on your current location!")
+                }
+            case .authorizedAlways, .authorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+            }
+        } else {
+            if !isFirstLocationExists {
+                needYourLocationView.isHidden = false
+                FTIndicator.showNotification(with: UIImage(named: "LocationPin"), title: "Can't update location!", message: "You should enable your location services to list the events based on your current location!")
+            }
+        }
         
         allEventsRefreshControl.addTarget(self, action: #selector(fakeAllEventsRefresh), for: UIControlEvents.valueChanged)
         favoritesRefreshControl.addTarget(self, action: #selector(retrieveFavoriteEvents), for: UIControlEvents.valueChanged)
@@ -49,8 +107,6 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         backButton.title = ""
         navigationItem.backBarButtonItem = backButton
-        
-        FTIndicator.showProgressWithmessage("Loading...")
         
         eventDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
         eventDetailVC.mainMenuSender = self
@@ -71,7 +127,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         
         // Get data from database and update collection view
-        retrieveAllEvents()
+//        retrieveAllEvents()
         
         // Collection view cell nib register
         let nibName = UINib(nibName: "EventCollectionViewCell", bundle:nil)
@@ -88,6 +144,12 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         thirdCollectionView.alwaysBounceVertical = true
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        FTIndicator.dismissProgress()
+    }
+    
     // MARK: - CollectionView Delegate Methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == firstCollectionView {
@@ -102,13 +164,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         return 0
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        FTIndicator.dismissProgress()
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == firstCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as! EventCollectionViewCell
@@ -210,7 +266,8 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     // MARK: -Self created methods
     
     func retrieveAllEvents() {
-       
+        FTIndicator.showProgressWithmessage("Loading...")
+        
         var tempAllEvents = [Event]()
         
         REF_EVENTS.observe(.value , with: { (snapshot) in
@@ -222,7 +279,11 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                 for element in snapshot.children.allObjects {
                     let eventElement = Event(snapshot: element as! FIRDataSnapshot)
                     
-                    if !eventElement.isPast {
+                    let eventLocation = CLLocation(latitude: Double(eventElement.locationLat)!, longitude: Double(eventElement.locationLon)!)
+                    
+                    let distance = Float(Double(self.location.distance(from: eventLocation)) / 1000.0)
+                    
+                    if !eventElement.isPast && distance < self.distanceMax {
                         tempAllEvents.append(eventElement)
                     }
                 }
@@ -372,5 +433,44 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         default:
             break
         }
+    }
+    
+    // MARK: -Location Services
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        
+        timesToLocateAccurate -= 1
+        location = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
+        print("Error while updating location " + error.localizedDescription)
+    }
+    
+    @IBAction func distanceSliderChanged(_ sender: AnyObject) {
+        distanceLabel.text = String(format: "%.1f km", distanceSlider.value)
+    }
+    
+    @IBAction func setDistance(_ sender: AnyObject) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.SetDistanceView.alpha = 0
+            self.setDistanceButton.alpha = 1
+            }, completion: { _ in
+                self.setDistanceButton.isHidden = false
+                self.SetDistanceView.isHidden = true
+        })
+        distanceMax = distanceSlider.value
+        retrieveAllEvents()
+        userDefaults.set(distanceMax, forKey: "maxDistance")
+    }
+    
+    @IBAction func showDistanaceSettingButtonClicked(_ sender: AnyObject) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.SetDistanceView.isHidden = false
+            self.SetDistanceView.alpha = 1
+            self.setDistanceButton.alpha = 0
+        })
+        
     }
 }

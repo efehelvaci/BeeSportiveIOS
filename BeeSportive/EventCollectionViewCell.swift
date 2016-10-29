@@ -32,6 +32,10 @@ class EventCollectionViewCell: UICollectionViewCell {
     func configureCell(event: Event) {
         clipsToBounds = false
         
+        self.creatorImage.image = UIImage()
+        self.creatorName.text = ""
+        self.verifiedImage.isHidden = true
+        
         // Hex code: CCCCCC
         self.layer.borderColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1.0).cgColor
         self.layer.borderWidth = 1.0
@@ -46,7 +50,7 @@ class EventCollectionViewCell: UICollectionViewCell {
                 self.creatorName.isHidden = false
                 
                 self.user.verified ? (self.verifiedImage.isHidden = false) : (self.verifiedImage.isHidden = true)
-                
+
                 let url = URL(string: self.user.photoURL!)
                 self.creatorImage.kf.setImage(with: url)
             }
