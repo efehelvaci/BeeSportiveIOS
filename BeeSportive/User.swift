@@ -13,7 +13,6 @@ class User {
     // MARK: Properties
     let displayName: String
     var photoURL: String?
-    let email: String
     let id: String
     var bio: String = "Sportive! \u{1F41D}"
     var followers = [String]()   // Follower users ID's
@@ -27,7 +26,6 @@ class User {
         
         self.displayName = data["displayName"] as! String
         self.photoURL = data["photoURL"] as? String
-        self.email = data["email"] as! String
         self.id = data["id"] as! String
         
         if let followers = (data["followers"] as? Dictionary<String, AnyObject>)?.keys {

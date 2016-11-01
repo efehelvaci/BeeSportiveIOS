@@ -74,6 +74,8 @@ class RequestsTableViewCell: UITableViewCell {
             "notificationConnection": delegate!.senderVC!.event.id,
             "type": "joinRequestAccepted"
         ]
+        
+        REF_NEW_NOTIFICATIONS.child(requesterID!).setValue(true)
         REF_NOTIFICATIONS.child(requesterID!).childByAutoId().setValue(notifier)
         
         deleteUserFromTable(accepted: true)

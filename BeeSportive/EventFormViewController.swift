@@ -12,10 +12,12 @@ import Firebase
 import FTIndicator
 import MapKit
 import Eureka
+import SDCAlertView
 
 class EventFormViewController: FormViewController, CLLocationManagerDelegate {
 
     let locationManager = CLLocationManager()
+    var createEventAlert : AlertController!
     var timesToLocateAccurate = 10
     var location : CLLocation? {
         didSet{
@@ -43,10 +45,20 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
         backButton.title = ""
         navigationItem.backBarButtonItem = backButton
         
+        createEventAlert = AlertController(title: "Are you sure?", message: "You won't be able to change or delete event afterwards. Check everything before creating event.")
+        createEventAlert.add(AlertAction(title: "Cancel", style: .destructive, handler: {_ in
+            self.createEventAlert.dismiss()
+        }))
+        createEventAlert.add(AlertAction(title: "Create", style: .preferred, handler: { _ in
+            if self.checkIfAttributesRight() {
+                self.createEvent()
+            }
+        }))
+        
         LabelRow.defaultCellUpdate = { cell, row in cell.detailTextLabel?.textColor = .orange  }
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Back"), style: .plain, target: self, action: #selector(back))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createEvent))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(areYouSureAlert))
         
         form =
 
@@ -105,7 +117,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
             <<< ButtonRow("Add Event") { row in
                 row.title = row.tag
             }.onCellSelection({ [weak self] (cell, row) in
-                self?.createEvent()
+                self?.areYouSureAlert()
             })
     }
     
@@ -134,7 +146,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
         
         if let name = self.form.rowBy(tag: "Name")?.baseValue as? String,
             let description = self.form.rowBy(tag: "Description")?.baseValue as? String,
-            var date = self.form.rowBy(tag: "Date")?.baseValue as? Date,
+            let date = self.form.rowBy(tag: "Date")?.baseValue as? Date,
             let time = self.form.rowBy(tag: "Time")?.baseValue as? Date,
             let locationPin = self.form.rowBy(tag: "LocationPin")?.baseValue as? CLLocation,
             let locationName = self.form.rowBy(tag: "LocationName")?.baseValue as? String,
@@ -142,61 +154,6 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
             let branch = self.form.rowBy(tag: "Branch")?.baseValue as? String,
             let maxJoin = self.form.rowBy(tag: "MaxJoin")?.baseValue as? Int
         {
-            let currentDate = Date()
-            
-            date = date.addHours(hoursToAdd: 1) as Date
-            if date.isLessThanDate(dateToCompare: currentDate){
-                FTIndicator.showInfo(withMessage: "Cannot create event to past time.")
-                return
-            }
-            
-            if maxJoin > 100 {
-                FTIndicator.showInfo(withMessage: "Cannot create event for more than 100 people.")
-                return
-            } else if maxJoin < 1 {
-                FTIndicator.showInfo(withMessage: "Cannot create event for less than 1 person")
-                return
-            }
-            
-            if currentDate.addDays(daysToAdd: 90) < date {
-                FTIndicator.showInfo(withMessage: "Cannot create event for >3 months later.")
-                return
-            }
-            
-            if description.characters.count < 10 {
-                FTIndicator.showInfo(withMessage: "Event description too short (Minimum 10 characters)")
-                return
-            } else if description.characters.count > 1000 {
-                FTIndicator.showInfo(withMessage: "Event description too long (Maximum 1000 characters)")
-                return
-            }
-            
-            if name.characters.count < 8 {
-                FTIndicator.showInfo(withMessage: "Event name too short (Minimum 8 characters)")
-                return
-            } else if name.characters.count > 60 {
-                FTIndicator.showInfo(withMessage: "Event name too long (Maximum 60 characters)")
-                return
-            }
-            
-            if locationName.characters.count < 4 {
-                FTIndicator.showInfo(withMessage: "Location name too short (Minimum 4 characters)")
-                return
-            } else if locationName.characters.count > 30 {
-                FTIndicator.showInfo(withMessage: "Event name too long (Maximum 30 characters)")
-                return
-            }
-            
-            if !branchs.contains(branch) {
-                FTIndicator.showInfo(withMessage: "Unknown branch!")
-                return
-            }
-            
-            if !levels.contains(level) {
-                FTIndicator.showInfo(withMessage: "Unknown level!")
-                return
-            }
-            
             FTIndicator.showProgressWithmessage("Adding your event!", userInteractionEnable: false)
             
             var locationAddress = ""
@@ -208,7 +165,6 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                     let placemrk = placemark?.last
                     locationAddress = (placemrk?.addressDictionary!["FormattedAddressLines"] as! [String]).joined(separator: " ")
                 }
-            
                 
                 let dateFormatter = DateFormatter()
                 
@@ -223,8 +179,6 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                 let newEvent = [
                     "id" : uuid,
                     "creatorID" : (FIRAuth.auth()?.currentUser?.uid)!,
-                    "creatorImageURL" : (FIRAuth.auth()?.currentUser?.photoURL?.absoluteString)!,
-                    "creatorName" : (FIRAuth.auth()?.currentUser?.displayName)!,
                     "name" : name,
                     "branch" : branch,
                     "location" : locationName,
@@ -271,6 +225,82 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
         } else {
             FTIndicator.showInfo(withMessage: "You must fill all the areas!")
         }
-
+    }
+    
+    func checkIfAttributesRight() -> Bool {
+        if let name = self.form.rowBy(tag: "Name")?.baseValue as? String,
+            let description = self.form.rowBy(tag: "Description")?.baseValue as? String,
+            var date = self.form.rowBy(tag: "Date")?.baseValue as? Date,
+            let locationName = self.form.rowBy(tag: "LocationName")?.baseValue as? String,
+            let level = self.form.rowBy(tag: "Level")?.baseValue as? String,
+            let branch = self.form.rowBy(tag: "Branch")?.baseValue as? String,
+            let maxJoin = self.form.rowBy(tag: "MaxJoin")?.baseValue as? Int
+        {
+            let currentDate = Date()
+            
+            date = date.addHours(hoursToAdd: 1) as Date
+            if date.isLessThanDate(dateToCompare: currentDate){
+                FTIndicator.showInfo(withMessage: "Cannot create event to past time.")
+                return false
+            }
+            
+            if maxJoin > 100 {
+                FTIndicator.showInfo(withMessage: "Cannot create event for more than 100 people.")
+                return false
+            } else if maxJoin < 1 {
+                FTIndicator.showInfo(withMessage: "Cannot create event for less than 1 person")
+                return false
+            }
+            
+            if currentDate.addDays(daysToAdd: 90) < date {
+                FTIndicator.showInfo(withMessage: "Cannot create event for >3 months later.")
+                return false
+            }
+            
+            if description.characters.count < 10 {
+                FTIndicator.showInfo(withMessage: "Event description too short (Minimum 10 characters)")
+                return false
+            } else if description.characters.count > 1000 {
+                FTIndicator.showInfo(withMessage: "Event description too long (Maximum 1000 characters)")
+                return false
+            }
+            
+            if name.characters.count < 8 {
+                FTIndicator.showInfo(withMessage: "Event name too short (Minimum 8 characters)")
+                return false
+            } else if name.characters.count > 60 {
+                FTIndicator.showInfo(withMessage: "Event name too long (Maximum 60 characters)")
+                return false
+            }
+            
+            if locationName.characters.count < 4 {
+                FTIndicator.showInfo(withMessage: "Location name too short (Minimum 4 characters)")
+                return false
+            } else if locationName.characters.count > 30 {
+                FTIndicator.showInfo(withMessage: "Event name too long (Maximum 30 characters)")
+                return false
+            }
+            
+            if !branchs.contains(branch) {
+                FTIndicator.showInfo(withMessage: "Unknown branch!")
+                return false
+            }
+            
+            if !levels.contains(level) {
+                FTIndicator.showInfo(withMessage: "Unknown level!")
+                return false
+            }
+            
+            return true
+        } else {
+            FTIndicator.showInfo(withMessage: "You must fill all the areas!")
+            return false
+        }
+    }
+    
+    func areYouSureAlert() {
+        if checkIfAttributesRight() {
+            self.createEventAlert.present()
+        }
     }
 }

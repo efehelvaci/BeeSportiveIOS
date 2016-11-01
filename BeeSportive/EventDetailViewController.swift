@@ -127,8 +127,7 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
             "You will be notified when event owner considers your application."), preferredStyle: AlertControllerStyle.alert)
         joinAlert.add(AlertAction(title: "Cancel", style: .destructive, handler: { _ in
             self.joinAlert.dismiss()
-        })
-        )
+        }))
         joinAlert.add(AlertAction(title: "Join!", style: .preferred, handler: { _ in
             if self.event!.creatorID != FIRAuth.auth()?.currentUser?.uid {
                 REF_EVENTS.child(self.event!.id).child("requested").child((FIRAuth.auth()?.currentUser?.uid)!).child("id").setValue((FIRAuth.auth()?.currentUser?.uid)!)
@@ -148,10 +147,10 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
                     "type": "incomingJoinRequest"
                 ]
                 
+                REF_NEW_NOTIFICATIONS.child(self.event.creatorID).setValue(true)
                 REF_NOTIFICATIONS.child(self.event.creatorID).childByAutoId().setValue(notifier)
             }
-        })
-        )
+        }))
         
         self.eventRequsters = [User]()
         if let reqIDs = event.requesters?.keys {

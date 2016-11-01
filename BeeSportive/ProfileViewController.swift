@@ -221,7 +221,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favoriteSportItem", for: indexPath) as! ProfileFavoriteSportCollectionViewCell
                 
                 if indexPath.row <= favoriteSports.count {
-                    cell.image.image = UIImage(named: favoriteSports[(indexPath as NSIndexPath).row - 1])
+                    cell.image.image = UIImage(named: (favoriteSports[(indexPath as NSIndexPath).row - 1] + "Mini"))
                     cell.name.text = favoriteSports[(indexPath as NSIndexPath).row - 1]
                 } else {
                     cell.image.image = UIImage(named: "Add2")
@@ -482,6 +482,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 "type": "newFollower"
             ]
             
+            REF_NEW_NOTIFICATIONS.child(user!.id).setValue(true)
             REF_NOTIFICATIONS.child(user!.id).childByAutoId().setValue(notifier)
             
         } else {

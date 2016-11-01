@@ -26,7 +26,7 @@ class ChannelCell: UITableViewCell {
                 self.title.text = title
             }
             if let branch = snapshot.childSnapshot(forPath: "branch").value as? String {
-                self.img.image = UIImage(named: branch)
+                self.img.image = UIImage(named: (branch + "Mini"))
             }
 
             self.isHidden = false

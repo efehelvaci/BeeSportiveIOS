@@ -95,6 +95,7 @@ class UserCell: UICollectionViewCell {
                 "type": "newFollower"
             ]
             
+            REF_NEW_NOTIFICATIONS.child(user.id).setValue(true)
             REF_NOTIFICATIONS.child(user.id).childByAutoId().setValue(notifier)
         } else {
             followButton.setTitle("follow", for: UIControlState())

@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 import FTIndicator
 import Async
 
@@ -33,8 +34,19 @@ class TabBarController: UITabBarController {
         // Tab Bar Item Images
         eventVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Events"), tag: 1)
         usersVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Search"), tag: 2)
-        notificationsVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "NotificationsRed")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal) , tag: 4)
+        notificationsVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Notifications") , tag: 4)
         profileVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Avatar"), tag: 5)
+        
+        REF_NEW_NOTIFICATIONS.child((FIRAuth.auth()?.currentUser?.uid)!).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.exists() {
+                if let isThereNewNotification = snapshot.value as? Bool {
+                    if isThereNewNotification {
+                        notificationsVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "NotificationsRed")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal) , tag: 4)
+                        notificationsVC.tabBarItem.imageInsets = self.tabBarImageInsets
+                    }
+                }
+            }
+        })
         
         // Tab bar items stand centered at the bar
         eventVC.tabBarItem.imageInsets = tabBarImageInsets

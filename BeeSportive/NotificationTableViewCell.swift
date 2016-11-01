@@ -40,6 +40,9 @@ class NotificationTableViewCell: UITableViewCell {
         case .incomingJoinRequest:
             notificationImage.image = UIImage(named: "JoinRequest")
             break
+        case .newComment:
+            notificationImage.image = UIImage(named: "NewComment")
+            break
         default:
             break
         }

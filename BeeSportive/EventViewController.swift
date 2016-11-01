@@ -38,6 +38,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     let followingRefreshControl = UIRefreshControl()
     let backButton = UIBarButtonItem()
     
+    var isFirstLocationExists = false
     var distanceMax : Float = 25
     var timesToLocateAccurate = 5
     var eventDetailVC : EventDetailViewController!
@@ -70,33 +71,15 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             distanceLabel.text = String(format: "%.1f km", distanceMax)
         }
         
-        var isFirstLocationExists = false
         if let lastLocationData = userDefaults.value(forKey: "lastLocation") as? Data {
             if let storedLocation = NSKeyedUnarchiver.unarchiveObject(with: lastLocationData) as? CLLocation {
                 location = storedLocation
                 isFirstLocationExists = true
                 retrieveAllEvents()
-                print("MY STORED LOCATION : ")
-                print(location)
             }
         }
         
-        if CLLocationManager.locationServicesEnabled() {
-            switch(CLLocationManager.authorizationStatus()) {
-            case .notDetermined, .restricted, .denied:
-                if !isFirstLocationExists {
-                    needYourLocationView.isHidden = false
-                    FTIndicator.showNotification(with: UIImage(named: "LocationPin"), title: "Can't update location!", message: "Give us location permission to list the events based on your current location!")
-                }
-            case .authorizedAlways, .authorizedWhenInUse:
-                locationManager.startUpdatingLocation()
-            }
-        } else {
-            if !isFirstLocationExists {
-                needYourLocationView.isHidden = false
-                FTIndicator.showNotification(with: UIImage(named: "LocationPin"), title: "Can't update location!", message: "You should enable your location services to list the events based on your current location!")
-            }
-        }
+        checkLocationPermission()
         
         allEventsRefreshControl.addTarget(self, action: #selector(fakeAllEventsRefresh), for: UIControlEvents.valueChanged)
         favoritesRefreshControl.addTarget(self, action: #selector(retrieveFavoriteEvents), for: UIControlEvents.valueChanged)
@@ -142,6 +125,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         // If there are not enough events to scroll, you can still scroll
         firstCollectionView.alwaysBounceVertical = true
         thirdCollectionView.alwaysBounceVertical = true
+        followingCollectionView.alwaysBounceVertical = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -269,10 +253,12 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         FTIndicator.showProgressWithmessage("Loading...")
         
         var tempAllEvents = [Event]()
+        var tempPopularEvents = [Event]()
         
         REF_EVENTS.observe(.value , with: { (snapshot) in
             
             tempAllEvents.removeAll()
+            tempPopularEvents.removeAll()
             
             if snapshot.exists() {
                 
@@ -284,11 +270,20 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                     let distance = Float(Double(self.location.distance(from: eventLocation)) / 1000.0)
                     
                     if !eventElement.isPast && distance < self.distanceMax {
-                        tempAllEvents.append(eventElement)
+                        if eventElement.isSponsored {
+                            tempPopularEvents.append(eventElement)
+                        } else {
+                            tempAllEvents.append(eventElement)
+                        }
                     }
                 }
                 
                 self.allEvents = tempAllEvents.sorted(by: { ($0.fullDate?.isLessThanDate(dateToCompare: $1.fullDate!))!})
+                
+                for popularEvent in tempPopularEvents {
+                    self.allEvents.insert(popularEvent, at: 0)
+                }
+                
                 FTIndicator.dismissProgress()
                 
                 Async.main {
@@ -446,6 +441,28 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
         print("Error while updating location " + error.localizedDescription)
+    }
+    
+    func checkLocationPermission() {
+        if CLLocationManager.locationServicesEnabled() {
+            switch(CLLocationManager.authorizationStatus()) {
+            case .notDetermined, .restricted, .denied:
+                if !isFirstLocationExists {
+                    needYourLocationView.isHidden = false
+                    FTIndicator.showNotification(with: UIImage(named: "LocationPin"), title: "Can't update location!", message: "Give us location permission to list the events based on your current location!")
+                    Async.background(after: 1, { self.checkLocationPermission() })
+                }
+            case .authorizedAlways, .authorizedWhenInUse:
+                needYourLocationView.isHidden = true
+                locationManager.startUpdatingLocation()
+            }
+        } else {
+            if !isFirstLocationExists {
+                needYourLocationView.isHidden = false
+                FTIndicator.showNotification(with: UIImage(named: "LocationPin"), title: "Can't update location!", message: "You should enable your location services to list the events based on your current location!")
+            }
+            Async.background(after: 1, { self.checkLocationPermission() })
+        }
     }
     
     @IBAction func distanceSliderChanged(_ sender: AnyObject) {

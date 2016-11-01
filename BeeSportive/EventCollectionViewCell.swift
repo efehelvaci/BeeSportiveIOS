@@ -60,7 +60,10 @@ class EventCollectionViewCell: UICollectionViewCell {
             // Hex code: FEE941
             self.layer.borderColor = UIColor(red: 254/255.0, green: 233/255.0, blue: 65/255.0, alpha: 1.0).cgColor
             self.layer.borderWidth = 2.0
-            self.layer.cornerRadius = 1.0
+        }
+        if event.isSponsored {
+            self.layer.borderColor = primaryButtonColor.cgColor
+            self.layer.borderWidth = 3.0
         }
         
         self.date.text = event.day + " " + months[Int(event.month)! - 1] + ", " + event.dayName + ", " + event.time

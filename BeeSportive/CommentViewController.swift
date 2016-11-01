@@ -52,6 +52,15 @@ class CommentViewController: UIViewController {
         
         REF_USERS.child(user!.id).child("comments").child((FIRAuth.auth()?.currentUser?.uid)!).setValue(comment)
         
+        let notifier = [
+            "notification": (currentUser.instance.user?.displayName)! + " commented on your profile!" ,
+            "notificationConnection": (FIRAuth.auth()?.currentUser?.uid)!,
+            "type": "newComment"
+        ]
+        
+        REF_NEW_NOTIFICATIONS.child(user!.id).setValue(true)
+        REF_NOTIFICATIONS.child(user!.id).childByAutoId().setValue(notifier)
+        
         self.dismiss(animated: true, completion: {
             self.senderVC?.getComments()
         })

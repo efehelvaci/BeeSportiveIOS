@@ -14,6 +14,7 @@ enum NotificationType {
     case newFollower
     case general
     case incomingJoinRequest
+    case newComment
     case notValid
 }
 
@@ -32,19 +33,22 @@ class Notification {
         if let notificationType = data["type"] as? String {
             switch notificationType {
             case "joinRequestAccepted":
-                self.notificationType = NotificationType.joinRequestAccepted
+                self.notificationType = .joinRequestAccepted
                 break
             case "newFollower":
-                self.notificationType = NotificationType.newFollower
+                self.notificationType = .newFollower
                 break
             case "general":
-                self.notificationType = NotificationType.general
+                self.notificationType = .general
                 break
             case "incomingJoinRequest":
-                self.notificationType = NotificationType.incomingJoinRequest
+                self.notificationType = .incomingJoinRequest
+                break
+            case "newComment":
+                self.notificationType = .newComment
                 break
             default:
-                self.notificationType = NotificationType.notValid
+                self.notificationType = .notValid
                 break
             }
         }

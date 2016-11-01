@@ -31,6 +31,7 @@ class Event {
     var address : String? = nil
     var fullDate : Date? = nil
     var isPast : Bool = false
+    var isSponsored : Bool = false
     
     init(snapshot: FIRDataSnapshot) {
         let data = snapshot.value as! Dictionary<String, AnyObject>
@@ -83,6 +84,10 @@ class Event {
             if (self.fullDate?.isLessThanDate(dateToCompare: Date()))! {
                 self.isPast = true
             }
+        }
+        
+        if let isSponsored = data["isSponsored"] as? Bool {
+            self.isSponsored = isSponsored
         }
         
         REF_USERS.child(creatorID).observeSingleEvent(of: .value, with: { snapshot2 in

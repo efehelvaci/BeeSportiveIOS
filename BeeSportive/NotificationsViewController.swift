@@ -10,7 +10,6 @@ import UIKit
 import FirebaseDatabase
 import FirebaseAuth
 import Async
-import FTIndicator
 
 class NotificationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -19,7 +18,9 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     var notifications = [Notification]()
     var eventDetailVC : EventDetailViewController!
     var usersProfileVC : ProfileViewController!
+    var firstTimeOpening = true
     
+    let refreshControl = UIRefreshControl()
     let backButton = UIBarButtonItem()
     
     override func viewDidLoad() {
@@ -31,45 +32,32 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
         usersProfileVC = storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         
-        var tempNotifications = [Notification]()
+        refreshControl.addTarget(self, action: #selector(retrieveNotifications), for: .valueChanged)
+        tableView.addSubview(refreshControl)
         
-        REF_NOTIFICATIONS.child(FIRAuth.auth()!.currentUser!.uid).observe(.value, with: { snapshot in
+        REF_NEW_NOTIFICATIONS.child((FIRAuth.auth()?.currentUser?.uid)!).observe(.value, with: { snapshot in
             if snapshot.exists() {
-                FTIndicator.showProgressWithmessage("Loading...")
-                
-                tempNotifications.removeAll()
-                
-                for snap in snapshot.children.allObjects as! [FIRDataSnapshot] {
-                    let notification = Notification(snapshot: snap)
-                    
-                    var contains = false
-                    for element in tempNotifications {
-                        if element.notification == notification.notification{
-                            contains = true
+                if let isThereNewNotification = snapshot.value as? Bool {
+                    if isThereNewNotification {
+                        if !self.firstTimeOpening {
+                            self.tabBarItem.image = UIImage(named: "NotificationsRed")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
                         }
                     }
                     
-                    if !contains{
-                        tempNotifications.insert(notification, at: 0)
-                    }
-                }
-                
-                self.notifications = tempNotifications
-                
-                if self.isViewLoaded {
-                    self.tableView.reloadData()
-
+                    self.firstTimeOpening = false
                 }
             }
             
-            self.tabBarItem.image = UIImage(named: "NotificationsRed")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-            
-            FTIndicator.dismissProgress()
+            self.refreshControl.beginRefreshing()
+            self.retrieveNotifications()
         })
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        REF_NEW_NOTIFICATIONS.child((FIRAuth.auth()?.currentUser?.uid)!).setValue(false)
         
         self.tableView.reloadData()
         Async.main{
@@ -85,8 +73,6 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
             self.tabBarItem.image = UIImage(named: "Notifications")
             self.tabBarItem.selectedImage = UIImage(named: "Notifications")
         }
-        
-        FTIndicator.dismissProgress()
     }
 
     override func didReceiveMemoryWarning() {
@@ -132,7 +118,8 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
                 })
             }
             break
-        case .newFollower:
+        case .newFollower,
+             .newComment:
             
             // Go to followers profile page
             if notifications[indexPath.row].notificationConnection != "" {
@@ -155,5 +142,40 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         default:
             break
         }
+    }
+    
+    func retrieveNotifications() {
+        var tempNotifications = [Notification]()
+        
+        REF_NOTIFICATIONS.child(FIRAuth.auth()!.currentUser!.uid).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.exists() {
+                tempNotifications.removeAll()
+                
+                for snap in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                    let notification = Notification(snapshot: snap)
+                    
+                    var contains = false
+                    for element in tempNotifications {
+                        if element.notification == notification.notification{
+                            contains = true
+                            break
+                        }
+                    }
+                    
+                    if !contains{
+                        tempNotifications.insert(notification, at: 0)
+                    }
+                }
+                
+                self.notifications = tempNotifications
+                
+                if self.isViewLoaded {
+                    self.tableView.reloadData()
+                    
+                }
+            }
+            
+            self.refreshControl.endRefreshing()
+        })
     }
 }
