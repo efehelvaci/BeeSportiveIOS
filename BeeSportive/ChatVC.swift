@@ -27,7 +27,7 @@ class ChatVC: JSQMessagesViewController {
         REF_CHANNELS.child(channelID).child("messages").observe(.childAdded, with: { snapshot in
             guard let data = snapshot.value as? Dictionary<String, String> else { return }
             let senderId = data["senderId"]!
-            REF_USERS.child(senderId).child("displayName").observe(.value, with: { (snapshot) in
+            REF_USERS.child(senderId).child("displayName").observeSingleEvent(of: .value, with: { (snapshot) in
                 let displayName = snapshot.value as! String
                 self.addMessage(data["message"]!, senderId: data["senderId"]!, senderDisplayName: displayName, date: Date())
             })

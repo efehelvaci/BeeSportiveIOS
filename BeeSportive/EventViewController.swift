@@ -109,9 +109,6 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         navigationItem.rightBarButtonItem = rightBarButtonItem
         navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         
-        // Get data from database and update collection view
-//        retrieveAllEvents()
-        
         // Collection view cell nib register
         let nibName = UINib(nibName: "EventCollectionViewCell", bundle:nil)
         let nibName2 = UINib(nibName: "FavoriteSportCollectionViewCell", bundle:nil)
@@ -448,17 +445,15 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             switch(CLLocationManager.authorizationStatus()) {
             case .notDetermined, .restricted, .denied:
                 if !isFirstLocationExists {
-                    needYourLocationView.isHidden = false
                     FTIndicator.showNotification(with: UIImage(named: "LocationPin"), title: "Can't update location!", message: "Give us location permission to list the events based on your current location!")
                     Async.background(after: 1, { self.checkLocationPermission() })
                 }
             case .authorizedAlways, .authorizedWhenInUse:
-                needYourLocationView.isHidden = true
+                self.needYourLocationView.isHidden = true
                 locationManager.startUpdatingLocation()
             }
         } else {
             if !isFirstLocationExists {
-                needYourLocationView.isHidden = false
                 FTIndicator.showNotification(with: UIImage(named: "LocationPin"), title: "Can't update location!", message: "You should enable your location services to list the events based on your current location!")
             }
             Async.background(after: 1, { self.checkLocationPermission() })

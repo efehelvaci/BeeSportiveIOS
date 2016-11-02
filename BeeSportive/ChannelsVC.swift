@@ -50,6 +50,10 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         tabBarCont.menuButton.isHidden = false
         tabBarCont.tabBar.isHidden = false
         
+        REF_USERS.child(uid).child("eventsCreated").removeAllObservers()
+        REF_USERS.child(uid).child("joinedEvents").removeAllObservers()
+        REF_CHANNELS.removeAllObservers()
+        
     }
     
     // MARK: - Table View Delegate Methods

@@ -62,13 +62,13 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
         
         form =
 
-        form +++ Section("Main Details")
+        form +++ Section("MAIN DETAILS")
                 <<< TextRow(){ row in
-                    row.placeholder = "Event name"
+                    row.placeholder = "Event name (Max. 60 characters)"
                     row.tag = "Name"
                 }
                 <<< TextAreaRow() {
-                    $0.placeholder = "Description"
+                    $0.placeholder = "Description (Max. 800 characters)"
                     $0.textAreaHeight = .dynamic(initialTextViewHeight: 80)
                     $0.tag = "Description"
                 }
@@ -109,7 +109,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                         $0.tag = "Branch"
                         }
                 <<< IntRow() {
-                        $0.title = "Join Number"
+                        $0.title = "Max. Attendees"
                         $0.placeholder = "1 ~ 100"
                         $0.tag = "MaxJoin"
                     }
@@ -260,8 +260,8 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
             if description.characters.count < 10 {
                 FTIndicator.showInfo(withMessage: "Event description too short (Minimum 10 characters)")
                 return false
-            } else if description.characters.count > 1000 {
-                FTIndicator.showInfo(withMessage: "Event description too long (Maximum 1000 characters)")
+            } else if description.characters.count > 800 {
+                FTIndicator.showInfo(withMessage: "Event description too long (Maximum 800 characters)")
                 return false
             }
             

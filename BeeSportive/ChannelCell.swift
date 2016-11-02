@@ -21,7 +21,7 @@ class ChannelCell: UITableViewCell {
         self.lastMessage.text = channel.lastMessage["message"]
         self.date.text = channel.lastMessage["date"]
 
-        REF_EVENTS.child(channel.id).observe(.value, with: { snapshot in
+        REF_EVENTS.child(channel.id).observeSingleEvent(of: .value, with: { snapshot in
             if let title = snapshot.childSnapshot(forPath: "name").value as? String {
                 self.title.text = title
             }

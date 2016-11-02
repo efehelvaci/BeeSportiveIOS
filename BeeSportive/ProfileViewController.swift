@@ -169,6 +169,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if profileName.text == "Name" && user != nil { setUser() }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if user?.id != FIRAuth.auth()?.currentUser?.uid {
+            REF_USERS.child((user?.id)!).removeAllObservers()
+        }
+    }
+    
     // MARK: - Collection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

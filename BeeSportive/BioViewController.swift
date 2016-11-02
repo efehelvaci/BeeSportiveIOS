@@ -10,14 +10,19 @@ import UIKit
 import FTIndicator
 import Firebase
 
-class BioViewController: UIViewController {
+class BioViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var bioTextView: UITextView!
+    @IBOutlet var characterCounter: UILabel!
     
     var senderVC: ProfileViewController?
     var oldBio = ""
+    let characterLimit = 80
+    var leftCharacterLimit = 80
 
     override func viewDidLoad() {
+        bioTextView.delegate = self
+        
         super.viewDidLoad()
     }
     
@@ -25,6 +30,9 @@ class BioViewController: UIViewController {
         super.viewWillAppear(animated)
         
         bioTextView.text = oldBio
+        
+        leftCharacterLimit = characterLimit - oldBio.characters.count
+        characterCounter.text = "\(leftCharacterLimit)"
     }
     
     // MARK: -IBActions
@@ -53,6 +61,17 @@ class BioViewController: UIViewController {
                 self.senderVC?.setUser()
                 FTIndicator.showToastMessage("You successfully changed your bio!")
             })
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        leftCharacterLimit = characterLimit - bioTextView.text.characters.count
+        characterCounter.text = "\(leftCharacterLimit)"
+        
+        if leftCharacterLimit < 0 {
+            characterCounter.textColor = UIColor.red
+        } else {
+            characterCounter.textColor = UIColor.gray
         }
     }
 }

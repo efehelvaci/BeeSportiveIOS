@@ -24,6 +24,21 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let userDefault = UserDefaults.standard
+        if let firstTime = userDefault.value(forKey: "firstTimeLaunching") as? Bool {
+            if firstTime {
+                Async.main{
+                    let walkVC = self.storyboard?.instantiateViewController(withIdentifier: "WalkthroughPageViewController")
+                    self.present(walkVC!, animated: true, completion: nil)
+                }
+            }
+        } else {
+            Async.main{
+                let walkVC = self.storyboard?.instantiateViewController(withIdentifier: "WalkthroughPageViewController")
+                self.present(walkVC!, animated: true, completion: nil)
+            }
+        }
+        
         // Facebook login button create
         
         loginButton.alpha = 0.0

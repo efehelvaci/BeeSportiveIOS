@@ -12,15 +12,20 @@ import FTIndicator
 
 enum Reporting { case user, event, comment }
 
-class ReportViewController: UIViewController {
+class ReportViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var reportTextView: UITextView!
-
+    @IBOutlet var characterCounter: UILabel!
+    
     var reporting : Reporting = .event
     var reported : AnyObject?
+    let characterLimit = 300
+    var leftCharacterLimit = 300
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        reportTextView.delegate = self
     }
     
     // MARK: -IBActions
@@ -33,6 +38,9 @@ class ReportViewController: UIViewController {
     @IBAction func doneButtonClicked(_ sender: AnyObject) {
         if reportTextView.text.characters.count == 0 {
             FTIndicator.showInfo(withMessage: "Report can't be blank!")
+            return
+        } else if reportTextView.text.characters.count > 300 {
+            FTIndicator.showInfo(withMessage: "Report too long! (Max. 300 characters)")
             return
         }
         
@@ -63,7 +71,20 @@ class ReportViewController: UIViewController {
         }
         
         dismiss(animated: true, completion: {
+            self.reportTextView.text = ""
+            self.characterCounter.text = "\(self.characterLimit)"
             FTIndicator.showToastMessage("Report sent! Thanks for your concern!")
         })
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        leftCharacterLimit = characterLimit - reportTextView.text.characters.count
+        characterCounter.text = "\(leftCharacterLimit)"
+        
+        if leftCharacterLimit < 0 {
+            characterCounter.textColor = UIColor.red
+        } else {
+            characterCounter.textColor = UIColor.gray
+        }
     }
 }

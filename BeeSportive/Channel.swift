@@ -23,7 +23,7 @@ class Channel {
         
         self.dateFormatter.dateFormat = "HH.mm - dd.M.yy"
         
-        REF_EVENTS.child(snapshot.key).child("name").observe(.value, with: { (snapshot) in
+        REF_EVENTS.child(snapshot.key).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
             if let name = snapshot.value as? String {
                 self.title = name
             } else { self.title = "Channel" }

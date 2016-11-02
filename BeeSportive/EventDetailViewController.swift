@@ -233,6 +233,7 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         super.viewWillDisappear(animated)
         
         map.removeAnnotation(self.pin)
+        REF_EVENTS.child(event.id).child("requested").removeAllObservers()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

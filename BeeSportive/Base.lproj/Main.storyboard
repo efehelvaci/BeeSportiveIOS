@@ -27,6 +27,14 @@
         </array>
     </customFonts>
     <scenes>
+        <!--Walkthrough Page View Controller-->
+        <scene sceneID="5do-Xx-Dst">
+            <objects>
+                <pageViewController storyboardIdentifier="WalkthroughPageViewController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="uKQ-el-85O" customClass="WalkthroughPageViewController" customModule="BeeSportive" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CDr-ss-O8D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3076" y="943"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="LLB-PG-qo9">
             <objects>
@@ -638,7 +646,7 @@
         <scene sceneID="TBJ-zi-1Af">
             <objects>
                 <collectionViewController storyboardIdentifier="EventsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lUu-DK-stH" customClass="EventsCollectionViewController" customModule="BeeSportive" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="t5U-hg-KT9">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="t5U-hg-KT9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1302,28 +1310,36 @@
                                     <constraint firstAttribute="height" constant="1" id="hK0-tE-S3t"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="300" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0L-82-kEN">
+                                <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="dWu-pp-ZCC" firstAttribute="top" secondItem="bYI-lj-3hM" secondAttribute="bottom" constant="-1" id="AEs-99-rZW"/>
+                            <constraint firstItem="dWu-pp-ZCC" firstAttribute="top" secondItem="bYI-lj-3hM" secondAttribute="bottom" id="AEs-99-rZW"/>
                             <constraint firstAttribute="trailing" secondItem="vJJ-CG-eBJ" secondAttribute="trailing" constant="8" id="JFk-bs-DSk"/>
+                            <constraint firstItem="P0L-82-kEN" firstAttribute="top" secondItem="dWu-pp-ZCC" secondAttribute="bottom" constant="2" id="Onc-w1-Gpp"/>
                             <constraint firstItem="bYI-lj-3hM" firstAttribute="top" secondItem="ruL-o3-2kc" secondAttribute="topMargin" constant="60" id="RGm-TT-1tu"/>
                             <constraint firstAttribute="trailing" secondItem="bYI-lj-3hM" secondAttribute="trailing" id="U7h-FO-rzT"/>
                             <constraint firstItem="yAJ-S2-iEb" firstAttribute="top" secondItem="ruL-o3-2kc" secondAttribute="topMargin" constant="15" id="ZSB-XY-ghP"/>
                             <constraint firstItem="bYI-lj-3hM" firstAttribute="leading" secondItem="ruL-o3-2kc" secondAttribute="leading" id="cpj-zw-2cQ"/>
                             <constraint firstItem="CXw-gN-f8x" firstAttribute="leading" secondItem="ruL-o3-2kc" secondAttribute="leading" constant="8" id="d5C-Wb-OTO"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="dWu-pp-ZCC" secondAttribute="bottom" id="ex9-Sw-ppk"/>
                             <constraint firstAttribute="trailing" secondItem="dWu-pp-ZCC" secondAttribute="trailing" id="kEb-Uc-OxE"/>
                             <constraint firstItem="yAJ-S2-iEb" firstAttribute="centerX" secondItem="ruL-o3-2kc" secondAttribute="centerX" id="ksi-gE-qgT"/>
+                            <constraint firstAttribute="trailing" secondItem="P0L-82-kEN" secondAttribute="trailing" constant="8" id="oWn-Z8-WXP"/>
                             <constraint firstItem="CXw-gN-f8x" firstAttribute="centerY" secondItem="yAJ-S2-iEb" secondAttribute="centerY" id="p67-f9-7Is"/>
                             <constraint firstItem="dWu-pp-ZCC" firstAttribute="leading" secondItem="ruL-o3-2kc" secondAttribute="leading" id="pTt-aR-ndQ"/>
                             <constraint firstItem="vJJ-CG-eBJ" firstAttribute="centerY" secondItem="yAJ-S2-iEb" secondAttribute="centerY" id="prM-Bl-l5u"/>
+                            <constraint firstItem="lsY-b9-8zM" firstAttribute="top" secondItem="P0L-82-kEN" secondAttribute="bottom" constant="8" id="yde-0N-hE6"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="280"/>
                     <connections>
+                        <outlet property="characterCounter" destination="P0L-82-kEN" id="KSG-CN-AdJ"/>
                         <outlet property="commentTextView" destination="dWu-pp-ZCC" id="alx-Pt-sk2"/>
                     </connections>
                 </viewController>
@@ -1400,15 +1416,22 @@
                                     <constraint firstAttribute="height" constant="1" id="kov-CZ-nVC"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="80" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bl4-pu-8D6">
+                                <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="bl4-pu-8D6" secondAttribute="trailing" constant="8" id="3k2-4b-BuH"/>
                             <constraint firstItem="5at-Mg-bhD" firstAttribute="top" secondItem="osb-bF-Z8R" secondAttribute="topMargin" id="5GR-FJ-rxv"/>
                             <constraint firstItem="41J-5W-uAP" firstAttribute="top" secondItem="osb-bF-Z8R" secondAttribute="topMargin" constant="60" id="Aw9-lk-5nJ"/>
+                            <constraint firstItem="bl4-pu-8D6" firstAttribute="top" secondItem="ze6-q6-ecO" secondAttribute="bottom" constant="2" id="E6O-bg-FV0"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="bl4-pu-8D6" secondAttribute="bottom" constant="8" id="HeE-Lb-F1o"/>
                             <constraint firstAttribute="trailing" secondItem="5at-Mg-bhD" secondAttribute="trailing" id="Jjq-HW-BIo"/>
                             <constraint firstAttribute="trailing" secondItem="ze6-q6-ecO" secondAttribute="trailing" id="Qyy-ow-occ"/>
                             <constraint firstAttribute="trailing" secondItem="41J-5W-uAP" secondAttribute="trailing" id="czp-Bm-LmW"/>
-                            <constraint firstItem="6bq-2I-GJZ" firstAttribute="top" secondItem="ze6-q6-ecO" secondAttribute="bottom" id="m4X-85-Mab"/>
                             <constraint firstItem="ze6-q6-ecO" firstAttribute="leading" secondItem="osb-bF-Z8R" secondAttribute="leading" id="tmu-H2-6n0"/>
                             <constraint firstItem="41J-5W-uAP" firstAttribute="leading" secondItem="osb-bF-Z8R" secondAttribute="leading" id="vcj-f0-4dx"/>
                             <constraint firstItem="ze6-q6-ecO" firstAttribute="top" secondItem="5at-Mg-bhD" secondAttribute="bottom" id="wHa-K3-buN"/>
@@ -1420,11 +1443,12 @@
                     <size key="freeformSize" width="375" height="200"/>
                     <connections>
                         <outlet property="bioTextView" destination="ze6-q6-ecO" id="3ra-Ld-Sys"/>
+                        <outlet property="characterCounter" destination="bl4-pu-8D6" id="hsH-lP-j4f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BGk-aU-lhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="321" y="3098"/>
+            <point key="canvasLocation" x="320.80000000000001" y="3097.1514242878561"/>
         </scene>
         <!--Favorite Sport Picker View Controller-->
         <scene sceneID="auW-Mm-nkY">
@@ -2207,34 +2231,42 @@ Go to settings and enable it then restart our application! ✌️</string>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="300" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5V-f3-bwe">
+                                <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="k7m-1p-Frt" firstAttribute="centerX" secondItem="Tjr-vb-Cmu" secondAttribute="centerX" id="4dO-n5-FKH"/>
                             <constraint firstAttribute="trailing" secondItem="V4b-67-0H9" secondAttribute="trailing" constant="8" id="6bu-qE-juW"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="Czf-bI-Q7m" secondAttribute="bottom" id="6wD-zK-xV5"/>
                             <constraint firstItem="Djd-ry-vAH" firstAttribute="leading" secondItem="Tjr-vb-Cmu" secondAttribute="leading" id="7ZD-yI-BZr"/>
-                            <constraint firstItem="Czf-bI-Q7m" firstAttribute="top" secondItem="Djd-ry-vAH" secondAttribute="bottom" constant="3" id="8Xy-Hb-7Y0"/>
+                            <constraint firstItem="Czf-bI-Q7m" firstAttribute="top" secondItem="Djd-ry-vAH" secondAttribute="bottom" id="8Xy-Hb-7Y0"/>
                             <constraint firstItem="Djd-ry-vAH" firstAttribute="top" secondItem="Tjr-vb-Cmu" secondAttribute="topMargin" constant="60" id="RRg-0d-4rt"/>
                             <constraint firstItem="Rmw-zR-Wtc" firstAttribute="leading" secondItem="Tjr-vb-Cmu" secondAttribute="leading" constant="8" id="V3o-3Q-Fpk"/>
                             <constraint firstItem="Rmw-zR-Wtc" firstAttribute="centerY" secondItem="k7m-1p-Frt" secondAttribute="centerY" id="Z0d-ZI-rLE"/>
                             <constraint firstAttribute="trailing" secondItem="Djd-ry-vAH" secondAttribute="trailing" id="Zz1-yI-hzX"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="W5V-f3-bwe" secondAttribute="bottom" constant="8" id="ad0-ri-bvV"/>
                             <constraint firstItem="k7m-1p-Frt" firstAttribute="top" secondItem="Tjr-vb-Cmu" secondAttribute="topMargin" constant="15" id="ar5-3r-Oqy"/>
+                            <constraint firstAttribute="trailing" secondItem="W5V-f3-bwe" secondAttribute="trailing" constant="8" id="i9l-hA-49x"/>
                             <constraint firstAttribute="trailing" secondItem="Czf-bI-Q7m" secondAttribute="trailing" id="pVB-zu-sUH"/>
                             <constraint firstItem="Czf-bI-Q7m" firstAttribute="leading" secondItem="Tjr-vb-Cmu" secondAttribute="leading" id="roa-6y-Hbp"/>
                             <constraint firstItem="V4b-67-0H9" firstAttribute="centerY" secondItem="k7m-1p-Frt" secondAttribute="centerY" id="teb-MV-jkG"/>
+                            <constraint firstItem="W5V-f3-bwe" firstAttribute="top" secondItem="Czf-bI-Q7m" secondAttribute="bottom" constant="2" id="vuh-bV-6F3"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="400"/>
                     <connections>
+                        <outlet property="characterCounter" destination="W5V-f3-bwe" id="M3k-Aj-lyY"/>
                         <outlet property="reportTextView" destination="Czf-bI-Q7m" id="LcS-pM-EUX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zy0-W7-WJY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="982" y="3188"/>
+            <point key="canvasLocation" x="981.60000000000002" y="3187.1064467766118"/>
         </scene>
         <!--Channel-->
         <scene sceneID="mT9-kM-Xt8">

@@ -10,18 +10,30 @@ import UIKit
 import Firebase
 import FTIndicator
 
-class CommentViewController: UIViewController {
+class CommentViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet var commentTextView: UITextView!
+    @IBOutlet var characterCounter: UILabel!
     
     var senderVC : ProfileViewController?
     var user : User?
     var comment = ""
+    let characterLimit = 300
+    var leftCharacterLimit = 300
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        commentTextView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         commentTextView.text = comment
+        leftCharacterLimit = characterLimit - comment.characters.count
+        
+        characterCounter.text = "\(leftCharacterLimit)"
     }
     
     // MARK: -IBActions
@@ -41,6 +53,9 @@ class CommentViewController: UIViewController {
         
         if commentText.characters.count < 1 {
             FTIndicator.showInfo(withMessage: "Comment can't be blank!")
+            return
+        } else if commentText.characters.count > 300 {
+            FTIndicator.showInfo(withMessage: "Comment too long! (Max. 300 characters)")
             return
         }
         
@@ -65,4 +80,16 @@ class CommentViewController: UIViewController {
             self.senderVC?.getComments()
         })
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        leftCharacterLimit = characterLimit - commentTextView.text.characters.count
+        characterCounter.text = "\(leftCharacterLimit)"
+        
+        if leftCharacterLimit < 0 {
+            characterCounter.textColor = UIColor.red
+        } else {
+            characterCounter.textColor = UIColor.gray
+        }
+    }
+    
 }

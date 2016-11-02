@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import FTIndicator
 
 class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, observeUser {
 
@@ -38,8 +37,6 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         
         REF_USERS.observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.exists() {
-                FTIndicator.showProgressWithmessage("Loading...", userInteractionEnable: true)
-                
                 self.users.removeAll()
                 
                 for snap in snapshot.children {
@@ -53,8 +50,6 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
                 }
                 
                 self.collectionView.reloadData()
-                
-                FTIndicator.dismissProgress()
             }
         })
     }
@@ -66,12 +61,6 @@ class UsersVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         self.collectionView.reloadData()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        FTIndicator.dismissProgress()
-    }
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
