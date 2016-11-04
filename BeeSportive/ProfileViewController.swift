@@ -52,6 +52,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet var bioHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet var scrollViewHeight: NSLayoutConstraint!
     var user : User? {
         didSet{
             self.setUser()
@@ -85,6 +86,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     var commentsArray = [Comment]()
+    var profileImageFullscreenVC : ImageFullscreenViewController!
     var eventDetailVC : EventDetailViewController!
     var favoriteSportPickerVC : FavoriteSportPickerViewController!
     var commentVC : CommentViewController!
@@ -102,17 +104,20 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         backButton.title = ""
         navigationItem.backBarButtonItem = backButton
         
-        followeringVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowerFollowingViewController") as? FollowerFollowingViewController
-        bioVC = self.storyboard?.instantiateViewController(withIdentifier: "BioViewController") as! BioViewController
-        settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsTableViewController") as! SettingsTableViewController
-        commentVC = self.storyboard?.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
-        eventDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
-        favoriteSportPickerVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FavoriteSportPickerViewController") as! FavoriteSportPickerViewController
+        followeringVC = storyboard?.instantiateViewController(withIdentifier: "FollowerFollowingViewController") as? FollowerFollowingViewController
+        bioVC = storyboard?.instantiateViewController(withIdentifier: "BioViewController") as! BioViewController
+        settingsVC = storyboard?.instantiateViewController(withIdentifier: "SettingsTableViewController") as! SettingsTableViewController
+        commentVC = storyboard?.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
+        eventDetailVC = storyboard?.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
+        favoriteSportPickerVC = storyboard?.instantiateViewController(withIdentifier: "FavoriteSportPickerViewController") as! FavoriteSportPickerViewController
+        profileImageFullscreenVC = storyboard?.instantiateViewController(withIdentifier: "ImageFullscreenViewController") as! ImageFullscreenViewController
+        
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(showProfileImageFullscreen))
+        singleTap.numberOfTapsRequired = 1
+        profileImage.addGestureRecognizer(singleTap)
         
         let eventNib = UINib(nibName: "EventCollectionViewCell", bundle: Bundle.main)
         eventsCollectionView.register(eventNib, forCellWithReuseIdentifier: "eventCell")
-
-        self.view.layoutIfNeeded()
 
         scrollPager.delegate = self
         scrollPager.addSegmentsWithTitlesAndViews(segments: [
@@ -123,9 +128,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         settingsButton = UIBarButtonItem(image: UIImage(named: "Settings"), style: .plain, target: self, action: #selector(settingsButtonClicked))
         
         favoriteSportsHeight.constant = (screenSize.width / 5.0) + 10
-        
-        eventsCollectionView.alwaysBounceVertical = true
-        commentsTableView.alwaysBounceVertical = true
+        scrollViewHeight.constant = screenSize.height - 42 - 120 - ((screenSize.width / 5.0) + 10)      // 42 = Headers height, 112 = Status bar + nav bar + tab bar heights
         
         verifiedImage.alpha = 0
         profileImage.alpha = 0
@@ -351,6 +354,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             self.user?.followers != nil ? (self.profileFollowers.text = String(describing: (self.user?.followers.count)!)) : (self.profileFollowers.text = "0")
             
             self.profileImage.kf.setImage(with: URL(string: (user?.photoURL)!))
+            profileImageFullscreenVC.imagePhotoURLString = (user?.photoURL)!
             
             UIView.animate(withDuration: 1, animations: { 
                 self.profileImage.alpha = 1
@@ -390,19 +394,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func getEventsIDs() {
-        REF_USERS.child(user!.id).child("eventsCreated").observe(.value, with: { snapshot in
-
+        REF_USERS.child(user!.id).child("eventsCreated").observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 
-                let myEventsIDArray = Array((snapshot.value as! [String: String]).values)
-                var myEventIDs = [String]()
+                let myEventsIDs = Array((snapshot.value as! [String: String]).values)
                 
-                for element in myEventsIDArray {
-                    myEventIDs.insert(element, at: 0)
-                }
-                
-                self.eventsArray = [Event]()
-                self.getEvents(myEventIDs)
+                self.eventsArray.removeAll()
+                self.getEvents(myEventsIDs)
             }
         })
     }
@@ -415,7 +413,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     
                     self.eventsArray.append(eventElement)
                     
-                    if element == events.count-1 && self.isViewLoaded { self.eventsCollectionView.reloadData() }
+                    if element == events.count-1 && self.isViewLoaded {
+                        self.eventsArray = self.eventsArray.sorted(by: { ($0.fullDate?.isGreaterThanDate(dateToCompare: $1.fullDate!))!})
+                        self.eventsCollectionView.reloadData()
+                    }
                 }
             })
         }
@@ -466,7 +467,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     let url = meta.downloadURL()!
                     self.user!.photoURL = url.absoluteString
                     REF_USERS.child(self.user!.id).child("photoURL").setValue(url.absoluteString)
-                } else { print(error) }
+                }
                 self.dismiss(animated: true, completion: nil)
             })
         }
@@ -581,6 +582,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 }
             }
         }
+    }
+    
+    func showProfileImageFullscreen() {
+        show(profileImageFullscreenVC, sender: self)
     }
     
     @IBAction func bioChangeButtonClicked(_ sender: AnyObject) {

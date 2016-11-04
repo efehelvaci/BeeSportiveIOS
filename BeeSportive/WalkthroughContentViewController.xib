@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -13,6 +16,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalkthroughContentViewController" customModule="BeeSportive" customModuleProvider="target">
             <connections>
+                <outlet property="colorBackground" destination="bIm-as-E4o" id="xmR-qn-Per"/>
                 <outlet property="gotItbutton" destination="Fh1-T9-Lho" id="rOv-zf-HmM"/>
                 <outlet property="pageControl" destination="MRa-Xf-bzB" id="JMx-8N-w0n"/>
                 <outlet property="skipButton" destination="Czw-F4-AFc" id="Z5d-dT-Nqz"/>
@@ -26,8 +30,14 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Slide1" translatesAutoresizingMaskIntoConstraints="NO" id="zc4-Ga-OXz"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Slide1" translatesAutoresizingMaskIntoConstraints="NO" id="zc4-Ga-OXz">
+                    <rect key="frame" x="8" y="32" width="359" height="486"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bIm-as-E4o">
+                    <rect key="frame" x="0.0" y="526" width="375" height="141"/>
+                </view>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="MRa-Xf-bzB">
+                    <rect key="frame" x="141.5" y="622" width="92" height="37"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="92" id="Icz-8c-dRA"/>
@@ -37,25 +47,34 @@
                     <color key="currentPageIndicatorTintColor" red="0.0" green="0.20000000000000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                 </pageControl>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Czw-F4-AFc">
+                    <rect key="frame" x="16" y="623.5" width="30" height="34"/>
                     <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="16"/>
-                    <state key="normal" title="Skip"/>
+                    <state key="normal" title="Skip">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fh1-T9-Lho">
+                    <rect key="frame" x="315" y="623.5" width="44" height="34"/>
                     <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="16"/>
-                    <state key="normal" title="Got it!"/>
+                    <state key="normal" title="Got it!">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cy9-0g-ZOY">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cy9-0g-ZOY">
+                    <rect key="frame" x="28" y="526" width="319" height="90"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="90" id="mqT-Ge-sVX"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="15"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="MRa-Xf-bzB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="0id-Xu-cfM"/>
+                <constraint firstAttribute="bottom" secondItem="bIm-as-E4o" secondAttribute="bottom" id="2Us-RY-1Oz"/>
+                <constraint firstAttribute="trailing" secondItem="bIm-as-E4o" secondAttribute="trailing" id="EuT-a5-fWF"/>
                 <constraint firstAttribute="trailing" secondItem="zc4-Ga-OXz" secondAttribute="trailing" constant="8" id="IjS-aL-1XJ"/>
                 <constraint firstItem="MRa-Xf-bzB" firstAttribute="top" secondItem="Cy9-0g-ZOY" secondAttribute="bottom" constant="6" id="O3y-i0-7wD"/>
                 <constraint firstAttribute="bottom" secondItem="MRa-Xf-bzB" secondAttribute="bottom" constant="8" id="Rze-NO-Hag"/>
@@ -67,6 +86,8 @@
                 <constraint firstItem="Cy9-0g-ZOY" firstAttribute="top" secondItem="zc4-Ga-OXz" secondAttribute="bottom" constant="8" id="c2W-wP-igZ"/>
                 <constraint firstItem="zc4-Ga-OXz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="dF4-5u-0JS"/>
                 <constraint firstAttribute="trailing" secondItem="Fh1-T9-Lho" secondAttribute="trailing" constant="16" id="eck-fX-3RT"/>
+                <constraint firstItem="bIm-as-E4o" firstAttribute="top" secondItem="Cy9-0g-ZOY" secondAttribute="top" id="j2w-ax-d5D"/>
+                <constraint firstItem="bIm-as-E4o" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nei-GR-aWN"/>
                 <constraint firstAttribute="trailing" secondItem="Cy9-0g-ZOY" secondAttribute="trailing" constant="28" id="ozc-bj-JZ6"/>
             </constraints>
             <point key="canvasLocation" x="-39.5" y="63.5"/>

@@ -7,6 +7,7 @@
 //
 import Foundation
 import Firebase
+import Kingfisher
 
 class User {
     
@@ -49,5 +50,6 @@ class User {
                 self.verified = verify
             }
         }
+        
     }
 }

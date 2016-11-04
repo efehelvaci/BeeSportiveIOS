@@ -78,10 +78,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
                 
                 FIRAuth.auth()?.signIn(with: credential) { (user, error) in
-                    guard user != nil else {
-                        print(error)
-                        return
-                    }
+                    guard user != nil else { return }
                     
                     FTIndicator.showNotification(with: UIImage(named: "Success"), title: "Yay!", message: "You logged in succesfully!")
                     

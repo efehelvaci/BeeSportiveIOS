@@ -27,7 +27,7 @@ class Event {
     var year : String! = ""
     var participants = [String]()
     var requesters : Dictionary<String, AnyObject>? = nil
-    var creator : User? = nil
+    var creator : User! = nil
     var address : String? = nil
     var fullDate : Date? = nil
     var isPast : Bool = false

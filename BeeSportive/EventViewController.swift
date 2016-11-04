@@ -247,7 +247,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     // MARK: -Self created methods
     
     func retrieveAllEvents() {
-        FTIndicator.showProgressWithmessage("Loading...")
+        FTIndicator.showProgressWithmessage("Loading...", userInteractionEnable: false)
         
         var tempAllEvents = [Event]()
         var tempPopularEvents = [Event]()
@@ -446,7 +446,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             case .notDetermined, .restricted, .denied:
                 if !isFirstLocationExists {
                     FTIndicator.showNotification(with: UIImage(named: "LocationPin"), title: "Can't update location!", message: "Give us location permission to list the events based on your current location!")
-                    Async.background(after: 1, { self.checkLocationPermission() })
+                    Async.main(after: 1, { self.checkLocationPermission() })
                 }
             case .authorizedAlways, .authorizedWhenInUse:
                 self.needYourLocationView.isHidden = true
@@ -456,7 +456,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             if !isFirstLocationExists {
                 FTIndicator.showNotification(with: UIImage(named: "LocationPin"), title: "Can't update location!", message: "You should enable your location services to list the events based on your current location!")
             }
-            Async.background(after: 1, { self.checkLocationPermission() })
+            Async.main(after: 1, { self.checkLocationPermission() })
         }
     }
     

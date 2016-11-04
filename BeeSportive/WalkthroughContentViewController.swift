@@ -20,15 +20,19 @@ class WalkthroughContentViewController: UIViewController {
     
     @IBOutlet var pageControl: UIPageControl!
     
+    @IBOutlet var colorBackground: UIView!
+    
     var index = 0
     var imageName = ""
     var text = ""
+    var backgroundColor : UIColor!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         slideImage.image = UIImage(named: imageName)
         slideLabel.text = text
+        colorBackground.backgroundColor = backgroundColor
         
         if index != 3 {
             skipButton.isHidden = false

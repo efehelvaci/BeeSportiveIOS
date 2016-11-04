@@ -1,46 +1,46 @@
 PODS:
   - AsyncSwift (2.0.0)
   - Eureka (2.0.0-beta.1)
-  - Firebase/Auth (3.7.0):
+  - Firebase/Auth (3.8.0):
     - Firebase/Core
-    - FirebaseAuth (= 3.0.5)
-  - Firebase/Core (3.7.0):
-    - FirebaseAnalytics (= 3.4.3)
-    - FirebaseCore (= 3.4.3)
-  - Firebase/Database (3.7.0):
+    - FirebaseAuth (= 3.0.6)
+  - Firebase/Core (3.8.0):
+    - FirebaseAnalytics (= 3.5.1)
+    - FirebaseCore (= 3.4.4)
+  - Firebase/Database (3.8.0):
     - Firebase/Core
-    - FirebaseDatabase (= 3.0.3)
-  - Firebase/Messaging (3.7.0):
+    - FirebaseDatabase (= 3.1.0)
+  - Firebase/Messaging (3.8.0):
     - Firebase/Core
-    - FirebaseMessaging (= 1.2.0)
-  - Firebase/Storage (3.7.0):
+    - FirebaseMessaging (= 1.2.1)
+  - Firebase/Storage (3.8.0):
     - Firebase/Core
-    - FirebaseStorage (= 1.0.3)
-  - FirebaseAnalytics (3.4.3):
+    - FirebaseStorage (= 1.0.4)
+  - FirebaseAnalytics (3.5.1):
     - FirebaseCore (~> 3.4)
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
-    - GoogleUtilities (~> 1.3)
-  - FirebaseAuth (3.0.5):
-    - FirebaseAnalytics (~> 3.3)
-    - GoogleNetworkingUtilities (~> 1.2)
-    - GoogleUtilities (~> 1.2)
-  - FirebaseCore (3.4.3):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseAuth (3.0.6):
+    - FirebaseAnalytics (~> 3.4)
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseCore (3.4.4):
     - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleUtilities (~> 1.2)
-  - FirebaseDatabase (3.0.3):
-    - FirebaseAnalytics (~> 3.3)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseDatabase (3.1.0):
+    - FirebaseAnalytics (~> 3.4)
   - FirebaseInstanceID (1.0.8)
-  - FirebaseMessaging (1.2.0):
-    - FirebaseAnalytics (~> 3.3)
+  - FirebaseMessaging (1.2.1):
+    - FirebaseAnalytics (~> 3.4)
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleIPhoneUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
-  - FirebaseStorage (1.0.3):
-    - FirebaseAnalytics (~> 3.3)
-    - GoogleNetworkingUtilities (~> 1.2)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+  - FirebaseStorage (1.0.4):
+    - FirebaseAnalytics (~> 3.4)
+    - GTMSessionFetcher/Core (~> 1.1)
   - FTIndicator (1.1.5):
     - FTIndicator/FTNotificationIndicator (= 1.1.5)
     - FTIndicator/FTProgressIndicator (= 1.1.5)
@@ -50,20 +50,26 @@ PODS:
   - FTIndicator/FTToastIndicator (1.1.5)
   - GoogleInterchangeUtilities (1.2.2):
     - GoogleSymbolUtilities (~> 1.1)
-  - GoogleIPhoneUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
-    - GoogleUtilities (~> 1.0)
-  - GoogleNetworkingUtilities (1.2.2):
-    - GoogleSymbolUtilities (~> 1.1)
   - GoogleSymbolUtilities (1.1.2)
-  - GoogleUtilities (1.3.2):
-    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleToolboxForMac/DebugUtils (2.1.0):
+    - GoogleToolboxForMac/Defines (= 2.1.0)
+  - GoogleToolboxForMac/Defines (2.1.0)
+  - GoogleToolboxForMac/Logger (2.1.0):
+    - GoogleToolboxForMac/Defines (= 2.1.0)
+  - GoogleToolboxForMac/NSData+zlib (2.1.0):
+    - GoogleToolboxForMac/Defines (= 2.1.0)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.0):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.0)
+    - GoogleToolboxForMac/Defines (= 2.1.0)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.0)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.0)
+  - GTMSessionFetcher/Core (1.1.7)
   - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
-  - Kingfisher (3.1.1)
-  - SDCAlertView (7.0.1)
-  - SwifterSwift (1.1)
+  - Kingfisher (3.1.4)
+  - SDCAlertView (7.1)
+  - SwifterSwift (1.2.2)
 
 DEPENDENCIES:
   - AsyncSwift (~> 2.0.0)
@@ -85,31 +91,30 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwifterSwift:
-    :commit: 264d2e7afd283e6e46a91b0aa7f5327ea9a0a464
+    :commit: c154fbe0c3232d1e8b574cd5750f86d7e55b97e5
     :git: https://github.com/omaralbeik/SwifterSwift.git
 
 SPEC CHECKSUMS:
   AsyncSwift: 6ba6ed9ecb51344458063f7c86fe447ab824e313
   Eureka: d014adf16406745e1a78d5790ea37ed130a0a8e5
-  Firebase: 3875e140d77c7572c6d4852faf94144ffcdb0704
-  FirebaseAnalytics: 02d0aed8c6246a9c8683ac3e9825c67ceb657bde
-  FirebaseAuth: 75a062bbf2d3c97d1e6e55bbc110e13a6853e25d
-  FirebaseCore: 5a885548bbc5f0c410b04f8e9ac9d73ff1221907
-  FirebaseDatabase: 750a4a0fe18ef114318876fd654b2d9c671e0992
+  Firebase: fdbecadb7b5cbef2774852d4fa659b9daf11f2af
+  FirebaseAnalytics: 6e58fc9b397664369ac7617fb0ba93fab6ba7b5b
+  FirebaseAuth: 96e9674ff31d6e1f826d53e26aa003a57cab0295
+  FirebaseCore: d0ed25f27b6f9158eccc439f1be6f92e81207e28
+  FirebaseDatabase: 3ebb2edb6007c3f0f87b248f3fa212bde56a1468
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
-  FirebaseMessaging: 789d23fd796594dfb55dcf36cd325541df887c22
-  FirebaseStorage: 3992817bf405f5c1a4f8349678d22724cd0ef509
+  FirebaseMessaging: acf66347e43c5637c697060c3001d25c809a4131
+  FirebaseStorage: c50aa353bf484072704e73b4aff1bd47adb735c4
   FTIndicator: 8b9885b84340a19029ad13672add3bb8183feba8
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
-  GoogleIPhoneUtilities: 63f25e93a3ddcb66884d182aab3a660d98f1479b
-  GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
-  GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
+  GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
+  GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
-  Kingfisher: 12b755ae697cc9f0fd3e550db8417fa1233e09ab
-  SDCAlertView: e04c5a8985e4490768cc9608bf0a13c44215fcf2
-  SwifterSwift: 73a46af6592832d8d0ccea035e5ede15116a0895
+  Kingfisher: 6c67e3e57f2d81a9cfdfa25052cd86f33ceac9bb
+  SDCAlertView: b92fd1f00e522e18a062005e15a16c1e8295c5b5
+  SwifterSwift: e99bfaef472cde9192ef586d65079ab2afa6c5b3
 
 PODFILE CHECKSUM: ccaead13c81537f9207bb229f4603d0f84982b67
 

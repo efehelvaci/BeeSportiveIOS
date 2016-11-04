@@ -92,7 +92,7 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
                     }
                 <<< TextRow(){ row in
                         row.title = "Location name"
-                        row.placeholder = "Ex. Caddebostan Sahil"
+                        row.placeholder = "Ex. Central Park"
                         row.tag = "LocationName"
                     }
                 <<< AlertRow<String>() {
@@ -123,9 +123,6 @@ class EventFormViewController: FormViewController, CLLocationManagerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        timesToLocateAccurate = 10
-        locationManager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

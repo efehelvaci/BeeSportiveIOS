@@ -67,8 +67,6 @@ class FavoriteSportPickerViewController: UIViewController, UICollectionViewDeleg
         }
         
         collectionView.reloadItems(at: [indexPath])
-        
-        print(selectedBranchs)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
@@ -93,5 +91,10 @@ class FavoriteSportPickerViewController: UIViewController, UICollectionViewDeleg
     
     @IBAction func backButtonClicked(_ sender: AnyObject) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func clearButtonClicked(_ sender: Any) {
+        selectedBranchs.removeAll()
+        collectionView.reloadData()
     }
 }

@@ -27,8 +27,6 @@ class EventCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
     
-    var user : User!
-    
     func configureCell(event: Event) {
         clipsToBounds = false
         
@@ -42,19 +40,29 @@ class EventCollectionViewCell: UICollectionViewCell {
         
         blackWhiteView.alpha = 0
         
-        REF_USERS.child(event.creatorID).observeSingleEvent(of: .value, with : { snapshot in
-            if snapshot.exists() {
-                self.user = User(snapshot: snapshot)
-                
-                self.creatorName.text = self.user.displayName
-                self.creatorName.isHidden = false
-                
-                self.user.verified ? (self.verifiedImage.isHidden = false) : (self.verifiedImage.isHidden = true)
-
-                let url = URL(string: self.user.photoURL!)
-                self.creatorImage.kf.setImage(with: url)
-            }
-        })
+        if event.creator != nil {
+            self.creatorName.text = event.creator.displayName
+            self.creatorName.isHidden = false
+            
+            event.creator.verified ? (self.verifiedImage.isHidden = false) : (self.verifiedImage.isHidden = true)
+            
+            let url = URL(string: event.creator.photoURL!)
+            self.creatorImage.kf.setImage(with: url)
+        } else {
+            REF_USERS.child(event.creatorID).observeSingleEvent(of: .value, with : { snapshot in
+                if snapshot.exists() {
+                    let user = User(snapshot: snapshot)
+                    
+                    self.creatorName.text = user.displayName
+                    self.creatorName.isHidden = false
+                    
+                    user.verified ? (self.verifiedImage.isHidden = false) : (self.verifiedImage.isHidden = true)
+                    
+                    let url = URL(string: user.photoURL!)
+                    self.creatorImage.kf.setImage(with: url)
+                }
+            })
+        }
         
         if event.creatorID == FIRAuth.auth()?.currentUser?.uid {
             // Hex code: FEE941

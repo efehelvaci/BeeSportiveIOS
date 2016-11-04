@@ -10,11 +10,15 @@ import UIKit
 
 class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
 
-    var pageDescription = ["Recieve updates on the sports gatherings and events happening nearby.",
-                           "Meet people with the same athletic interests woth you and exercise with them!",
-                           "Create sporting events for your favourite sports and enjoy training with your new sports buddies!",
-                           "Follow your friends and BeeSportive Athletes! Get inspired and socialize with BeeSportive!"]
+    var pageDescription = ["Recieve updates on sports gatherings and events happening nearby.",
+                           "Meet people who have same athletic interests with you and exercise with them!",
+                           "Create sporting events for your favorite sports and enjoy training with your new sports buddies!",
+                           "Follow your friends and BeeSportive Athletes. Get inspired and socialize with BeeSportive!"]
     var pageImages = ["Slide1", "Slide2", "Slide3", "Slide4"]
+    var pageColors = [ UIColor(red: 204/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1),
+                       UIColor(red: 102/255.0, green: 204/255.0, blue: 51/255.0, alpha: 1),
+                       UIColor(red: 153/255.0, green: 0, blue: 153/255.0, alpha: 1),
+                       UIColor(red: 0, green: 153/255.0, blue: 204/255.0, alpha: 1)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +60,8 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         walkthroughVC.index = index
         walkthroughVC.imageName = pageImages[index]
         walkthroughVC.text = pageDescription[index]
+        walkthroughVC.backgroundColor = pageColors[index]
+        
         
         return walkthroughVC
     }
