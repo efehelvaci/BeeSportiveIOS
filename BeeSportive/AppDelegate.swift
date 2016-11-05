@@ -38,7 +38,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loginVC = mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         let tabCon = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
         
-        if FIRAuth.auth()?.currentUser != nil {
+        if let current_user = FIRAuth.auth()?.currentUser {
+            REF_BANNED_USERS.child(current_user.uid).observeSingleEvent(of: .value, with: {snapshot in
+                if snapshot.exists() {
+                    if let isDisabled = snapshot.value as? Bool {
+                        if isDisabled {
+                            try! FIRAuth.auth()?.signOut()
+                            FBSDKLoginManager().logOut()
+                            self.window?.rootViewController = loginVC
+                        }
+                    }
+                }
+            })
+            
             window?.rootViewController = tabCon
             print(currentUser.instance)
         } else {

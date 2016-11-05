@@ -9,10 +9,9 @@
 import UIKit
 import Firebase
 
-class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
 
     let backButton = UIBarButtonItem()
     let uid = FIRAuth.auth()!.currentUser!.uid
@@ -20,8 +19,6 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     var counter = 0
     var channels = [Channel]()
     var tempChannels = [Channel]()
-    var filteredChannels = [Channel]()
-    var isSearching = false
     var selectedChannelID: String!
 
     override func viewDidLoad() {
@@ -29,15 +26,15 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         
         backButton.title = ""
         navigationItem.backBarButtonItem = backButton
-        
-        REF_USERS.child(self.uid).child("joinedEvents").observe(.value, with: { snapshot in
-            self.retrieveChannels()
-        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
+        
+        REF_USERS.child(self.uid).child("joinedEvents").observeSingleEvent(of: .value, with: { snapshot in
+            self.retrieveChannels()
+        })
+        
         let tabBarCont = tabBarController as! TabBarController
         tabBarCont.menuButton.isHidden = true
         tabBarCont.tabBar.isHidden = true
@@ -63,23 +60,14 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if isSearching {
-            return filteredChannels.count
-        } else {
-            return channels.count
-        }
-        
+        return channels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell") as? ChannelCell {
-            if isSearching {
-                cell.configureCell(filteredChannels[(indexPath as NSIndexPath).row])
-            } else {
-                cell.configureCell(channels[(indexPath as NSIndexPath).row])
-            }
+            cell.configureCell(channels[indexPath.row])
+
             return cell
         } else {
             return UITableViewCell()
@@ -88,18 +76,12 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if isSearching {
-            self.selectedChannelID = filteredChannels[(indexPath as NSIndexPath).row].id
-        } else {
-            self.selectedChannelID = channels[(indexPath as NSIndexPath).row].id
-        }
+        self.selectedChannelID = channels[indexPath.row].id
         
         guard let cell = tableView.cellForRow(at: indexPath) as? ChannelCell else { return }
         performSegue(withIdentifier: "toChatSegue", sender: cell)
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -114,26 +96,8 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         
     }
     
-    // MARK: - Search Bar Delegate Methods
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.view.endEditing(true)
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        if searchBar.text == nil || searchBar.text == "" {
-            isSearching = false
-        } else {
-            isSearching = true
-            let key = searchBar.text!.capitalized
-            filteredChannels = channels.filter({$0.title.range(of: key) != nil})
-        }
-        tableView.reloadData()
-    }
-    
     func retrieveChannels () {
-        REF_USERS.child(uid).child("eventsCreated").observe(.value, with: { snapshot in
+        REF_USERS.child(uid).child("eventsCreated").observeSingleEvent(of: .value, with: { snapshot in
             var snaps = [FIRDataSnapshot]()
             
             if snapshot.exists() {
@@ -153,13 +117,12 @@ class ChannelsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
                 for snap in snaps {
                     let channelID = snap.value as! String
                     
-                    REF_CHANNELS.child(channelID).observe(.value, with: { (snap) in
-                        if snap.exists() {
-                            if self.channels.count != Int(snaps.count) {
-                                let channel = Channel(snapshot: snap)
-                                self.tempChannels.append(channel)
-                            }
+                    REF_CHANNELS.child(channelID).observeSingleEvent(of: .value, with: { (snap) in
+                        if self.tempChannels.count != snaps.count {
+                            let channel = Channel(snapshot: snap)
+                            self.tempChannels.append(channel)
                         }
+                        
                         self.counter += 1
                         
                         if self.counter == snaps.count {

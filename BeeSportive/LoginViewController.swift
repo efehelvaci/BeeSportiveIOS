@@ -55,6 +55,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             }, completion: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        FTIndicator.dismissProgress()
+    }
+    
     // MARK: -Facebook Delegate Methods
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!)
     {
@@ -78,12 +84,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
                 
                 FIRAuth.auth()?.signIn(with: credential) { (user, error) in
-                    guard user != nil else { return }
-                    
-                    FTIndicator.showNotification(with: UIImage(named: "Success"), title: "Yay!", message: "You logged in succesfully!")
+                    guard user != nil, let displayName = user?.displayName, let uid = user?.uid, let photoURL = user?.photoURL else {
+                        FTIndicator.showNotification(with: UIImage(named: "Error"), title: "Oups!", message: "Need your profile information!")
+                        FBSDKLoginManager().logOut()
+                        self.loginButtonDidLogOut(self.loginButton)
+                        return
+                    }
                     
                     var email = " "
-                    
                     if result.grantedPermissions.contains("email")
                     {
                         email = (user?.email)!
@@ -93,15 +101,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                     // If not, create user object into database/users
                     REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).observeSingleEvent(of: .value, with: { snapshot in
                         if !snapshot.exists() {
-                            let newUser : [String : AnyObject] = [
-                                "displayName" : (user?.displayName)! as AnyObject,
-                                "email" : email as AnyObject,
-                                "photoURL" : (user?.photoURL?.absoluteString)! as AnyObject,
-                                "id" : (user?.uid)! as AnyObject
+                            let newUser : [String : String] = [
+                                "displayName" : displayName,
+                                "email" : email,
+                                "photoURL" : photoURL.absoluteString,
+                                "id" : uid
                                 ]
-                    
+                
                             REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).setValue(newUser)
-                            
                             
                             REF_USERS.child((FIRAuth.auth()?.currentUser?.uid)!).observeSingleEvent(of: .value, with: { snapshot in
                                 if snapshot.exists() {
@@ -109,24 +116,28 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                                 }
                             })
                         }
+                        
+                        FTIndicator.showNotification(with: UIImage(named: "Success"), title: "Yay!", message: "You logged in succesfully!")
+                        
+                        Async.main{
+                            let tabCon = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController")
+                            
+                            self.appDelegate.window?.rootViewController = tabCon
+                            
+                            tabCon?.view.alpha = 0
+                            
+                            UIView.animate(withDuration: 1, animations: {
+                                tabCon?.view.alpha = 1
+                            })
+                        }
                     })
-                    
-                    Async.main{
-                        let tabCon = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController")
-                        
-                        self.appDelegate.window?.rootViewController = tabCon
-                        
-                        tabCon?.view.alpha = 0
-                        
-                        UIView.animate(withDuration: 1, animations: {
-                            tabCon?.view.alpha = 1
-                        })
-                    }
                 }
             }
             else
             {
-                // TODO: - Not all permissions are granted
+                FTIndicator.showNotification(with: UIImage(named: "Error"), title: "Oups!", message: "Need your profile information!")
+                FBSDKLoginManager().logOut()
+                self.loginButtonDidLogOut(self.loginButton)
             }
         }
     }
@@ -134,10 +145,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
         do {
             try FIRAuth.auth()?.signOut()
-            FTIndicator.showNotification(with: UIImage(named: "Success"), title: "You logged off!", message: "You logged off successfully")
             print("User signed out")
         } catch {
-            FTIndicator.showNotification(with: UIImage(named: "Error"), title: "Error!", message: "Problem occured while logging out")
             print("Couldn't sign out")
         }
     }

@@ -17,8 +17,8 @@ class ChatVC: JSQMessagesViewController {
     let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+        
         automaticallyScrollsToMostRecentMessage = true
         self.senderId = FIRAuth.auth()?.currentUser?.uid
         self.senderDisplayName = FIRAuth.auth()?.currentUser?.displayName
@@ -26,10 +26,18 @@ class ChatVC: JSQMessagesViewController {
         // Getting messages and users one by one
         REF_CHANNELS.child(channelID).child("messages").observe(.childAdded, with: { snapshot in
             guard let data = snapshot.value as? Dictionary<String, String> else { return }
-            let senderId = data["senderId"]!
-            REF_USERS.child(senderId).child("displayName").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let senderID = data["senderId"]!
+            self.dateFormatter.dateFormat = "HH.mm - dd.M.yy"
+            var messageDate = self.dateFormatter.date(from: data["date"]!)
+            
+            if messageDate == nil {
+                messageDate = Date()
+            }
+            
+            REF_USERS.child(senderID).child("displayName").observeSingleEvent(of: .value, with: { (snapshot) in
                 let displayName = snapshot.value as! String
-                self.addMessage(data["message"]!, senderId: data["senderId"]!, senderDisplayName: displayName, date: Date())
+                self.addMessage(data["message"]!, senderId: senderID, senderDisplayName: displayName, date: messageDate!)
             })
         })
         
@@ -69,10 +77,8 @@ class ChatVC: JSQMessagesViewController {
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         
         let factory = JSQMessagesBubbleImageFactory()
-        let outgoingBubbleImage = factory?.outgoingMessagesBubbleImage(
-            with: UIColor.jsq_messageBubbleBlue())
-        let incomingBubbleImage = factory?.incomingMessagesBubbleImage(
-            with: UIColor.jsq_messageBubbleLightGray())
+        let outgoingBubbleImage = factory?.outgoingMessagesBubbleImage(with: primaryButtonColor)
+        let incomingBubbleImage = factory?.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
         let message = messages[indexPath.item]
         
         if message.senderId == senderId {
@@ -114,19 +120,6 @@ class ChatVC: JSQMessagesViewController {
     }
     
     override func didPressAccessoryButton(_ sender: UIButton) {
-        
-        self.inputToolbar.contentView!.textView!.resignFirstResponder()
-        
-        let sheet = UIAlertController(title: "Media messages", message: nil, preferredStyle: .actionSheet)
-        let photoAction = UIAlertAction(title: "Send photo", style: .default) { (action) in
-            let photoItem = JSQPhotoMediaItem(image: UIImage(named: "pp"))
-            self.addMedia(photoItem!)
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        sheet.addAction(photoAction)
-        sheet.addAction(cancelAction)
-        self.present(sheet, animated: true, completion: nil)
         
     }
     

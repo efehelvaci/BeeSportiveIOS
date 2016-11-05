@@ -46,6 +46,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     var favoriteSports = [String]()
     var favoriteEvents = [Event]()
     var followingEvents = [Event]()
+    var nonEmptyBranches = [String]()
     var selectedEventNo : Int?
     var startAnimation = true
     var location = CLLocation(latitude: 41.01513, longitude: 28.97953) { // Kennedy Street, Istanbul
@@ -138,7 +139,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         } else if collectionView == thirdCollectionView {
             return favoriteEvents.count
         } else if collectionView == fourthCollectionView {
-            return branchs.count
+            return nonEmptyBranches.count
         } else if collectionView == followingCollectionView {
             return followingEvents.count
         }
@@ -177,8 +178,8 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         } else if collectionView == fourthCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteSportCell", for: indexPath) as! FavoriteSportCollectionViewCell
             
-            cell.favSportImage.image = UIImage(named: branchs[(indexPath as NSIndexPath).row])
-            cell.favSportName.text = branchs[(indexPath as NSIndexPath).row]
+            cell.favSportImage.image = UIImage(named: nonEmptyBranches[indexPath.row])
+            cell.favSportName.text = nonEmptyBranches[indexPath.row]
             
             return cell
         } else if collectionView == followingCollectionView {
@@ -207,15 +208,15 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         } else if collectionView == fourthCollectionView {
             
             let eventsVC = self.storyboard?.instantiateViewController(withIdentifier: "EventsCollectionViewController") as! EventsCollectionViewController
-            eventsVC.navigationItem.title = branchs[indexPath.row]
+            eventsVC.navigationItem.title = nonEmptyBranches[indexPath.row]
             
             var events = [Event]()
             
             for i in 0..<allEvents.count {
-                if allEvents[i].branch == branchs[indexPath.row] {events.insert(allEvents[i], at: 0)  }
+                if allEvents[i].branch == nonEmptyBranches[indexPath.row] {events.insert(allEvents[i], at: 0)  }
             }
             
-            eventsVC.branchName = branchs[indexPath.row]
+            eventsVC.branchName = nonEmptyBranches[indexPath.row]
             eventsVC.events = events
             eventsVC.collectionView?.reloadData()
             
@@ -233,13 +234,6 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
             return CGSize(width: screenSize.width - 8, height: 144)
         }
         
-        var events = [Event]()
-        
-        for i in 0..<allEvents.count {
-            if allEvents[i].branch == branchs[(indexPath as NSIndexPath).row] {events.insert(allEvents[i], at: 0)  }
-        }
-        if events.count == 0 { return CGSize(width: 4, height: 0) }
-        
         return CGSize(width: screenSize.width - 8, height: 120)
     }
     
@@ -251,6 +245,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         var tempAllEvents = [Event]()
         var tempPopularEvents = [Event]()
+        var tempNonEmptyBranches = [String]()
         
         REF_EVENTS.observe(.value , with: { (snapshot) in
             
@@ -285,13 +280,27 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                 
                 Async.main {
                     self.firstCollectionView.reloadData()
-                    self.fourthCollectionView.reloadData()
                     
                     if self.startAnimation {
                         Async.main(after: 0.5, { _ in
                             self.startAnimation = false
                         })
                     }
+                }
+                Async.main{
+                    tempNonEmptyBranches.removeAll()
+                    
+                    for branch in branchs {
+                        for event in tempAllEvents {
+                            if event.branch == branch {
+                                tempNonEmptyBranches.append(branch)
+                                break
+                            }
+                        }
+                    }
+                    
+                    self.nonEmptyBranches = tempNonEmptyBranches
+                    self.fourthCollectionView.reloadData()
                 }
                 
                 self.retrieveFavoriteEvents()

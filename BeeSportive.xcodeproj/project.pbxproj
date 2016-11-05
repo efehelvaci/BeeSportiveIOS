@@ -286,7 +286,6 @@
 				27A0FBEE1DBCDF2200F2D370 /* FollowerFollowingViewController.swift */,
 				27DDC2A81DC94D2B00E45AC9 /* WalkthroughPageViewController.swift */,
 				271DA0361DC9715D00F30DC0 /* WalkthroughContentViewController.swift */,
-				271DA0371DC9715D00F30DC0 /* WalkthroughContentViewController.xib */,
 				27F2B83F1DCB9C7700E8F157 /* ImageFullscreenViewController.swift */,
 			);
 			name = "View Controllers";
@@ -319,6 +318,7 @@
 		27E45F4C1DA57E0A00409852 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
+				271DA0371DC9715D00F30DC0 /* WalkthroughContentViewController.xib */,
 				277C1CBF1D64A2B20008331F /* EventCollectionViewCell.xib */,
 				27EDE99A1D75ACD200C90FC9 /* FavoriteSportCollectionViewCell.xib */,
 				8114B4D01D7ED2CB00CE0FF8 /* UserCell.xib */,
@@ -398,7 +398,7 @@
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = NG2H4EFXTS;
 						LastSwiftMigration = 0800;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -683,8 +683,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BeeSportive/BeeSportive.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Efe Helvaci (NG2H4EFXTS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = NG2H4EFXTS;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -694,8 +694,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.efehelvaci.BeeSportive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "0a611e5c-2cc2-48e0-a6c2-93b3094e2ca1";
+				PROVISIONING_PROFILE_SPECIFIER = "Efe Helvacı";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -708,8 +708,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BeeSportive/BeeSportive.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Efe Helvaci (NG2H4EFXTS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = NG2H4EFXTS;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -719,8 +719,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.efehelvaci.BeeSportive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "0a611e5c-2cc2-48e0-a6c2-93b3094e2ca1";
+				PROVISIONING_PROFILE_SPECIFIER = "Efe Helvacı";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

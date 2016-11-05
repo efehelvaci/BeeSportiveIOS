@@ -21,6 +21,7 @@ let REF_POPULAR_EVENTS = REF_DATA.child("popularEvents")
 let REF_FEEDBACKS = REF_DATA.child("feedbacks")
 let REF_NEW_NOTIFICATIONS = REF_DATA.child("newNotifications")
 let REF_NEW_CHAT_NOTIFICATIONS = REF_DATA.child("newChatNotifications")
+let REF_BANNED_USERS = REF_DATA.child("banned_users")
 let REF_STORAGE = FIRStorage.storage().reference()
 
 

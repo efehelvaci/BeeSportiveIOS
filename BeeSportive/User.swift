@@ -7,14 +7,13 @@
 //
 import Foundation
 import Firebase
-import Kingfisher
 
 class User {
     
     // MARK: Properties
-    let displayName: String
-    var photoURL: String?
-    let id: String
+    var displayName: String! = ""
+    var photoURL: String! = ""
+    var id: String!
     var bio: String = "Sportive! \u{1F41D}"
     var followers = [String]()   // Follower users ID's
     var following = [String]()   // Following users ID's
@@ -25,9 +24,15 @@ class User {
     init(snapshot: FIRDataSnapshot) {
         let data = snapshot.value as! Dictionary<String, AnyObject>
         
-        self.displayName = data["displayName"] as! String
-        self.photoURL = data["photoURL"] as? String
         self.id = data["id"] as! String
+        
+        if let displayName = data["displayName"] as? String {
+            self.displayName = displayName
+        }
+        
+        if let photoURL = data["photoURL"] as? String {
+            self.photoURL = photoURL
+        }
         
         if let followers = (data["followers"] as? Dictionary<String, AnyObject>)?.keys {
             self.followers = Array(followers)
