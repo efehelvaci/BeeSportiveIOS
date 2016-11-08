@@ -34,11 +34,11 @@ class FavoriteSportPickerViewController: UIViewController, UICollectionViewDeleg
         cell.branchName.text = branchs[indexPath.row]
         
         if selectedBranchs.contains(branchs[indexPath.row]) {
-            UIView.animate(withDuration: 0.5, animations: {
-                cell.yellowCurtainView.alpha = 0.3
+            UIView.animate(withDuration: 0.4, animations: {
+                cell.yellowCurtainView.alpha = 0.7
             })
         } else {
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: 0.4, animations: {
                 cell.yellowCurtainView.alpha = 0.0
             })
         }

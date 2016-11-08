@@ -51,7 +51,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     var startAnimation = true
     var location = CLLocation(latitude: 41.01513, longitude: 28.97953) { // Kennedy Street, Istanbul
         didSet {
-            if timesToLocateAccurate <= 0 {
+            if timesToLocateAccurate == 0 {
                 let locationData = NSKeyedArchiver.archivedData(withRootObject: location)
                 userDefaults.set(locationData, forKey: "lastLocation")
                 retrieveAllEvents()
@@ -61,6 +61,8 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        FTIndicator.showProgressWithmessage("Loading...", userInteractionEnable: false)
         
         locationManager.delegate = self;
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -241,14 +243,12 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
     // MARK: -Self created methods
     
     func retrieveAllEvents() {
-        FTIndicator.showProgressWithmessage("Loading...", userInteractionEnable: false)
-        
+
         var tempAllEvents = [Event]()
         var tempPopularEvents = [Event]()
         var tempNonEmptyBranches = [String]()
         
         REF_EVENTS.observe(.value , with: { (snapshot) in
-            
             tempAllEvents.removeAll()
             tempPopularEvents.removeAll()
             
@@ -282,7 +282,7 @@ class EventViewController: UIViewController, UICollectionViewDelegate, UICollect
                     self.firstCollectionView.reloadData()
                     
                     if self.startAnimation {
-                        Async.main(after: 0.5, { _ in
+                        Async.main(after: 0.3, { _ in
                             self.startAnimation = false
                         })
                     }

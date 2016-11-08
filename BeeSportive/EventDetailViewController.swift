@@ -59,7 +59,7 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     var participants = [User]() {
         didSet{
-            yellowLineWidth.constant = ( CGFloat(participants.count) / CGFloat(Double(event.maxJoinNumber)!)) * grayLineWidth
+            yellowLineWidth.constant = ((CGFloat(participants.count) / CGFloat(Double(event.maxJoinNumber)!)) * grayLineWidth) - 14
             capacityLabel.text = String(participants.count) + "/" + String(event.maxJoinNumber)
         }
     }
@@ -186,6 +186,22 @@ class EventDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         if event.creatorID == FIRAuth.auth()?.currentUser?.uid {
             Async.main{
                 self.joinButton.setTitle("Your Beevent", for: .disabled)
+                self.joinButton.layer.borderColor = UIColor.gray.cgColor
+                self.joinButton.isEnabled = false
+            }
+        }
+        
+        if event.fullDate!.isLessThanDate(dateToCompare: Date()) {
+            Async.main{
+                self.joinButton.setTitle("Past", for: .disabled)
+                self.joinButton.layer.borderColor = UIColor.gray.cgColor
+                self.joinButton.isEnabled = false
+            }
+        }
+        
+        if event.participants.count >= Int(event.maxJoinNumber)! {
+            Async.main{
+                self.joinButton.setTitle("Full", for: .disabled)
                 self.joinButton.layer.borderColor = UIColor.gray.cgColor
                 self.joinButton.isEnabled = false
             }

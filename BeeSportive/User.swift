@@ -12,7 +12,7 @@ class User {
     
     // MARK: Properties
     var displayName: String! = ""
-    var photoURL: String! = ""
+    var photoURL: String! = "https://firebasestorage.googleapis.com/v0/b/beesportive-cbd41.appspot.com/o/picture-95970-1460131169.png?alt=media&token=f4837663-6add-4039-be16-eab5a915a5cc"
     var id: String!
     var bio: String = "Sportive! \u{1F41D}"
     var followers = [String]()   // Follower users ID's
