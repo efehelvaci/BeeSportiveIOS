@@ -1,4 +1,6 @@
-# BeeSportive
+<img src="BeeSportive/Assets.xcassets/Logo.imageset/Logo.png" width=350px />
+
+# 
 BeeSportive iOS Application with Swift. Let's be sportive!
 
 # Application Description
